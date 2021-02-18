@@ -9,16 +9,17 @@ namespace BaseProject
     {
         private GraphicsDeviceManager _graphics;
         SpriteBatch spriteBatch;
-        Cell cell, cell2;
+
+        Cell cell;
+
+        private Cell _cell;
         Texture2D background;
-        //test conflict niels :D
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            //gaming on the toilet
         }
 
         protected override void Initialize()
