@@ -11,6 +11,7 @@ namespace BaseProject
         public SpriteBatch spriteBatch;
         Cell cell;
         Texture2D background;
+        //test conflict niels :D
 
         public Game1()
         {
