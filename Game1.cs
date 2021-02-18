@@ -6,8 +6,11 @@ namespace BaseProject
 {
     public class Game1 : Game
     {
-        private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
+        GraphicsDeviceManager _graphics;
+        SpriteBatch _spriteBatch;
+        public Texture2D soilTexture;
+
+        Tilling tilling;
 
         public Game1()
         {
@@ -19,6 +22,7 @@ namespace BaseProject
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            tilling = new Tilling();
 
             base.Initialize();
         }
@@ -28,6 +32,7 @@ namespace BaseProject
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -36,7 +41,7 @@ namespace BaseProject
                 Exit();
 
             // TODO: Add your update logic here
-
+            tilling.Update();
             base.Update(gameTime);
         }
 
@@ -45,7 +50,7 @@ namespace BaseProject
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
+            tilling.Draw();
             base.Draw(gameTime);
         }
     }
