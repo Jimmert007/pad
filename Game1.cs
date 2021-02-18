@@ -8,7 +8,7 @@ namespace BaseProject
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
-        public SpriteBatch spriteBatch;
+        SpriteBatch spriteBatch;
         Cell cell;
         Texture2D background;
         //test conflict niels :D
