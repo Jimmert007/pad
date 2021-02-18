@@ -21,3 +21,4 @@ C:\Users\PC\PAD\project04\obj\Debug\netcoreapp3.1\BaseProject.csproj.CopyComplet
 C:\Users\PC\PAD\project04\obj\Debug\netcoreapp3.1\BaseProject.dll
 C:\Users\PC\PAD\project04\obj\Debug\netcoreapp3.1\BaseProject.pdb
 C:\Users\PC\PAD\project04\obj\Debug\netcoreapp3.1\BaseProject.genruntimeconfig.cache
+C:\Users\PC\PAD\project04\bin\Debug\netcoreapp3.1\Content\test.xnb
