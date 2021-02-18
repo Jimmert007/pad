@@ -1,16 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Diagnostics;
 
 namespace BaseProject
 {
     public class Game1 : Game
     {
-        GraphicsDeviceManager _graphics;
-        SpriteBatch _spriteBatch;
-        public Texture2D soilTexture;
-
-        Tilling tilling;
+        private GraphicsDeviceManager _graphics;
+        public SpriteBatch spriteBatch;
+        Cell cell;
+        Texture2D background;
 
         public Game1()
         {
@@ -22,17 +22,17 @@ namespace BaseProject
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            tilling = new Tilling();
+            cell = new Cell(10,10, this);
 
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-
+            background = Content.Load<Texture2D>("test");
         }
 
         protected override void Update(GameTime gameTime)
@@ -41,7 +41,7 @@ namespace BaseProject
                 Exit();
 
             // TODO: Add your update logic here
-            tilling.Update();
+
             base.Update(gameTime);
         }
 
@@ -50,7 +50,14 @@ namespace BaseProject
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            tilling.Draw();
+            spriteBatch.Begin();
+
+            //spriteBatch.Draw(background, new Rectangle(0, 0, 10, 10), Color.Black);
+
+            cell.Display();
+
+            spriteBatch.End();
+
             base.Draw(gameTime);
         }
     }
