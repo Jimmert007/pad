@@ -9,9 +9,10 @@ namespace BaseProject
     {
         private GraphicsDeviceManager _graphics;
         SpriteBatch spriteBatch;
-        Cell cell;
+        private Cell _cell;
         Texture2D background;
         //test conflict niels :D
+        //nog een test
 
         public Game1()
         {
