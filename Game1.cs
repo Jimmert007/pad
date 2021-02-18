@@ -6,11 +6,14 @@ namespace BaseProject
 {
     public class Game1 : Game
     {
+        
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        Sleeping sleeping;
 
         public Game1()
         {
+            sleeping = new Sleeping();
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -36,7 +39,7 @@ namespace BaseProject
                 Exit();
 
             // TODO: Add your update logic here
-
+            sleeping.Update();
             base.Update(gameTime);
         }
 
