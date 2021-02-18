@@ -9,7 +9,7 @@ namespace BaseProject
     {
         private GraphicsDeviceManager _graphics;
         SpriteBatch spriteBatch;
-        Cell cell;
+        Cell cell, cell2;
         Texture2D background;
         //test conflict niels :D
 
