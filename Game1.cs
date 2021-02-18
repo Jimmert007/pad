@@ -17,6 +17,7 @@ namespace BaseProject
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            //gaming on the toilet
         }
 
         protected override void Initialize()
