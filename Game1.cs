@@ -7,12 +7,15 @@ namespace BaseProject
 {
     public class Game1 : Game
     {
-        
+
         private GraphicsDeviceManager _graphics;
+
 
         Sleeping sleeping;
 
-        public SpriteBatch spriteBatch;
+
+        private SpriteBatch spriteBatch;
+
         Cell cell;
         Texture2D background;
 
@@ -28,7 +31,7 @@ namespace BaseProject
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            cell = new Cell(10,10, this);
+            cell = new Cell(10, 10, this);
 
             base.Initialize();
         }
