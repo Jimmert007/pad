@@ -8,8 +8,18 @@ namespace BaseProject
 {
     class Hotbar
     {
-        int x;
-        int y;
+
+        //Screen
+        int screenwidth = 800;
+        int screenheight = 480;
+        int screenHalfWidth;
+
+        //Hotbar
+        int hotbarWidth = 200;
+        int hotbarheight = 50;
+        int hotbarXPos;
+        int hotbarYPos;
+
 
         Vector2 position;
         Texture2D texture;
@@ -21,12 +31,18 @@ namespace BaseProject
             position.Y = _y;
             game1 = _game1;
             texture = game1.Content.Load<Texture2D>("test");
+
+
+            //Calculations
+            screenHalfWidth = screenwidth / 2;
+            hotbarXPos = screenHalfWidth - hotbarWidth / 2;
+            hotbarYPos = screenheight - hotbarheight;
         }
 
         public void Display()
         {
-            game1.spriteBatch.Draw(texture, new Rectangle(x, y, 200, 50), Color.Gray);
-          
+            game1.spriteBatch.Draw(texture, new Rectangle(hotbarXPos, hotbarYPos, hotbarWidth, hotbarheight), Color.Gray);
+
         }
     }
 }
