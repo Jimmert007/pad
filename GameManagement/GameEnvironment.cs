@@ -16,9 +16,6 @@ class GameEnvironment : Game
     static protected ContentManager content;
     public static Point screen;
     protected static Random random;
-                                                                    /*    public int ScreenWidth;
-                                                                        public int ScreenHeight;
-                                                                    */
     static protected List<GameState> gameStateList;
     static protected GameState currentGameState;
 
