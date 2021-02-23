@@ -5,9 +5,9 @@ using System.Diagnostics;
 
 namespace BaseProject
 {
-    public class Game1 : Game
+    class Game1 : GameEnvironment
     {
-        private GraphicsDeviceManager _graphics;
+/*        private GraphicsDeviceManager _graphics;
         public SpriteBatch spriteBatch;
         Cell cell;
         Hotbar hotbar;
@@ -68,8 +68,16 @@ namespace BaseProject
             hotbar.Display();
             spriteBatch.End();
           
+*/
+        protected override void LoadContent()
+        {
+            base.LoadContent();
+            screen = new Point(520, 300);
+            ApplyResolutionSettings();
 
-            base.Draw(gameTime);
+
+            gameStateList.Add(new PlayingState());
+            GameEnvironment.SwitchTo(0);
         }
     }
 }
