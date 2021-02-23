@@ -41,6 +41,7 @@ namespace BaseProject
 
         public void Display()
         {
+            
             game1.spriteBatch.Draw(texture, new Rectangle(hotbarXPos, hotbarYPos, hotbarWidth, hotbarheight), Color.Gray);
 
         }

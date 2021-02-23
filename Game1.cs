@@ -12,12 +12,19 @@ namespace BaseProject
         Cell cell;
         Hotbar hotbar;
         Texture2D background;
+        public static int BHeight;
+        public static int BWidth;
+
+        
+
+
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            
         }
 
         protected override void Initialize()
@@ -49,17 +56,18 @@ namespace BaseProject
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+           // BHeight = background.Height;
             // TODO: Add your drawing code here
             spriteBatch.Begin();
 
-            //spriteBatch.Draw(background, new Rectangle(0, 0, 10, 10), Color.Black);
+                cell.Display();
 
-            cell.Display();
+                //spriteBatch.Draw(background, new Rectangle(0, 0, BHeight , BWidth ), Color.Black);
             hotbar.Display();
-
             spriteBatch.End();
+          
 
             base.Draw(gameTime);
         }
