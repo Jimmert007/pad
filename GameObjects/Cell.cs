@@ -8,9 +8,9 @@ namespace BaseProject
 {
     class Cell : GameObject
     {
-        public Cell(string _assetName, Vector2 _position, Vector2 _velocity) : base(_assetName){
+        public Cell(string _assetName, Vector2 _position, Vector2 _size) : base(_assetName){
             position = _position;
-            velocity = _velocity;
+            size = _size;
         }
     }
 }

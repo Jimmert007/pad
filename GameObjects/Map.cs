@@ -10,22 +10,25 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace BaseProject
 {
-    class Map
+    class Map : GameObject
     {
-        int cols, rows;
-        List<Cell> grid = new List<Cell>();
+        public int rows, cols;
+        public List<Cell> cells = new List<Cell>();
 
-        Map() { 
-            
+        public Map(string _assetName, Vector2 _position, Vector2 _size) : base(_assetName)
+        {
+            position = _position;
+            size = _size;
+            Debug.WriteLine(size.X + ", " +  size.Y);
+            rows = GameEnvironment.Screen.X / texture.Width;
+            cols = GameEnvironment.Screen.Y / texture.Height;
+
+            Debug.Print(rows.ToString() + " x " + cols.ToString());
         }
 
-        int index(int x, int y)
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            if (x < 0 || y < 0 || x > cols - 1 || y > rows - 1)
-            { //check of het zich in het speelveld bevindt
-                return 0;
-            }
-            return x + y * cols;
+            base.Draw(spriteBatch);
         }
     }
 }

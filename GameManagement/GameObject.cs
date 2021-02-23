@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 class GameObject
 {
+    public Vector2 size;
     public Vector2 position;
     public Vector2 velocity;
     public Texture2D texture;
@@ -22,7 +23,7 @@ class GameObject
 
     public virtual void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(texture, position, Color.White);
+        spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y), Color.White);
     }
 
     public virtual void Init()

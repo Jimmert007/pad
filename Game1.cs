@@ -15,6 +15,7 @@ namespace BaseProject
 
             gameStateList.Add(new PlayingState());
             GameEnvironment.SwitchTo(0);
+            IsMouseVisible = true;
         }
     }
 }
