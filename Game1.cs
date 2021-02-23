@@ -10,6 +10,7 @@ namespace BaseProject
         private GraphicsDeviceManager _graphics;
         public SpriteBatch spriteBatch;
         Cell cell;
+        Tilling tilling;
         Texture2D background;
 
         public Game1()
@@ -23,6 +24,7 @@ namespace BaseProject
         {
             // TODO: Add your initialization logic here
             cell = new Cell(10,10, this);
+            tilling = new Tilling(10, 10, this);
 
             base.Initialize();
         }
@@ -41,7 +43,7 @@ namespace BaseProject
                 Exit();
 
             // TODO: Add your update logic here
-
+            tilling.Update();
             base.Update(gameTime);
         }
 
@@ -53,8 +55,8 @@ namespace BaseProject
             spriteBatch.Begin();
 
             //spriteBatch.Draw(background, new Rectangle(0, 0, 10, 10), Color.Black);
-
-            cell.Display();
+            tilling.Draw();
+            //cell.Display();
 
             spriteBatch.End();
 
