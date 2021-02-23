@@ -13,7 +13,9 @@ namespace BaseProject
         public PlayingState()
         {
             //gameObjectList.Add(new GameObject("spr_background"));  
-            gameObjectList.Add(new Cell("test", new Vector2(10, 10), new Vector2(0, 0)));
+            //gameObjectList.Add(new Cell("test", new Vector2(10, 10), new Vector2(0, 0)));
+            gameObjectList.Add(new Hotbar("test",   new Vector2(0, 0)));
+           
         }
         public override void Update(GameTime gameTime)
         {

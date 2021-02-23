@@ -7,15 +7,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 class GameEnvironment : Game
 {
     protected GraphicsDeviceManager graphics;
     protected SpriteBatch spriteBatch;
     static protected ContentManager content;
-    protected static Point screen;
+    public static Point screen;
     protected static Random random;
-
+                                                                    /*    public int ScreenWidth;
+                                                                        public int ScreenHeight;
+                                                                    */
     static protected List<GameState> gameStateList;
     static protected GameState currentGameState;
 
@@ -52,6 +55,7 @@ class GameEnvironment : Game
         content = Content;
         gameStateList = new List<GameState>();
         random = new Random();
+
     }
 
     public void ApplyResolutionSettings()
@@ -59,11 +63,13 @@ class GameEnvironment : Game
         graphics.PreferredBackBufferWidth = screen.X;
         graphics.PreferredBackBufferHeight = screen.Y;
         graphics.ApplyChanges();
+     
     }
 
     protected override void LoadContent()
     {
         spriteBatch = new SpriteBatch(GraphicsDevice);
+        
     }
 
     protected override void Draw(GameTime gameTime)
@@ -74,7 +80,6 @@ class GameEnvironment : Game
             currentGameState.Draw(spriteBatch);
 
         spriteBatch.End();
-
         base.Draw(gameTime);
     }
 
@@ -82,7 +87,7 @@ class GameEnvironment : Game
     {
         if (currentGameState != null)
             currentGameState.Update(gameTime);
-
+       
         base.Update(gameTime);
     }
 }
