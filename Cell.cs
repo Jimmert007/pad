@@ -20,7 +20,7 @@ namespace BaseProject
         }
 
         public void Display() {
-            game1.spriteBatch.Draw(texture, new Rectangle(0, 0, 50, 50), Color.Yellow);  
+            //game1.spriteBatch.Draw(texture, new Rectangle(0, 0, 50, 50), Color.Yellow);  
         }
     }
 }

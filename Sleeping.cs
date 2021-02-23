@@ -8,25 +8,24 @@ namespace BaseProject
 {
     class Sleeping
     {
+ 
         float energy = 50;
         bool useOnce = true;
-        void Start()
-        {
-        }
 
-        public void Update()
+
+        public void Update(GlobalTime globalTime)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Enter) && useOnce/* && insert cords check*/)
             {
-                Sleep();
+                Sleep(globalTime);
                 useOnce = false;
             }
         }
 
-        void Sleep()
+        void Sleep(GlobalTime time)
         {
             energy += 50;
-            //time = day;
+            time.Reset();
             //plant grow
         }
 

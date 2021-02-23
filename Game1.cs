@@ -12,7 +12,7 @@ namespace BaseProject
 
 
         Sleeping sleeping;
-
+        GlobalTime globalTime;
 
         private SpriteBatch spriteBatch;
 
@@ -24,6 +24,7 @@ namespace BaseProject
         {
             sleeping = new Sleeping();
             _graphics = new GraphicsDeviceManager(this);
+            globalTime = new GlobalTime();
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
@@ -50,7 +51,8 @@ namespace BaseProject
                 Exit();
 
             // TODO: Add your update logic here
-            sleeping.Update();
+            globalTime.Update(gameTime);
+            sleeping.Update(globalTime);
             base.Update(gameTime);
         }
 
