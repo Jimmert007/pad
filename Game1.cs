@@ -1,64 +1,30 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.Diagnostics;
 
 namespace BaseProject
 {
-    public class Game1 : Game
+    /// <summary>
+    /// This is the main type for your game.
+    /// </summary>
+    class Game1 : GameEnvironment
     {
-        private GraphicsDeviceManager _graphics;
-        public SpriteBatch spriteBatch;
-        Cell cell;
-        Texture2D background;
 
-        public Game1()
-        {
-            _graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
-            IsMouseVisible = true;
-        }
-
-        protected override void Initialize()
-        {
-            // TODO: Add your initialization logic here
-            cell = new Cell(10,10, this);
-
-            base.Initialize();
-        }
-
+        /// <summary>
+        /// LoadContent will be called once per game and is the place to load
+        /// all of your content.
+        /// </summary>
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            base.LoadContent();
+            screen = new Point(1920, 1080);
+            ApplyResolutionSettings();
 
-            // TODO: use this.Content to load your game content here
-            background = Content.Load<Texture2D>("test");
+            gameStateList.Add(new PlayingState());
+            GameEnvironment.SwitchTo(0);
+
         }
 
-        protected override void Update(GameTime gameTime)
-        {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
 
-            // TODO: Add your update logic here
-
-            base.Update(gameTime);
-        }
-
-        protected override void Draw(GameTime gameTime)
-        {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-            spriteBatch.Begin();
-
-            //spriteBatch.Draw(background, new Rectangle(0, 0, 10, 10), Color.Black);
-
-            cell.Display();
-
-            spriteBatch.End();
-
-            base.Draw(gameTime);
-        }
     }
 }
