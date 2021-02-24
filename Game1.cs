@@ -5,39 +5,16 @@ using System.Diagnostics;
 
 namespace BaseProject
 {
-    public class Game1 : Game
+    class Game1 : GameEnvironment
     {
-
-        private GraphicsDeviceManager _graphics;
-
-
-        Sleeping sleeping;
-        GlobalTime globalTime;
-
-        private SpriteBatch spriteBatch;
-
-        Cell cell;
-        Tilling tilling;
-        Texture2D background;
-
-
-        public Game1()
-        {
-            sleeping = new Sleeping();
-            _graphics = new GraphicsDeviceManager(this);
-            globalTime = new GlobalTime();
-            Content.RootDirectory = "Content";
-            IsMouseVisible = true;
-        }
-
-
-
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
-            background = Content.Load<Texture2D>("test");
+            base.LoadContent();
+            screen = new Point(520, 300);
+            ApplyResolutionSettings();
+            gameStateList.Add(new PlayingState());
+            GameEnvironment.SwitchTo(0);
+            IsMouseVisible = true;
         }
     }
 }
