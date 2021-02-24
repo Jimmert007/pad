@@ -48,7 +48,6 @@ namespace BaseProject
             {
                 texture = tilledSoilTexture;
             }
-
             Till();
             Plant();
             Grow();
