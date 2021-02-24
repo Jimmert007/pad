@@ -47,7 +47,7 @@ namespace BaseProject
             {
                 texture = tilledSoilTexture;
             }
-            Debug.Print(plant.growthStage.ToString());
+            //Debug.Print(plant.growthStage.ToString());
 
             Till();
             Plant();
@@ -58,7 +58,7 @@ namespace BaseProject
         public void Till()
         {
             MouseState state = Mouse.GetState();
-            Debug.Print("x" + state.X.ToString() + " y " + state.Y.ToString());
+            //Debug.Print("x" + state.X.ToString() + " y " + state.Y.ToString());
             //tilling the soil
             if (tool == "HOE")
             {
@@ -75,7 +75,7 @@ namespace BaseProject
         public void Plant()
         {
             MouseState state = Mouse.GetState();
-            Debug.Print("x" + state.X.ToString() + " y " + state.Y.ToString());
+            //Debug.Print("x" + state.X.ToString() + " y " + state.Y.ToString());
             //planting a seed
             if (!soilHasPlant)
             {
@@ -99,7 +99,7 @@ namespace BaseProject
         public void Grow()
         {
             MouseState state = Mouse.GetState();
-            Debug.Print("x" + state.X.ToString() + " y " + state.Y.ToString());
+            //Debug.Print("x" + state.X.ToString() + " y " + state.Y.ToString());
             //growing the plant
             if (soilHasPlant)
             {
@@ -118,7 +118,7 @@ namespace BaseProject
         public void Harvest()
         {
             MouseState state = Mouse.GetState();
-            Debug.Print("x" + state.X.ToString() + " y " + state.Y.ToString());
+            //Debug.Print("x" + state.X.ToString() + " y " + state.Y.ToString());
             if (soilHasPlant)
             {
                 if (plant.growthStage >= 4)

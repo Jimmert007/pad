@@ -6,9 +6,11 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BaseProject
 {
-    class Sleeping
+    class Sleeping : GameObject
     {
- 
+
+        public Sleeping(string _assetName) : base(_assetName) { }
+
         float energy = 50;
         bool useOnce = true;
 
@@ -19,9 +21,9 @@ namespace BaseProject
             {
                 Sleep(globalTime);
                 useOnce = false;
-              
             }
         }
+
 
         void Sleep(GlobalTime time)
         {
@@ -29,6 +31,5 @@ namespace BaseProject
             time.Reset();
             //plant grow
         }
-
     }
 }

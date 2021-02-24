@@ -8,18 +8,15 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BaseProject
 {
-    class GlobalTime
+    class GlobalTime : GameObject
     {
-       public int counter = 1;
-        int limit = 10;
+        public GlobalTime(string _assetName) : base(_assetName) { }
+        public int counter = 1;
         float countDuration = 2f;
         float currentTime = 1f;
-        
 
-
-       public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
-            Debug.WriteLine(counter);
 
             currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds; // time passed since last update
             if (currentTime >= countDuration)
@@ -27,13 +24,10 @@ namespace BaseProject
                 counter++;
                 currentTime -= countDuration;
             }
-            
-            
         }
 
         public void Reset()
         {
-            Debug.WriteLine("sleeping now");
             counter = 0;
         }
     }
