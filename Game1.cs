@@ -13,7 +13,7 @@ namespace BaseProject
         {
             
             base.LoadContent();
-            screen = new Point(520, 300);
+            screen = new Point(1020, 300);
             ApplyResolutionSettings();
          
             gameStateList.Add(new PlayingState());
