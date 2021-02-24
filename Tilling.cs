@@ -14,7 +14,7 @@ namespace BaseProject
         //Jim van de Burgwal
 
         //creating variables
-        String tool = "HOE";
+
         String item = "SEED";
         Boolean soilIsTilled = false;
         Boolean soilHasPlant = false;
@@ -23,6 +23,7 @@ namespace BaseProject
         public Texture2D soilTexture;
         public Texture2D tilledSoilTexture;
         public Plant plant;
+        public Tools tools;
 
 
 
@@ -47,7 +48,6 @@ namespace BaseProject
             {
                 texture = tilledSoilTexture;
             }
-            Debug.Print(plant.growthStage.ToString());
 
             Till();
             Plant();
@@ -58,9 +58,8 @@ namespace BaseProject
         public void Till()
         {
             MouseState state = Mouse.GetState();
-            Debug.Print("x" + state.X.ToString() + " y " + state.Y.ToString());
             //tilling the soil
-            if (tool == "HOE")
+            if (tools.toolSelected == "HOE")
             {
                 if (state.X > rectSize & state.X < rectSize * 2 & state.Y > rectSize & state.Y < rectSize * 2)
                 {
@@ -75,7 +74,6 @@ namespace BaseProject
         public void Plant()
         {
             MouseState state = Mouse.GetState();
-            Debug.Print("x" + state.X.ToString() + " y " + state.Y.ToString());
             //planting a seed
             if (!soilHasPlant)
             {
@@ -88,7 +86,7 @@ namespace BaseProject
                             if (state.LeftButton == ButtonState.Pressed)
                             {
                                 soilHasPlant = true;
-                                plant.growthStage = 0;
+                                plant.growthStage = 1;
                             }
                         }
                     }
@@ -99,7 +97,6 @@ namespace BaseProject
         public void Grow()
         {
             MouseState state = Mouse.GetState();
-            Debug.Print("x" + state.X.ToString() + " y " + state.Y.ToString());
             //growing the plant
             if (soilHasPlant)
             {
@@ -118,7 +115,6 @@ namespace BaseProject
         public void Harvest()
         {
             MouseState state = Mouse.GetState();
-            Debug.Print("x" + state.X.ToString() + " y " + state.Y.ToString());
             if (soilHasPlant)
             {
                 if (plant.growthStage >= 4)
