@@ -19,12 +19,11 @@ namespace BaseProject
             {
                 for (int x = 0; x < map.rows; x++)
                 {
-                    Cell newCell = new Cell("test", new Vector2(map.size.X * x, map.size.Y * i), map.size);
+                    Cell newCell = new Cell("tiles/Grassland 2 Color 2@128x128", new Vector2(map.size.X * x, map.size.Y * i), map.size);
                     map.cells.Add(newCell);
                     gameObjectList.Add(newCell);
                 }
             }
-            Debug.WriteLine(map.index((int)map.cells[5].position.X, (int)map.cells[5].position.Y));
         }
         public override void Update(GameTime gameTime)
         {
