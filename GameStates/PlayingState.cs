@@ -4,31 +4,26 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Microsoft.Xna.Framework;
 
 namespace BaseProject
 {
     class PlayingState : GameState
     {
-        Tools tools;
-        Hoe hoe;
-        Tilling tilling;
-        Plant plant;
+        Map map;
         public PlayingState()
         {
-            tools = new Tools("spr_empty");
-            hoe = new Hoe("spr_hoe", GameEnvironment.Screen.X / 2 - 25, GameEnvironment.Screen.Y - 70, 50, 50);
-            tilling = new Tilling("spr_soil", 100, 100, 100, 100);
-            plant = new Plant("spr_seed1_stage1", 100, 100, 100, 100);
-            //gameObjectList.Add(new GameObject("spr_background"));  
-            gameObjectList.Add(new Cell("test", new Vector2(10, 10), new Vector2(0, 0)));
-            gameObjectList.Add(tools);
-            gameObjectList.Add(hoe);
-            gameObjectList.Add(tilling);
-            gameObjectList.Add(plant);
-            tilling.plant = plant;
-            tilling.tools = tools;
+            map = new Map("1px", new Vector2(0, 0), new Vector2(50, 50));
+            gameObjectList.Add(map);
+            for (int i = 0; i < map.cols; i++)
+            {
+                for (int x = 0; x < map.rows; x++)
+                {
+                    Cell newCell = new Cell("tiles/Grassland 2 Color 2@128x128", new Vector2(map.size.X * x, map.size.Y * i), map.size);
+                    map.cells.Add(newCell);
+                    gameObjectList.Add(newCell);
+                }
+            }
         }
         public override void Update(GameTime gameTime)
         {
