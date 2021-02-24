@@ -17,6 +17,7 @@ namespace BaseProject
         private SpriteBatch spriteBatch;
 
         Cell cell;
+        Tilling tilling;
         Texture2D background;
 
 
@@ -29,13 +30,7 @@ namespace BaseProject
             IsMouseVisible = true;
         }
 
-        protected override void Initialize()
-        {
-            // TODO: Add your initialization logic here
-            cell = new Cell(10, 10, this);
 
-            base.Initialize();
-        }
 
         protected override void LoadContent()
         {
@@ -43,33 +38,6 @@ namespace BaseProject
 
             // TODO: use this.Content to load your game content here
             background = Content.Load<Texture2D>("test");
-        }
-
-        protected override void Update(GameTime gameTime)
-        {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            // TODO: Add your update logic here
-            globalTime.Update(gameTime);
-            sleeping.Update(globalTime);
-            base.Update(gameTime);
-        }
-
-        protected override void Draw(GameTime gameTime)
-        {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-            spriteBatch.Begin();
-
-            //spriteBatch.Draw(background, new Rectangle(0, 0, 10, 10), Color.Black);
-
-            cell.Display();
-
-            spriteBatch.End();
-
-            base.Draw(gameTime);
         }
     }
 }
