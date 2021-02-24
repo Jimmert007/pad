@@ -13,21 +13,18 @@ namespace BaseProject
         Map map;
         public PlayingState()
         {
-            gameObjectList.Add(new GameObject("test"));
-            map = new Map("test", new Vector2(0, 0), new Vector2(10,10));
+            map = new Map("1px", new Vector2(0, 0), new Vector2(50, 50));
             gameObjectList.Add(map);
             for (int i = 0; i < map.cols; i++)
             {
                 for (int x = 0; x < map.rows; x++)
                 {
-                    map.cells.Add(new Cell("test", new Vector2(map.texture.Width * x, map.texture.Height * i), new Vector2(10,10)));
+                    Cell newCell = new Cell("test", new Vector2(map.size.X * x, map.size.Y * i), map.size);
+                    map.cells.Add(newCell);
+                    gameObjectList.Add(newCell);
                 }
             }
-            for (int i = 0; i < map.cells.Count; i++)
-            {
-                gameObjectList.Add(map.cells[i]);
-            }
-            Debug.Print(map.cells.Count.ToString());
+            Debug.WriteLine(map.index((int)map.cells[5].position.X, (int)map.cells[5].position.Y));
         }
         public override void Update(GameTime gameTime)
         {

@@ -19,16 +19,20 @@ namespace BaseProject
         {
             position = _position;
             size = _size;
-            Debug.WriteLine(size.X + ", " +  size.Y);
-            rows = GameEnvironment.Screen.X / texture.Width;
-            cols = GameEnvironment.Screen.Y / texture.Height;
+            rows = (int)MathF.Round(GameEnvironment.Screen.X / size.X);
+            cols = (int)MathF.Round(GameEnvironment.Screen.Y / size.Y);
 
-            Debug.Print(rows.ToString() + " x " + cols.ToString());
+            Debug.WriteLine(rows.ToString() + " x " + cols.ToString() + " totaal " + rows * cols);
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public int index(int x, int y)
         {
-            base.Draw(spriteBatch);
+            if (x < 0 || y < 0 || x > cols - 1 || y > rows - 1)
+            {
+                return 0;
+            }
+            return x + y * cols;
         }
     }
 }
+
