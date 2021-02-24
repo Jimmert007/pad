@@ -33,10 +33,10 @@ class GameObject
 
     public Boolean Overlaps(GameObject other)
     {
-        float w0 = this.texture.Width,
-            h0 = this.texture.Height,
-            w1 = other.texture.Width,
-            h1 = other.texture.Height,
+        float w0 = this.size.X,
+            h0 = this.size.Y,
+            w1 = other.size.X,
+            h1 = other.size.Y,
             x0 = this.position.X,
             y0 = this.position.Y,
             x1 = other.position.X,

@@ -47,12 +47,12 @@ namespace BaseProject
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        /*public override void Draw(SpriteBatch spriteBatch)
         {
             if (growthStage != 0)
             {
                 spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y), Color.White);
             }
-        }
+        }*/
     }
 }
