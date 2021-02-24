@@ -32,7 +32,7 @@ namespace BaseProject
         {
             base.Update(gameTime);
             globalTime.Update(gameTime);
-            sleeping.Update(globalTime);
+            sleeping.Update(globalTime, plant, tilling);
         }
     }
 }

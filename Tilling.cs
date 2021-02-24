@@ -17,7 +17,7 @@ namespace BaseProject
         String tool = "HOE";
         String item = "SEED";
         Boolean soilIsTilled = false;
-        Boolean soilHasPlant = false;
+        public Boolean soilHasPlant = false;
         Boolean rightButtonPressed = false;
         int rectSize = 100; 
         public Texture2D soilTexture;
