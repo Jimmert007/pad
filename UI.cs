@@ -11,8 +11,8 @@ namespace BaseProject
 {
     class UI : GameObject
     {
-        public bool playerDescision, UIActive;
-        Texture2D no, cancel, mainBody;
+        public bool playerDescision, UIActive = false;
+        public Texture2D no, yes, cancel, mainBody;
 
         public UI() : base("ui_bar")
         {
@@ -25,9 +25,6 @@ namespace BaseProject
         public override void Init()
         {
             base.Init();
-            //Initialize UI position
-            position.X = GameEnvironment.Screen.X / 2 - this.texture.Width / 2;
-            position.Y = GameEnvironment.Screen.Y / 2 - this.texture.Height / 2;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -43,12 +40,6 @@ namespace BaseProject
             base.Update();
 
             //Update UI behavior
-            //On mouse click + collision activate button 
-            /*if (Overlaps(MouseCursor))
-            {
-            activate command
-            }
-            */
         }
     }
 }

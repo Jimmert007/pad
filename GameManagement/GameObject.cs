@@ -12,7 +12,7 @@ class GameObject
     public Vector2 position;
     public Vector2 velocity;
     public Texture2D texture;
-    public MouseState mouseState;
+    public MouseState mouse;
 
     public GameObject(String assetName)
     {
@@ -20,7 +20,8 @@ class GameObject
         Init();
     }
 
-    public virtual void Update() { 
+    public virtual void Update()
+    {
         //Mouse collsion
     }
 
@@ -47,6 +48,21 @@ class GameObject
 
         return !(x0 > x1 + w1 || x0 + w0 < x1 ||
           y0 > y1 + h1 || y0 + h0 < y1);
+    }
+
+    public Boolean MouseCollission()
+    {
+        float w0 = this.texture.Width,
+          h0 = this.texture.Height,
+          w1 = mouse.X,
+          h1 = mouse.Y,
+          x0 = this.position.X,
+          y0 = this.position.Y,
+          x1 = mouse.X,
+          y1 = mouse.Y;
+
+        return !(x0 > x1 + w1 || x0 + w0 < x1 ||
+    y0 > y1 + h1 || y0 + h0 < y1);
     }
 
 }

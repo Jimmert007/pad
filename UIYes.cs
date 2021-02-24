@@ -9,7 +9,7 @@ namespace BaseProject
 {
     class UIYes : UI
     {
-        Texture2D yes;
+        UIDialogueBox uIDialogueBox;
         UIYes() : base()
         {
             //Initialize UI Images
@@ -18,8 +18,9 @@ namespace BaseProject
 
         public override void Init()
         {
-            position.X = GameEnvironment.Screen.X / 3 - this.texture.Width / 2;
-            position.X = GameEnvironment.Screen.X * 2/3 - this.texture.Width / 2;
+            //Set intial position of the Yes box
+            position.X = uIDialogueBox.position.X;
+            position.Y = +uIDialogueBox.position.Y + uIDialogueBox.texture.Height*1.25f;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -32,6 +33,13 @@ namespace BaseProject
         {
             base.Update();
             //Activate button on collision detection & click
+            if (MouseCollission() /*&& Mouse.GetState*/ && playerDescision && UIActive)
+            {
+                // activate command /Accept player action/
+                playerDescision = false;
+                UIActive = false;
+            }
+           
         }
 
     }
