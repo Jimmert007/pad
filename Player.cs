@@ -33,6 +33,8 @@ namespace BaseProject
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            texture = GameEnvironment.ContentManager.Load<Texture2D>("jorrit");
+            /*
             if (Keyboard.GetState().IsKeyDown(Keys.W))
             {
                 texture = up;
@@ -49,6 +51,7 @@ namespace BaseProject
             {
                 texture = right;
             }
+            */
             base.Draw(spriteBatch);
         }
 
