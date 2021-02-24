@@ -61,7 +61,7 @@ namespace BaseProject
             //Movement inputs
             if (Keyboard.GetState().IsKeyDown(Keys.A)) { velocity.X = -10.0f; }
             else if (Keyboard.GetState().IsKeyDown(Keys.D)) { velocity.X = 10.0f; }
-            else if (Keyboard.GetState().IsKeyDown(Keys.W)) { velocity.Y = -10.0f; }
+            if (Keyboard.GetState().IsKeyDown(Keys.W)) { velocity.Y = -10.0f; }
             else if (Keyboard.GetState().IsKeyDown(Keys.S)) { velocity.Y = 10.0f; }
             if (Keyboard.GetState().IsKeyDown(Keys.LeftShift)) { velocity *= 2; }
 

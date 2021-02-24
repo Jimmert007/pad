@@ -11,7 +11,7 @@ namespace BaseProject
     {
         public PlayingState()
         {
-            gameObjectList.Add(new GameObject("spr_background"));
+            //gameObjectList.Add(new GameObject("spr_background"));
             gameObjectList.Add(new Player());
         }
     }
