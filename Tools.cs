@@ -16,7 +16,6 @@ namespace BaseProject
 
         public override void Update()
         {
-            MouseState state = Mouse.GetState();
         }
     }
 }

@@ -57,13 +57,12 @@ namespace BaseProject
 
         public void Till()
         {
-            MouseState state = Mouse.GetState();
             //tilling the soil
             if (tools.toolSelected == "HOE")
             {
-                if (state.X > rectSize & state.X < rectSize * 2 & state.Y > rectSize & state.Y < rectSize * 2)
+                if (GameEnvironment.MouseState.X > rectSize & GameEnvironment.MouseState.X < rectSize * 2 & GameEnvironment.MouseState.Y > rectSize & GameEnvironment.MouseState.Y < rectSize * 2)
                 {
-                    if (state.LeftButton == ButtonState.Pressed)
+                    if (GameEnvironment.MouseState.LeftButton == ButtonState.Pressed)
                     {
                         soilIsTilled = true;
                     }
@@ -73,7 +72,6 @@ namespace BaseProject
 
         public void Plant()
         {
-            MouseState state = Mouse.GetState();
             //planting a seed
             if (!soilHasPlant)
             {
@@ -81,9 +79,9 @@ namespace BaseProject
                 {
                     if (soilIsTilled)
                     {
-                        if (state.X > rectSize & state.X < rectSize * 2 & state.Y > rectSize & state.Y < rectSize * 2)
+                        if (GameEnvironment.MouseState.X > rectSize & GameEnvironment.MouseState.X < rectSize * 2 & GameEnvironment.MouseState.Y > rectSize & GameEnvironment.MouseState.Y < rectSize * 2)
                         {
-                            if (state.LeftButton == ButtonState.Pressed)
+                            if (GameEnvironment.MouseState.LeftButton == ButtonState.Pressed)
                             {
                                 soilHasPlant = true;
                                 plant.growthStage = 1;
@@ -96,16 +94,15 @@ namespace BaseProject
 
         public void Grow()
         {
-            MouseState state = Mouse.GetState();
             //growing the plant
             if (soilHasPlant)
             {
-                if (state.RightButton == ButtonState.Pressed & !rightButtonPressed)
+                if (GameEnvironment.MouseState.RightButton == ButtonState.Pressed & !rightButtonPressed)
                 {
                     rightButtonPressed = true;
                     plant.growthStage += 1;
                 }
-                if (state.RightButton == ButtonState.Released)
+                if (GameEnvironment.MouseState.RightButton == ButtonState.Released)
                 {
                     rightButtonPressed = false;
                 }
@@ -114,14 +111,13 @@ namespace BaseProject
 
         public void Harvest()
         {
-            MouseState state = Mouse.GetState();
             if (soilHasPlant)
             {
                 if (plant.growthStage >= 4)
                 {
-                    if (state.X > rectSize & state.X < rectSize * 2 & state.Y > rectSize & state.Y < rectSize * 2)
+                    if (GameEnvironment.MouseState.X > rectSize & GameEnvironment.MouseState.X < rectSize * 2 & GameEnvironment.MouseState.Y > rectSize & GameEnvironment.MouseState.Y < rectSize * 2)
                     {
-                        if (state.LeftButton == ButtonState.Pressed)
+                        if (GameEnvironment.MouseState.LeftButton == ButtonState.Pressed)
                         {
                             //(receive product and new seed)
                             soilHasPlant = false;
