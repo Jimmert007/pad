@@ -18,7 +18,7 @@ class GameState
     public virtual void Init()
     {
         foreach (GameObject gameObject in gameObjectList)
-            gameObject.Reset();
+            gameObject.Init();
     }
 
     public virtual void Update(GameTime gameTime)

@@ -23,9 +23,9 @@ namespace BaseProject
 
         }
 
-        override public void Reset()
+        override public void Init()
         {
-            base.Reset();
+            base.Init();
             position.X = GameEnvironment.Screen.X / 2 - this.texture.Width / 2;
             position.Y = GameEnvironment.Screen.Y / 2 - this.texture.Height / 2;
 

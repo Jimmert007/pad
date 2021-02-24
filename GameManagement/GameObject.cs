@@ -1,24 +1,27 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 using System.Text;
-using System.Threading.Tasks;
+using System.Linq;
 
 class GameObject
 {
     public Vector2 position;
     public Vector2 velocity;
     public Texture2D texture;
+    public MouseState mouseState;
 
     public GameObject(String assetName)
     {
         texture = GameEnvironment.ContentManager.Load<Texture2D>(assetName);
-        Reset();
+        Init();
     }
 
     public virtual void Update() { 
+        //Mouse collsion
     }
 
     public virtual void Draw(SpriteBatch spriteBatch)
@@ -26,7 +29,7 @@ class GameObject
         spriteBatch.Draw(texture, position, Color.White);
     }
 
-    public virtual void Reset()
+    public virtual void Init()
     {
 
     }
