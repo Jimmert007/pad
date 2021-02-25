@@ -19,12 +19,13 @@ namespace BaseProject
             {
                 for (int x = 0; x < map.rows; x++)
                 {
-                    Cell newCell = new Cell("tiles/Grassland 2 Spring@128x128", new Vector2(map.size.X * x, map.size.Y * i), map.size);
+                    Cell newCell = new Cell("1px", new Vector2(map.size.X * i, map.size.Y * x), map.size, i + x * map.cols);
                     map.cells.Add(newCell);
                     gameObjectList.Add(newCell);
                 }
             }
         }
+
         public override void Update(GameTime gameTime)
         {
             GameObject mouseGO = new GameObject("test");
@@ -32,8 +33,9 @@ namespace BaseProject
             mouseGO.position.Y = GameEnvironment.MouseState.Y;
             for (int i = 0; i < map.cells.Count; i++)
             {
-                if (map.cells[i].Overlaps(mouseGO)) {
-
+                if (map.cells[i].Overlaps(mouseGO))
+                {
+                    Debug.WriteLine(map.cells[i].id);
                 }
             }
             base.Update(gameTime);
