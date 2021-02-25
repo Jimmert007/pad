@@ -5,19 +5,55 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace BaseProject
+
 {
     class PlayingState : GameState
     {
+        Player player;
+        Map map;
+        Tilling tilling;
+        List<Plant> plants = new List<Plant>();
+        Tools tools;
+        Hoe hoe;
+        
         public int ScreenWidth;
         public int ScreenHeight;
         Hotbar hotbar;
         float HotbarCount = 9;
         float HalfHotbar;
-
+        
         public PlayingState()
         {
+            player = new Player("jorrit", 0, 0, 100, 100);
+            tools = new Tools("spr_empty");
+            hoe = new Hoe("spr_hoe", GameEnvironment.Screen.X / 2 - 25, GameEnvironment.Screen.Y - 70, 50, 50);
+            tilling = new Tilling("spr_soil", 100, 100, 100, 100);
+            map = new Map("1px", new Vector2(0, 0), new Vector2(50, 50));
+            gameObjectList.Add(map);
+            gameObjectList.Add(tools);
+            gameObjectList.Add(hoe);
+            gameObjectList.Add(tilling);
+
+            for (int i = 0; i < map.cols; i++)
+            {
+                for (int x = 0; x < map.rows; x++)
+                {
+                    Cell newCell = new Cell("tiles/Grassland 2 Color 2@128x128", new Vector2(map.size.X * x, map.size.Y * i), map.size);
+                    map.cells.Add(newCell);
+                    gameObjectList.Add(newCell);
+                    Plant newPlant = new Plant("spr_seed1_stage1", 0, 0, 0, 0);
+                    plants.Add(newPlant);
+                    gameObjectList.Add(newPlant);
+                }
+            }
+            gameObjectList.Add(player);
+        
+
+
+       
 
             ScreenWidth = GameEnvironment.screen.X;
             ScreenHeight = GameEnvironment.screen.Y;
@@ -54,6 +90,44 @@ namespace BaseProject
 
         public override void Update(GameTime gameTime)
         {
+            GameObject mouseGO = new GameObject("test");
+            mouseGO.position.X = GameEnvironment.MouseState.X;
+            mouseGO.position.Y = GameEnvironment.MouseState.Y;
+            for (int i = 0; i < map.cells.Count; i++)
+            {
+                if (map.cells[i].Overlaps(mouseGO))
+                {
+                    if (player.PlayerCanReach())
+                    {
+
+                        if (GameEnvironment.MouseState.LeftButton == ButtonState.Pressed)
+                    {
+                        
+                            
+                            if (tilling.item == "SEED")
+                            {
+                                Debug.WriteLine("hallo :)");
+                                tilling.soilHasPlant = true;
+                                plants[i].position = map.cells[i].position;
+                                plants[i].size = map.cells[i].size;
+                                plants[i].growthStage = 1;
+                            }
+                            if (tools.toolSelected == "HOE")
+                            {
+                                map.cells[i].texture = tilling.tilledSoilTexture;
+                            }
+                            if (tilling.soilHasPlant)
+                            {
+                                if (plants[i].growthStage >= 4)
+                                {
+                                    //(receive product and new seed)
+                                    tilling.soilHasPlant = false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             base.Update(gameTime);
         }
     }

@@ -24,6 +24,11 @@ class GameEnvironment : Game
         get { return Keyboard.GetState(); }
     }
 
+    public static MouseState MouseState
+    {
+        get { return Mouse.GetState(); }
+    }
+
     public static Point Screen
     {
         get { return screen; }
