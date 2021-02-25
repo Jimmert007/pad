@@ -8,9 +8,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace BaseProject
+
 {
     class PlayingState : GameState
     {
+        Player player;
         Map map;
         Tilling tilling;
         List<Plant> plants = new List<Plant>();
@@ -18,6 +20,7 @@ namespace BaseProject
         Hoe hoe;
         public PlayingState()
         {
+            player = new Player("jorrit", 0, 0, 100, 100);
             tools = new Tools("spr_empty");
             hoe = new Hoe("spr_hoe", GameEnvironment.Screen.X / 2 - 25, GameEnvironment.Screen.Y - 70, 50, 50);
             tilling = new Tilling("spr_soil", 100, 100, 100, 100);
@@ -39,7 +42,10 @@ namespace BaseProject
                     gameObjectList.Add(newPlant);
                 }
             }
+            gameObjectList.Add(player);
         }
+
+
         public override void Update(GameTime gameTime)
         {
             GameObject mouseGO = new GameObject("test");
@@ -49,26 +55,32 @@ namespace BaseProject
             {
                 if (map.cells[i].Overlaps(mouseGO))
                 {
-                    if (GameEnvironment.MouseState.LeftButton == ButtonState.Pressed)
+                    if (player.PlayerCanReach())
                     {
-                        if (tilling.item == "SEED")
-                        {
-                            Debug.WriteLine("hallo :)");
-                            tilling.soilHasPlant = true;
-                            plants[i].position = map.cells[i].position;
-                            plants[i].size = map.cells[i].size;
-                            plants[i].growthStage = 1;
-                        }
-                        if (tools.toolSelected == "HOE")
-                        {
-                            map.cells[i].texture = tilling.tilledSoilTexture;
-                        }
-                        if (tilling.soilHasPlant)
-                        {
-                            if (plants[i].growthStage >= 4)
+
+                        if (GameEnvironment.MouseState.LeftButton == ButtonState.Pressed)
+                    {
+                        
+                            
+                            if (tilling.item == "SEED")
                             {
-                                //(receive product and new seed)
-                                tilling.soilHasPlant = false;
+                                Debug.WriteLine("hallo :)");
+                                tilling.soilHasPlant = true;
+                                plants[i].position = map.cells[i].position;
+                                plants[i].size = map.cells[i].size;
+                                plants[i].growthStage = 1;
+                            }
+                            if (tools.toolSelected == "HOE")
+                            {
+                                map.cells[i].texture = tilling.tilledSoilTexture;
+                            }
+                            if (tilling.soilHasPlant)
+                            {
+                                if (plants[i].growthStage >= 4)
+                                {
+                                    //(receive product and new seed)
+                                    tilling.soilHasPlant = false;
+                                }
                             }
                         }
                     }

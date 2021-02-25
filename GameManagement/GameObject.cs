@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 class GameObject
 {
-    public Vector2 size;
     public Vector2 position;
+    public Vector2 size;
     public Vector2 velocity;
     public Texture2D texture;
 
