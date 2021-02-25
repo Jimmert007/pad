@@ -10,7 +10,7 @@ namespace BaseProject
         protected override void LoadContent()
         {
             base.LoadContent();
-            screen = new Point(960, 540);
+            screen = new Point(1920, 1080);
             ApplyResolutionSettings();
 
             gameStateList.Add(new PlayingState());

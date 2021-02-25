@@ -13,8 +13,8 @@ namespace BaseProject
         Map map;
         public PlayingState()
         {
-            map = new Map("1px", new Vector2(0, 0), new Vector2(100, 100));
-            gameObjectList.Add(map);
+            map = new Map("1px", Vector2.Zero, new Vector2(192, 192));
+            //gameObjectList.Add(map);
             for (int i = 0; i < map.cols; i++)
             {
                 for (int x = 0; x < map.rows; x++)
@@ -35,7 +35,7 @@ namespace BaseProject
             {
                 if (map.cells[i].Overlaps(mouseGO))
                 {
-                    Debug.WriteLine(map.cells[i].id);
+                    //Debug.WriteLine(map.cells[i].id);
                 }
             }
             base.Update(gameTime);
