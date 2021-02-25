@@ -20,13 +20,13 @@ namespace BaseProject
         List<Plant> plants = new List<Plant>();
         Tools tools;
         Hoe hoe;
-        
+
         public int ScreenWidth;
         public int ScreenHeight;
         Hotbar hotbar;
         float HotbarCount = 9;
         float HalfHotbar;
-        
+
         public PlayingState()
         {
             player = new Player("jorrit", 0, 0, 100, 100);
@@ -52,10 +52,6 @@ namespace BaseProject
                 }
             }
             gameObjectList.Add(player);
-        
-
-
-       
 
             ScreenWidth = GameEnvironment.screen.X;
             ScreenHeight = GameEnvironment.screen.Y;
@@ -65,30 +61,30 @@ namespace BaseProject
 
 
             hotbar = new Hotbar("test");
-                            //gameObjectList.Add(hotbar);
+            //gameObjectList.Add(hotbar);
 
 
             for (int i = 0; i < HotbarCount; i++)
             {
-                
+
                 GameObject hItem = new GameObject("test");
 
                 hotbar.hotbarItemList.Add(hItem);
                 gameObjectList.Add(hItem);
-               
+
                 HalfHotbar = HotbarCount / 2 * hotbar.hotbarItemList[i].texture.Width;
-                
+
                 hotbar.hotbarItemList[i].position.X = ScreenWidth / 2 - HalfHotbar;
-                hotbar.hotbarItemList[i].position.X += 80*i;
+                hotbar.hotbarItemList[i].position.X += 80 * i;
                 hotbar.hotbarItemList[i].position.Y = ScreenHeight - hotbar.hotbarItemList[i].texture.Height;
-               /*                                                                                                     Debug.Print("X " + i + " = " + hotbar.hotbarItemList[i].position.X.ToString());
-                                                                                                                      Debug.Print("Y " + i + " = " + hotbar.hotbarItemList[i].position.Y.ToString());
-               */
+                /*                                                                                                     Debug.Print("X " + i + " = " + hotbar.hotbarItemList[i].position.X.ToString());
+                                                                                                                       Debug.Print("Y " + i + " = " + hotbar.hotbarItemList[i].position.Y.ToString());
+                */
             }
 
         }
 
-       
+
 
         public override void Update(GameTime gameTime)
         {
@@ -103,9 +99,9 @@ namespace BaseProject
                     {
 
                         if (GameEnvironment.MouseState.LeftButton == ButtonState.Pressed)
-                    {
-                        
-                            
+                        {
+
+
                             if (tilling.item == "SEED")
                             {
                                 Debug.WriteLine("hallo :)");
@@ -131,8 +127,8 @@ namespace BaseProject
                 }
             }
             base.Update(gameTime);
-            globalTime.Update(gameTime);
-            sleeping.Update(globalTime, plant, tilling);
+           //globalTime.Update(gameTime);
+            //sleeping.Update(globalTime, plants[0], tilling);
         }
     }
 }
