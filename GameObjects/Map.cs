@@ -19,10 +19,10 @@ namespace BaseProject
         {
             position = _position;
             size = _size;
-            rows = (int)MathF.Round(GameEnvironment.Screen.X / size.X);
-            cols = (int)MathF.Round(GameEnvironment.Screen.Y / size.Y);
+            cols = (int)MathF.Round(GameEnvironment.Screen.X / size.X);
+            rows = (int)MathF.Round(GameEnvironment.Screen.Y / size.Y);
 
-            Debug.WriteLine(rows.ToString() + " x " + cols.ToString() + " totaal " + rows * cols);
+            Debug.WriteLine(cols.ToString() + " x " + rows.ToString() + " totaal " + rows * cols);
         }
 
         public int index(int x, int y)

@@ -43,7 +43,7 @@ namespace BaseProject
             {
                 for (int x = 0; x < map.rows; x++)
                 {
-                    Cell newCell = new Cell("tiles/Grassland 2 Color 2@128x128", new Vector2(map.size.X * x, map.size.Y * i), map.size);
+                    Cell newCell = new Cell("1px", new Vector2(map.size.X * i, map.size.Y * x), map.size, i + x * map.cols);
                     map.cells.Add(newCell);
                     gameObjectList.Add(newCell);
                     Plant newPlant = new Plant("spr_seed1_stage1", 0, 0, 0, 0);
