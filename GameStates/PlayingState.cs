@@ -12,6 +12,8 @@ namespace BaseProject
 {
     class PlayingState : GameState
     {
+        Sleeping sleeping;
+        GlobalTime globalTime;
         Player player;
         Map map;
         Tilling tilling;
@@ -129,6 +131,8 @@ namespace BaseProject
                 }
             }
             base.Update(gameTime);
+            globalTime.Update(gameTime);
+            sleeping.Update(globalTime, plant, tilling);
         }
     }
 }
