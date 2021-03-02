@@ -10,10 +10,10 @@ namespace BaseProject
     class Sleeping : GameObject
     {
         float energy = 50;
-        float fadeAmount = 0;
+        public float fadeAmount = 0;
         bool useOnce = true;
         bool fade = false;
-        bool fadeIn, fadeOut;
+        public bool fadeIn, fadeOut;
         Color color1, color2, finalColor;
         public Texture2D fadeSprite;
         public Sleeping(string _assetName) : base(_assetName)
@@ -60,14 +60,8 @@ namespace BaseProject
             if (fadeIn)
             {
                 fadeAmount += .01f;
-            }
-            else if (fadeOut)
-            {
-                fadeAmount -= 0.01f;
-                if (tilling.soilHasPlant && fadeAmount >= .99f)
-                {
-                    plant.growthStage++;
-                }
+            } else if (fadeOut) {
+                fadeAmount -= 0.01f; 
             }
             finalColor = Color.Lerp(color1, color2, fadeAmount);
         }

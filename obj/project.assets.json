@@ -174,25 +174,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\PC\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\jimvd\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\PC\\PAD\\project04\\BaseProject.csproj",
+      "projectUniqueName": "C:\\Users\\jimvd\\OneDrive\\Documenten\\GitHub\\project04\\BaseProject.csproj",
       "projectName": "BaseProject",
-      "projectPath": "C:\\Users\\PC\\PAD\\project04\\BaseProject.csproj",
-      "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\PC\\PAD\\project04\\obj\\",
+      "projectPath": "C:\\Users\\jimvd\\OneDrive\\Documenten\\GitHub\\project04\\BaseProject.csproj",
+      "packagesPath": "C:\\Users\\jimvd\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\jimvd\\OneDrive\\Documenten\\GitHub\\project04\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\"
-      ],
       "configFilePaths": [
-        "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\jimvd\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"

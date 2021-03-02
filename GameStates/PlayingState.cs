@@ -34,6 +34,10 @@ namespace BaseProject
             hoe = new Hoe("spr_hoe", GameEnvironment.Screen.X / 2 - 25, GameEnvironment.Screen.Y - 70, 50, 50);
             tilling = new Tilling("spr_soil", 100, 100, 100, 100);
             map = new Map("1px", new Vector2(0, 0), new Vector2(50, 50));
+            globalTime = new GlobalTime("test");
+            sleeping = new Sleeping("test");
+            gameObjectList.Add(globalTime);
+            
             gameObjectList.Add(map);
             gameObjectList.Add(tools);
             gameObjectList.Add(hoe);
@@ -52,6 +56,7 @@ namespace BaseProject
                 }
             }
             gameObjectList.Add(player);
+            
 
             ScreenWidth = GameEnvironment.screen.X;
             ScreenHeight = GameEnvironment.screen.Y;
@@ -81,7 +86,7 @@ namespace BaseProject
                                                                                                                        Debug.Print("Y " + i + " = " + hotbar.hotbarItemList[i].position.Y.ToString());
                 */
             }
-
+            gameObjectList.Add(sleeping);
         }
 
 
@@ -125,10 +130,22 @@ namespace BaseProject
                         }
                     }
                 }
+
             }
             base.Update(gameTime);
-           //globalTime.Update(gameTime);
-            //sleeping.Update(globalTime, plants[0], tilling);
+            for (int i = 0; i < plants.Count; i++)
+            {
+                if (sleeping.fadeOut)
+                {
+
+                    if (tilling.soilHasPlant /*&& sleeping.fadeAmount >= .99f*/)
+                    {
+                        plants[i].growthStage++;
+                    }
+                }
+                sleeping.Update(globalTime, plants[i], tilling);
+            }
+            globalTime.Update(gameTime);
         }
     }
 }
