@@ -9,6 +9,7 @@ namespace BaseProject
     class Plant : GameObject
     {
         public int growthStage = 0;
+        public Texture2D empty;
         public Texture2D seed1stage1;
         public Texture2D seed1stage2;
         public Texture2D seed1stage3;
@@ -20,6 +21,7 @@ namespace BaseProject
             position.Y = _y;
             size.X = _w;
             size.Y = _h;
+            empty = GameEnvironment.ContentManager.Load<Texture2D>("spr_empty");
             seed1stage1 = GameEnvironment.ContentManager.Load<Texture2D>("spr_seed1_stage1");
             seed1stage2 = GameEnvironment.ContentManager.Load<Texture2D>("spr_seed1_stage2");
             seed1stage3 = GameEnvironment.ContentManager.Load<Texture2D>("spr_seed1_stage3");
@@ -29,7 +31,11 @@ namespace BaseProject
         public override void Update()
         {
             //seed growth stages update
-            if (growthStage == 1)
+            if (growthStage == 0)
+            {
+                texture = empty;
+            }
+            else if (growthStage == 1)
             {
                 texture = seed1stage1;
             }

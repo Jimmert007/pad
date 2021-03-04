@@ -16,7 +16,6 @@ namespace BaseProject
         //creating variables
 
         public String item = "SEED";
-        public Boolean soilHasPlant = false;
         public Texture2D tilledSoilTexture;
 
 

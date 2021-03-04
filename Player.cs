@@ -62,7 +62,6 @@ namespace BaseProject
             if (Keyboard.GetState().IsKeyDown(Keys.W)) { velocity.Y = -10.0f; }
             else if (Keyboard.GetState().IsKeyDown(Keys.S)) { velocity.Y = 10.0f; }
             if (Keyboard.GetState().IsKeyDown(Keys.LeftShift)) { velocity *= 2; }
-
             /*Player action inputs
             if (Keyboard.GetState().IsKeyDown(Keys.Escape)) { }
             if (Keyboard.GetState().IsKeyDown(Keys.F)) { openInventory }

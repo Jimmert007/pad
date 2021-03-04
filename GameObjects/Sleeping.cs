@@ -9,11 +9,10 @@ namespace BaseProject
 {
     class Sleeping : GameObject
     {
-        float energy = 50;
-        float fadeAmount = 0;
-        bool useOnce = true;
-        bool fade = false;
-        bool fadeIn, fadeOut;
+        public float fadeAmount = 0;
+        public bool useOnce = true;
+        public bool fade = false;
+        public bool fadeIn, fadeOut;
         Color color1, color2, finalColor;
         public Texture2D fadeSprite;
         public Sleeping(string _assetName) : base(_assetName)
@@ -24,16 +23,16 @@ namespace BaseProject
             texture = fadeSprite;
         }
 
-        public void Update(GlobalTime globalTime, Plant plant, Tilling tilling)
+        public void Update(GlobalTime globalTime)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Enter) && useOnce/* && insert cords check*/)
             {
-                Sleep(globalTime, plant, tilling);
+                Sleep(globalTime);
                 useOnce = false;
             }
             if (fade)
             {
-                FadeScreen(plant, tilling);
+                FadeScreen();
             }
 
             if (fadeAmount >= 1)
@@ -55,28 +54,22 @@ namespace BaseProject
                 spriteBatch.Draw(texture, new Rectangle(0, 0, GameEnvironment.Screen.X, GameEnvironment.Screen.Y), finalColor);
             }
         }
-        public void FadeScreen(Plant plant, Tilling tilling)
+        public void FadeScreen()
         {
             if (fadeIn)
             {
                 fadeAmount += .01f;
-            }
-            else if (fadeOut)
+            } else if (fadeOut) 
             {
-                fadeAmount -= 0.01f;
-                if (tilling.soilHasPlant && fadeAmount >= .99f)
-                {
-                    plant.growthStage++;
-                }
+                fadeAmount -= 0.01f; 
             }
             finalColor = Color.Lerp(color1, color2, fadeAmount);
         }
 
-        void Sleep(GlobalTime time, Plant plant, Tilling tilling)
+        public void Sleep(GlobalTime time)
         {
             fade = true;
             fadeIn = true;
-            energy += 50;
             time.Reset();
         }
     }

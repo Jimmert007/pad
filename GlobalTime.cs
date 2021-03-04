@@ -17,7 +17,7 @@ namespace BaseProject
 
         public void Update(GameTime gameTime)
         {
-
+            
             currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds; // time passed since last update
             if (currentTime >= countDuration)
             {
