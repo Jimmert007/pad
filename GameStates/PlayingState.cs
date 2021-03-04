@@ -37,8 +37,8 @@ namespace BaseProject
             hoe = new Hoe("spr_hoe", GameEnvironment.Screen.X / 2 - 25, GameEnvironment.Screen.Y - 70, 50, 50);
             tilling = new Tilling("spr_soil", 0, 0, 100, 100);
             map = new Map("1px", new Vector2(0, 0), new Vector2(50, 50));
-            globalTime = new GlobalTime("test");
-            sleeping = new Sleeping("test");
+            globalTime = new GlobalTime("spr_empty");
+            sleeping = new Sleeping("spr_empty");
             gameObjectList.Add(globalTime);
             
             gameObjectList.Add(map);
@@ -68,14 +68,14 @@ namespace BaseProject
             //gameObjectList.Add(new Cell("test", new Vector2(10, 10), new Vector2(0, 0)));
 
 
-            hotbar = new Hotbar("test");
+            hotbar = new Hotbar("spr_empty");
             //gameObjectList.Add(hotbar);
 
 
             for (int i = 0; i < HotbarCount; i++)
             {
 
-                GameObject hItem = new GameObject("test");
+                GameObject hItem = new GameObject("spr_empty");
 
                 hotbar.hotbarItemList.Add(hItem);
                 gameObjectList.Add(hItem);
@@ -94,7 +94,7 @@ namespace BaseProject
 
         public override void Update(GameTime gameTime)
         {
-            GameObject mouseGO = new GameObject("test");
+            GameObject mouseGO = new GameObject("spr_empty");
             mouseGO.position.X = GameEnvironment.MouseState.X;
             mouseGO.position.Y = GameEnvironment.MouseState.Y;
             for (int i = 0; i < map.cells.Count; i++)

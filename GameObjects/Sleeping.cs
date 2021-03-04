@@ -19,7 +19,7 @@ namespace BaseProject
         {
             color1 = new Color(0, 0, 0, 0);
             color2 = new Color(0, 0, 0, 255);
-            fadeSprite = GameEnvironment.ContentManager.Load<Texture2D>("test");
+            fadeSprite = GameEnvironment.ContentManager.Load<Texture2D>("EnergyBarBackground");
             texture = fadeSprite;
         }
 
