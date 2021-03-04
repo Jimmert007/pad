@@ -83,3 +83,69 @@ C:\Users\jimvd\OneDrive\Documenten\GitHub\project04\obj\Debug\netcoreapp3.1\Base
 C:\Users\jimvd\OneDrive\Documenten\GitHub\project04\obj\Debug\netcoreapp3.1\BaseProject.csproj.CoreCompileInputs.cache
 C:\Users\jimvd\OneDrive\Documenten\GitHub\project04\obj\Debug\netcoreapp3.1\BaseProject.csproj.CopyComplete
 C:\Users\jimvd\OneDrive\Documenten\GitHub\project04\obj\Debug\netcoreapp3.1\BaseProject.genruntimeconfig.cache
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\obj\Debug\netcoreapp3.1\BaseProject.csprojAssemblyReference.cache
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\obj\Debug\netcoreapp3.1\BaseProject.AssemblyInfoInputs.cache
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\obj\Debug\netcoreapp3.1\BaseProject.AssemblyInfo.cs
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\obj\Debug\netcoreapp3.1\BaseProject.csproj.CoreCompileInputs.cache
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\obj\Debug\netcoreapp3.1\BaseProject.dll
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\obj\Debug\netcoreapp3.1\BaseProject.pdb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\1px.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\jorrit.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\love_nidal.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\Sprites test\test.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\Sprites test\testSmiley.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\Sprites test\test\hallo\testSmiley.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\Sprites\test.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\Sprites\testSmiley.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\spr_empty.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\spr_hoe.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\spr_seed1_stage1.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\spr_seed1_stage2.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\spr_seed1_stage3.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\spr_seed1_stage4.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\spr_soil.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\spr_tilled_soil.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\test.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\testSmiley.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\tiles\Grassland 2 Color 2@128x128.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\tiles\Grassland 2 Color 3@128x128.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\tiles\Grassland 2 Fall@128x128.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\tiles\Grassland 2 Spring@128x128.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\tiles\Grassland 2 Winter@128x128.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\tiles\Grassland 2@128x128.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\tiles\Grassland Color 2@128x128.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\tiles\Grassland Color 3@128x128.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\tiles\Grassland Fall@128x128.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\tiles\Grassland Spring@128x128.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\tiles\Grassland Winter@128x128.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\tiles\Grassland@128x128.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\tiles\Water Color 2@128x128.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\tiles\Water Color 3@128x128.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\tiles\Water Fall@128x128.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\tiles\Water Spring@128x128.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\tiles\Water Winter@128x128.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\tiles\Water@128x128.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\tiles\Waterfall Color 2@128x128.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\tiles\Waterfall Color 3@128x128.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\tiles\Waterfall Fall@128x128.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\tiles\Waterfall Spring@128x128.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\tiles\Waterfall Winter@128x128.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\tiles\Waterfall@128x128.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\Content\ui_bar.xnb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\BaseProject.exe
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\BaseProject.deps.json
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\BaseProject.runtimeconfig.json
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\BaseProject.runtimeconfig.dev.json
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\BaseProject.dll
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\BaseProject.pdb
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\MonoGame.Framework.dll
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\runtimes\linux-x64\native\libSDL2-2.0.so.0
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\runtimes\linux-x64\native\libopenal.so.1
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\runtimes\osx\native\libSDL2-2.0.0.dylib
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\runtimes\osx\native\libopenal.1.dylib
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\SDL2.dll
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\soft_oal.dll
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\SDL2.dll
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\soft_oal.dll
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\obj\Debug\netcoreapp3.1\BaseProject.csproj.CopyComplete
+D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\obj\Debug\netcoreapp3.1\BaseProject.genruntimeconfig.cache

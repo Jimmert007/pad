@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "EZeyvN4YkR0YDWSTGH0+dFFIGOI/G9EDzFlZh7a+a8di5kqDreUS4vqvPadPaOTXtC9t4eyntODgFlvLMdxS6A==",
+  "dgSpecHash": "RrP+UdALcXF7pHaNkx0suGn+lYFcLd3kq/ByUS5Ssuq8AbqquRFibb2fuAuN85VHze4zGWNaCfWbaz16o+zM9Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\jimvd\\OneDrive\\Documenten\\GitHub\\project04\\BaseProject.csproj",
+  "projectFilePath": "D:\\HvA\\Jaar 1 Blok 3\\PAD\\Harvest Valley\\project04\\BaseProject.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\jimvd\\.nuget\\packages\\monogame.content.builder.task\\3.8.0.1641\\monogame.content.builder.task.3.8.0.1641.nupkg.sha512",
-    "C:\\Users\\jimvd\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.0.1641\\monogame.framework.desktopgl.3.8.0.1641.nupkg.sha512"
+    "C:\\Users\\niels\\.nuget\\packages\\monogame.content.builder.task\\3.8.0.1641\\monogame.content.builder.task.3.8.0.1641.nupkg.sha512",
+    "C:\\Users\\niels\\.nuget\\packages\\monogame.framework.desktopgl\\3.8.0.1641\\monogame.framework.desktopgl.3.8.0.1641.nupkg.sha512"
   ],
   "logs": []
 }

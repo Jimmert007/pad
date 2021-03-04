@@ -4,41 +4,41 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/1px.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/jorrit.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/spr_empty.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/spr_hoe.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/spr_seed1_stage1.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/spr_seed1_stage2.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/spr_seed1_stage3.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/spr_seed1_stage4.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/spr_soil.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/spr_tilled_soil.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/tiles/Grassland 2 Color 2@128x128.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/tiles/Grassland 2 Color 3@128x128.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/tiles/Grassland 2 Fall@128x128.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/tiles/Grassland 2 Spring@128x128.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/tiles/Grassland 2 Winter@128x128.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/tiles/Grassland 2@128x128.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/tiles/Grassland Color 2@128x128.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/tiles/Grassland Color 3@128x128.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/tiles/Grassland Fall@128x128.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/tiles/Grassland Spring@128x128.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/tiles/Grassland Winter@128x128.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/tiles/Grassland@128x128.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/tiles/Water Color 2@128x128.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/tiles/Water Color 3@128x128.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/tiles/Water Fall@128x128.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/tiles/Water Spring@128x128.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/tiles/Water Winter@128x128.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/tiles/Water@128x128.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/tiles/Waterfall Color 2@128x128.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/tiles/Waterfall Color 3@128x128.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/tiles/Waterfall Fall@128x128.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/tiles/Waterfall Spring@128x128.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/tiles/Waterfall Winter@128x128.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/tiles/Waterfall@128x128.png</File>
-    <File>C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/ui_bar.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/1px.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/jorrit.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/spr_empty.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/spr_hoe.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/spr_seed1_stage1.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/spr_seed1_stage2.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/spr_seed1_stage3.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/spr_seed1_stage4.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/spr_soil.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/spr_tilled_soil.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/tiles/Grassland 2 Color 2@128x128.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/tiles/Grassland 2 Color 3@128x128.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/tiles/Grassland 2 Fall@128x128.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/tiles/Grassland 2 Spring@128x128.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/tiles/Grassland 2 Winter@128x128.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/tiles/Grassland 2@128x128.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/tiles/Grassland Color 2@128x128.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/tiles/Grassland Color 3@128x128.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/tiles/Grassland Fall@128x128.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/tiles/Grassland Spring@128x128.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/tiles/Grassland Winter@128x128.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/tiles/Grassland@128x128.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/tiles/Water Color 2@128x128.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/tiles/Water Color 3@128x128.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/tiles/Water Fall@128x128.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/tiles/Water Spring@128x128.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/tiles/Water Winter@128x128.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/tiles/Water@128x128.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/tiles/Waterfall Color 2@128x128.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/tiles/Waterfall Color 3@128x128.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/tiles/Waterfall Fall@128x128.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/tiles/Waterfall Spring@128x128.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/tiles/Waterfall Winter@128x128.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/tiles/Waterfall@128x128.png</File>
+    <File>D:/HvA/Jaar 1 Blok 3/PAD/Harvest Valley/project04/Content/ui_bar.png</File>
   </SourceFiles>
   <DestFiles>
     <File xsi:nil="true" />
