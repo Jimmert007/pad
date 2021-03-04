@@ -24,16 +24,16 @@ namespace BaseProject
             texture = fadeSprite;
         }
 
-        public void Update(GlobalTime globalTime, Plant plant, Tilling tilling)
+        public void Update(GlobalTime globalTime, Tilling tilling)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Enter) && useOnce/* && insert cords check*/)
             {
-                Sleep(globalTime, plant, tilling);
+                Sleep(globalTime, tilling);
                 useOnce = false;
             }
             if (fade)
             {
-                FadeScreen(plant, tilling);
+                FadeScreen(tilling);
             }
 
             if (fadeAmount >= 1)
@@ -55,18 +55,19 @@ namespace BaseProject
                 spriteBatch.Draw(texture, new Rectangle(0, 0, GameEnvironment.Screen.X, GameEnvironment.Screen.Y), finalColor);
             }
         }
-        public void FadeScreen(Plant plant, Tilling tilling)
+        public void FadeScreen(Tilling tilling)
         {
             if (fadeIn)
             {
                 fadeAmount += .01f;
-            } else if (fadeOut) {
+            } else if (fadeOut) 
+            {
                 fadeAmount -= 0.01f; 
             }
             finalColor = Color.Lerp(color1, color2, fadeAmount);
         }
 
-        void Sleep(GlobalTime time, Plant plant, Tilling tilling)
+        void Sleep(GlobalTime time, Tilling tilling)
         {
             fade = true;
             fadeIn = true;

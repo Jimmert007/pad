@@ -105,12 +105,9 @@ namespace BaseProject
 
                         if (GameEnvironment.MouseState.LeftButton == ButtonState.Pressed)
                         {
-
-
-                            if (tilling.item == "SEED")
+                            if (tilling.item == "SEED" && !map.cells[i].soilHasPlant)
                             {
-                                Debug.WriteLine("hallo :)");
-                                tilling.soilHasPlant = true;
+                                map.cells[i].soilHasPlant = true;
                                 plants[i].position = map.cells[i].position;
                                 plants[i].size = map.cells[i].size;
                                 plants[i].growthStage = 1;
@@ -119,12 +116,17 @@ namespace BaseProject
                             {
                                 map.cells[i].texture = tilling.tilledSoilTexture;
                             }
-                            if (tilling.soilHasPlant)
+                            
+                        }
+                        if (GameEnvironment.MouseState.RightButton == ButtonState.Pressed)
+                        {
+                            if (map.cells[i].soilHasPlant)
                             {
                                 if (plants[i].growthStage >= 4)
                                 {
                                     //(receive product and new seed)
-                                    tilling.soilHasPlant = false;
+                                    map.cells[i].soilHasPlant = false;
+                                    plants[i].growthStage = 0;
                                 }
                             }
                         }
@@ -137,14 +139,14 @@ namespace BaseProject
             {
                 if (sleeping.fadeOut)
                 {
-
-                    if (tilling.soilHasPlant /*&& sleeping.fadeAmount >= .99f*/)
+                    if (map.cells[i].soilHasPlant && sleeping.fadeAmount >= 1f)
                     {
                         plants[i].growthStage++;
                     }
                 }
-                sleeping.Update(globalTime, plants[i], tilling);
+               
             }
+            sleeping.Update(globalTime, tilling);
             globalTime.Update(gameTime);
         }
     }
