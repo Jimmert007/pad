@@ -12,7 +12,7 @@ namespace BaseProject
         List<Texture2D> sprites = new List<Texture2D>();
         int tileAmount = 4;
         public int id;
-        Rectangle sourceRect;
+        public Rectangle sourceRect;
         public Cell(string _assetName, Vector2 _position, Vector2 _size, int _id) : base(_assetName)
         {
             position = _position;
