@@ -24,7 +24,6 @@ namespace BaseProject
                 counter++;
                 currentTime -= countDuration;
             }
-            Debug.WriteLine(counter);
         }
 
         public void Reset()

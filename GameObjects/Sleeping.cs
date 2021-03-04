@@ -9,10 +9,9 @@ namespace BaseProject
 {
     class Sleeping : GameObject
     {
-        float energy = 50;
         public float fadeAmount = 0;
-        bool useOnce = true;
-        bool fade = false;
+        public bool useOnce = true;
+        public bool fade = false;
         public bool fadeIn, fadeOut;
         Color color1, color2, finalColor;
         public Texture2D fadeSprite;
@@ -24,16 +23,16 @@ namespace BaseProject
             texture = fadeSprite;
         }
 
-        public void Update(GlobalTime globalTime, Tilling tilling)
+        public void Update(GlobalTime globalTime)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Enter) && useOnce/* && insert cords check*/)
             {
-                Sleep(globalTime, tilling);
+                Sleep(globalTime);
                 useOnce = false;
             }
             if (fade)
             {
-                FadeScreen(tilling);
+                FadeScreen();
             }
 
             if (fadeAmount >= 1)
@@ -55,7 +54,7 @@ namespace BaseProject
                 spriteBatch.Draw(texture, new Rectangle(0, 0, GameEnvironment.Screen.X, GameEnvironment.Screen.Y), finalColor);
             }
         }
-        public void FadeScreen(Tilling tilling)
+        public void FadeScreen()
         {
             if (fadeIn)
             {
@@ -67,11 +66,10 @@ namespace BaseProject
             finalColor = Color.Lerp(color1, color2, fadeAmount);
         }
 
-        void Sleep(GlobalTime time, Tilling tilling)
+        public void Sleep(GlobalTime time)
         {
             fade = true;
             fadeIn = true;
-            energy += 50;
             time.Reset();
         }
     }

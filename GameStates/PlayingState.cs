@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BaseProject.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -12,6 +13,7 @@ namespace BaseProject
 {
     class PlayingState : GameState
     {
+        EnergyBar energyBar;
         Sleeping sleeping;
         GlobalTime globalTime;
         Player player;
@@ -29,6 +31,7 @@ namespace BaseProject
 
         public PlayingState()
         {
+            energyBar = new EnergyBar("EnergyBarBackground", GameEnvironment.Screen.X - 60, GameEnvironment.Screen.Y - 220, 40, 200);
             player = new Player("jorrit", 0, 0, 100, 100);
             tools = new Tools("spr_empty");
             hoe = new Hoe("spr_hoe", GameEnvironment.Screen.X / 2 - 25, GameEnvironment.Screen.Y - 70, 50, 50);
@@ -85,6 +88,7 @@ namespace BaseProject
                 //Debug.Print("X " + i + " = " + hotbar.hotbarItemList[i].position.X.ToString());
                 //Debug.Print("Y " + i + " = " + hotbar.hotbarItemList[i].position.Y.ToString());
             }
+            gameObjectList.Add(energyBar);
             gameObjectList.Add(sleeping);
         }
 
@@ -107,6 +111,7 @@ namespace BaseProject
                                 plants[i].position = map.cells[i].position;
                                 plants[i].size = map.cells[i].size;
                                 plants[i].growthStage = 1;
+                                energyBar.percentageLost += energyBar.onePercent;
                             }
                             if (tools.toolSelected == "HOE")
                             {
@@ -136,14 +141,19 @@ namespace BaseProject
             {
                 if (sleeping.fadeOut)
                 {
+                    energyBar.Reset();
                     if (map.cells[i].soilHasPlant && sleeping.fadeAmount >= 1f)
                     {
                         plants[i].growthStage++;
                     }
                 }
-               
             }
-            sleeping.Update(globalTime, tilling);
+            if (energyBar.passOut)
+            {
+                sleeping.Sleep(globalTime);
+                sleeping.useOnce = false;
+            }
+            sleeping.Update(globalTime);
             globalTime.Update(gameTime);
         }
     }

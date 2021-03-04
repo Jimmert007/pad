@@ -1,5 +1,7 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
 "C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/1px.png","C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/bin/DesktopGL/1px.xnb","TextureProcessor","Texture2DContent",119,89,0.2727177
+"C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/EnergyBarBackground.png","C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/bin/DesktopGL/EnergyBarBackground.xnb","TextureProcessor","Texture2DContent",242,153901,0.2761949
+"C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/EnergyBarPercentage.png","C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/bin/DesktopGL/EnergyBarPercentage.xnb","TextureProcessor","Texture2DContent",667,153901,0.0195684
 "C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/jorrit.png","C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/bin/DesktopGL/jorrit.xnb","TextureProcessor","Texture2DContent",137374,1209685,0.0463826
 "C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/spr_empty.png","C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/bin/DesktopGL/spr_empty.xnb","TextureProcessor","Texture2DContent",2329,2097237,0.0591867
 "C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/spr_hoe.png","C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/bin/DesktopGL/spr_hoe.xnb","TextureProcessor","Texture2DContent",4836,1048661,0.0426745

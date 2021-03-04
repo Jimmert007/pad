@@ -149,3 +149,5 @@ D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\runtim
 D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\soft_oal.dll
 D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\obj\Debug\netcoreapp3.1\BaseProject.csproj.CopyComplete
 D:\HvA\Jaar 1 Blok 3\PAD\Harvest Valley\project04\obj\Debug\netcoreapp3.1\BaseProject.genruntimeconfig.cache
+C:\Users\jimvd\OneDrive\Documenten\GitHub\project04\bin\Debug\netcoreapp3.1\Content\EnergyBarBackground.xnb
+C:\Users\jimvd\OneDrive\Documenten\GitHub\project04\bin\Debug\netcoreapp3.1\Content\EnergyBarPercentage.xnb

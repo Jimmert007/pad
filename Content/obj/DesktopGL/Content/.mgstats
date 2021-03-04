@@ -1,1 +1,3 @@
 Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/EnergyBarBackground.png","C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/bin/DesktopGL/Content/EnergyBarBackground.xnb","TextureProcessor","Texture2DContent",242,153901,0.1334084
+"C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/EnergyBarPercentage.png","C:/Users/jimvd/OneDrive/Documenten/GitHub/project04/Content/bin/DesktopGL/Content/EnergyBarPercentage.xnb","TextureProcessor","Texture2DContent",667,153901,0.0063359
