@@ -9,10 +9,12 @@ namespace BaseProject
 {
     class Cell : GameObject
     {
-        List<Texture2D> sprites = new List<Texture2D>();
+        public List<Texture2D> sprites = new List<Texture2D>();
         int tileAmount = 4;
         public int id;
-        public bool soilHasPlant = false;
+        public bool cellIsTilled = false;
+        public bool cellHasPlant = false;
+        public bool cellHasTree = false;
         public Rectangle sourceRect;
         public Cell(string _assetName, Vector2 _position, Vector2 _size, int _id) : base(_assetName)
         {
@@ -26,6 +28,7 @@ namespace BaseProject
             }
             if (position.Y == 0 || position.Y == GameEnvironment.Screen.Y - size.Y){
                 texture = sprites[0];
+                cellHasTree = true;
                 sourceRect = new Rectangle(64, 64, 1024, 1024);
             }
             else

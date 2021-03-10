@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics;
 
 namespace BaseProject
 {
@@ -16,6 +17,14 @@ namespace BaseProject
 
         public override void Update()
         {
+            //add tool selection
+            if (GameEnvironment.KeyboardState.IsKeyDown(Keys.D1))
+            {
+                toolSelected = "HOE";
+            } else if (GameEnvironment.KeyboardState.IsKeyDown(Keys.D2))
+            {
+                toolSelected = "AXE";
+            }
         }
     }
 }

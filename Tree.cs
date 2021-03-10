@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Security.Cryptography.X509Certificates;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -10,16 +9,38 @@ namespace BaseProject
 {
     class Tree : GameObject
     {
-        Tree() : base("tree")
-        { }
-
-        public override void Init()
+        public int hitTimer;
+        public int hitTimerReset = 60;
+        public bool treeHit = false;
+        public int health = 4;
+        public Texture2D treeCut, normalTree;
+        public Tree(string assetName, int _x, int _y, int _w, int _h) : base(assetName)
         {
-            base.Init();
-            position.X = GameEnvironment.Screen.X / 4 - this.texture.Width / 2;
-            position.Y = GameEnvironment.Screen.Y / 4 - this.texture.Height / 2;
+            position.X = _x;
+            position.Y = _y;
+            size.X = _w;
+            size.Y = _h;
+            normalTree = GameEnvironment.ContentManager.Load<Texture2D>("spr_tree");
+            treeCut = GameEnvironment.ContentManager.Load<Texture2D>("spr_tree_cut");
+
         }
 
-
+        public override void Update()
+        {
+            base.Update();
+            if (!treeHit)
+            {
+                texture = normalTree;
+            }
+            if (treeHit)
+            {
+                hitTimer -= 1;
+                texture = treeCut;
+                if (hitTimer <= 0)
+                {
+                    treeHit = false;
+                }
+            }
+        }
     }
 }

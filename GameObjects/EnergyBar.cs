@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BaseProject.GameObjects
+namespace BaseProject
 {
     class EnergyBar : GameObject
     {
@@ -13,7 +13,7 @@ namespace BaseProject.GameObjects
         public Vector2 percentagePosition;
         public Vector2 percentageSize;
         public float percentageLost;
-        public float onePercent;
+        public float oneUse;
         public bool passOut;
         public EnergyBar(string assetName, int _x, int _y, int _w, int _h) : base(assetName)
         {
@@ -23,7 +23,7 @@ namespace BaseProject.GameObjects
             size.Y = _h;
             energyBarBackground = GameEnvironment.ContentManager.Load<Texture2D>("EnergyBarBackground");
             energyBarPercentage = GameEnvironment.ContentManager.Load<Texture2D>("EnergyBarPercentage");
-            onePercent = (size.Y - 10) / 100;
+            oneUse = (size.Y - 10) / 100;
             percentagePosition.X = position.X + 5;
             percentageSize.X = size.X - 10;
         }
