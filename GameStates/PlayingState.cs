@@ -43,18 +43,19 @@ namespace BaseProject
             Add(globalTime);*/
             
             Add(map);
-            
-            for (int i = 0; i < map.cols; i++)
+            Add(new Cell("1px", new Vector2(map.size.X, map.size.Y), map.size, map.cols));
+
+            /*for (int i = 0; i < map.cols; i++)
             {
                 for (int x = 0; x < map.rows; x++)
                 {
                     Cell newCell = new Cell("1px", new Vector2(map.size.X * i, map.size.Y * x), map.size, i + x * map.cols);
                     Add(newCell);
-                    /*Plant newPlant = new Plant("spr_empty", 0, 0, (int)map.size.X, (int)map.size.Y);
+                    *//*Plant newPlant = new Plant("spr_empty", 0, 0, (int)map.size.X, (int)map.size.Y);
                     plants.Add(newPlant);
-                    Add(newPlant);*/
+                    Add(newPlant);*//*
                 }
-            }
+            }*/
             /*
             Add(player);
 
