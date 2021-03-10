@@ -7,7 +7,7 @@ using System.Text;
 
 namespace BaseProject
 {
-    class Hotbar : GameObject
+    class Hotbar : SpriteGameObject
     {
         public List<GameObject> hotbarItemList;
         public int ScreenWidth;
@@ -17,9 +17,9 @@ namespace BaseProject
         {
             hotbarItemList = new List<GameObject>();
 
-            ScreenWidth = GameEnvironment.screen.X;
-            ScreenHeight = GameEnvironment.screen.Y;
-            position.X = ScreenWidth / 2 - texture.Width / 2;
+            ScreenWidth = GameEnvironment.Screen.X;
+            ScreenHeight = GameEnvironment.Screen.Y;
+            position.X = ScreenWidth / 2 - sprite.Width / 2;
            /* position.Y = ScreenHeight - texture.Height;*/
 
             /* velocity = _velocity;*/

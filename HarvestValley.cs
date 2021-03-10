@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BaseProject
 {
-    class Game1 : GameEnvironment
+    class HarvestValley : GameEnvironment
     {
 
         /// <summary>
@@ -16,7 +16,6 @@ namespace BaseProject
             base.LoadContent();
             screen = new Point(600, 500);
             ApplyResolutionSettings();
-
 
             gameStateManager.AddGameState("playingState", new PlayingState());
             gameStateManager.SwitchTo("playingState");

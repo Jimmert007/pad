@@ -9,14 +9,14 @@ using System.Linq;
 
 namespace BaseProject
 {
-    class Tilling : GameObject
+    class Tilling : SpriteGameObject
     {
         //Jim van de Burgwal
 
         //creating variables
 
         public String item = "SEED";
-        public Texture2D tilledSoilTexture;
+        public SpriteSheet tilledSoilTexture;
 
 
         public Tilling(string _assetName, int _x, int _y, int _w, int _h) : base(_assetName)
@@ -25,7 +25,7 @@ namespace BaseProject
             position.Y = _y;
             size.X = _w;
             size.Y = _h;
-            tilledSoilTexture = GameEnvironment.ContentManager.Load<Texture2D>("spr_tilled_soil");
+            tilledSoilTexture = new SpriteSheet("spr_tilled_soil");
         }
     }
 }

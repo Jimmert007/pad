@@ -15,7 +15,6 @@ namespace BaseProject
             position.Y = _y;
             size.X = _w;
             size.Y = _h;
-            texture = GameEnvironment.ContentManager.Load<Texture2D>("spr_hoe");
         }
     }
 }

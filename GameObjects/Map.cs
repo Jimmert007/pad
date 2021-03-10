@@ -13,7 +13,6 @@ namespace BaseProject
     class Map : GameObject
     {
         public int rows, cols;
-        public List<Cell> cells = new List<Cell>();
 
         public Map(Vector2 _position, Vector2 _size) : base()
         {

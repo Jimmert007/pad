@@ -11,14 +11,15 @@ using Microsoft.Xna.Framework.Input;
 namespace BaseProject
 
 {
-    class PlayingState : GameState
+    class PlayingState : GameObjectList
     {
-        EnergyBar energyBar;
+/*        EnergyBar energyBar;
         Sleeping sleeping;
         GlobalTime globalTime;
-        Player player;
+        Player player;*/
         Map map;
-        Tilling tilling;
+        public GameObjectList cells;
+/*        Tilling tilling;
         List<Plant> plants = new List<Plant>();
         Tools tools;
         Hoe hoe;
@@ -27,39 +28,39 @@ namespace BaseProject
         public int ScreenHeight;
         Hotbar hotbar;
         float HotbarCount = 9;
-        float HalfHotbar;
+        float HalfHotbar;*/
 
         public PlayingState()
         {
-            energyBar = new EnergyBar("EnergyBarBackground", GameEnvironment.Screen.X - 60, GameEnvironment.Screen.Y - 220, 40, 200);
+            /*energyBar = new EnergyBar("EnergyBarBackground", GameEnvironment.Screen.X - 60, GameEnvironment.Screen.Y - 220, 40, 200);
             player = new Player("jorrit", 0, 0, 100, 100);
             tools = new Tools("spr_empty");
             hoe = new Hoe("spr_hoe", GameEnvironment.Screen.X / 2 - 25, GameEnvironment.Screen.Y - 70, 50, 50);
-            tilling = new Tilling("spr_soil", 0, 0, 100, 100);
+            tilling = new Tilling("spr_soil", 0, 0, 100, 100);*/
             map = new Map(new Vector2(0, 0), new Vector2(50, 50));
-            globalTime = new GlobalTime();
+            /*globalTime = new GlobalTime();
             sleeping = new Sleeping("spr_empty");
-            gameObjectList.Add(globalTime);
+            Add(globalTime);*/
             
-            gameObjectList.Add(map);
-            gameObjectList.Add(tools);
-            gameObjectList.Add(hoe);
-            gameObjectList.Add(tilling);
-
+            Add(map);
+            
             for (int i = 0; i < map.cols; i++)
             {
                 for (int x = 0; x < map.rows; x++)
                 {
                     Cell newCell = new Cell("1px", new Vector2(map.size.X * i, map.size.Y * x), map.size, i + x * map.cols);
-                    map.cells.Add(newCell);
-                    gameObjectList.Add(newCell);
-                    Plant newPlant = new Plant("spr_empty", 0, 0, (int)map.size.X, (int)map.size.Y);
+                    Add(newCell);
+                    /*Plant newPlant = new Plant("spr_empty", 0, 0, (int)map.size.X, (int)map.size.Y);
                     plants.Add(newPlant);
-                    gameObjectList.Add(newPlant);
+                    Add(newPlant);*/
                 }
             }
-            gameObjectList.Add(player);
-            
+            /*
+            Add(player);
+
+            Add(tools);
+            Add(hoe);
+            Add(tilling);
 
             ScreenWidth = GameEnvironment.Screen.X;
             ScreenHeight = GameEnvironment.Screen.Y;
@@ -78,21 +79,21 @@ namespace BaseProject
                 SpriteGameObject hItem = new SpriteGameObject("spr_empty");
 
                 hotbar.hotbarItemList.Add(hItem);
-                gameObjectList.Add(hItem);
+                Add(hItem);
 
                 //HalfHotbar = HotbarCount / 2 * hotbar.hotbarItemList[i].sprite.Width;
 
                 /*hotbar.hotbarItemList[i].Position.X = ScreenWidth / 2 - HalfHotbar;
                 hotbar.hotbarItemList[i].Position.X += 80 * i;
-                hotbar.hotbarItemList[i].Position.Y = ScreenHeight - hotbar.hotbarItemList[i].sprite.Height;*/
+                hotbar.hotbarItemList[i].Position.Y = ScreenHeight - hotbar.hotbarItemList[i].sprite.Height;*//*
                 //Debug.Print("X " + i + " = " + hotbar.hotbarItemList[i].position.X.ToString());
                 //Debug.Print("Y " + i + " = " + hotbar.hotbarItemList[i].position.Y.ToString());
             }
-            gameObjectList.Add(energyBar);
-            gameObjectList.Add(sleeping);
+            Add(energyBar);
+            Add(sleeping);*/
         }
 
-        public override void Update(GameTime gameTime)
+        /*public override void Update(GameTime gameTime)
         {
             SpriteGameObject mouseGO = new SpriteGameObject("1px");
             mouseGO.Position = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
@@ -154,6 +155,6 @@ namespace BaseProject
             }
             sleeping.Update(globalTime);
             globalTime.Update(gameTime);
-        }
+        }*/
     }
 }
