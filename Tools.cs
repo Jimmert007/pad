@@ -6,16 +6,12 @@ using System.Text;
 
 namespace BaseProject
 {
-    class Tools : GameObject
+    class Tools : SpriteGameObject
     {
         public String toolSelected = "HOE";
         public Tools(string _assetName) : base(_assetName)
         {
-            texture = GameEnvironment.ContentManager.Load<Texture2D>("spr_empty");
-        }
-
-        public override void Update()
-        {
+            sprite = new SpriteSheet("spr_empty");
         }
     }
 }

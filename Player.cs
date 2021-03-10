@@ -8,11 +8,11 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BaseProject
 {
-    class Player : GameObject
+    class Player : SpriteGameObject
     {
         public bool openInventory;
         public bool openMap;
-        Texture2D left, right, up, down ; 
+        SpriteSheet left, right, up, down;
 
         public Player(string _assetName, int _x, int _y, int _w, int _h) : base(_assetName)
         {
@@ -20,7 +20,7 @@ namespace BaseProject
             position.Y = _y;
             size.X = _w;
             size.Y = _h;
-            texture = GameEnvironment.ContentManager.Load<Texture2D>("jorrit");
+            sprite = new SpriteSheet("jorrit");
             //left = GameEnvironment.ContentManager.Load<Texture2D>("spr_red_invader");
             //right = GameEnvironment.ContentManager.Load<Texture2D>("spr_green_invader");
             //up = GameEnvironment.ContentManager.Load<Texture2D>("spr_yellow_invader");
@@ -28,29 +28,28 @@ namespace BaseProject
 
         }
 
-        override public void Init()
+        override public void Reset()
         {
-            base.Init();
-            position.X = GameEnvironment.Screen.X / 2 - this.texture.Width / 2;
-            position.Y = GameEnvironment.Screen.Y / 2 - this.texture.Height / 2;
+            base.Reset();
+            position.X = GameEnvironment.Screen.X / 2 - this.sprite.Width / 2;
+            position.Y = GameEnvironment.Screen.Y / 2 - this.sprite.Height / 2;
             size.X = 100;
             size.Y = 100;
 
         }
-
-       public bool PlayerCanReach()
+        public bool PlayerCanReach()
         {
-            if (position.X + size.X / 2 - GameEnvironment.MouseState.X <= 75
-                & position.X + size.X / 2 - GameEnvironment.MouseState.X >= -75
-                & position.Y + size.Y / 2 - GameEnvironment.MouseState.Y <= 75
-                & position.Y + size.Y / 2 - GameEnvironment.MouseState.Y >= -75)
+            if (position.X + size.X / 2 - Mouse.GetState().X <= 75
+                & position.X + size.X / 2 - Mouse.GetState().X >= -75
+                & position.Y + size.Y / 2 - Mouse.GetState().Y <= 75
+                & position.Y + size.Y / 2 - Mouse.GetState().Y >= -75)
             {
                 return true;
             }
             return false;
         }
 
-        override public void Update()
+        override public void Update(GameTime gameTime)
         {
             //Continuesly set movement to 0
             velocity.X = 0;

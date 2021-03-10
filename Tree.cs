@@ -8,16 +8,16 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BaseProject
 {
-    class Tree : GameObject
+    class Tree : SpriteGameObject
     {
         Tree() : base("tree")
         { }
 
-        public override void Init()
+        public override void Reset()
         {
-            base.Init();
-            position.X = GameEnvironment.Screen.X / 4 - this.texture.Width / 2;
-            position.Y = GameEnvironment.Screen.Y / 4 - this.texture.Height / 2;
+            base.Reset();
+            position.X = GameEnvironment.Screen.X / 4 - this.sprite.Width / 2;
+            position.Y = GameEnvironment.Screen.Y / 4 - this.sprite.Height / 2;
         }
 
 

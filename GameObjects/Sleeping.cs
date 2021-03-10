@@ -7,20 +7,20 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 namespace BaseProject
 {
-    class Sleeping : GameObject
+    class Sleeping : SpriteGameObject
     {
         public float fadeAmount = 0;
         public bool useOnce = true;
         public bool fade = false;
         public bool fadeIn, fadeOut;
         Color color1, color2, finalColor;
-        public Texture2D fadeSprite;
+        public SpriteSheet fadeSprite;
         public Sleeping(string _assetName) : base(_assetName)
         {
             color1 = new Color(0, 0, 0, 0);
             color2 = new Color(0, 0, 0, 255);
-            fadeSprite = GameEnvironment.ContentManager.Load<Texture2D>("EnergyBarBackground");
-            texture = fadeSprite;
+            fadeSprite = new SpriteSheet("EnergyBarBackground");
+            sprite = fadeSprite;
         }
 
         public void Update(GlobalTime globalTime)
@@ -47,13 +47,13 @@ namespace BaseProject
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+   /*     public override void Draw(SpriteBatch spriteBatch)
         {
             if (fade)
             {
                 spriteBatch.Draw(texture, new Rectangle(0, 0, GameEnvironment.Screen.X, GameEnvironment.Screen.Y), finalColor);
             }
-        }
+        }*/
         public void FadeScreen()
         {
             if (fadeIn)

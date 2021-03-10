@@ -15,7 +15,7 @@ namespace BaseProject
         public int rows, cols;
         public List<Cell> cells = new List<Cell>();
 
-        public Map(string _assetName, Vector2 _position, Vector2 _size) : base(_assetName)
+        public Map(Vector2 _position, Vector2 _size) : base()
         {
             position = _position;
             size = _size;

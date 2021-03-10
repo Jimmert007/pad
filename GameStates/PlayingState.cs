@@ -36,8 +36,8 @@ namespace BaseProject
             tools = new Tools("spr_empty");
             hoe = new Hoe("spr_hoe", GameEnvironment.Screen.X / 2 - 25, GameEnvironment.Screen.Y - 70, 50, 50);
             tilling = new Tilling("spr_soil", 0, 0, 100, 100);
-            map = new Map("1px", new Vector2(0, 0), new Vector2(50, 50));
-            globalTime = new GlobalTime("spr_empty");
+            map = new Map(new Vector2(0, 0), new Vector2(50, 50));
+            globalTime = new GlobalTime();
             sleeping = new Sleeping("spr_empty");
             gameObjectList.Add(globalTime);
             
@@ -61,8 +61,8 @@ namespace BaseProject
             gameObjectList.Add(player);
             
 
-            ScreenWidth = GameEnvironment.screen.X;
-            ScreenHeight = GameEnvironment.screen.Y;
+            ScreenWidth = GameEnvironment.Screen.X;
+            ScreenHeight = GameEnvironment.Screen.Y;
 
             //gameObjectList.Add(new GameObject("spr_background"));  
             //gameObjectList.Add(new Cell("test", new Vector2(10, 10), new Vector2(0, 0)));
@@ -75,16 +75,16 @@ namespace BaseProject
             for (int i = 0; i < HotbarCount; i++)
             {
 
-                GameObject hItem = new GameObject("spr_empty");
+                SpriteGameObject hItem = new SpriteGameObject("spr_empty");
 
                 hotbar.hotbarItemList.Add(hItem);
                 gameObjectList.Add(hItem);
 
-                HalfHotbar = HotbarCount / 2 * hotbar.hotbarItemList[i].texture.Width;
+                //HalfHotbar = HotbarCount / 2 * hotbar.hotbarItemList[i].sprite.Width;
 
-                hotbar.hotbarItemList[i].position.X = ScreenWidth / 2 - HalfHotbar;
-                hotbar.hotbarItemList[i].position.X += 80 * i;
-                hotbar.hotbarItemList[i].position.Y = ScreenHeight - hotbar.hotbarItemList[i].texture.Height;
+                /*hotbar.hotbarItemList[i].Position.X = ScreenWidth / 2 - HalfHotbar;
+                hotbar.hotbarItemList[i].Position.X += 80 * i;
+                hotbar.hotbarItemList[i].Position.Y = ScreenHeight - hotbar.hotbarItemList[i].sprite.Height;*/
                 //Debug.Print("X " + i + " = " + hotbar.hotbarItemList[i].position.X.ToString());
                 //Debug.Print("Y " + i + " = " + hotbar.hotbarItemList[i].position.Y.ToString());
             }
@@ -94,33 +94,32 @@ namespace BaseProject
 
         public override void Update(GameTime gameTime)
         {
-            GameObject mouseGO = new GameObject("spr_empty");
-            mouseGO.position.X = GameEnvironment.MouseState.X;
-            mouseGO.position.Y = GameEnvironment.MouseState.Y;
+            SpriteGameObject mouseGO = new SpriteGameObject("1px");
+            mouseGO.Position = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
             for (int i = 0; i < map.cells.Count; i++)
             {
-                if (map.cells[i].Overlaps(mouseGO))
+                if (map.cells[i].CollidesWith(mouseGO))
                 {
                     if (player.PlayerCanReach())
                     {
-                        if (GameEnvironment.MouseState.LeftButton == ButtonState.Pressed)
+                        if (Mouse.GetState().LeftButton == ButtonState.Pressed)
                         {
                             if (tilling.item == "SEED" && !map.cells[i].soilHasPlant)
                             {
                                 map.cells[i].soilHasPlant = true;
-                                plants[i].position = map.cells[i].position;
-                                plants[i].size = map.cells[i].size;
-                                plants[i].growthStage = 1;
+                                plants[i].Position = map.cells[i].Position;
+                                //plants[i].size = map.cells[i].size;
+                                //plants[i].growthStage = 1;
                                 energyBar.percentageLost += energyBar.onePercent;
                             }
                             if (tools.toolSelected == "HOE")
                             {
-                                map.cells[i].sourceRect = new Rectangle(0,0,tilling.texture.Width,tilling.texture.Height);
-                                map.cells[i].texture = tilling.tilledSoilTexture;
+                                //map.cells[i].sourceRect = new Rectangle(0,0,tilling.sprite.Width,tilling.sprite.Height);
+                                //map.cells[i].sprite = tilling.tilledSoilTexture;
                             }
                             
                         }
-                        if (GameEnvironment.MouseState.RightButton == ButtonState.Pressed)
+                        if (Mouse.GetState().RightButton == ButtonState.Pressed)
                         {
                             if (map.cells[i].soilHasPlant)
                             {

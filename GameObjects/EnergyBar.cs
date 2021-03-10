@@ -6,10 +6,10 @@ using System.Text;
 
 namespace BaseProject.GameObjects
 {
-    class EnergyBar : GameObject
+    class EnergyBar : SpriteGameObject
     {
-        public Texture2D energyBarBackground;
-        public Texture2D energyBarPercentage;
+        public SpriteSheet energyBarBackground;
+        public SpriteSheet energyBarPercentage;
         public Vector2 percentagePosition;
         public Vector2 percentageSize;
         public float percentageLost;
@@ -21,14 +21,15 @@ namespace BaseProject.GameObjects
             position.Y = _y;
             size.X = _w;
             size.Y = _h;
-            energyBarBackground = GameEnvironment.ContentManager.Load<Texture2D>("EnergyBarBackground");
-            energyBarPercentage = GameEnvironment.ContentManager.Load<Texture2D>("EnergyBarPercentage");
+            energyBarBackground = new SpriteSheet("EnergyBarBackground");
+            energyBarPercentage = new SpriteSheet("EnergyBarPercentage");
             onePercent = (size.Y - 10) / 100;
             percentagePosition.X = position.X + 5;
             percentageSize.X = size.X - 10;
         }
 
-        public override void Update()
+
+        public override void Update(GameTime gameTime)
         {
             percentagePosition.Y = position.Y + 5 + percentageLost;
             percentageSize.Y = size.Y - 10 - percentageLost;
@@ -36,15 +37,16 @@ namespace BaseProject.GameObjects
             {
                 passOut = true;
             }
+            base.Update(gameTime);
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+      /*  public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(energyBarBackground, new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y), Color.White);
             spriteBatch.Draw(energyBarPercentage, new Rectangle((int)percentagePosition.X, (int)percentagePosition.Y, (int)percentageSize.X, (int)percentageSize.Y), Color.White);
-        }
+        }*/
 
-        public void Reset()
+        public override void Reset()
         {
             percentageLost = 0;
             passOut = false;
