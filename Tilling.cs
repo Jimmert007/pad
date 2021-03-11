@@ -14,8 +14,6 @@ namespace BaseProject
         //Jim van de Burgwal
 
         //creating variables
-
-        public String item = "SEED";
         public Texture2D tilledSoilTexture;
 
 

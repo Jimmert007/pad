@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace BaseProject
@@ -20,11 +21,18 @@ namespace BaseProject
         Tilling tilling;
         List<Plant> plants = new List<Plant>();
         List<Tree> trees = new List<Tree>();
-        Tools tools;
+        Item item;
+
+        #region Adding Items
         Hoe hoe;
+        Axe axe;
+        WateringCan wateringCan;
+        Seed seed;
+        #endregion
 
         public int ScreenWidth;
         public int ScreenHeight;
+        public int itemAmount = 4;
         Hotbar hotbar;
         float HotbarCount = 9;
         float HalfHotbar;
@@ -33,8 +41,7 @@ namespace BaseProject
         {
             energyBar = new EnergyBar("EnergyBarBackground", GameEnvironment.Screen.X - 60, GameEnvironment.Screen.Y - 220, 40, 200);
             player = new Player("jorrit", 0, 0, 100, 100);
-            tools = new Tools("spr_empty");
-            hoe = new Hoe("spr_hoe", GameEnvironment.Screen.X / 2 - 25, GameEnvironment.Screen.Y - 70, 50, 50);
+            item = new Item("spr_empty");
             tilling = new Tilling("spr_soil", 0, 0, 100, 100);
             map = new Map("1px", new Vector2(0, 0), new Vector2(50, 50));
             globalTime = new GlobalTime("spr_empty");
@@ -42,8 +49,15 @@ namespace BaseProject
             gameObjectList.Add(globalTime);
             
             gameObjectList.Add(map);
-            gameObjectList.Add(tools);
-            gameObjectList.Add(hoe);
+            gameObjectList.Add(item);
+
+            #region Adding Items
+                item.items.Add(new Hoe("spr_hoe", false));
+                item.items.Add(new Axe("spr_empty", false));
+                item.items.Add(new WateringCan("spr_empty", false));
+                item.items.Add(new Seed("spr_seed1_stage1", true));
+            #endregion
+
             gameObjectList.Add(tilling);
 
             for (int i = 0; i < map.cols; i++)
@@ -118,7 +132,7 @@ namespace BaseProject
                     {
                         if (GameEnvironment.MouseState.LeftButton == ButtonState.Pressed)
                         {
-                            if (tilling.item == "SEED" && !map.cells[i].cellHasPlant && map.cells[i].cellIsTilled)
+                            if (item.itemSelected == "SEED" && !map.cells[i].cellHasPlant && map.cells[i].cellIsTilled)
                             {
                                 map.cells[i].cellHasPlant = true;
                                 plants[i].position = map.cells[i].position;
@@ -126,14 +140,14 @@ namespace BaseProject
                                 plants[i].growthStage = 1;
                                 energyBar.percentageLost += energyBar.oneUse;
                             }
-                            if (tools.toolSelected == "HOE" && !map.cells[i].cellHasTree && !map.cells[i].cellIsTilled)
+                            if (item.itemSelected == "HOE" && !map.cells[i].cellHasTree && !map.cells[i].cellIsTilled)
                             {
                                 map.cells[i].cellIsTilled = true;
                                 map.cells[i].sourceRect = new Rectangle(0,0,tilling.texture.Width,tilling.texture.Height);
                                 map.cells[i].texture = tilling.tilledSoilTexture;
                                 energyBar.percentageLost += energyBar.oneUse;
                             }
-                            if (tools.toolSelected == "AXE" && map.cells[i].cellHasTree && !trees[i].treeHit)
+                            if (item.itemSelected == "AXE" && map.cells[i].cellHasTree && !trees[i].treeHit)
                             {
                                 trees[i].treeHit = true;
                                 trees[i].hitTimer = trees[i].hitTimerReset;
@@ -155,7 +169,6 @@ namespace BaseProject
                         }
                     }
                 }
-
             }
             base.Update(gameTime);
             for (int i = 0; i < plants.Count; i++)
@@ -176,6 +189,16 @@ namespace BaseProject
             }
             sleeping.Update(globalTime);
             globalTime.Update(gameTime);
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+            spriteBatch.Draw(item.hotbar, new Rectangle((int)item.position.X, (int)item.position.Y, (int)item.totalWidth, (int)item.size.Y), Color.White);
+            for (int i = 0; i < item.items.Count; i++) 
+            {
+                spriteBatch.Draw(item.items[i].texture, new Rectangle((int)item.position.X + item.spacing * i, (int)item.position.Y, (int)item.size.X, (int)item.size.Y), Color.White);
+            }
         }
     }
 }

@@ -97,6 +97,18 @@
 /processorParam:TextureFormat=Color
 /build:spr_hoe.png
 
+#begin spr_hotbar.PNG
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:spr_hotbar.PNG
+
 #begin spr_seed1_stage1.png
 /importer:TextureImporter
 /processor:TextureProcessor
