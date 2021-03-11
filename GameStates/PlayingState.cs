@@ -97,22 +97,6 @@ namespace BaseProject
 
         public override void Update(GameTime gameTime)
         {
-            for (int i = 0; i < HotbarCount; i++)
-            {
-                GameObject hItem = new GameObject("1px");
-                hItem.size.X = 45;
-                hItem.size.Y = 45;
-                vak = hItem.size.X + 5;
-
-                hotbar.hotbarItemList.Add(hItem);
-                gameObjectList.Add(hItem);
-
-                hotbar.hotbarItemList[i].position.X = hotbar.position.X + 5;
-                hotbar.hotbarItemList[i].position.X += vak * i ;
-                hotbar.hotbarItemList[i].position.Y = ScreenHeight - hItem.size.Y;
-               
-            }
-
             GameObject mouseGO = new GameObject("spr_empty");
             mouseGO.position.X = GameEnvironment.MouseState.X;
             mouseGO.position.Y = GameEnvironment.MouseState.Y;
@@ -146,7 +130,7 @@ namespace BaseProject
                             if (item.itemSelected == "HOE" && !map.cells[i].cellHasTree && !map.cells[i].cellIsTilled)
                             {
                                 map.cells[i].cellIsTilled = true;
-                                map.cells[i].sourceRect = new Rectangle(0,0,tilling.texture.Width,tilling.texture.Height);
+                                map.cells[i].sourceRect = new Rectangle(0, 0, tilling.texture.Width, tilling.texture.Height);
                                 map.cells[i].texture = tilling.tilledSoilTexture;
                                 energyBar.percentageLost += energyBar.oneUse;
                             }
@@ -193,15 +177,65 @@ namespace BaseProject
             sleeping.Update(globalTime);
             globalTime.Update(gameTime);
 
+            #region Item Selection
+            if (GameEnvironment.KeyboardState.IsKeyDown(Keys.D1))
+            {
+                item.itemSelected = "HOE";
+                hotbar.selectedSquarePosition.X = hotbar.position.X;
+            }
+            else if (GameEnvironment.KeyboardState.IsKeyDown(Keys.D2))
+            {
+                item.itemSelected = "AXE";
+                hotbar.selectedSquarePosition.X = hotbar.position.X + hotbar.squareSize;
+            }
+            else if (GameEnvironment.KeyboardState.IsKeyDown(Keys.D3))
+            {
+                item.itemSelected = "WATERINGCAN";
+                hotbar.selectedSquarePosition.X = hotbar.position.X + hotbar.squareSize * 2;
+            }
+            else if (GameEnvironment.KeyboardState.IsKeyDown(Keys.D4))
+            {
+                item.itemSelected = "SEED";
+                hotbar.selectedSquarePosition.X = hotbar.position.X + hotbar.squareSize * 3;
+            }
+            else if (GameEnvironment.KeyboardState.IsKeyDown(Keys.D5))
+            {
+                //item.itemSelected = "AXE";
+                hotbar.selectedSquarePosition.X = hotbar.position.X + hotbar.squareSize * 4;
+            }
+            else if (GameEnvironment.KeyboardState.IsKeyDown(Keys.D6))
+            {
+                //item.itemSelected = "WATERINGCAN";
+                hotbar.selectedSquarePosition.X = hotbar.position.X + hotbar.squareSize * 5;
+            }
+            else if (GameEnvironment.KeyboardState.IsKeyDown(Keys.D7))
+            {
+                //item.itemSelected = "SEED";
+                hotbar.selectedSquarePosition.X = hotbar.position.X + hotbar.squareSize * 6;
+            }
+            else if (GameEnvironment.KeyboardState.IsKeyDown(Keys.D8))
+            {
+                //item.itemSelected = "WATERINGCAN";
+                hotbar.selectedSquarePosition.X = hotbar.position.X + hotbar.squareSize * 7;
+            }
+            else if (GameEnvironment.KeyboardState.IsKeyDown(Keys.D9))
+            {
+                //item.itemSelected = "SEED";
+                hotbar.selectedSquarePosition.X = hotbar.position.X + hotbar.squareSize * 8;
+            }
+            #endregion
         }
+
+
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            spriteBatch.Draw(item.hotbar, new Rectangle((int)item.position.X, (int)item.position.Y, (int)item.totalWidth, (int)item.size.Y), Color.White);
-            for (int i = 0; i < item.items.Count; i++) 
+            spriteBatch.Draw(hotbar.hotbar, new Rectangle((int)hotbar.position.X, (int)hotbar.position.Y, (int)hotbar.size.X, (int)hotbar.size.Y), Color.White);
+            spriteBatch.Draw(hotbar.selectedSquare, new Rectangle((int)hotbar.selectedSquarePosition.X, (int)hotbar.selectedSquarePosition.Y, (int)hotbar.squareSize, (int)hotbar.squareSize), Color.White); ;
+            for (int i = 0; i < item.items.Count; i++)
             {
-                spriteBatch.Draw(item.items[i].texture, new Rectangle((int)item.position.X + item.spacing * i, (int)item.position.Y, (int)item.size.X, (int)item.size.Y), Color.White);
+                spriteBatch.Draw(item.items[i].texture, new Rectangle((int)hotbar.position.X + hotbar.squareSize * i, (int)hotbar.position.Y, (int)hotbar.squareSize, (int)hotbar.squareSize), Color.White);
             }
         }
     }

@@ -157,6 +157,18 @@
 /processorParam:TextureFormat=Color
 /build:spr_seed1_stage4.png
 
+#begin spr_selected_square.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:spr_selected_square.png
+
 #begin spr_soil.png
 /importer:TextureImporter
 /processor:TextureProcessor
