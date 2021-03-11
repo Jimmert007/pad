@@ -36,6 +36,7 @@ namespace BaseProject
         Hotbar hotbar;
         float HotbarCount = 9;
         float HalfHotbar;
+        float vak;
 
         public PlayingState()
         {
@@ -84,32 +85,34 @@ namespace BaseProject
             //gameObjectList.Add(new Cell("test", new Vector2(10, 10), new Vector2(0, 0)));
 
 
-            hotbar = new Hotbar("spr_empty");
-            //gameObjectList.Add(hotbar);
+            hotbar = new Hotbar("1px");
+            gameObjectList.Add(hotbar);
 
 
-            for (int i = 0; i < HotbarCount; i++)
-            {
-
-                GameObject hItem = new GameObject("spr_empty");
-
-                hotbar.hotbarItemList.Add(hItem);
-                gameObjectList.Add(hItem);
-
-                HalfHotbar = HotbarCount / 2 * hotbar.hotbarItemList[i].texture.Width;
-
-                hotbar.hotbarItemList[i].position.X = ScreenWidth / 2 - HalfHotbar;
-                hotbar.hotbarItemList[i].position.X += 80 * i;
-                hotbar.hotbarItemList[i].position.Y = ScreenHeight - hotbar.hotbarItemList[i].texture.Height;
-                //Debug.Print("X " + i + " = " + hotbar.hotbarItemList[i].position.X.ToString());
-                //Debug.Print("Y " + i + " = " + hotbar.hotbarItemList[i].position.Y.ToString());
-            }
+           
             gameObjectList.Add(energyBar);
             gameObjectList.Add(sleeping);
+
         }
 
         public override void Update(GameTime gameTime)
         {
+            for (int i = 0; i < HotbarCount; i++)
+            {
+                GameObject hItem = new GameObject("1px");
+                hItem.size.X = 45;
+                hItem.size.Y = 45;
+                vak = hItem.size.X + 5;
+
+                hotbar.hotbarItemList.Add(hItem);
+                gameObjectList.Add(hItem);
+
+                hotbar.hotbarItemList[i].position.X = hotbar.position.X + 5;
+                hotbar.hotbarItemList[i].position.X += vak * i ;
+                hotbar.hotbarItemList[i].position.Y = ScreenHeight - hItem.size.Y;
+               
+            }
+
             GameObject mouseGO = new GameObject("spr_empty");
             mouseGO.position.X = GameEnvironment.MouseState.X;
             mouseGO.position.Y = GameEnvironment.MouseState.Y;
@@ -189,6 +192,7 @@ namespace BaseProject
             }
             sleeping.Update(globalTime);
             globalTime.Update(gameTime);
+
         }
 
         public override void Draw(SpriteBatch spriteBatch)
