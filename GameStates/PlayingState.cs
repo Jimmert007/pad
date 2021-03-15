@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BaseProject.GameObjects;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace BaseProject
@@ -13,12 +14,12 @@ namespace BaseProject
 {
     class PlayingState : GameObjectList
     {
-        EnergyBar energyBar;
+        /*EnergyBar energyBar;
         Sleeping sleeping;
         GlobalTime globalTime;
         Player player;
         Map map;
-        public GameObjectList cells;
+        //GameObjectList cells = new GameObjectList();
         Tilling tilling;
         List<Plant> plants = new List<Plant>();
         Tools tools;
@@ -28,36 +29,43 @@ namespace BaseProject
         public int ScreenHeight;
         Hotbar hotbar;
         float HotbarCount = 9;
-        float HalfHotbar;
+        float HalfHotbar;*/
+
+        GameObjectList map = new GameObjectList();
 
         public PlayingState()
         {
-            energyBar = new EnergyBar("EnergyBarBackground", GameEnvironment.Screen.X - 60, GameEnvironment.Screen.Y - 220, 40, 200);
+            SpriteSheet testSS = new SpriteSheet("tiles/Niels/tilesSheet_Niels", 0);
+            Add(map);
+            for (int i = 0; i < 100; i++)
+            {
+                map.Add(new Cell(testSS, Vector2.Zero, .1f, 0));
+            }
+
+            /*energyBar = new EnergyBar("EnergyBarBackground", GameEnvironment.Screen.X - 60, GameEnvironment.Screen.Y - 220, 40, 200);
             player = new Player("jorrit", 0, 0, 100, 100);
             tools = new Tools("spr_empty");
             hoe = new Hoe("spr_hoe", GameEnvironment.Screen.X / 2 - 25, GameEnvironment.Screen.Y - 70, 50, 50);
             tilling = new Tilling("spr_soil", 0, 0, 100, 100);
-            map = new Map(new Vector2(0, 0), new Vector2(50, 50));
             globalTime = new GlobalTime();
             sleeping = new Sleeping("spr_empty");
-            Add(globalTime);
+            Add(globalTime);*/
 
-            Add(map);
-            Add(new Cell("1px", new Vector2(map.size.X, map.size.Y), map.size, map.cols));
+            //map = new Map(new Vector2(0, 0), new Vector2(50, 50));
+            /*
+                        for (int i = 0; i < map.cols; i++)
+                        {
+                            for (int x = 0; x < map.rows; x++)
+                            {
+                                Cell newCell = new Cell("tiles/Niels/tilesSheet_Niels", new Vector2(50 * i, 50 * x), i + x * map.cols);
+                                map.cells.Add(newCell);
+                                *//*Plant newPlant = new Plant("spr_empty", 0, 0, (int)map.size.X, (int)map.size.Y);
+                                plants.Add(newPlant);
+                                Add(newPlant);*//*
+                            }
+                        }*/
 
-            /*for (int i = 0; i < map.cols; i++)
-            {
-                for (int x = 0; x < map.rows; x++)
-                {
-                    Cell newCell = new Cell("1px", new Vector2(map.size.X * i, map.size.Y * x), map.size, i + x * map.cols);
-                    Add(newCell);
-                    *//*Plant newPlant = new Plant("spr_empty", 0, 0, (int)map.size.X, (int)map.size.Y);
-                    plants.Add(newPlant);
-                    Add(newPlant);*//*
-                }
-            }*/
-
-            Add(player);
+            /*Add(player);
 
             Add(tools);
             Add(hoe);
@@ -67,7 +75,7 @@ namespace BaseProject
             ScreenHeight = GameEnvironment.Screen.Y;
 
             hotbar = new Hotbar("spr_empty");
-            Add(hotbar);
+            Add(hotbar);*/
 
 
             /*for (int i = 0; i < HotbarCount; i++)
@@ -85,73 +93,74 @@ namespace BaseProject
                 hotbar.hotbarItemList[i].Position.Y = ScreenHeight - hotbar.hotbarItemList[i].sprite.Height;*//*
                 //Debug.Print("X " + i + " = " + hotbar.hotbarItemList[i].position.X.ToString());
                 //Debug.Print("Y " + i + " = " + hotbar.hotbarItemList[i].position.Y.ToString());
-            }*/
+            }
             Add(energyBar);
-            Add(sleeping);
-            }
-
-            public override void Update(GameTime gameTime)
+            Add(sleeping);*/
+        }
+        public void LoadLevel(int levelIndex) { }
+        public void LevelCompleted(int levelIndex) { }
+        public override void Update(GameTime gameTime)
+        {
+            /*SpriteGameObject mouseGO = new SpriteGameObject("1px");
+            mouseGO.Position = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);*/
+            /*for (int i = 0; i < map.cells.Count; i++)
             {
-                SpriteGameObject mouseGO = new SpriteGameObject("1px");
-                mouseGO.Position = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
-                /*for (int i = 0; i < map.cells.Count; i++)
+                if (map.cells[i].CollidesWith(mouseGO))
                 {
-                    if (map.cells[i].CollidesWith(mouseGO))
+                    if (player.PlayerCanReach())
                     {
-                        if (player.PlayerCanReach())
+                        if (Mouse.GetState().LeftButton == ButtonState.Pressed)
                         {
-                            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                            if (tilling.item == "SEED" && !map.cells[i].soilHasPlant)
                             {
-                                if (tilling.item == "SEED" && !map.cells[i].soilHasPlant)
-                                {
-                                    map.cells[i].soilHasPlant = true;
-                                    plants[i].Position = map.cells[i].Position;
-                                    //plants[i].size = map.cells[i].size;
-                                    //plants[i].growthStage = 1;
-                                    energyBar.percentageLost += energyBar.onePercent;
-                                }
-                                if (tools.toolSelected == "HOE")
-                                {
-                                    //map.cells[i].sourceRect = new Rectangle(0,0,tilling.sprite.Width,tilling.sprite.Height);
-                                    //map.cells[i].sprite = tilling.tilledSoilTexture;
-                                }
-
+                                map.cells[i].soilHasPlant = true;
+                                plants[i].Position = map.cells[i].Position;
+                                //plants[i].size = map.cells[i].size;
+                                //plants[i].growthStage = 1;
+                                energyBar.percentageLost += energyBar.onePercent;
                             }
-                            if (Mouse.GetState().RightButton == ButtonState.Pressed)
+                            if (tools.toolSelected == "HOE")
                             {
-                                if (map.cells[i].soilHasPlant)
+                                //map.cells[i].sourceRect = new Rectangle(0,0,tilling.sprite.Width,tilling.sprite.Height);
+                                //map.cells[i].sprite = tilling.tilledSoilTexture;
+                            }
+
+                        }
+                        if (Mouse.GetState().RightButton == ButtonState.Pressed)
+                        {
+                            if (map.cells[i].soilHasPlant)
+                            {
+                                if (plants[i].growthStage >= 4)
                                 {
-                                    if (plants[i].growthStage >= 4)
-                                    {
-                                        //(receive product and new seed)
-                                        map.cells[i].soilHasPlant = false;
-                                        plants[i].growthStage = 0;
-                                    }
+                                    //(receive product and new seed)
+                                    map.cells[i].soilHasPlant = false;
+                                    plants[i].growthStage = 0;
                                 }
                             }
                         }
                     }
+                }
 
-                }
-                base.Update(gameTime);
-                for (int i = 0; i < plants.Count; i++)
-                {
-                    if (sleeping.fadeOut)
-                    {
-                        energyBar.Reset();
-                        if (map.cells[i].soilHasPlant && sleeping.fadeAmount >= 1f)
-                        {
-                            plants[i].growthStage++;
-                        }
-                    }
-                }
-                if (energyBar.passOut)
-                {
-                    sleeping.Sleep(globalTime);
-                    sleeping.useOnce = false;
-                }
-                sleeping.Update(globalTime);
-                globalTime.Update(gameTime);*/
             }
+            base.Update(gameTime);
+            for (int i = 0; i < plants.Count; i++)
+            {
+                if (sleeping.fadeOut)
+                {
+                    energyBar.Reset();
+                    if (map.cells[i].soilHasPlant && sleeping.fadeAmount >= 1f)
+                    {
+                        plants[i].growthStage++;
+                    }
+                }
+            }
+            if (energyBar.passOut)
+            {
+                sleeping.Sleep(globalTime);
+                sleeping.useOnce = false;
+            }
+            sleeping.Update(globalTime);
+            globalTime.Update(gameTime);*/
         }
     }
+}

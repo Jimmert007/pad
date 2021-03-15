@@ -3,8 +3,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 public class SpriteGameObject : GameObject
 {
+    protected Color shade = Color.White;
     protected SpriteSheet sprite;
     protected Vector2 origin;
+    protected float scale = 1f;
     public bool PerPixelCollisionDetection = true;
 
     public SpriteGameObject(string assetName, int layer = 0, string id = "", int sheetIndex = 0)
@@ -18,7 +20,13 @@ public class SpriteGameObject : GameObject
         {
             sprite = null;
         }
-    }    
+    }
+
+    public SpriteGameObject(SpriteSheet spriteSheet, int layer = 0, string id = "")
+       : base(layer, id)
+    {
+            sprite = spriteSheet;
+    }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
     {
@@ -26,7 +34,7 @@ public class SpriteGameObject : GameObject
         {
             return;
         }
-        sprite.Draw(spriteBatch, this.GlobalPosition, origin);
+        spriteBatch.Draw(sprite.Sprite, GlobalPosition, null, shade, 0, Origin, scale, SpriteEffects.None, 0);
     }
 
     public SpriteSheet Sprite
@@ -53,6 +61,22 @@ public class SpriteGameObject : GameObject
         {
             return sprite.Height;
         }
+    }
+
+    /// <summary>
+    /// Returns / sets the scale of the sprite.
+    /// </summary>
+    public float Scale {
+        get { return scale; }
+        set { scale = value;  }
+    }
+
+    /// <summary>
+    /// Set the shade the sprite will be drawn in.
+    /// </summary>
+    public Color Shade {
+        get { return shade; }
+        set { shade = value; }
     }
 
     public bool Mirror
@@ -86,6 +110,10 @@ public class SpriteGameObject : GameObject
         if (!PerPixelCollisionDetection)
         {
             return true;
+        }
+        if (this == obj)
+        {
+            return false;
         }
         Rectangle b = Collision.Intersection(BoundingBox, obj.BoundingBox);
         for (int x = 0; x < b.Width; x++)

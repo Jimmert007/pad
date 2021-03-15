@@ -23,8 +23,8 @@ namespace BaseProject
         {
             position.X = _x;
             position.Y = _y;
-            size.X = _w;
-            size.Y = _h;
+            /*size.X = _w;
+            size.Y = _h;*/
             tilledSoilTexture = new SpriteSheet("spr_tilled_soil");
         }
     }

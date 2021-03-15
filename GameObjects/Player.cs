@@ -14,12 +14,12 @@ namespace BaseProject
         public bool openMap;
         SpriteSheet left, right, up, down;
 
-        public Player(string _assetName, int _x, int _y, int _w, int _h) : base(_assetName)
+        public Player(string _assetName, int _x, int _y, int _w, int _h, Vector2 _size) : base(_assetName)
         {
             position.X = _x;
             position.Y = _y;
-            size.X = _w;
-            size.Y = _h;
+            _size.X = _w;
+            _size.Y = _h;
             sprite = new SpriteSheet("jorrit");
             //left = GameEnvironment.ContentManager.Load<Texture2D>("spr_red_invader");
             //right = GameEnvironment.ContentManager.Load<Texture2D>("spr_green_invader");
@@ -33,19 +33,19 @@ namespace BaseProject
             base.Reset();
             position.X = GameEnvironment.Screen.X / 2 - this.sprite.Width / 2;
             position.Y = GameEnvironment.Screen.Y / 2 - this.sprite.Height / 2;
-            size.X = 100;
-            size.Y = 100;
+            /*size.X = 100;
+            size.Y = 100;*/
 
         }
         public bool PlayerCanReach()
         {
-            if (position.X + size.X / 2 - Mouse.GetState().X <= 75
+            /*if (position.X + size.X / 2 - Mouse.GetState().X <= 75
                 & position.X + size.X / 2 - Mouse.GetState().X >= -75
                 & position.Y + size.Y / 2 - Mouse.GetState().Y <= 75
                 & position.Y + size.Y / 2 - Mouse.GetState().Y >= -75)
             {
                 return true;
-            }
+            }*/
             return false;
         }
 

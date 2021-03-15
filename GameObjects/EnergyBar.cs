@@ -19,20 +19,20 @@ namespace BaseProject.GameObjects
         {
             position.X = _x;
             position.Y = _y;
-            size.X = _w;
-            size.Y = _h;
-            energyBarBackground = new SpriteSheet("EnergyBarBackground");
-            energyBarPercentage = new SpriteSheet("EnergyBarPercentage");
-            onePercent = (size.Y - 10) / 100;
+            //size.X = _w;
+            //size.Y = _h;
+            //energyBarBackground = new SpriteSheet("EnergyBarBackground");
+            //energyBarPercentage = new SpriteSheet("EnergyBarPercentage");
+            //onePercent = (size.Y - 10) / 100;
             percentagePosition.X = position.X + 5;
-            percentageSize.X = size.X - 10;
+            //percentageSize.X = size.X - 10;
         }
 
 
         public override void Update(GameTime gameTime)
         {
             percentagePosition.Y = position.Y + 5 + percentageLost;
-            percentageSize.Y = size.Y - 10 - percentageLost;
+            //percentageSize.Y = size.Y - 10 - percentageLost;
             if (percentageSize.Y <= 0)
             {
                 passOut = true;
@@ -40,9 +40,9 @@ namespace BaseProject.GameObjects
             base.Update(gameTime);
         }
 
-      /*  public override void Draw(SpriteBatch spriteBatch)
+       /* public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(energyBarBackground, new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y), Color.White);
+            spriteBatch.Draw(energyBarBackground, new Rectangle((int)localPosition.X, (int)localPosition.Y, (int)size.X, (int)size.Y), Color.White);
             spriteBatch.Draw(energyBarPercentage, new Rectangle((int)percentagePosition.X, (int)percentagePosition.Y, (int)percentageSize.X, (int)percentageSize.Y), Color.White);
         }*/
 

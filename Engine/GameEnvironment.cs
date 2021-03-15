@@ -29,6 +29,12 @@ public class GameEnvironment : Game
         gameSettingsManager = new GameSettingsManager();
     }
 
+    protected override void Initialize()
+    {
+        IsMouseVisible = true;
+        base.Initialize();
+    }
+
     public static Point Screen
     {
         get { return screen; }

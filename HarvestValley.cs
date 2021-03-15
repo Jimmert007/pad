@@ -6,7 +6,6 @@ namespace BaseProject
 {
     class HarvestValley : GameEnvironment
     {
-
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
@@ -14,7 +13,9 @@ namespace BaseProject
         protected override void LoadContent()
         {
             base.LoadContent();
-            screen = new Point(600, 500);
+
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            screen = new Point(470, 550);
             ApplyResolutionSettings();
 
             gameStateManager.AddGameState("playingState", new PlayingState());

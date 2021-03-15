@@ -13,13 +13,12 @@ namespace BaseProject
     class Map : GameObject
     {
         public int rows, cols;
-
+        public GameObjectList cells = new GameObjectList();
         public Map(Vector2 _position, Vector2 _size) : base()
         {
             position = _position;
-            size = _size;
-            cols = (int)MathF.Round(GameEnvironment.Screen.X / size.X);
-            rows = (int)MathF.Round(GameEnvironment.Screen.Y / size.Y);
+            cols = (int)MathF.Round(GameEnvironment.Screen.X / _size.X);
+            rows = (int)MathF.Round(GameEnvironment.Screen.Y / _size.Y);
 
             Debug.WriteLine(cols.ToString() + " x " + rows.ToString() + " totaal " + rows * cols);
         }
