@@ -20,7 +20,7 @@ namespace BaseProject
             position.Y = _y;
             size.X = _w;
             size.Y = _h;
-            normalTree = GameEnvironment.ContentManager.Load<Texture2D>("spr_tree");
+            normalTree = GameEnvironment.ContentManager.Load<Texture2D>("spr_tree_cut");
             treeCut = GameEnvironment.ContentManager.Load<Texture2D>("spr_tree_cut");
 
         }
