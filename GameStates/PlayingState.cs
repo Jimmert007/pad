@@ -22,6 +22,7 @@ namespace BaseProject
         List<Plant> plants = new List<Plant>();
         List<Tree> trees = new List<Tree>();
         Item item;
+        Wallet wallet;
 
         #region Adding Items
         Hoe hoe;
@@ -40,6 +41,7 @@ namespace BaseProject
 
         public PlayingState()
         {
+            
             energyBar = new EnergyBar("EnergyBarBackground", GameEnvironment.Screen.X - 60, GameEnvironment.Screen.Y - 220, 40, 200);
             player = new Player("jorrit", 0, 0, 100, 100);
             item = new Item("spr_empty");
@@ -84,12 +86,12 @@ namespace BaseProject
             //gameObjectList.Add(new GameObject("spr_background"));  
             //gameObjectList.Add(new Cell("test", new Vector2(10, 10), new Vector2(0, 0)));
 
-
+            wallet = new Wallet("spr_wallet");
             hotbar = new Hotbar("1px");
             gameObjectList.Add(hotbar);
 
 
-           
+            gameObjectList.Add(wallet);
             gameObjectList.Add(energyBar);
             gameObjectList.Add(sleeping);
 
@@ -237,6 +239,7 @@ namespace BaseProject
             {
                 spriteBatch.Draw(item.items[i].texture, new Rectangle((int)hotbar.position.X + hotbar.squareSize * i, (int)hotbar.position.Y, (int)hotbar.squareSize, (int)hotbar.squareSize), Color.White);
             }
+            spriteBatch.Draw(wallet.wallet, new Rectangle((int)wallet.position.X, (int)wallet.position.Y, (int)wallet.size.X, (int)wallet.size.Y), Color.White);
         }
     }
 }
