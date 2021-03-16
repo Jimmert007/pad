@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using BaseProject.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace BaseProject
 
@@ -22,7 +23,6 @@ namespace BaseProject
         List<Plant> plants = new List<Plant>();
         Tools tools;
         Hoe hoe;
-
         public int ScreenWidth;
         public int ScreenHeight;
         Hotbar hotbar;
@@ -39,6 +39,7 @@ namespace BaseProject
             map = new Map("1px", new Vector2(0, 0), new Vector2(50, 50));
             globalTime = new GlobalTime("spr_empty");
             sleeping = new Sleeping("spr_empty");
+            
             gameObjectList.Add(globalTime);
             
             gameObjectList.Add(map);
@@ -90,6 +91,13 @@ namespace BaseProject
             }
             gameObjectList.Add(energyBar);
             gameObjectList.Add(sleeping);
+        }
+
+        public override void Init()
+        {
+            
+            base.Init();
+            camera = new Camera("spr_empty");
         }
 
         public override void Update(GameTime gameTime)
@@ -155,6 +163,14 @@ namespace BaseProject
             }
             sleeping.Update(globalTime);
             globalTime.Update(gameTime);
+            camera.Update(gameTime, player);
+            
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            //spriteBatch.Begin(transformMatrix: camera.Transform);
+            base.Draw(spriteBatch);
         }
     }
 }

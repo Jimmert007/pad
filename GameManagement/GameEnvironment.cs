@@ -47,6 +47,7 @@ class GameEnvironment : Game
     {
         if (gameStateIndex >= 0 && gameStateIndex < gameStateList.Count)
             currentGameState = gameStateList[gameStateIndex];
+        currentGameState.Init();
     }
 
     public GameEnvironment()
@@ -75,7 +76,8 @@ class GameEnvironment : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        spriteBatch.Begin();
+        GraphicsDevice.Clear(Color.Black);
+        spriteBatch.Begin(transformMatrix: GameState.camera?.Transform);
 
         if (currentGameState != null)
             currentGameState.Draw(spriteBatch);
