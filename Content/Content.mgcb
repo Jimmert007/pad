@@ -13,18 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin ../../../../Afbeeldingen/spr_tree.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:../../../../Afbeeldingen/spr_tree.jpg;spr_tree.jpg
-
 #begin 1px.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -193,6 +181,18 @@
 /processorParam:TextureFormat=Color
 /build:spr_tilled_soil.png
 
+#begin spr_tree.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:spr_tree.jpg
+
 #begin spr_tree_cut.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -204,6 +204,13 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:spr_tree_cut.jpg
+
+#begin TestFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:TestFont.spritefont
 
 #begin tiles/Grassland 2 Color 2@128x128.png
 /importer:TextureImporter

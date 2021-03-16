@@ -7,7 +7,7 @@ namespace BaseProject
 {
     class WateringCan : Item
     {
-        public WateringCan(string _assetName, bool stackable) : base(_assetName)
+        public WateringCan(string _assetName, int startItemAmount) : base(_assetName, startItemAmount)
         {
         }
     }

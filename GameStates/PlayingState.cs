@@ -22,27 +22,19 @@ namespace BaseProject
         List<Plant> plants = new List<Plant>();
         List<Tree> trees = new List<Tree>();
         Item item;
-
-        #region Adding Items
-        Hoe hoe;
-        Axe axe;
-        WateringCan wateringCan;
-        Seed seed;
-        #endregion
+        public SpriteFont font;
 
         public int ScreenWidth;
         public int ScreenHeight;
         public int itemAmount = 4;
         Hotbar hotbar;
-        float HotbarCount = 9;
-        float HalfHotbar;
-        float vak;
 
         public PlayingState()
         {
+            font = GameEnvironment.ContentManager.Load<SpriteFont>("TestFont");
             energyBar = new EnergyBar("EnergyBarBackground", GameEnvironment.Screen.X - 60, GameEnvironment.Screen.Y - 220, 40, 200);
             player = new Player("jorrit", 0, 0, 100, 100);
-            item = new Item("spr_empty");
+            item = new Item("spr_empty", 0);
             tilling = new Tilling("spr_soil", 0, 0, 100, 100);
             map = new Map("1px", new Vector2(0, 0), new Vector2(50, 50));
             globalTime = new GlobalTime("spr_empty");
@@ -53,10 +45,10 @@ namespace BaseProject
             gameObjectList.Add(item);
 
             #region Adding Items
-                item.items.Add(new Hoe("spr_hoe", false));
-                item.items.Add(new Axe("spr_empty", false));
-                item.items.Add(new WateringCan("spr_empty", false));
-                item.items.Add(new Seed("spr_seed1_stage1", true));
+                item.items.Add(new Hoe("spr_hoe", 1));
+                item.items.Add(new Axe("spr_empty", 1));
+                item.items.Add(new WateringCan("spr_empty", 1));
+                item.items.Add(new Seed("spr_seed1_stage1", 10));
             #endregion
 
             gameObjectList.Add(tilling);
@@ -81,14 +73,8 @@ namespace BaseProject
             ScreenWidth = GameEnvironment.screen.X;
             ScreenHeight = GameEnvironment.screen.Y;
 
-            //gameObjectList.Add(new GameObject("spr_background"));  
-            //gameObjectList.Add(new Cell("test", new Vector2(10, 10), new Vector2(0, 0)));
-
-
             hotbar = new Hotbar("1px");
             gameObjectList.Add(hotbar);
-
-
            
             gameObjectList.Add(energyBar);
             gameObjectList.Add(sleeping);
@@ -119,8 +105,9 @@ namespace BaseProject
                     {
                         if (GameEnvironment.MouseState.LeftButton == ButtonState.Pressed)
                         {
-                            if (item.itemSelected == "SEED" && !map.cells[i].cellHasPlant && map.cells[i].cellIsTilled)
+                            if (item.itemSelected == "SEED" && !map.cells[i].cellHasPlant && map.cells[i].cellIsTilled && item.items[3].itemAmount > 0)
                             {
+                                item.items[3].itemAmount -= 1;
                                 map.cells[i].cellHasPlant = true;
                                 plants[i].position = map.cells[i].position;
                                 plants[i].size = map.cells[i].size;
@@ -148,7 +135,7 @@ namespace BaseProject
                             {
                                 if (plants[i].growthStage >= 4)
                                 {
-                                    //(receive product and new seed)
+                                    item.items[3].itemAmount += GameEnvironment.Random.Next(1, 3);
                                     map.cells[i].cellHasPlant = false;
                                     plants[i].growthStage = 0;
                                 }
@@ -235,7 +222,14 @@ namespace BaseProject
             spriteBatch.Draw(hotbar.selectedSquare, new Rectangle((int)hotbar.selectedSquarePosition.X, (int)hotbar.selectedSquarePosition.Y, (int)hotbar.squareSize, (int)hotbar.squareSize), Color.White); ;
             for (int i = 0; i < item.items.Count; i++)
             {
-                spriteBatch.Draw(item.items[i].texture, new Rectangle((int)hotbar.position.X + hotbar.squareSize * i, (int)hotbar.position.Y, (int)hotbar.squareSize, (int)hotbar.squareSize), Color.White);
+                if (item.items[i].itemAmount > 0)
+                {
+                    spriteBatch.Draw(item.items[i].texture, new Rectangle((int)hotbar.position.X + hotbar.squareSize * i, (int)hotbar.position.Y, (int)hotbar.squareSize, (int)hotbar.squareSize), Color.White);
+                    if (i > 2)
+                    {
+                        spriteBatch.DrawString(font, item.items[i].itemAmount.ToString(), new Vector2((int)hotbar.position.X + hotbar.squareSize * i, (int)hotbar.position.Y), Color.Black);
+                    }
+                }
             }
         }
     }
