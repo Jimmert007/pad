@@ -14,17 +14,17 @@ namespace BaseProject
         public bool openMap;
         SpriteSheet left, right, up, down;
 
-        public Player(string _assetName, int _x, int _y, int _w, int _h, Vector2 _size) : base(_assetName)
+        public Player(string _assetName, int _x, int _y, float _w, float _h) : base(_assetName)
         {
             position.X = _x;
             position.Y = _y;
-            _size.X = _w;
-            _size.Y = _h;
-            sprite = new SpriteSheet("jorrit");
-            //left = GameEnvironment.ContentManager.Load<Texture2D>("spr_red_invader");
-            //right = GameEnvironment.ContentManager.Load<Texture2D>("spr_green_invader");
-            //up = GameEnvironment.ContentManager.Load<Texture2D>("spr_yellow_invader");
-            //down = GameEnvironment.ContentManager.Load<Texture2D>("spr_blue_invader");
+           /* _size.X = _w;
+            _size.Y = _h;*/
+/*            sprite = new SpriteSheet("jorrit");
+            left = new SpriteSheet("spr_red_invader");
+            right = new SpriteSheet("spr_green_invader");
+            up = new SpriteSheet("spr_yellow_invader");
+            down = new SpriteSheet("spr_blue_invader");*/
 
         }
 

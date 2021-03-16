@@ -14,9 +14,8 @@ namespace BaseProject
     {
         public int rows, cols;
         public GameObjectList cells = new GameObjectList();
-        public Map(Vector2 _position, Vector2 _size) : base()
+        public Map(Vector2 _size) : base()
         {
-            position = _position;
             cols = (int)MathF.Round(GameEnvironment.Screen.X / _size.X);
             rows = (int)MathF.Round(GameEnvironment.Screen.Y / _size.Y);
 

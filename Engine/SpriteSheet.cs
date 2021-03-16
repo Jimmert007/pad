@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -7,7 +8,7 @@ public class SpriteSheet
     protected Texture2D sprite;
     protected bool[] collisionMask;
     protected int sheetIndex;
-    protected int sheetColumns;
+    public int sheetColumns;
     protected int sheetRows;
     protected bool mirror;
 

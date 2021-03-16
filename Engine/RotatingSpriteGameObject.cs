@@ -26,6 +26,11 @@ class RotatingSpriteGameObject : SpriteGameObject
     {
     }
 
+    public RotatingSpriteGameObject(SpriteSheet assetname) :
+        base(assetname)
+    {
+    }
+
     /// <summary>
     /// Returns unit vector2 (length = 1) based on current angle.
     /// </summary>

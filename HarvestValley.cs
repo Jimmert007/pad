@@ -15,7 +15,7 @@ namespace BaseProject
             base.LoadContent();
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            screen = new Point(470, 550);
+            screen = new Point(1280, 720);
             ApplyResolutionSettings();
 
             gameStateManager.AddGameState("playingState", new PlayingState());

@@ -11,12 +11,12 @@ namespace BaseProject
         public int growthStage = 0;
         public SpriteSheet empty, seed1stage1, seed1stage2, seed1stage3, seed1stage4;
 
-        public Plant(string assetName, int _x, int _y, int _w, int _h, Vector2 _size) : base(assetName)
+        public Plant(string assetName, int _x, int _y, float _w, float _h) : base(assetName)
         {
             position.X = _x;
             position.Y = _y;
-            _size.X = _w;
-            _size.Y = _h;
+/*            _size.X = _w;
+            _size.Y = _h;*/
             empty = new SpriteSheet("spr_empty");
             seed1stage1 = new SpriteSheet("spr_seed1_stage1");
             seed1stage2 = new SpriteSheet("spr_seed1_stage2");
