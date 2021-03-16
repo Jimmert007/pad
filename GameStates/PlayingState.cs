@@ -14,6 +14,9 @@ namespace BaseProject
     class PlayingState : GameObjectList
     {
         Map map;
+        Player player;
+        GameObjectList plants;
+
 
         public PlayingState()
         {
@@ -28,6 +31,22 @@ namespace BaseProject
                     map.cells.Add(c);
                 }
             }
+
+            plants = new GameObjectList();
+            for (int i = 1; i < map.rows - 1; i++)
+            {
+                for (int x = 1; x < map.cols - 1; x++)
+                {
+                    Plant p = new Plant("spr_empty", 0, 0, 102.4f, 102.4f, 1f);
+                    plants.Add(p);
+                }
+            }
+            Debug.WriteLine("aantal planten " + plants.Children.Count);
+
+
+
+            player = new Player("jorrit", new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2), .1f);
+            Add(player);
         }
     }
 }

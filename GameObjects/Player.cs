@@ -14,18 +14,10 @@ namespace BaseProject
         public bool openMap;
         SpriteSheet left, right, up, down;
 
-        public Player(string _assetName, int _x, int _y, float _w, float _h) : base(_assetName)
+        public Player(string _assetName, Vector2 _position, float _scale) : base(_assetName)
         {
-            position.X = _x;
-            position.Y = _y;
-           /* _size.X = _w;
-            _size.Y = _h;*/
-/*            sprite = new SpriteSheet("jorrit");
-            left = new SpriteSheet("spr_red_invader");
-            right = new SpriteSheet("spr_green_invader");
-            up = new SpriteSheet("spr_yellow_invader");
-            down = new SpriteSheet("spr_blue_invader");*/
-
+            position = _position;
+            scale = _scale;
         }
 
         override public void Reset()
