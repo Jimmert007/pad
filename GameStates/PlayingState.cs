@@ -16,7 +16,8 @@ namespace HarvestValley
         Map map;
         Player player;
         GameObjectList plants;
- 
+        Tilling tilling;
+        Hoe hoe;
 
         public PlayingState()
         {
@@ -41,9 +42,12 @@ namespace HarvestValley
                     plants.Add(p);
                 }
             }
-            Debug.WriteLine("aantal planten " + plants.Children.Count);
+            //Debug.WriteLine("aantal planten " + plants.Children.Count);
 
+            tilling = new Tilling("spr_soil", new Vector2(100, 100), .1f);
+            Add(tilling);
 
+            hoe = new Hoe("spr_hoe", new Vector2(GameEnvironment.Screen.X / 2 - 25, GameEnvironment.Screen.Y / 2 - 75), .1f);
 
             player = new Player("jorrit", new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2), .1f);
             Add(player);
