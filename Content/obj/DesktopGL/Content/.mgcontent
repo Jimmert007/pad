@@ -4,9 +4,95 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/PC/PAD/project04/Content/test.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/1px.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/cancel.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/GameFont.spritefont</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/jorrit.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/play.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/spr_background.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/spr_blue_invader.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/spr_empty.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/spr_green_invader.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/spr_hoe.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/spr_red_invader.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/spr_seed1_stage1.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/spr_seed1_stage2.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/spr_seed1_stage3.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/spr_seed1_stage4.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/spr_soil.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/spr_tilled_soil.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/spr_yellow_invader.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tiles/Grassland 2 Color 2@128x128.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tiles/Grassland 2 Color 3@128x128.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tiles/Grassland 2 Fall@128x128.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tiles/Grassland 2 Spring@128x128.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tiles/Grassland 2 Winter@128x128.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tiles/Grassland 2@128x128.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tiles/Grassland Color 2@128x128.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tiles/Grassland Color 3@128x128.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tiles/Grassland Fall@128x128.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tiles/Grassland Spring@128x128.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tiles/Grassland Winter@128x128.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tiles/Grassland@128x128.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tiles/Water Color 2@128x128.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tiles/Water Color 3@128x128.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tiles/Water Fall@128x128.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tiles/Water Spring@128x128.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tiles/Water Winter@128x128.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tiles/Water@128x128.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tiles/Waterfall Color 2@128x128.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tiles/Waterfall Color 3@128x128.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tiles/Waterfall Fall@128x128.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tiles/Waterfall Spring@128x128.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tiles/Waterfall Winter@128x128.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tiles/Waterfall@128x128.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/tree.png</File>
+    <File>C:/Users/E7470/Desktop/vs/NewestPAD/Content/ui_bar.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>
 </SourceFileCollection>
