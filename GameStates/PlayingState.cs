@@ -33,8 +33,8 @@ namespace BaseProject
         {
             font = GameEnvironment.ContentManager.Load<SpriteFont>("TestFont");
             energyBar = new EnergyBar("EnergyBarBackground", GameEnvironment.Screen.X - 60, GameEnvironment.Screen.Y - 220, 40, 200);
-            player = new Player("jorrit", 0, 0, 100, 100);
-            item = new Item("spr_empty", 0);
+            player = new Player("jorrit", GameEnvironment.screen.X / 2, GameEnvironment.screen.Y / 2, 70, 70);
+            item = new Item("spr_empty", true, 0);
             tilling = new Tilling("spr_soil", 0, 0, 100, 100);
             map = new Map("1px", new Vector2(0, 0), new Vector2(50, 50));
             globalTime = new GlobalTime("spr_empty");
@@ -45,10 +45,10 @@ namespace BaseProject
             gameObjectList.Add(item);
 
             #region Adding Items
-                item.items.Add(new Hoe("spr_hoe", 1));
-                item.items.Add(new Axe("spr_empty", 1));
-                item.items.Add(new WateringCan("spr_empty", 1));
-                item.items.Add(new Seed("spr_seed1_stage1", 10));
+                item.items.Add(new Hoe("spr_hoe", false, 1));
+                item.items.Add(new Axe("spr_empty", false, 1));
+                item.items.Add(new WateringCan("spr_empty", false, 1));
+                item.items.Add(new Seed("spr_seed1_stage1", true, 10));
             #endregion
 
             gameObjectList.Add(tilling);
@@ -83,61 +83,73 @@ namespace BaseProject
 
         public override void Update(GameTime gameTime)
         {
+            foreach (Cell cell in map.cells)
+            {
+                if (cell.cellHasTree)
+                    player.checkObstacles(cell);
+            }
+            player.Walking();
             GameObject mouseGO = new GameObject("spr_empty");
             mouseGO.position.X = GameEnvironment.MouseState.X;
             mouseGO.position.Y = GameEnvironment.MouseState.Y;
-            for (int i = 0; i < map.cells.Count; i++)
+            foreach (Item seed in item.items) 
             {
-                if (trees[i].health <= 0)
+                if (seed is Seed)
                 {
-                    map.cells[i].cellHasTree = false;
-                    map.cells[i].sourceRect = new Rectangle(900, 0, 380, 380);
-                    map.cells[i].texture = map.cells[i].sprites[1];
-                    trees[i].health = 4;
-                }
-                if (map.cells[i].cellHasTree)
-                {
-                    map.cells[i].texture = trees[i].texture;
-                }
-                if (map.cells[i].Overlaps(mouseGO))
-                {
-                    if (player.PlayerCanReach())
+                    for (int i = 0; i < map.cells.Count; i++)
                     {
-                        if (GameEnvironment.MouseState.LeftButton == ButtonState.Pressed)
+                        if (trees[i].health <= 0)
                         {
-                            if (item.itemSelected == "SEED" && !map.cells[i].cellHasPlant && map.cells[i].cellIsTilled && item.items[3].itemAmount > 0)
-                            {
-                                item.items[3].itemAmount -= 1;
-                                map.cells[i].cellHasPlant = true;
-                                plants[i].position = map.cells[i].position;
-                                plants[i].size = map.cells[i].size;
-                                plants[i].growthStage = 1;
-                                energyBar.percentageLost += energyBar.oneUse;
-                            }
-                            if (item.itemSelected == "HOE" && !map.cells[i].cellHasTree && !map.cells[i].cellIsTilled)
-                            {
-                                map.cells[i].cellIsTilled = true;
-                                map.cells[i].sourceRect = new Rectangle(0, 0, tilling.texture.Width, tilling.texture.Height);
-                                map.cells[i].texture = tilling.tilledSoilTexture;
-                                energyBar.percentageLost += energyBar.oneUse;
-                            }
-                            if (item.itemSelected == "AXE" && map.cells[i].cellHasTree && !trees[i].treeHit)
-                            {
-                                trees[i].treeHit = true;
-                                trees[i].hitTimer = trees[i].hitTimerReset;
-                                trees[i].health -= 1;
-                                energyBar.percentageLost += energyBar.oneUse;
-                            }
+                            map.cells[i].cellHasTree = false;
+                            map.cells[i].sourceRect = new Rectangle(900, 0, 380, 380);
+                            map.cells[i].texture = map.cells[i].sprites[1];
+                            trees[i].health = 4;
                         }
-                        if (GameEnvironment.MouseState.RightButton == ButtonState.Pressed)
+                        if (map.cells[i].cellHasTree)
                         {
-                            if (map.cells[i].cellHasPlant)
+                            map.cells[i].texture = trees[i].texture;
+                        }
+                        if (map.cells[i].Overlaps(mouseGO))
+                        {
+                            if (player.PlayerCanReach())
                             {
-                                if (plants[i].growthStage >= 4)
+                                if (GameEnvironment.MouseState.LeftButton == ButtonState.Pressed)
                                 {
-                                    item.items[3].itemAmount += GameEnvironment.Random.Next(1, 3);
-                                    map.cells[i].cellHasPlant = false;
-                                    plants[i].growthStage = 0;
+                                    if (item.itemSelected == "SEED" && !map.cells[i].cellHasPlant && map.cells[i].cellIsTilled && seed.itemAmount > 0)
+                                    {
+                                        seed.itemAmount -= 1;
+                                        map.cells[i].cellHasPlant = true;
+                                        plants[i].position = map.cells[i].position;
+                                        plants[i].size = map.cells[i].size;
+                                        plants[i].growthStage = 1;
+                                        energyBar.percentageLost += energyBar.oneUse;
+                                    }
+                                    if (item.itemSelected == "HOE" && !map.cells[i].cellHasTree && !map.cells[i].cellIsTilled)
+                                    {
+                                        map.cells[i].cellIsTilled = true;
+                                        map.cells[i].sourceRect = new Rectangle(0, 0, tilling.texture.Width, tilling.texture.Height);
+                                        map.cells[i].texture = tilling.tilledSoilTexture;
+                                        energyBar.percentageLost += energyBar.oneUse;
+                                    }
+                                    if (item.itemSelected == "AXE" && map.cells[i].cellHasTree && !trees[i].treeHit)
+                                    {
+                                        trees[i].treeHit = true;
+                                        trees[i].hitTimer = trees[i].hitTimerReset;
+                                        trees[i].health -= 1;
+                                        energyBar.percentageLost += energyBar.oneUse;
+                                    }
+                                }
+                                if (GameEnvironment.MouseState.RightButton == ButtonState.Pressed)
+                                {
+                                    if (map.cells[i].cellHasPlant)
+                                    {
+                                        if (plants[i].growthStage >= 4)
+                                        {
+                                            seed.itemAmount += GameEnvironment.Random.Next(3);
+                                            map.cells[i].cellHasPlant = false;
+                                            plants[i].growthStage = 0;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -213,8 +225,6 @@ namespace BaseProject
             #endregion
         }
 
-
-
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
@@ -225,7 +235,7 @@ namespace BaseProject
                 if (item.items[i].itemAmount > 0)
                 {
                     spriteBatch.Draw(item.items[i].texture, new Rectangle((int)hotbar.position.X + hotbar.squareSize * i, (int)hotbar.position.Y, (int)hotbar.squareSize, (int)hotbar.squareSize), Color.White);
-                    if (i > 2)
+                    if (item.items[i].isStackable)
                     {
                         spriteBatch.DrawString(font, item.items[i].itemAmount.ToString(), new Vector2((int)hotbar.position.X + hotbar.squareSize * i, (int)hotbar.position.Y), Color.Black);
                     }

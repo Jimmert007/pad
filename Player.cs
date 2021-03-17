@@ -10,6 +10,8 @@ namespace BaseProject
 {
     class Player : GameObject
     {
+        public int playerSpeed = 5;
+        public bool runIntoObject = false;
         public bool openInventory;
         public bool openMap;
         Texture2D left, right, up, down ; 
@@ -20,7 +22,7 @@ namespace BaseProject
             position.Y = _y;
             size.X = _w;
             size.Y = _h;
-            texture = GameEnvironment.ContentManager.Load<Texture2D>("jorrit");
+            texture = GameEnvironment.ContentManager.Load<Texture2D>("EnergyBarBackground");
             //left = GameEnvironment.ContentManager.Load<Texture2D>("spr_red_invader");
             //right = GameEnvironment.ContentManager.Load<Texture2D>("spr_green_invader");
             //up = GameEnvironment.ContentManager.Load<Texture2D>("spr_yellow_invader");
@@ -33,8 +35,8 @@ namespace BaseProject
             base.Init();
             position.X = GameEnvironment.Screen.X / 2 - this.texture.Width / 2;
             position.Y = GameEnvironment.Screen.Y / 2 - this.texture.Height / 2;
-            size.X = 100;
-            size.Y = 100;
+            size.X = 60;
+            size.Y = 60;
 
         }
 
@@ -50,18 +52,52 @@ namespace BaseProject
             return false;
         }
 
+        public void checkObstacles(GameObject other)
+        {
+            //collision
+            if (position.X + size.X + playerSpeed > other.position.X &&
+                position.X + playerSpeed < other.position.X + other.size.X &&
+                position.Y + size.Y > other.position.Y &&
+                position.Y < other.position.Y + other.size.Y)
+            {
+                runIntoObject = true;
+            }
+            if (position.X + size.X > other.position.X &&
+                position.X < other.position.X + other.position.X &&
+                position.Y + size.Y + playerSpeed > other.position.Y &&
+                position.Y + playerSpeed < other.position.Y + other.size.Y)
+            {
+                runIntoObject = true;
+            }
+        }
+
+        public void Walking()
+        {
+            if (!runIntoObject)
+            {
+                velocity.X = 0;
+                velocity.Y = 0;
+                if (GameEnvironment.KeyboardState.IsKeyDown(Keys.A)) { velocity.X = -playerSpeed; }
+                else if (GameEnvironment.KeyboardState.IsKeyDown(Keys.D)) { velocity.X = playerSpeed; }
+                if (GameEnvironment.KeyboardState.IsKeyDown(Keys.W)) { velocity.Y = -playerSpeed; }
+                else if (GameEnvironment.KeyboardState.IsKeyDown(Keys.S)) { velocity.Y = playerSpeed; }
+                if (GameEnvironment.KeyboardState.IsKeyDown(Keys.LeftShift)) { velocity *= 2; }
+                position.X += velocity.X;
+                position.Y += velocity.Y;
+            }
+        }
+
         override public void Update()
         {
             //Continuesly set movement to 0
-            velocity.X = 0;
-            velocity.Y = 0;
+            
+
+
 
             //Movement inputs
-            if (Keyboard.GetState().IsKeyDown(Keys.A)) { velocity.X = -10.0f; }
-            else if (Keyboard.GetState().IsKeyDown(Keys.D)) { velocity.X = 10.0f; }
-            if (Keyboard.GetState().IsKeyDown(Keys.W)) { velocity.Y = -10.0f; }
-            else if (Keyboard.GetState().IsKeyDown(Keys.S)) { velocity.Y = 10.0f; }
-            if (Keyboard.GetState().IsKeyDown(Keys.LeftShift)) { velocity *= 2; }
+            
+
+            
             /*Player action inputs
             if (Keyboard.GetState().IsKeyDown(Keys.Escape)) { }
             if (Keyboard.GetState().IsKeyDown(Keys.F)) { openInventory }
@@ -71,8 +107,7 @@ namespace BaseProject
             */
 
             //Control movement
-            position.X += velocity.X;
-            position.Y += velocity.Y;
+
 
             //Texture changes
             /*

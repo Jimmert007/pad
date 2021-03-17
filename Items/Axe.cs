@@ -7,7 +7,7 @@ namespace BaseProject
 {
     class Axe : Item
     {
-        public Axe(string _assetName, int startItemAmount) : base(_assetName, startItemAmount)
+        public Axe(string _assetName, bool stackable, int startItemAmount) : base(_assetName, stackable, startItemAmount)
         {
         }
     }

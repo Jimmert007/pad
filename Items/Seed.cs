@@ -6,7 +6,7 @@ namespace BaseProject
 {
     class Seed : Item
     {
-        public Seed(string _assetName, int startItemAmount) : base(_assetName, startItemAmount)
+        public Seed(string _assetName, bool stackable, int startItemAmount) : base(_assetName, stackable, startItemAmount)
         {
         }
     }

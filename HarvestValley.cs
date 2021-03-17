@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace BaseProject
 {
-    class Game1 : GameEnvironment
+    class HarvestValley : GameEnvironment
     {
 
         /// <summary>

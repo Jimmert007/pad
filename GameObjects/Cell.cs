@@ -26,7 +26,7 @@ namespace BaseProject
                 sprites.Add(GameEnvironment.ContentManager.Load<Texture2D>("tiles/Grassland 2 Color 2@128x128"));
                 sprites.Add(GameEnvironment.ContentManager.Load<Texture2D>("tiles/Grassland Color 2@128x128"));
             }
-            if (position.Y == 0 || position.Y == GameEnvironment.Screen.Y - size.Y){
+            if (position.Y == 0 || position.Y == GameEnvironment.Screen.Y - size.Y || position.X == 0 || position.X == GameEnvironment.Screen.X - size.Y){
                 texture = sprites[0];
                 cellHasTree = true;
                 sourceRect = new Rectangle(64, 64, 1024, 1024);

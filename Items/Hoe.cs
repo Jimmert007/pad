@@ -9,7 +9,7 @@ namespace BaseProject
     class Hoe : Item
     {
 
-        public Hoe(string _assetName, int startItemAmount) : base(_assetName, startItemAmount)
+        public Hoe(string _assetName, bool stackable, int startItemAmount) : base(_assetName, stackable, startItemAmount)
         {
         }
     }
