@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BaseProject.GameObjects
+namespace HarvestValley.GameObjects
 {
     class EnergyBar : SpriteGameObject
     {

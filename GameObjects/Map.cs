@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 //Niels Duivenvoorden, 500847100
 //purpose: Generate a random map for every player
 
-namespace BaseProject
+namespace HarvestValley
 {
     class Map : GameObject
     {

@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace BaseProject
+namespace HarvestValley
 {
     class HarvestValley : GameEnvironment
     {

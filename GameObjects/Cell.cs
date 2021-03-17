@@ -5,19 +5,21 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-namespace BaseProject
+namespace HarvestValley
 {
     class Cell : SpriteGameObject
     {
         public int cellID;
         public bool soilHasPlant = false;
         private int _sheetIndex;
+        private bool _mirror;
 
         public Cell(SpriteSheet _sprite, Vector2 _position, float _scale, int _id) : base(_sprite)
         {
             scale = _scale;
             position = _position;
             cellID = _id;
+            _mirror = false;
             if (cellID > 0 && cellID < 11)
             {
                 _sheetIndex = 7;
@@ -37,6 +39,7 @@ namespace BaseProject
             else if (cellID == 72)
             {
                 _sheetIndex = 10;
+                _mirror = true;
             }
             else if (cellID == 11)
             {
@@ -45,6 +48,7 @@ namespace BaseProject
             else if (cellID == 0)
             {
                 _sheetIndex = 11;
+                _mirror = true;
             }
             else if (cellID == 83)
             {
@@ -59,6 +63,7 @@ namespace BaseProject
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             sprite.SheetIndex = _sheetIndex;
+            sprite.Mirror = _mirror;
             sprite.Draw(spriteBatch, Position, origin, scale);
         }
     }

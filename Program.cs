@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BaseProject
+namespace HarvestValley
 {
     public static class Program
     {

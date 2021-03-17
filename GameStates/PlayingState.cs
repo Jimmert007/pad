@@ -4,19 +4,19 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BaseProject.GameObjects;
+using HarvestValley.GameObjects;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace BaseProject
+namespace HarvestValley
 {
     class PlayingState : GameObjectList
     {
         Map map;
         Player player;
         GameObjectList plants;
-
+ 
 
         public PlayingState()
         {
