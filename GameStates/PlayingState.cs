@@ -177,11 +177,13 @@ namespace BaseProject
             {
                 dialogueBox.position.X = GameEnvironment.Screen.X / 4;
                 dialogueBox.position.Y = GameEnvironment.Screen.Y / 4;
+                dialogueText.Text = dialogueLines[0];
+
                 //Add test dialogue for UI
-                for (int iLine = 0; iLine < 2; iLine++)
+                /*for (int iLine = 0; iLine < 2; iLine++)
                 {
                     dialogueText.Text = dialogueLines[iLine];
-                }
+                }*/
             }
             if (ui.playerDescision)
             {
