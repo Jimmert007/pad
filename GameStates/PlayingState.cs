@@ -87,8 +87,8 @@ namespace BaseProject
             {
                 if (cell.cellHasTree)
                     player.checkObstacles(cell);
+
             }
-            player.Walking();
             GameObject mouseGO = new GameObject("spr_empty");
             mouseGO.position.X = GameEnvironment.MouseState.X;
             mouseGO.position.Y = GameEnvironment.MouseState.Y;

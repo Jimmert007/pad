@@ -22,7 +22,7 @@ namespace BaseProject
             position.Y = _y;
             size.X = _w;
             size.Y = _h;
-            texture = GameEnvironment.ContentManager.Load<Texture2D>("EnergyBarBackground");
+            texture = GameEnvironment.ContentManager.Load<Texture2D>("Jorrit");
             //left = GameEnvironment.ContentManager.Load<Texture2D>("spr_red_invader");
             //right = GameEnvironment.ContentManager.Load<Texture2D>("spr_green_invader");
             //up = GameEnvironment.ContentManager.Load<Texture2D>("spr_yellow_invader");
@@ -60,75 +60,96 @@ namespace BaseProject
                 position.Y + size.Y > other.position.Y &&
                 position.Y < other.position.Y + other.size.Y)
             {
+                if (position.X > other.position.X + other.size.X / 2)
+                {
+                    position.X = other.position.X + other.size.X;
+                }
+                if (position.X < other.position.X + other.size.X / 2)
+                {
+                    position.X = other.position.X - size.X;
+                }
                 runIntoObject = true;
             }
             if (position.X + size.X > other.position.X &&
-                position.X < other.position.X + other.position.X &&
+                position.X < other.position.X + other.size.X &&
                 position.Y + size.Y + playerSpeed > other.position.Y &&
                 position.Y + playerSpeed < other.position.Y + other.size.Y)
             {
+                if (position.Y > other.position.Y + other.size.Y / 2)
+                {
+                    position.Y = other.position.Y + other.size.Y;
+                }
+                if (position.Y < other.position.Y + other.size.Y / 2)
+                {
+                    position.Y = other.position.Y - size.Y;
+                }
                 runIntoObject = true;
+            } 
+            else
+            {
+                runIntoObject = false;
             }
         }
 
-        public void Walking()
+
+
+        override public void Update()
         {
+            if (runIntoObject)
+            Debug.WriteLine(runIntoObject);
+
+            //Continuesly set movement to 0
+            velocity.X = 0;
+            velocity.Y = 0;
+
+
+
+            //Movement inputs
             if (!runIntoObject)
             {
-                velocity.X = 0;
-                velocity.Y = 0;
                 if (GameEnvironment.KeyboardState.IsKeyDown(Keys.A)) { velocity.X = -playerSpeed; }
                 else if (GameEnvironment.KeyboardState.IsKeyDown(Keys.D)) { velocity.X = playerSpeed; }
                 if (GameEnvironment.KeyboardState.IsKeyDown(Keys.W)) { velocity.Y = -playerSpeed; }
                 else if (GameEnvironment.KeyboardState.IsKeyDown(Keys.S)) { velocity.Y = playerSpeed; }
                 if (GameEnvironment.KeyboardState.IsKeyDown(Keys.LeftShift)) { velocity *= 2; }
-                position.X += velocity.X;
-                position.Y += velocity.Y;
             }
+
+            position.X += velocity.X;
+            position.Y += velocity.Y;
+            base.Update();
         }
 
-        override public void Update()
-        {
-            //Continuesly set movement to 0
-            
+        /*Player action inputs
+        if (Keyboard.GetState().IsKeyDown(Keys.Escape)) { }
+        if (Keyboard.GetState().IsKeyDown(Keys.F)) { openInventory }
+        if (Keyboard.GetState().IsKeyDown(Keys.F) && openInventory) { !openInventory }
+        if (Keyboard.GetState().IsKeyDown(Keys.M)) { openMap }
+        if (Keyboard.GetState().IsKeyDown(Keys.M) && openMap) { !openMap }
+        */
+
+        //Control movement
 
 
-
-            //Movement inputs
-            
-
-            
-            /*Player action inputs
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape)) { }
-            if (Keyboard.GetState().IsKeyDown(Keys.F)) { openInventory }
-            if (Keyboard.GetState().IsKeyDown(Keys.F) && openInventory) { !openInventory }
-            if (Keyboard.GetState().IsKeyDown(Keys.M)) { openMap }
-            if (Keyboard.GetState().IsKeyDown(Keys.M) && openMap) { !openMap }
-            */
-
-            //Control movement
-
-
-            //Texture changes
-            /*
+        //Texture changes
+        /*
 if (Keyboard.GetState().IsKeyDown(Keys.W))
 {
-    texture = up;
+texture = up;
 }
 else if (Keyboard.GetState().IsKeyDown(Keys.S))
 {
-    texture = down;
+texture = down;
 }
 else if (Keyboard.GetState().IsKeyDown(Keys.A))
 {
-    texture = left;
+texture = left;
 }
 else if (Keyboard.GetState().IsKeyDown(Keys.D))
 {
-    texture = right;
+texture = right;
 }
 */
-        }
     }
+    
 }
 
