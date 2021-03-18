@@ -153,15 +153,21 @@ namespace BaseProject
             //Continuesly draw the UI on top of the UI box
             dialogueText.position = new Vector2(dialogueBox.position.X + yesButton.size.X / 3, dialogueBox.position.Y + dialogueBox.size.Y / 3);
 
-            ////Go through lines array
-            //for (int iLines = 0; iLines < 5; iLines++)
-            //{
-            //dialogueText.Text = dialogueLines[0];
-            //}
-
             //Pick a sepcific line to display 
-            //Cycle through lines on intput
-            if (Keyboard.GetState().IsKeyDown(Keys.P))
+            //Cycle through lines on input
+            //bool Ppressed = true;
+            //bool PlastFramePressed = false;
+            //if (Keyboard.GetState().IsKeyDown(Keys.P))
+            //{
+            //    Ppressed = true;
+            //    PlastFramePressed = false;
+            //}
+            //else if (!Keyboard.GetState().IsKeyDown(Keys.P)) {
+            //    PlastFramePressed = true; 
+            //    Ppressed = false;  
+            //}
+            //if (Ppressed && PlastFramePressed)
+            if(Keyboard.GetState().IsKeyDown(Keys.P))
             {
                 iLines++;
                 if (iLines >= dialogueLines.Length)
