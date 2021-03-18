@@ -11,9 +11,9 @@ namespace HarvestValley
         public int growthStage = 0;
         public SpriteSheet empty, seed1stage1, seed1stage2, seed1stage3, seed1stage4;
 
-        public Plant(string assetName, int _x, int _y, float _w, float _h, float _scale) : base(assetName)
+        public Plant(string assetName, Vector2 _postition, float _scale) : base(assetName)
         {
-            position = new Vector2(_x, _y);
+            position = _postition;
             scale = _scale;
             empty = new SpriteSheet("spr_empty");
             seed1stage1 = new SpriteSheet("spr_seed1_stage1");

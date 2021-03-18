@@ -13,6 +13,7 @@ namespace HarvestValley
         public bool openInventory;
         public bool openMap;
         SpriteSheet left, right, up, down;
+        public Cell current;
 
         public Player(string _assetName, Vector2 _position, float _scale) : base(_assetName)
         {
@@ -23,26 +24,27 @@ namespace HarvestValley
         override public void Reset()
         {
             base.Reset();
-            position.X = GameEnvironment.Screen.X / 2 - this.sprite.Width / 2;
-            position.Y = GameEnvironment.Screen.Y / 2 - this.sprite.Height / 2;
-            /*size.X = 100;
-            size.Y = 100;*/
-
+            position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2);
         }
         public bool PlayerCanReach()
         {
-            /*if (position.X + size.X / 2 - Mouse.GetState().X <= 75
-                & position.X + size.X / 2 - Mouse.GetState().X >= -75
-                & position.Y + size.Y / 2 - Mouse.GetState().Y <= 75
-                & position.Y + size.Y / 2 - Mouse.GetState().Y >= -75)
+            if (position.X + Width / 2 - Mouse.GetState().X <= 75
+                & position.X + Width / 2 - Mouse.GetState().X >= -75
+                & position.Y + Height / 2 - Mouse.GetState().Y <= 75
+                & position.Y + Height / 2 - Mouse.GetState().Y >= -75)
             {
                 return true;
-            }*/
+            }
             return false;
         }
 
         override public void Update(GameTime gameTime)
         {
+           /* if (current != null)
+            {
+                Debug.WriteLine(gameTime.TotalGameTime + " " + current.cellID);
+            }*/
+
             //Continuesly set movement to 0
             velocity.X = 0;
             velocity.Y = 0;
@@ -53,37 +55,10 @@ namespace HarvestValley
             if (Keyboard.GetState().IsKeyDown(Keys.W)) { velocity.Y = -10.0f; }
             else if (Keyboard.GetState().IsKeyDown(Keys.S)) { velocity.Y = 10.0f; }
             if (Keyboard.GetState().IsKeyDown(Keys.LeftShift)) { velocity *= 2; }
-            /*Player action inputs
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape)) { }
-            if (Keyboard.GetState().IsKeyDown(Keys.F)) { openInventory }
-            if (Keyboard.GetState().IsKeyDown(Keys.F) && openInventory) { !openInventory }
-            if (Keyboard.GetState().IsKeyDown(Keys.M)) { openMap }
-            if (Keyboard.GetState().IsKeyDown(Keys.M) && openMap) { !openMap }
-            */
 
             //Control movement
             position.X += velocity.X;
             position.Y += velocity.Y;
-
-            //Texture changes
-            /*
-if (Keyboard.GetState().IsKeyDown(Keys.W))
-{
-    texture = up;
-}
-else if (Keyboard.GetState().IsKeyDown(Keys.S))
-{
-    texture = down;
-}
-else if (Keyboard.GetState().IsKeyDown(Keys.A))
-{
-    texture = left;
-}
-else if (Keyboard.GetState().IsKeyDown(Keys.D))
-{
-    texture = right;
-}
-*/
         }
     }
 }
