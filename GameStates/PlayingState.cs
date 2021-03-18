@@ -155,18 +155,6 @@ namespace BaseProject
 
             //Pick a sepcific line to display 
             //Cycle through lines on input
-            //bool Ppressed = true;
-            //bool PlastFramePressed = false;
-            //if (Keyboard.GetState().IsKeyDown(Keys.P))
-            //{
-            //    Ppressed = true;
-            //    PlastFramePressed = false;
-            //}
-            //else if (!Keyboard.GetState().IsKeyDown(Keys.P)) {
-            //    PlastFramePressed = true; 
-            //    Ppressed = false;  
-            //}
-            //if (Ppressed && PlastFramePressed)
             if(Keyboard.GetState().IsKeyDown(Keys.P))
             {
                 iLines++;
@@ -176,26 +164,56 @@ namespace BaseProject
                 }
             }
             dialogueText.Text = dialogueLines[iLines].ToString();
-
+            //UI textBox
             if (ui.UIActive)
-            {
+            {   //Change UI textBox position
                 dialogueBox.position.X = GameEnvironment.Screen.X / 4;
                 dialogueBox.position.Y = GameEnvironment.Screen.Y / 4;
             }
-
+            //  UI for Player Actions
             if (ui.playerDescision)
             {
+                //Change UI Choice Positions
                 yesButton.position.X = (int)(dialogueBox.position.X);
                 yesButton.position.Y = (int)(dialogueBox.position.Y + (dialogueBox.size.Y * 2));
 
                 noButton.position.X = (int)(dialogueBox.position.X + dialogueBox.size.X - noButton.size.X);
                 noButton.position.Y = (int)(yesButton.position.Y);
+
+                //Choices for Player Actions on UI interaction when UI Choice is active
+                for (int iLines = 0; iLines < dialogueLines.Length; iLines++)
+                {
+                    if (yesButton.Overlaps(mouseGO) && ui.UIActive && iLines == 0)
+                    {
+                        ui.playerDescision = false;
+                        //Accept player command for action 0
+                    }
+                    if (yesButton.Overlaps(mouseGO) && ui.UIActive && iLines == 1)
+                    {
+                        ui.playerDescision = false;
+                        //Accept player command for action 1
+                    }
+                    if (yesButton.Overlaps(mouseGO) && ui.UIActive && iLines == 2)
+                    {
+                        ui.playerDescision = false;
+                        //Accept player command for action 2
+                    }
+                    if (yesButton.Overlaps(mouseGO) && ui.UIActive && iLines == 3)
+                    {
+                        ui.playerDescision = false;
+                        //Accept player command for action 3
+                    }
+                    if (noButton.Overlaps(mouseGO) && ui.UIActive)
+                    {
+                        ui.playerDescision = false;
+                        //reject player command
+                    }
+                }
             }
             else if (!ui.UIActive)
             {
                 dialogueBox.position.X = -10000;
                 dialogueBox.position.Y = -10000;
-                iLines = 0;
             }
             else if (!ui.playerDescision)
             {
@@ -203,17 +221,6 @@ namespace BaseProject
                 yesButton.position.Y = -10000;
                 noButton.position.X = -10000;
                 noButton.position.Y = -10000;
-            }
-
-            if (yesButton.Overlaps(mouseGO) && ui.UIActive)
-            {
-                ui.playerDescision = false;
-                //Accept player command
-            }
-            if (noButton.Overlaps(mouseGO) && ui.UIActive)
-            {
-                ui.playerDescision = false;
-                //reject player command
             }
 
             base.Update(gameTime);
