@@ -12,6 +12,7 @@ namespace BaseProject
 {
     class PlayingState : GameState
     {
+        int iLines = 0;
         Sleeping sleeping;
         GlobalTime globalTime;
         Player player;
@@ -23,9 +24,9 @@ namespace BaseProject
         public UI ui;
         public UIButton yesButton, noButton;
         public UIDialogueBox dialogueBox;
-        public TextGameObject dialogueText;
+        public UIText dialogueText;
 
-        public string[] dialogueLines = { "Dit is een test", "Hallo" };
+        public string[] dialogueLines = { "Dit is een test", "Hallo", "Het werkt", "INSERT TEXT", "Proleet" };
 
 
         public int ScreenWidth;
@@ -46,18 +47,12 @@ namespace BaseProject
             gameObjectList.Add(hoe);
             gameObjectList.Add(tilling);
 
-            dialogueText = new TextGameObject("GameFont");
+            //Initialize UI Elements
             ui = new UI("ui_bar");
-
-            //For loop to cycle through dialogue lines
-            for (int iLines = 0; iLines < 2; iLines++)
-            {
-                dialogueBox = new UIDialogueBox("ui_bar", -1000, -1000, GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 4);
-            }
+            dialogueBox = new UIDialogueBox("ui_bar", -1000, -1000, GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 4);
+            dialogueText = new UIText();
             yesButton = new UIButton("play", -1000, -1000, (int)dialogueBox.size.X / 3, (int)dialogueBox.size.Y / 3);
             noButton = new UIButton("cancel", -1000, -1000, (int)dialogueBox.size.X / 3, (int)dialogueBox.size.Y / 3);
-
-            dialogueText.position = new Vector2(dialogueBox.position.X + yesButton.size.X, dialogueBox.position.Y + dialogueBox.size.Y / 2);
 
             for (int i = 0; i < map.cols; i++)
             {
@@ -83,12 +78,11 @@ namespace BaseProject
             hotbar = new Hotbar("test");
             //gameObjectList.Add(hotbar);
 
-            //Add UI elements
+            //Add new instance for UI elements
             gameObjectList.Add(dialogueBox);
             gameObjectList.Add(yesButton);
             gameObjectList.Add(noButton);
             gameObjectList.Add(dialogueText);
-
 
             for (int i = 0; i < HotbarCount; i++)
             {
@@ -109,8 +103,6 @@ namespace BaseProject
             }
 
         }
-
-
 
         public override void Update(GameTime gameTime)
         {
@@ -153,13 +145,58 @@ namespace BaseProject
                 }
             }
 
-             if (Keyboard.GetState().IsKeyDown(Keys.U)) { ui.UIActive = true; }
+            if (Keyboard.GetState().IsKeyDown(Keys.U)) { ui.UIActive = true; }
             if (Keyboard.GetState().IsKeyDown(Keys.I)) { ui.playerDescision = true; }
             if (Keyboard.GetState().IsKeyDown(Keys.J)) { ui.UIActive = false; }
             if (Keyboard.GetState().IsKeyDown(Keys.K)) { ui.playerDescision = false; }
 
-            for (int iLines = 0; iLines < 2; iLines++) {
-                dialogueText.Text = dialogueLines[iLines].ToString();
+            //Continuesly draw the UI on top of the UI box
+            dialogueText.position = new Vector2(dialogueBox.position.X + yesButton.size.X / 3, dialogueBox.position.Y + dialogueBox.size.Y / 3);
+
+            ////Go through lines array
+            //for (int iLines = 0; iLines < 5; iLines++)
+            //{
+            //dialogueText.Text = dialogueLines[0];
+            //}
+
+            //Pick a sepcific line to display 
+            //Cycle through lines on intput
+            if (Keyboard.GetState().IsKeyDown(Keys.P))
+            {
+                iLines++;
+                if (iLines >= dialogueLines.Length)
+                {
+                    iLines = 0;
+                }
+            }
+            dialogueText.Text = dialogueLines[iLines].ToString();
+
+            if (ui.UIActive)
+            {
+                dialogueBox.position.X = GameEnvironment.Screen.X / 4;
+                dialogueBox.position.Y = GameEnvironment.Screen.Y / 4;
+            }
+
+            if (ui.playerDescision)
+            {
+                yesButton.position.X = (int)(dialogueBox.position.X);
+                yesButton.position.Y = (int)(dialogueBox.position.Y + (dialogueBox.size.Y * 2));
+
+                noButton.position.X = (int)(dialogueBox.position.X + dialogueBox.size.X - noButton.size.X);
+                noButton.position.Y = (int)(yesButton.position.Y);
+            }
+            else if (!ui.UIActive)
+            {
+                dialogueBox.position.X = -10000;
+                dialogueBox.position.Y = -10000;
+                iLines = 0;
+            }
+            else if (!ui.playerDescision)
+            {
+                yesButton.position.X = -10000;
+                yesButton.position.Y = -10000;
+                noButton.position.X = -10000;
+                noButton.position.Y = -10000;
             }
 
             if (yesButton.Overlaps(mouseGO) && ui.UIActive)
@@ -173,41 +210,8 @@ namespace BaseProject
                 //reject player command
             }
 
-            if (ui.UIActive)
-            {
-                dialogueBox.position.X = GameEnvironment.Screen.X / 4;
-                dialogueBox.position.Y = GameEnvironment.Screen.Y / 4;
-                dialogueText.Text = dialogueLines[0];
-
-                //Add test dialogue for UI
-                /*for (int iLine = 0; iLine < 2; iLine++)
-                {
-                    dialogueText.Text = dialogueLines[iLine];
-                }*/
-            }
-            if (ui.playerDescision)
-            {
-                yesButton.position.X = (int)(dialogueBox.position.X);
-                yesButton.position.Y = (int)(dialogueBox.position.Y + (dialogueBox.size.Y * 2));
-
-                noButton.position.X = (int)(dialogueBox.position.X + dialogueBox.size.X - noButton.size.X);
-                noButton.position.Y = (int)(yesButton.position.Y);
-            }
-            else if (!ui.UIActive)
-            {
-                dialogueBox.position.X = -10000;
-                dialogueBox.position.Y = -10000;
-            }
-            else if (!ui.playerDescision)
-            {
-                yesButton.position.X = -10000;
-                yesButton.position.Y = -10000;
-                noButton.position.X = -10000;
-                noButton.position.Y = -10000;
-            }
-
             base.Update(gameTime);
-           //globalTime.Update(gameTime);
+            //globalTime.Update(gameTime);
             //sleeping.Update(globalTime, plants[0], tilling);
         }
     }
