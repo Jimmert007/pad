@@ -25,7 +25,7 @@ public class SpriteGameObject : GameObject
     public SpriteGameObject(SpriteSheet spriteSheet, int layer = 0, string id = "")
        : base(layer, id)
     {
-            sprite = spriteSheet;
+        sprite = spriteSheet;
     }
 
     public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -51,7 +51,7 @@ public class SpriteGameObject : GameObject
     {
         get
         {
-            return sprite.Width;
+            return (int)(sprite.Width * scale);
         }
     }
 
@@ -59,22 +59,24 @@ public class SpriteGameObject : GameObject
     {
         get
         {
-            return sprite.Height;
+            return (int)(sprite.Height * scale);
         }
     }
 
     /// <summary>
     /// Returns / sets the scale of the sprite.
     /// </summary>
-    public float Scale {
+    public float Scale
+    {
         get { return scale; }
-        set { scale = value;  }
+        set { scale = value; }
     }
 
     /// <summary>
     /// Set the shade the sprite will be drawn in.
     /// </summary>
-    public Color Shade {
+    public Color Shade
+    {
         get { return shade; }
         set { shade = value; }
     }

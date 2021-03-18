@@ -10,7 +10,6 @@ namespace HarvestValley
     class Cell : SpriteGameObject
     {
         public int cellID;
-        public bool soilHasPlant = false;
         private int _sheetIndex;
         private bool _mirror;
 
@@ -20,37 +19,39 @@ namespace HarvestValley
             position = _position;
             cellID = _id;
             _mirror = false;
-            if (cellID > 0 && cellID < 11)
+            Debug.WriteLine(cellID);
+
+            if (cellID > 0 && cellID < 9)
             {
-                _sheetIndex = 7;
+                _sheetIndex = 7; //bovenste rij bomen zonder hoeken
             }
-            else if (cellID > 72 && cellID < 83)
+            else if (cellID > 40 && cellID < 49)
             {
-                _sheetIndex = 1;
+                _sheetIndex = 1; //onderste rij bomen zonder hoeken
             }
-            else if (cellID % 12 == 0 && cellID > 0 && cellID < 72)
+            else if (cellID % 10 == 0 && cellID > 9 && cellID < 40)
             {
-                _sheetIndex = 5;
+                _sheetIndex = 5; //linker rij bomen zonder hoeken
             }
-            else if (cellID % 12 == 11 && cellID < 83 && cellID > 12)
+            else if (cellID % 10 == 9 && cellID < 40 && cellID > 9)
             {
-                _sheetIndex = 3;
+                _sheetIndex = 3; //rechter rij bomen zonder hoeken
             }
-            else if (cellID == 72)
+            else if (cellID == 0) //TL
+            {
+                _sheetIndex = 11;
+                _mirror = true;
+            }
+            else if (cellID == 9) //TR
+            {
+                _sheetIndex = 11;
+            }
+            else if (cellID == 40) //BL
             {
                 _sheetIndex = 10;
                 _mirror = true;
             }
-            else if (cellID == 11)
-            {
-                _sheetIndex = 11;
-            }
-            else if (cellID == 0)
-            {
-                _sheetIndex = 11;
-                _mirror = true;
-            }
-            else if (cellID == 83)
+            else if (cellID == 49) //BR
             {
                 _sheetIndex = 10;
             }
@@ -65,6 +66,14 @@ namespace HarvestValley
             sprite.SheetIndex = _sheetIndex;
             sprite.Mirror = _mirror;
             sprite.Draw(spriteBatch, Position, origin, scale);
+        }
+
+        public void changeSpriteTo(SpriteSheet obj)
+        {
+            if (obj != null)
+            {
+                sprite = obj;
+            }
         }
     }
 }

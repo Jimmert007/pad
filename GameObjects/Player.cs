@@ -19,6 +19,7 @@ namespace HarvestValley
         {
             position = _position;
             scale = _scale;
+            PerPixelCollisionDetection = false;
         }
 
         override public void Reset()
@@ -28,23 +29,27 @@ namespace HarvestValley
         }
         public bool PlayerCanReach()
         {
-            if (position.X + Width / 2 - Mouse.GetState().X <= 75
-                & position.X + Width / 2 - Mouse.GetState().X >= -75
-                & position.Y + Height / 2 - Mouse.GetState().Y <= 75
-                & position.Y + Height / 2 - Mouse.GetState().Y >= -75)
+            if (position.X + sprite.Width / 2 - Mouse.GetState().X <= 10
+                & position.X + sprite.Width / 2 - Mouse.GetState().X >= -10
+                & position.Y + sprite.Height / 2 - Mouse.GetState().Y <= 10
+                & position.Y + sprite.Height / 2 - Mouse.GetState().Y >= -10)
             {
                 return true;
             }
             return false;
         }
 
+/*        public override void HandleInput(InputHelper inputHelper)
+        {
+            SpriteGameObject MouseGO = new SpriteGameObject();
+            MouseGO.Position = Mouse.GetState().Position;
+            if(CollidesWith(new Mouse.GetState().Position)
+            Debug.WriteLine()
+            base.HandleInput(inputHelper);
+        }*/
+
         override public void Update(GameTime gameTime)
         {
-           /* if (current != null)
-            {
-                Debug.WriteLine(gameTime.TotalGameTime + " " + current.cellID);
-            }*/
-
             //Continuesly set movement to 0
             velocity.X = 0;
             velocity.Y = 0;

@@ -16,8 +16,8 @@ namespace HarvestValley
         public GameObjectList cells = new GameObjectList();
         public Map(Vector2 _size) : base()
         {
-            cols = (int)MathF.Round(GameEnvironment.Screen.X / _size.X);
-            rows = (int)MathF.Round(GameEnvironment.Screen.Y / _size.Y);
+            cols = (int)MathF.Floor(GameEnvironment.Screen.X / _size.X);
+            rows = (int)MathF.Floor(GameEnvironment.Screen.Y / _size.Y);
 
             Debug.WriteLine(cols.ToString() + " x " + rows.ToString() + " totaal " + rows * cols);
         }
