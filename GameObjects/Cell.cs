@@ -19,7 +19,7 @@ namespace HarvestValley
             position = _position;
             cellID = _id;
             _mirror = false;
-            Debug.WriteLine(cellID);
+            //Debug.WriteLine(cellID);
 
             if (cellID > 0 && cellID < 9)
             {
@@ -66,14 +66,6 @@ namespace HarvestValley
             sprite.SheetIndex = _sheetIndex;
             sprite.Mirror = _mirror;
             sprite.Draw(spriteBatch, Position, origin, scale);
-        }
-
-        public void changeSpriteTo(SpriteSheet obj)
-        {
-            if (obj != null)
-            {
-                sprite = obj;
-            }
         }
     }
 }

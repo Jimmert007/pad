@@ -19,6 +19,9 @@ namespace HarvestValley
         Tilling tilling;
         Tools tools;
         Hoe hoe;
+        EnergyBar energyBar;
+        Sleeping sleeping;
+        GlobalTime globalTime;
 
         public PlayingState()
         {
@@ -49,7 +52,7 @@ namespace HarvestValley
             player = new Player("spr_soil", new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2), .2f);
             Add(player);
 
-            tilling = new Tilling("spr_soil", new Vector2(100, 100), .25f);
+            tilling = new Tilling("spr_soil", new Vector2(100, 100), .1f);
             Add(tilling);
 
             tools = new Tools("spr_empty");
@@ -57,6 +60,15 @@ namespace HarvestValley
 
             hoe = new Hoe("spr_hoe", new Vector2(GameEnvironment.Screen.X / 2 - 25, GameEnvironment.Screen.Y / 2 - 75), .1f);
             Add(hoe);
+
+            energyBar = new EnergyBar("EnergyBarBackground", GameEnvironment.Screen.X - 60, GameEnvironment.Screen.Y - 220, 40, 200);
+            Add(energyBar);
+
+            sleeping = new Sleeping("spr_empty");
+            Add(sleeping);
+
+            globalTime = new GlobalTime();
+            Add(globalTime);
         }
 
         public override void Update(GameTime gameTime)
@@ -77,35 +89,44 @@ namespace HarvestValley
                             //energyBar.percentageLost += energyBar.onePercent;
 
                         }
-                    }
-                    /*if (GameEnvironment.MouseState.RightButton == ButtonState.Pressed)
-                    {
-                        if (map.cells[i].soilHasPlant)
+                        /*if (tools.toolSelected == "HOE")
                         {
-                            if (plants[i].growthStage >= 4)
+                            p.texture = tilling.tilledSoilTexture;
+                        }*/
+
+                    }
+
+                    if (Mouse.GetState().RightButton == ButtonState.Pressed)
+                    {
+                        if (p.soilHasPlant)
+                        {
+                            if (p.growthStage >= 4)
                             {
                                 //(receive product and new seed)
-                                map.cells[i].soilHasPlant = false;
-                                plants[i].growthStage = 0;
+                                p.soilHasPlant = false;
+                                p.growthStage = 0;
                             }
                         }
-                    }*/
+                    }
+
                 }
-            }
-
-            foreach (Cell c in map.cells.Children)
-            {
-                c.changeSpriteTo(tilling.tilledSoilTexture);
-
-                if (c.CollidesWith(mouseGO))
+                if (sleeping.fadeOut)
                 {
-                    Debug.WriteLine("yo");
-                    if (tools.toolSelected == "HOE")
+                    energyBar.Reset();
+                    if (p.soilHasPlant && sleeping.fadeAmount >= 1f)
                     {
+                        p.growthStage++;
                     }
                 }
-            }
+                if (energyBar.passOut)
+                {
+                    sleeping.Sleep(globalTime);
+                    sleeping.useOnce = false;
+                }
+                sleeping.Update(globalTime);
+                globalTime.Update(gameTime);
 
+            }
             base.Update(gameTime);
         }
     }
