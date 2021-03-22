@@ -14,6 +14,7 @@ namespace BaseProject
         public bool treeHit = false;
         public int health = 4;
         public Texture2D treeCut, normalTree;
+        public Vector2 centerPosition;
         public Tree(string assetName, int _x, int _y, int _w, int _h) : base(assetName)
         {
             position.X = _x;
@@ -22,7 +23,7 @@ namespace BaseProject
             size.Y = _h;
             normalTree = GameEnvironment.ContentManager.Load<Texture2D>("spr_tree");
             treeCut = GameEnvironment.ContentManager.Load<Texture2D>("spr_tree_cut");
-
+            centerPosition = new Vector2(position.X + size.X / 2, position.Y + size.Y / 2);
         }
 
         public override void Update()

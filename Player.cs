@@ -14,7 +14,8 @@ namespace BaseProject
         public bool runIntoObject = false;
         public bool openInventory;
         public bool openMap;
-        Texture2D left, right, up, down ; 
+        Texture2D left, right, up, down ;
+        Vector2 obstacleCenter, playerCenter;
 
         public Player(string _assetName, int _x, int _y, int _w, int _h) : base(_assetName)
         {
@@ -22,7 +23,7 @@ namespace BaseProject
             position.Y = _y;
             size.X = _w;
             size.Y = _h;
-            texture = GameEnvironment.ContentManager.Load<Texture2D>("Jorrit");
+            texture = GameEnvironment.ContentManager.Load<Texture2D>("EnergyBarBackground");
             //left = GameEnvironment.ContentManager.Load<Texture2D>("spr_red_invader");
             //right = GameEnvironment.ContentManager.Load<Texture2D>("spr_green_invader");
             //up = GameEnvironment.ContentManager.Load<Texture2D>("spr_yellow_invader");
@@ -55,39 +56,96 @@ namespace BaseProject
         public void checkObstacles(GameObject other)
         {
             //collision
-            if (position.X + size.X + playerSpeed > other.position.X &&
-                position.X + playerSpeed < other.position.X + other.size.X &&
-                position.Y + size.Y > other.position.Y &&
-                position.Y < other.position.Y + other.size.Y)
+
+            obstacleCenter = new Vector2(other.position.X + other.size.X / 2, other.position.Y + other.size.Y / 2);
+            
+            //looks for the left and bottomside of the player
+            if (playerCenter.X - obstacleCenter.X > 0 && playerCenter.Y - obstacleCenter.Y < 0)
             {
-                if (position.X > other.position.X + other.size.X / 2)
+                //checks bottom half 1
+                if (playerCenter.X - obstacleCenter.X < -(playerCenter.Y - obstacleCenter.Y))
                 {
-                    position.X = other.position.X + other.size.X;
-                }
-                if (position.X < other.position.X + other.size.X / 2)
+                    //makes the player unable to walk into obstacle
+                    if (position.Y + size.Y > other.position.Y)
+                    {
+                        position.Y = other.position.Y - size.Y;
+                    }
+                } 
+                //checks left half 2
+                if (playerCenter.X - obstacleCenter.X > -(playerCenter.Y - obstacleCenter.Y))
                 {
-                    position.X = other.position.X - size.X;
+                    //makes the player unable to walk into obstacle
+                    if (position.X < other.position.X + other.size.X)
+                    {
+                        position.X = other.position.X + other.size.X;
+                    }
                 }
-                runIntoObject = true;
             }
-            if (position.X + size.X > other.position.X &&
-                position.X < other.position.X + other.size.X &&
-                position.Y + size.Y + playerSpeed > other.position.Y &&
-                position.Y + playerSpeed < other.position.Y + other.size.Y)
+            //looks for the rigth and topside of the player
+            if (playerCenter.X - obstacleCenter.X < 0 && playerCenter.Y - obstacleCenter.Y > 0)
             {
-                if (position.Y > other.position.Y + other.size.Y / 2)
+                //checks top half 2
+                if (-(playerCenter.X - obstacleCenter.X) < playerCenter.Y - obstacleCenter.Y)
                 {
-                    position.Y = other.position.Y + other.size.Y;
+                    //makes the player unable to walk into obstacle
+                    if (position.Y < other.position.Y + other.size.Y)
+                    {
+                        position.Y = other.position.Y + other.size.Y;
+                    }
                 }
-                if (position.Y < other.position.Y + other.size.Y / 2)
+                //checks right half 1
+                if (-(playerCenter.X - obstacleCenter.X) > playerCenter.Y - obstacleCenter.Y)
                 {
-                    position.Y = other.position.Y - size.Y;
+                    //makes the player unable to walk into obstacle
+                    if (position.X + size.X > other.position.X)
+                    {
+                        position.X = other.position.X - size.X;
+                    }
                 }
-                runIntoObject = true;
-            } 
-            else
+            }
+            //looks for the left and topside of the player
+            if (playerCenter.X - obstacleCenter.X > 0 && playerCenter.Y - obstacleCenter.Y > 0)
             {
-                runIntoObject = false;
+                //checks top half 1
+                if (playerCenter.X - obstacleCenter.X < playerCenter.Y - obstacleCenter.Y)
+                {
+                    //makes the player unable to walk into obstacle
+                    if (position.Y < other.position.Y + other.size.Y)
+                    {
+                        position.Y = other.position.Y + other.size.Y;
+                    }
+                }
+                // checks left half 1
+                if (playerCenter.X - obstacleCenter.X > playerCenter.Y - obstacleCenter.Y)
+                {
+                    //makes the player unable to walk into obstacle
+                    if (position.X < other.position.X + other.size.X)
+                    {
+                        position.X = other.position.X + other.size.X;
+                    }
+                }
+            }
+            //looks for the right and bottomside of the player
+            if (playerCenter.X - obstacleCenter.X < 0 && playerCenter.Y - obstacleCenter.Y < 0)
+            {
+                //checks bottom half 2
+                //if (playerCenter.X - obstacleCenter.X > playerCenter.Y - obstacleCenter.Y)
+                //{
+                //    //makes the player unable to walk into obstacle
+                //    if (position.Y + size.Y < other.position.Y)
+                //    {
+                //        position.Y = other.position.Y - size.Y;
+                //    }
+                //}
+                ////checks rigth half 2
+                //if (playerCenter.X - obstacleCenter.X > playerCenter.Y - obstacleCenter.Y)
+                //{
+                //    //makes the player unable to walk into obstacle
+                //    if (position.X + size.X > other.position.X)
+                //    {
+                //        position.X = other.position.X - size.X;
+                //    }
+                //}
             }
         }
 
@@ -95,9 +153,7 @@ namespace BaseProject
 
         override public void Update()
         {
-            if (runIntoObject)
-            Debug.WriteLine(runIntoObject);
-
+            playerCenter = new Vector2(position.X + size.X, position.Y + size.Y);
             //Continuesly set movement to 0
             velocity.X = 0;
             velocity.Y = 0;
