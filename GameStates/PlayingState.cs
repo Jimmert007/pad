@@ -22,6 +22,7 @@ namespace BaseProject
         List<Plant> plants = new List<Plant>();
         List<Tree> trees = new List<Tree>();
         Item item;
+        Numbers number;
         Wallet wallet;
 
         #region Adding Items
@@ -38,10 +39,15 @@ namespace BaseProject
         float HotbarCount = 9;
         float HalfHotbar;
         float vak;
+        //C0 C0;
+
+        public SpriteFont font;
 
         public PlayingState()
         {
             
+
+
             energyBar = new EnergyBar("EnergyBarBackground", GameEnvironment.Screen.X - 60, GameEnvironment.Screen.Y - 220, 40, 200);
             player = new Player("jorrit", 0, 0, 100, 100);
             item = new Item("spr_empty");
@@ -53,6 +59,7 @@ namespace BaseProject
             
             gameObjectList.Add(map);
             gameObjectList.Add(item);
+            //gameObjectList.Add(number);
 
             #region Adding Items
                 item.items.Add(new Hoe("spr_hoe", false));
@@ -60,6 +67,9 @@ namespace BaseProject
                 item.items.Add(new WateringCan("spr_empty", false));
                 item.items.Add(new Seed("spr_seed1_stage1", true));
             #endregion
+
+
+
 
             gameObjectList.Add(tilling);
 
@@ -89,12 +99,13 @@ namespace BaseProject
             wallet = new Wallet("spr_wallet");
             hotbar = new Hotbar("1px");
             gameObjectList.Add(hotbar);
-
+            font = GameEnvironment.ContentManager.Load<SpriteFont>("File");
 
             gameObjectList.Add(wallet);
             gameObjectList.Add(energyBar);
             gameObjectList.Add(sleeping);
 
+           
         }
 
         public override void Update(GameTime gameTime)
@@ -226,6 +237,23 @@ namespace BaseProject
                 hotbar.selectedSquarePosition.X = hotbar.position.X + hotbar.squareSize * 8;
             }
             #endregion
+
+
+            #region Item Selection vervormen naar money
+            if (GameEnvironment.KeyboardState.IsKeyDown(Keys.D1))
+            {
+                item.itemSelected = "HOE";
+                hotbar.selectedSquarePosition.X = hotbar.position.X;
+            }
+            else if (GameEnvironment.KeyboardState.IsKeyDown(Keys.D2))
+            {
+                item.itemSelected = "AXE";
+                hotbar.selectedSquarePosition.X = hotbar.position.X + hotbar.squareSize;
+            }
+
+            #endregion
+
+          
         }
 
 
@@ -239,7 +267,72 @@ namespace BaseProject
             {
                 spriteBatch.Draw(item.items[i].texture, new Rectangle((int)hotbar.position.X + hotbar.squareSize * i, (int)hotbar.position.Y, (int)hotbar.squareSize, (int)hotbar.squareSize), Color.White);
             }
+
+            #region wallet Draw
             spriteBatch.Draw(wallet.wallet, new Rectangle((int)wallet.position.X, (int)wallet.position.Y, (int)wallet.size.X, (int)wallet.size.Y), Color.White);
+            spriteBatch.Draw(wallet.moneySquare, new Rectangle((int)wallet.moneySquarePosition.X, (int)wallet.moneySquarePosition.Y, (int)wallet.moneySquareSize, (int)wallet.size.Y), Color.White); ;
+            
+            wallet.money++;
+            for (int i = 0; i < wallet.money.ToString().Length; i++)
+            {
+                for (int r = 0; r < wallet.money.ToString().Length;)
+                {
+                    #region lelijke if
+                    if (wallet.money.ToString()[r] == '0')
+                        {
+                        
+                            spriteBatch.DrawString(font, "0", new Vector2((int)wallet.position.X + wallet.moneySquareSize /2 -10  + wallet.moneySquareSize * r, (int)wallet.position.Y), Color.Black);
+                            Debug.WriteLine(" 0?");
+                        }
+                        else if (wallet.money.ToString()[r] == '1')
+                        {
+                        spriteBatch.DrawString(font, "1", new Vector2((int)wallet.position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.position.Y), Color.Black);
+                    }
+                        else if (wallet.money.ToString()[r] == '2')
+                        {
+                        spriteBatch.DrawString(font, "2", new Vector2((int)wallet.position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.position.Y), Color.Black);
+                        Debug.WriteLine(" 2?");
+                        }
+                        else if (wallet.money.ToString()[r] == '3')
+                        {
+                        spriteBatch.DrawString(font, "3", new Vector2((int)wallet.position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.position.Y), Color.Black);
+                        Debug.WriteLine(" 3?");
+                        }
+                        else if (wallet.money.ToString()[r] == '4')
+                        {
+                        spriteBatch.DrawString(font, "4", new Vector2((int)wallet.position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.position.Y), Color.Black);
+                        Debug.WriteLine(" 4?");
+                        }
+                        else if (wallet.money.ToString()[r] == '5')
+                        {
+                        spriteBatch.DrawString(font, "5", new Vector2((int)wallet.position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.position.Y), Color.Black);
+                        Debug.WriteLine(" 5?");
+                        }
+                        else if (wallet.money.ToString()[r] == '6')
+                        {
+                        spriteBatch.DrawString(font, "6", new Vector2((int)wallet.position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.position.Y), Color.Black);
+                        Debug.WriteLine(" 6?");
+                        }
+                        else if (wallet.money.ToString()[r] == '7')
+                        {
+                        spriteBatch.DrawString(font, "7", new Vector2((int)wallet.position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.position.Y), Color.Black);
+                        Debug.WriteLine(" 7?");
+                        }
+                        else if (wallet.money.ToString()[r] == '8')
+                        {
+                        spriteBatch.DrawString(font, "8", new Vector2((int)wallet.position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.position.Y), Color.Black);
+                        Debug.WriteLine(" 8?");
+                        }
+                        else if (wallet.money.ToString()[r] == '9')
+                        {
+                        spriteBatch.DrawString(font, "9", new Vector2((int)wallet.position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.position.Y), Color.Black);
+                        Debug.WriteLine(" 9?");
+                        }
+                    #endregion
+                    r++;
+                }
+            }
+            #endregion
         }
     }
 }

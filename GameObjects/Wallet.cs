@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace BaseProject
@@ -11,15 +12,13 @@ namespace BaseProject
         public List<GameObject> walletMoneyList;
         public Texture2D wallet, moneySquare;
         public int moneySquareSize;
-        public int walletWidth = 200;
+        //als je deze aan past moet je de font in content ook aanpassen
+        public int walletWidth = 160;
         public Vector2 moneySquarePosition;
-
-
-
+        public int money;
 
         public Wallet(string _assetName) : base(_assetName)
         {
-             
             size.X = walletWidth;
             size.Y = size.X /4;
             position.X = GameEnvironment.Screen.X - size.X;
@@ -33,14 +32,8 @@ namespace BaseProject
 
             moneySquarePosition.X = position.X;
             moneySquarePosition.Y = position.Y;
-
-
+            money = 0;
         }
-     /*   public override void Update()
-        {
-            base.Update();
-            
-        }*/
     }
 
 }

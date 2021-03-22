@@ -21,9 +21,9 @@ namespace BaseProject
             selectedSquare = GameEnvironment.ContentManager.Load<Texture2D>("spr_selected_square");
             
             HBWidth = 450;
-            squareSize = HBWidth / 9;
+            squareSize = HBWidth/9;
             size.X = HBWidth;
-            size.Y = 50;
+            size.Y = HBWidth/9;
             position.X = GameEnvironment.screen.X / 2 - HBWidth /2;
             position.Y = GameEnvironment.screen.Y - size.Y;
             selectedSquarePosition.X = position.X;
