@@ -49,7 +49,7 @@ namespace HarvestValley
             }
             Debug.WriteLine("aantal planten " + plants.Children.Count);
 
-            player = new Player("spr_soil", new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2), .2f);
+            player = new Player("jorrit", new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2), .2f);
             Add(player);
 
             tilling = new Tilling("spr_soil", new Vector2(100, 100), .1f);
