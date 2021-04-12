@@ -49,6 +49,13 @@
 /processorParam:TextureFormat=Color
 /build:EnergyBarPercentage.png
 
+#begin GameFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:GameFont.spritefont
+
 #begin jorrit.png
 /importer:TextureImporter
 /processor:TextureProcessor

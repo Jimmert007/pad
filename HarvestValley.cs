@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using HarvestValley.GameStates;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -18,8 +19,9 @@ namespace HarvestValley
             screen = new Point(1280, 720);
             ApplyResolutionSettings();
 
+            gameStateManager.AddGameState("menuState", new MenuState());
             gameStateManager.AddGameState("playingState", new PlayingState());
-            gameStateManager.SwitchTo("playingState");
+            gameStateManager.SwitchTo("menuState");
 
             IsMouseVisible = true;
         }

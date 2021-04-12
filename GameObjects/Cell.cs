@@ -67,5 +67,10 @@ namespace HarvestValley
             sprite.Mirror = _mirror;
             sprite.Draw(spriteBatch, Position, origin, scale);
         }
+
+        public void ChangeSpriteTo(SpriteSheet ss)
+        {
+            sprite = ss;
+        }
     }
 }

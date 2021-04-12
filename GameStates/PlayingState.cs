@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace HarvestValley
+namespace HarvestValley.GameStates
 {
     class PlayingState : GameObjectList
     {
@@ -19,9 +19,8 @@ namespace HarvestValley
         Tilling tilling;
         Tools tools;
         Hoe hoe;
-        EnergyBar energyBar;
-        Sleeping sleeping;
-        GlobalTime globalTime;
+        SpriteGameObject mouseGO;
+
 
         public PlayingState()
         {
@@ -49,11 +48,13 @@ namespace HarvestValley
             }
             Debug.WriteLine("aantal planten " + plants.Children.Count);
 
+            tilling = new Tilling("spr_empty", new Vector2(100, 100), .1f);
+            Add(tilling);
+
             player = new Player("jorrit", new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2), .2f);
             Add(player);
 
-            tilling = new Tilling("spr_soil", new Vector2(100, 100), .1f);
-            Add(tilling);
+
 
             tools = new Tools("spr_empty");
             Add(tools);
@@ -61,20 +62,33 @@ namespace HarvestValley
             hoe = new Hoe("spr_hoe", new Vector2(GameEnvironment.Screen.X / 2 - 25, GameEnvironment.Screen.Y / 2 - 75), .1f);
             Add(hoe);
 
-            energyBar = new EnergyBar("EnergyBarBackground", GameEnvironment.Screen.X - 60, GameEnvironment.Screen.Y - 220, 40, 200);
-            Add(energyBar);
-
-            sleeping = new Sleeping("spr_empty");
-            Add(sleeping);
-
-            globalTime = new GlobalTime();
-            Add(globalTime);
+            mouseGO = new SpriteGameObject("1px");
+            Add(mouseGO);
         }
 
         public override void Update(GameTime gameTime)
         {
-            SpriteGameObject mouseGO = new SpriteGameObject("spr_empty");
-            mouseGO.Position = new Vector2(Mouse.GetState().Position.X, Mouse.GetState().Position.Y);
+            base.Update(gameTime);
+        }
+
+        public override void HandleInput(InputHelper inputHelper)
+        {
+            base.HandleInput(inputHelper);
+            mouseGO.Position = inputHelper.MousePosition;
+
+            foreach (Cell c in map.cells.Children)
+            {
+                if (c.CollidesWith(mouseGO))
+                {
+                    if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                    {
+                        if (tools.toolSelected == "HOE")
+                        {
+                            c.ChangeSpriteTo(tilling.tilledSoilTexture);
+                        }
+                    }
+                }
+            }
 
             foreach (Plant p in plants.Children)
             {
@@ -86,14 +100,7 @@ namespace HarvestValley
                         {
                             p.soilHasPlant = true;
                             p.growthStage = 1;
-                            //energyBar.percentageLost += energyBar.onePercent;
-
                         }
-                        /*if (tools.toolSelected == "HOE")
-                        {
-                            p.texture = tilling.tilledSoilTexture;
-                        }*/
-
                     }
 
                     if (Mouse.GetState().RightButton == ButtonState.Pressed)
@@ -108,26 +115,8 @@ namespace HarvestValley
                             }
                         }
                     }
-
                 }
-                if (sleeping.fadeOut)
-                {
-                    energyBar.Reset();
-                    if (p.soilHasPlant && sleeping.fadeAmount >= 1f)
-                    {
-                        p.growthStage++;
-                    }
-                }
-                if (energyBar.passOut)
-                {
-                    sleeping.Sleep(globalTime);
-                    sleeping.useOnce = false;
-                }
-                sleeping.Update(globalTime);
-                globalTime.Update(gameTime);
-
             }
-            base.Update(gameTime);
         }
     }
 }
