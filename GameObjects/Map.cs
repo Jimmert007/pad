@@ -19,7 +19,7 @@ namespace HarvestValley
             cols = (int)MathF.Floor(GameEnvironment.Screen.X / _size.X);
             rows = (int)MathF.Floor(GameEnvironment.Screen.Y / _size.Y);
 
-            Debug.WriteLine(cols.ToString() + " x " + rows.ToString() + " totaal " + rows * cols);
+            //Debug.WriteLine(cols.ToString() + " x " + rows.ToString() + " totaal " + rows * cols);
         }
 
         public int index(int x, int y)

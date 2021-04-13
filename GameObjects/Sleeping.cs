@@ -21,14 +21,14 @@ namespace HarvestValley
             color1 = new Color(0, 0, 0, 0);
             color2 = new Color(0, 0, 0, 255);
             fadeSprite = new SpriteSheet("EnergyBarBackground");
-            sprite = fadeSprite;
         }
 
-        public void Update(GlobalTime globalTime)
+        public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
             if (Keyboard.GetState().IsKeyDown(Keys.Enter) && useOnce/* && insert cords check*/)
             {
-                Sleep(globalTime);
+                Sleep(gameTime);
                 useOnce = false;
             }
             if (fade)
@@ -48,30 +48,32 @@ namespace HarvestValley
             }
         }
 
-   /*     public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            base.Draw(gameTime, spriteBatch);
             if (fade)
             {
-                spriteBatch.Draw(texture, new Rectangle(0, 0, GameEnvironment.Screen.X, GameEnvironment.Screen.Y), finalColor);
+                spriteBatch.Draw(fadeSprite.Sprite, new Rectangle(0, 0, GameEnvironment.Screen.X, GameEnvironment.Screen.Y), finalColor);
             }
-        }*/
+        }
+
         public void FadeScreen()
         {
             if (fadeIn)
             {
                 fadeAmount += .01f;
-            } else if (fadeOut) 
+            }
+            else if (fadeOut)
             {
-                fadeAmount -= 0.01f; 
+                fadeAmount -= .01f;
             }
             finalColor = Color.Lerp(color1, color2, fadeAmount);
         }
 
-        public void Sleep(GlobalTime time)
+        public void Sleep(GameTime time)
         {
             fade = true;
             fadeIn = true;
-            time.Reset();
         }
     }
 }

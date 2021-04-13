@@ -5,27 +5,35 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-namespace HarvestValley
+namespace HarvestValley.GameObjects
 {
     class Hotbar : SpriteGameObject
     {
         public List<GameObject> hotbarItemList;
-        public int ScreenWidth;
-        public int ScreenHeight;
-
+        public SpriteGameObject hotbar, selectedSquare;
+        public int squareSize;
+        public int HBWidth;
+        public Vector2 selectedSquarePosition;
         public Hotbar(string _assetName) : base(_assetName)
         {
             hotbarItemList = new List<GameObject>();
+            hotbar = new SpriteGameObject("spr_hotbar");
+            selectedSquare = new SpriteGameObject("spr_selected_square");
+            sprite = hotbar.Sprite;
 
-            ScreenWidth = GameEnvironment.Screen.X;
-            ScreenHeight = GameEnvironment.Screen.Y;
-            position.X = ScreenWidth / 2 - sprite.Width / 2;
-           /* position.Y = ScreenHeight - texture.Height;*/
-
-            /* velocity = _velocity;*/
-
+            HBWidth = 450;
+            squareSize = HBWidth / 9;
+            hotbar.Scale = 1f;
+            position.X = GameEnvironment.Screen.X * .5f - hotbar.Sprite.Width * .5f;
+            position.Y = GameEnvironment.Screen.Y - hotbar.Sprite.Height;
+            selectedSquarePosition.X = position.X;
+            selectedSquarePosition.Y = position.Y;
         }
 
-      
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            selectedSquare.scale = 100;
+        }
     }
 }

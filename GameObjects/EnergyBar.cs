@@ -21,18 +21,18 @@ namespace HarvestValley.GameObjects
             position.Y = _y;
             //size.X = _w;
             //size.Y = _h;
-            //energyBarBackground = new SpriteSheet("EnergyBarBackground");
-            //energyBarPercentage = new SpriteSheet("EnergyBarPercentage");
-            //onePercent = (size.Y - 10) / 100;
+            energyBarBackground = new SpriteSheet("EnergyBarBackground");
+            energyBarPercentage = new SpriteSheet("EnergyBarPercentage");
+            onePercent = (sprite.Height - 10) / 100;
             percentagePosition.X = position.X + 5;
-            //percentageSize.X = size.X - 10;
+            percentageSize.X = sprite.Width - 10;
         }
 
 
         public override void Update(GameTime gameTime)
         {
             percentagePosition.Y = position.Y + 5 + percentageLost;
-            //percentageSize.Y = size.Y - 10 - percentageLost;
+            percentageSize.Y = sprite.Height - 10 - percentageLost;
             if (percentageSize.Y <= 0)
             {
                 passOut = true;
@@ -40,11 +40,13 @@ namespace HarvestValley.GameObjects
             base.Update(gameTime);
         }
 
-       /* public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(energyBarBackground, new Rectangle((int)localPosition.X, (int)localPosition.Y, (int)size.X, (int)size.Y), Color.White);
-            spriteBatch.Draw(energyBarPercentage, new Rectangle((int)percentagePosition.X, (int)percentagePosition.Y, (int)percentageSize.X, (int)percentageSize.Y), Color.White);
-        }*/
+            base.Draw(gameTime, spriteBatch);
+            spriteBatch.Draw(energyBarBackground.Sprite, new Rectangle((int)position.X, (int)position.Y, (int)sprite.Width, (int)sprite.Height), Color.White);
+            spriteBatch.Draw(energyBarPercentage.Sprite, new Rectangle((int)percentagePosition.X, (int)percentagePosition.Y, (int)percentageSize.X, (int)percentageSize.Y), Color.White);
+
+        }
 
         public override void Reset()
         {

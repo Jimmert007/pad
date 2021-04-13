@@ -16,13 +16,13 @@ namespace HarvestValley
         //creating variables
 
         public String item = "SEED";
-        public SpriteSheet tilledSoilTexture;
+        public string tilled = "spr_tilled_soil";
 
         public Tilling(string _assetName, Vector2 _position, float _scale) : base(_assetName)
         {
             position = _position;
-            scale = _scale;
-            tilledSoilTexture = new SpriteSheet("spr_tilled_soil");
+            Scale = _scale;
+            sprite = new SpriteSheet(tilled);
         }
     }
 }

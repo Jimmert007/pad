@@ -39,14 +39,14 @@ namespace HarvestValley
             return false;
         }
 
-/*        public override void HandleInput(InputHelper inputHelper)
-        {
-            SpriteGameObject MouseGO = new SpriteGameObject();
-            MouseGO.Position = Mouse.GetState().Position;
-            if(CollidesWith(new Mouse.GetState().Position)
-            Debug.WriteLine()
-            base.HandleInput(inputHelper);
-        }*/
+        /*        public override void HandleInput(InputHelper inputHelper)
+                {
+                    SpriteGameObject MouseGO = new SpriteGameObject();
+                    MouseGO.Position = Mouse.GetState().Position;
+                    if(CollidesWith(new Mouse.GetState().Position)
+                    Debug.WriteLine()
+                    base.HandleInput(inputHelper);
+                }*/
 
         override public void Update(GameTime gameTime)
         {
@@ -64,6 +64,23 @@ namespace HarvestValley
             //Control movement
             position.X += velocity.X;
             position.Y += velocity.Y;
+
+          /*  if (position.Y - sprite.Height < 0)
+            {
+                position.Y = 0;
+            }
+            if (position.Y > GameEnvironment.Screen.Y)
+            {
+                position.Y = GameEnvironment.Screen.Y;
+            }
+            if (position.X < 0)
+            {
+                position.X = 0;
+            }
+            if (position.X + sprite.Width > GameEnvironment.Screen.X)
+            {
+                position.X = GameEnvironment.Screen.X - sprite.Width;
+            }*/
         }
     }
 }

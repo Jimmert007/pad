@@ -16,11 +16,14 @@ namespace HarvestValley.GameStates
         Map map;
         Player player;
         GameObjectList plants;
-        Tilling tilling;
         Tools tools;
         Hoe hoe;
         SpriteGameObject mouseGO;
-
+        EnergyBar energyBar;
+        Sleeping sleeping;
+        Hotbar hotbar;
+        GameObjectList items;
+        SpriteFont font;
 
         public PlayingState()
         {
@@ -46,15 +49,9 @@ namespace HarvestValley.GameStates
                     plants.Add(p);
                 }
             }
-            Debug.WriteLine("aantal planten " + plants.Children.Count);
-
-            tilling = new Tilling("spr_empty", new Vector2(100, 100), .1f);
-            Add(tilling);
 
             player = new Player("jorrit", new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2), .2f);
             Add(player);
-
-
 
             tools = new Tools("spr_empty");
             Add(tools);
@@ -64,11 +61,45 @@ namespace HarvestValley.GameStates
 
             mouseGO = new SpriteGameObject("1px");
             Add(mouseGO);
+
+            energyBar = new EnergyBar("EnergyBarBackground", GameEnvironment.Screen.X - 60, GameEnvironment.Screen.Y - 220, 40, 200);
+            Add(energyBar);
+
+            sleeping = new Sleeping("spr_empty");
+            Add(sleeping);
+
+            hotbar = new Hotbar("spr_empty");
+            Add(hotbar);
+
+            items = new GameObjectList();
+            Add(items);
+
+            font = GameEnvironment.AssetManager.Content.Load<SpriteFont>("GameFont");
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            if (sleeping.fadeAmount >= 1)
+            {
+                foreach (Plant p in plants.Children)
+                {
+                    if (sleeping.fadeOut)
+                    {
+                        energyBar.Reset();
+                        if (p.soilHasPlant)
+                        {
+                            p.growthStage++;
+                        }
+                    }
+                    if (energyBar.passOut)
+                    {
+                        sleeping.Sleep(gameTime);
+                        sleeping.useOnce = false;
+                    }
+                    sleeping.Update(gameTime);
+                }
+            }
         }
 
         public override void HandleInput(InputHelper inputHelper)
@@ -84,7 +115,7 @@ namespace HarvestValley.GameStates
                     {
                         if (tools.toolSelected == "HOE")
                         {
-                            c.ChangeSpriteTo(tilling.tilledSoilTexture);
+                            c.ChangeSpriteTo(Cell.TILESOIL, .5f);
                         }
                     }
                 }
@@ -96,10 +127,11 @@ namespace HarvestValley.GameStates
                 {
                     if (Mouse.GetState().LeftButton == ButtonState.Pressed)
                     {
-                        if (tilling.item == "SEED" && !p.soilHasPlant)
+                        if (/*tilling.item == "SEED" &&*/ !p.soilHasPlant)
                         {
                             p.soilHasPlant = true;
                             p.growthStage = 1;
+                            energyBar.percentageLost += energyBar.onePercent;
                         }
                     }
 
@@ -118,6 +150,23 @@ namespace HarvestValley.GameStates
                 }
             }
         }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            base.Draw(gameTime, spriteBatch);
+            spriteBatch.Draw(hotbar.selectedSquare.Sprite.Sprite, new Rectangle((int)hotbar.selectedSquarePosition.X, (int)hotbar.selectedSquarePosition.Y, (int)hotbar.squareSize, (int)hotbar.squareSize), Color.White); ;
+            for (int i = 0; i < items.Children.Count; i++)
+            {
+                Item item = (items.Children[i] as Item);
+                if (item.itemAmount > 0)
+                {
+                    spriteBatch.Draw(item.Sprite.Sprite, new Rectangle((int)hotbar.Position.X + hotbar.squareSize * i, (int)hotbar.Position.Y, (int)hotbar.squareSize, (int)hotbar.squareSize), Color.White);
+                    if (item.isStackable)
+                    {
+                        spriteBatch.DrawString(font, item.itemAmount.ToString(), new Vector2((int)hotbar.Position.X + hotbar.squareSize * i, (int)hotbar.Position.Y), Color.Black);
+                    }
+                }
+            }
+        }
     }
 }
-
