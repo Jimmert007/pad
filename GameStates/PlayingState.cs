@@ -16,6 +16,7 @@ namespace HarvestValley.GameStates
         Map map;
         Player player;
         GameObjectList plants;
+        GameObjectList trees; //kutboomen
         SpriteGameObject mouseGO;
         EnergyBar energyBar;
         Sleeping sleeping;
@@ -48,13 +49,24 @@ namespace HarvestValley.GameStates
                 }
             }
 
+            trees = new GameObjectList();
+            Add(trees);
+            for (int i = 0; i < map.rows; i++)
+            {
+                for (int x = 0; x < map.cols; x++)
+                {
+                    Tree t = new Tree(new Vector2(mapSpriteSheet.Width * x, mapSpriteSheet.Height * i), .1f);
+                    trees.Add(t);
+                }
+            }
+
             player = new Player("jorrit", new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2), .2f);
             Add(player);
 
             mouseGO = new SpriteGameObject("1px");
             Add(mouseGO);
 
-            energyBar = new EnergyBar("EnergyBarBackground", GameEnvironment.Screen.X - 60, GameEnvironment.Screen.Y - 220, 40, 200);
+            energyBar = new EnergyBar("spr_empty", GameEnvironment.Screen.X - 60, GameEnvironment.Screen.Y - 220, 40, 200);
             Add(energyBar);
 
             sleeping = new Sleeping("spr_empty");
@@ -67,6 +79,15 @@ namespace HarvestValley.GameStates
             Add(itemList);
 
             font = GameEnvironment.AssetManager.Content.Load<SpriteFont>("GameFont");
+
+            foreach (Cell c in map.cells.Children)
+            {
+                if (c.cellHasTree)
+                {
+                    (trees.Children[c.cellID] as Tree).growthStage = 1;
+                    (trees.Children[c.cellID] as Tree).soilHasBoom = true;
+                }
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -91,6 +112,12 @@ namespace HarvestValley.GameStates
                     }
                     sleeping.Update(gameTime);
                 }
+            }
+
+            if (energyBar.passOut)
+            {
+                sleeping.Sleep(gameTime);
+                sleeping.useOnce = false;
             }
         }
 
@@ -125,6 +152,16 @@ namespace HarvestValley.GameStates
                                     (plants.Children[c.cellID] as Plant).soilHasPlant = true;
                                 }
                             }
+
+                            Tree t = (trees.Children[c.cellID] as Tree);
+                            if (itemList.itemSelected == "AXE" && c.cellHasTree && !t.treeHit)
+                            {
+                                t.treeHit = true;
+                                t.hitTimer = t.hitTimerReset;
+                                t.health -= 1;
+                                energyBar.percentageLost += energyBar.oneUse;
+                            }
+
                         }
 
                         if (inputHelper.MouseRightButtonDown())

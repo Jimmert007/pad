@@ -17,12 +17,13 @@ namespace HarvestValley
 
         public Cell(SpriteSheet _sprite, Vector2 _position, float _scale, int _id) : base(_sprite)
         {
-           /* TILESOIL = new SpriteGameObject("spr_tilled_soil");*/
+            /* TILESOIL = new SpriteGameObject("spr_tilled_soil");*/
             scale = _scale;
             position = _position;
             cellID = _id;
             _mirror = false;
             //Debug.WriteLine(cellID);
+            //Debug.WriteLine(Position);
 
             if (cellID > 0 && cellID < 9)
             {
@@ -57,6 +58,11 @@ namespace HarvestValley
             else if (cellID == 49) //BR
             {
                 _sheetIndex = 10;
+            }
+            else if (cellID == 25 || cellID == 26)
+            {
+                _sheetIndex = 9;
+                cellHasTree = true;
             }
             else
             {
