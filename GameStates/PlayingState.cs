@@ -39,9 +39,9 @@ namespace HarvestValley.GameStates
 
             plants = new GameObjectList();
             Add(plants);
-            for (int i = 1; i < map.rows - 1; i++)
+            for (int i = 0; i < map.rows; i++)
             {
-                for (int x = 1; x < map.cols - 1; x++)
+                for (int x = 0; x < map.cols; x++)
                 {
                     Plant p = new Plant(new Vector2(mapSpriteSheet.Width * x, mapSpriteSheet.Height * i), 4);
                     plants.Add(p);
@@ -105,7 +105,7 @@ namespace HarvestValley.GameStates
                 {
                     if (c.CollidesWith(mouseGO))
                     {
-                        if (inputHelper.MouseLeftButtonPressed())
+                        if (inputHelper.MouseLeftButtonDown())
                         {
                             if (itemList.itemSelected == "HOE" && !c.cellIsTilled)
                             {
@@ -113,50 +113,36 @@ namespace HarvestValley.GameStates
                                 c.cellIsTilled = true;
                                 energyBar.percentageLost += energyBar.oneUse;
                             }
-                        }
-                    }
-                }
-            }
 
-            foreach (Plant p in plants.Children)
-            {
-                foreach (Item item in itemList.Children)
-                {
-                    foreach (Cell c in map.cells.Children)
-                    {
-                        if (p.CollidesWith(mouseGO))
+                            if (item is Seed)
+                            {
+                                if (itemList.itemSelected == "SEED" && c.cellIsTilled && !c.cellHasPlant && item.itemAmount > 0)
+                                {
+                                    item.itemAmount -= 1;
+                                    c.cellHasPlant = true;
+                                    energyBar.percentageLost += energyBar.oneUse;
+                                    (plants.Children[c.cellID] as Plant).growthStage = 1;
+                                    (plants.Children[c.cellID] as Plant).soilHasPlant = true;
+                                }
+                            }
+                        }
+
+                        if (inputHelper.MouseRightButtonDown())
                         {
-                            if (inputHelper.MouseLeftButtonPressed())
+                            if (c.cellHasPlant)
                             {
-                                if (item is Seed)
+                                if ((plants.Children[c.cellID] as Plant).growthStage >= 4)
                                 {
-                                    if (itemList.itemSelected == "SEED" && !c.cellHasPlant && c.cellIsTilled && item.itemAmount > 0)
-                                    {
-                                        item.itemAmount -= 1;
-                                        c.cellHasPlant = true;
-                                        energyBar.percentageLost += energyBar.oneUse;
-                                        p.growthStage = 1;
-                                    }
-                                }
-                            }
-
-                            if (Mouse.GetState().RightButton == ButtonState.Pressed)
-                            {
-                                if (p.soilHasPlant)
-                                {
-                                    if (p.growthStage >= 4)
-                                    {
-                                        //(receive product and new seed)
-                                        p.soilHasPlant = false;
-                                        p.growthStage = 0;
-                                    }
+                                    //(receive product and new seed)
+                                    (plants.Children[c.cellID] as Plant).soilHasPlant = false;
+                                    c.cellHasPlant = false;
+                                    (plants.Children[c.cellID] as Plant).growthStage = 0;
                                 }
                             }
                         }
                     }
                 }
             }
-
             #region Item Selection
             if (inputHelper.KeyPressed(Keys.D1))
             {

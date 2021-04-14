@@ -39,6 +39,10 @@ namespace HarvestValley
 
         public override void Update(GameTime gameTime)
         {
+            if (growthStage > 4)
+            {
+                growthStage = 4;
+            }
             foreach (SpriteGameObject SGO in Children)
             {
                 SGO.Visible = false;
