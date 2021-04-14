@@ -11,7 +11,6 @@ namespace HarvestValley.GameObjects
     class Item : SpriteGameObject
     {
       /*  public List<Item> items = new List<Item>();*/
-        public string itemSelected = "HOE";
         public int itemAmount = 0;
         public bool isStackable;
         public SpriteSheet hotbar;

@@ -13,7 +13,7 @@ namespace HarvestValley.GameObjects
         public Vector2 percentagePosition;
         public Vector2 percentageSize;
         public float percentageLost;
-        public float onePercent;
+        public float oneUse;
         public bool passOut;
         public EnergyBar(string assetName, int _x, int _y, int _w, int _h) : base(assetName)
         {
@@ -23,7 +23,7 @@ namespace HarvestValley.GameObjects
             //size.Y = _h;
             energyBarBackground = new SpriteSheet("EnergyBarBackground");
             energyBarPercentage = new SpriteSheet("EnergyBarPercentage");
-            onePercent = (sprite.Height - 10) / 100;
+            oneUse = (sprite.Height - 10) / 100;
             percentagePosition.X = position.X + 5;
             percentageSize.X = sprite.Width - 10;
         }

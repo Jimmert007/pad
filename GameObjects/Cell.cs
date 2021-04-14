@@ -13,6 +13,7 @@ namespace HarvestValley
         private int _sheetIndex;
         private bool _mirror;
         public static SpriteGameObject TILESOIL = new SpriteGameObject("spr_tilled_soil");
+        public bool cellIsTilled, cellHasPlant, cellHasTree;
 
         public Cell(SpriteSheet _sprite, Vector2 _position, float _scale, int _id) : base(_sprite)
         {

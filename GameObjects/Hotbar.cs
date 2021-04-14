@@ -19,21 +19,15 @@ namespace HarvestValley.GameObjects
             hotbarItemList = new List<GameObject>();
             hotbar = new SpriteGameObject("spr_hotbar");
             selectedSquare = new SpriteGameObject("spr_selected_square");
+           // selectedSquare.Origin = selectedSquare.Sprite.Center;
             sprite = hotbar.Sprite;
 
-            HBWidth = 450;
+            HBWidth = sprite.Width;
             squareSize = HBWidth / 9;
-            hotbar.Scale = 1f;
             position.X = GameEnvironment.Screen.X * .5f - hotbar.Sprite.Width * .5f;
             position.Y = GameEnvironment.Screen.Y - hotbar.Sprite.Height;
             selectedSquarePosition.X = position.X;
             selectedSquarePosition.Y = position.Y;
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-            selectedSquare.scale = 100;
         }
     }
 }

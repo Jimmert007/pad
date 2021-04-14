@@ -16,13 +16,11 @@ namespace HarvestValley.GameStates
         Map map;
         Player player;
         GameObjectList plants;
-        Tools tools;
-        Hoe hoe;
         SpriteGameObject mouseGO;
         EnergyBar energyBar;
         Sleeping sleeping;
         Hotbar hotbar;
-        GameObjectList items;
+        ItemList itemList;
         SpriteFont font;
 
         public PlayingState()
@@ -53,12 +51,6 @@ namespace HarvestValley.GameStates
             player = new Player("jorrit", new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2), .2f);
             Add(player);
 
-            tools = new Tools("spr_empty");
-            Add(tools);
-
-            hoe = new Hoe("spr_hoe", new Vector2(GameEnvironment.Screen.X / 2 - 25, GameEnvironment.Screen.Y / 2 - 75), .1f);
-            Add(hoe);
-
             mouseGO = new SpriteGameObject("1px");
             Add(mouseGO);
 
@@ -71,8 +63,8 @@ namespace HarvestValley.GameStates
             hotbar = new Hotbar("spr_empty");
             Add(hotbar);
 
-            items = new GameObjectList();
-            Add(items);
+            itemList = new ItemList();
+            Add(itemList);
 
             font = GameEnvironment.AssetManager.Content.Load<SpriteFont>("GameFont");
         }
@@ -109,13 +101,23 @@ namespace HarvestValley.GameStates
 
             foreach (Cell c in map.cells.Children)
             {
-                if (c.CollidesWith(mouseGO))
+                if (c.cellIsTilled)
                 {
-                    if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                Debug.WriteLine(c.cellID + " " + c.cellIsTilled);
+
+                }
+                foreach (Item item in itemList.Children)
+                {
+                    if (c.CollidesWith(mouseGO))
                     {
-                        if (tools.toolSelected == "HOE")
+                        if (Mouse.GetState().LeftButton == ButtonState.Pressed)
                         {
-                            c.ChangeSpriteTo(Cell.TILESOIL, .5f);
+                            if (itemList.itemSelected == "HOE" && !c.cellIsTilled)
+                            {
+                                c.ChangeSpriteTo(Cell.TILESOIL, .5f);
+                                c.cellIsTilled = true;
+                                energyBar.percentageLost += energyBar.oneUse;
+                            }
                         }
                     }
                 }
@@ -123,41 +125,99 @@ namespace HarvestValley.GameStates
 
             foreach (Plant p in plants.Children)
             {
-                if (p.CollidesWith(mouseGO))
+                foreach (Item item in itemList.Children)
                 {
-                    if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                    foreach (Cell c in map.cells.Children)
                     {
-                        if (/*tilling.item == "SEED" &&*/ !p.soilHasPlant)
+                        if (p.CollidesWith(mouseGO))
                         {
-                            p.soilHasPlant = true;
-                            p.growthStage = 1;
-                            energyBar.percentageLost += energyBar.onePercent;
-                        }
-                    }
-
-                    if (Mouse.GetState().RightButton == ButtonState.Pressed)
-                    {
-                        if (p.soilHasPlant)
-                        {
-                            if (p.growthStage >= 4)
+                            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
                             {
-                                //(receive product and new seed)
-                                p.soilHasPlant = false;
-                                p.growthStage = 0;
+                                if (item is Seed)
+                                {
+                                    if (itemList.itemSelected == "SEED" && !c.cellHasPlant && c.cellIsTilled && item.itemAmount > 0)
+                                    {
+                                        item.itemAmount -= 1;
+                                        c.cellHasPlant = true;
+                                        energyBar.percentageLost += energyBar.oneUse;
+                                        p.growthStage = 1;
+                                    }
+                                }
+                            }
+
+                            if (Mouse.GetState().RightButton == ButtonState.Pressed)
+                            {
+                                if (p.soilHasPlant)
+                                {
+                                    if (p.growthStage >= 4)
+                                    {
+                                        //(receive product and new seed)
+                                        p.soilHasPlant = false;
+                                        p.growthStage = 0;
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
+
+            #region Item Selection
+            if (inputHelper.KeyPressed(Keys.D1))
+            {
+                itemList.itemSelected = "HOE";
+                hotbar.selectedSquarePosition.X = hotbar.Position.X;
+            }
+            else if (inputHelper.KeyPressed(Keys.D2))
+            {
+                itemList.itemSelected = "AXE";
+                hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize;
+            }
+            else if (inputHelper.KeyPressed(Keys.D3))
+            {
+                itemList.itemSelected = "WATERINGCAN";
+                hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 2;
+            }
+            else if (inputHelper.KeyPressed(Keys.D4))
+            {
+                itemList.itemSelected = "SEED";
+                hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 3;
+            }
+            else if (inputHelper.KeyPressed(Keys.D5))
+            {
+                //itemList.itemSelected = "AXE";
+                hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 4;
+            }
+            else if (inputHelper.KeyPressed(Keys.D6))
+            {
+                //itemList.itemSelected = "WATERINGCAN";
+                hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 5;
+            }
+            else if (inputHelper.KeyPressed(Keys.D7))
+            {
+                //itemList.itemSelected = "SEED";
+                hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 6;
+            }
+            else if (inputHelper.KeyPressed(Keys.D8))
+            {
+                //itemList.itemSelected = "WATERINGCAN";
+                hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 7;
+            }
+            else if (inputHelper.KeyPressed(Keys.D9))
+            {
+                //itemList.itemSelected = "SEED";
+                hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 8;
+            }
+            #endregion
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             base.Draw(gameTime, spriteBatch);
-            spriteBatch.Draw(hotbar.selectedSquare.Sprite.Sprite, new Rectangle((int)hotbar.selectedSquarePosition.X, (int)hotbar.selectedSquarePosition.Y, (int)hotbar.squareSize, (int)hotbar.squareSize), Color.White); ;
-            for (int i = 0; i < items.Children.Count; i++)
+            spriteBatch.Draw(hotbar.selectedSquare.Sprite.Sprite, new Rectangle((int)hotbar.selectedSquarePosition.X, (int)hotbar.selectedSquarePosition.Y, (int)hotbar.squareSize + 5, (int)hotbar.squareSize + 5), Color.White); ;
+            for (int i = 0; i < itemList.Children.Count; i++)
             {
-                Item item = (items.Children[i] as Item);
+                Item item = (itemList.Children[i] as Item);
                 if (item.itemAmount > 0)
                 {
                     spriteBatch.Draw(item.Sprite.Sprite, new Rectangle((int)hotbar.Position.X + hotbar.squareSize * i, (int)hotbar.Position.Y, (int)hotbar.squareSize, (int)hotbar.squareSize), Color.White);
