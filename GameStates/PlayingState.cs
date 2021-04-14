@@ -101,16 +101,11 @@ namespace HarvestValley.GameStates
 
             foreach (Cell c in map.cells.Children)
             {
-                if (c.cellIsTilled)
-                {
-                Debug.WriteLine(c.cellID + " " + c.cellIsTilled);
-
-                }
                 foreach (Item item in itemList.Children)
                 {
                     if (c.CollidesWith(mouseGO))
                     {
-                        if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                        if (inputHelper.MouseLeftButtonPressed())
                         {
                             if (itemList.itemSelected == "HOE" && !c.cellIsTilled)
                             {
@@ -131,7 +126,7 @@ namespace HarvestValley.GameStates
                     {
                         if (p.CollidesWith(mouseGO))
                         {
-                            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                            if (inputHelper.MouseLeftButtonPressed())
                             {
                                 if (item is Seed)
                                 {
@@ -223,7 +218,7 @@ namespace HarvestValley.GameStates
                     spriteBatch.Draw(item.Sprite.Sprite, new Rectangle((int)hotbar.Position.X + hotbar.squareSize * i, (int)hotbar.Position.Y, (int)hotbar.squareSize, (int)hotbar.squareSize), Color.White);
                     if (item.isStackable)
                     {
-                        spriteBatch.DrawString(font, item.itemAmount.ToString(), new Vector2((int)hotbar.Position.X + hotbar.squareSize * i, (int)hotbar.Position.Y), Color.Black);
+                        spriteBatch.DrawString(font, item.itemAmount.ToString(), new Vector2((int)hotbar.Position.X + 5 + hotbar.squareSize * i, (int)hotbar.Position.Y + 5), Color.Black);
                     }
                 }
             }
