@@ -57,6 +57,9 @@ namespace HarvestValley.GameStates
                 }
             }
 
+            player = new Player("jorrit", new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2), .2f);
+            Add(player);
+
             trees = new GameObjectList();
             Add(trees);
             for (int i = 0; i < map.rows; i++)
@@ -67,9 +70,6 @@ namespace HarvestValley.GameStates
                     trees.Add(t);
                 }
             }
-
-            player = new Player("jorrit", new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2), .2f);
-            Add(player);
 
             mouseGO = new SpriteGameObject("1px");
             Add(mouseGO);
@@ -178,6 +178,10 @@ namespace HarvestValley.GameStates
 
             foreach (Cell c in map.cells.Children)
             {
+                if (c.cellHasTree)
+                {
+                    c.dab(player);
+                }
                 foreach (Item item in itemList.Children)
                 {
                     if (c.CollidesWith(mouseGO))
