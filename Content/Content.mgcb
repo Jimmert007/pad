@@ -260,7 +260,7 @@
 /processorParam:TextureFormat=Color
 /build:tiles/Niels/tilesSheet_Niels.png
 
-#begin ui_bar.png
+#begin tiles/spr_grass.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -270,7 +270,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:ui_bar.png
+/build:tiles/spr_grass.png
 
 #begin ui_bar.png
 /importer:TextureImporter
