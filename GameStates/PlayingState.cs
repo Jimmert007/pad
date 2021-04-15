@@ -16,7 +16,7 @@ namespace HarvestValley.GameStates
         Map map;
         Player player;
         GameObjectList plants;
-        GameObjectList trees; //kutboomen
+        GameObjectList trees;
         SpriteGameObject mouseGO;
         EnergyBar energyBar;
         Sleeping sleeping;
@@ -28,6 +28,7 @@ namespace HarvestValley.GameStates
         UIDialogueBox dialogueBox;
         UIText dialogueText;
         int iLines = 0;
+        Wallet wallet;
 
         string[] dialogueLines = { "Dit is een test", "Hallo", "Het werkt", "INSERT TEXT", "Proleet" };
 
@@ -107,6 +108,9 @@ namespace HarvestValley.GameStates
             Add(yesButton);
             Add(noButton);
             Add(dialogueText);
+
+            wallet = new Wallet("spr_wallet");
+            Add(wallet);
         }
 
         public override void Update(GameTime gameTime)
@@ -343,6 +347,63 @@ namespace HarvestValley.GameStates
                     }
                 }
             }
+
+            #region wallet Draw
+            spriteBatch.Draw(wallet.wallet.Sprite, new Rectangle((int)wallet.Position.X, (int)wallet.Position.Y, (int)wallet.Sprite.Width, (int)wallet.Sprite.Height), Color.White);
+            spriteBatch.Draw(wallet.moneySquare.Sprite, new Rectangle((int)wallet.moneySquarePosition.X, (int)wallet.moneySquarePosition.Y, (int)wallet.moneySquareSize, (int)wallet.Sprite.Height), Color.White); ;
+
+            wallet.money++;
+            for (int i = 0; i < wallet.money.ToString().Length; i++)
+            {
+                for (int r = 0; r < wallet.money.ToString().Length;)
+                {
+                    #region lelijke if
+                    if (wallet.money.ToString()[r] == '0')
+                    {
+
+                        spriteBatch.DrawString(font, "0", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
+                    }
+                    else if (wallet.money.ToString()[r] == '1')
+                    {
+                        spriteBatch.DrawString(font, "1", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
+                    }
+                    else if (wallet.money.ToString()[r] == '2')
+                    {
+                        spriteBatch.DrawString(font, "2", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
+                    }
+                    else if (wallet.money.ToString()[r] == '3')
+                    {
+                        spriteBatch.DrawString(font, "3", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
+                    }
+                    else if (wallet.money.ToString()[r] == '4')
+                    {
+                        spriteBatch.DrawString(font, "4", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
+                    }
+                    else if (wallet.money.ToString()[r] == '5')
+                    {
+                        spriteBatch.DrawString(font, "5", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
+                    }
+                    else if (wallet.money.ToString()[r] == '6')
+                    {
+                        spriteBatch.DrawString(font, "6", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
+                    }
+                    else if (wallet.money.ToString()[r] == '7')
+                    {
+                        spriteBatch.DrawString(font, "7", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
+                    }
+                    else if (wallet.money.ToString()[r] == '8')
+                    {
+                        spriteBatch.DrawString(font, "8", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
+                    }
+                    else if (wallet.money.ToString()[r] == '9')
+                    {
+                        spriteBatch.DrawString(font, "9", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
+                    }
+                    #endregion
+                    r++;
+                }
+            }
+            #endregion
         }
     }
 }
