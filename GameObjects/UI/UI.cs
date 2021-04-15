@@ -15,6 +15,7 @@ namespace HarvestValley.GameObjects
 
         public UI(string _assetName) : base(_assetName)
         {
+            //Test
         }
     }
 }
