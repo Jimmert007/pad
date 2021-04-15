@@ -26,6 +26,8 @@ namespace HarvestValley.GameObjects
             Add(tree1stage1);
             Add(treeCut);
             soilHasTree = false;
+            tree1stage1.Origin = new Vector2(0, 45);
+            treeCut.Origin = new Vector2(5, 50);
             for (int i = 0; i < children.Count; i++)
             {
                 (children[i] as SpriteGameObject).Scale = _scale;
