@@ -15,7 +15,7 @@ namespace HarvestValley.GameObjects
         public int health = 4;
         SpriteGameObject empty, tree1stage1, treeCut;
         public int growthStage = 0;
-        public bool soilHasBoom;
+        public bool soilHasTree;
         public Tree(Vector2 _position, float _scale) : base()
         {
             position = _position;
@@ -25,7 +25,7 @@ namespace HarvestValley.GameObjects
             Add(empty);
             Add(tree1stage1);
             Add(treeCut);
-            soilHasBoom = false;
+            soilHasTree = false;
             for (int i = 0; i < children.Count; i++)
             {
                 (children[i] as SpriteGameObject).Scale = _scale;
@@ -41,24 +41,27 @@ namespace HarvestValley.GameObjects
             foreach (SpriteGameObject SGO in Children)
             {
                 SGO.Visible = false;
-                if (SGO.Id == growthStage.ToString())
+                if (health > 0)
                 {
-                    SGO.Visible = true;
-                }
-                if (SGO.Visible)
-                {
-                    if (!treeHit && soilHasBoom)
+                    if (SGO.Id == growthStage.ToString())
                     {
-                        growthStage = 1;
+                        SGO.Visible = true;
                     }
-
-                    if (treeHit)
+                    if (SGO.Visible)
                     {
-                        growthStage = 2;
-                        hitTimer -= 1;
-                        if (hitTimer <= 0)
+                        if (!treeHit && soilHasTree)
                         {
-                            treeHit = false;
+                            growthStage = 1;
+                        }
+
+                        if (treeHit)
+                        {
+                            growthStage = 2;
+                            hitTimer -= 1;
+                            if (hitTimer <= 0)
+                            {
+                                treeHit = false;
+                            }
                         }
                     }
                 }

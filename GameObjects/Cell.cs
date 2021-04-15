@@ -25,7 +25,7 @@ namespace HarvestValley
             //Debug.WriteLine(cellID);
             //Debug.WriteLine(Position);
 
-            if (cellID > 0 && cellID < 9)
+            /*if (cellID > 0 && cellID < 9)
             {
                 _sheetIndex = 7; //bovenste rij bomen zonder hoeken
             }
@@ -57,16 +57,16 @@ namespace HarvestValley
             }
             else if (cellID == 49) //BR
             {
-                _sheetIndex = 10;
+                _sheetIndex = 4;
             }
-            else if (cellID == 25 || cellID == 26)
+            else */ if (cellID == 25 || cellID == 26)
             {
                 _sheetIndex = 9;
                 cellHasTree = true;
             }
             else
             {
-                _sheetIndex = 9;
+                _sheetIndex = 4;
             }
         }
 
