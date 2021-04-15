@@ -33,7 +33,7 @@ namespace HarvestValley.GameStates
 
         public PlayingState()
         {
-            SpriteSheet mapSpriteSheet = new SpriteSheet("tiles/Niels/cutOutTilesNiels@3x4", 0);
+            SpriteSheet mapSpriteSheet = new SpriteSheet("tiles/spr_grass", 0);
             map = new Map(new Vector2(mapSpriteSheet.Width, mapSpriteSheet.Height));
             Add(map.cells);
             for (int i = 0; i < map.rows; i++)
@@ -62,7 +62,7 @@ namespace HarvestValley.GameStates
             {
                 for (int x = 0; x < map.cols; x++)
                 {
-                    Tree t = new Tree(new Vector2(mapSpriteSheet.Width * x, mapSpriteSheet.Height * i), .1f);
+                    Tree t = new Tree(new Vector2(mapSpriteSheet.Width * x, mapSpriteSheet.Height * i), 1f);
                     trees.Add(t);
                 }
             }
