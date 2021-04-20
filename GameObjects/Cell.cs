@@ -25,49 +25,6 @@ namespace HarvestValley
             //Debug.WriteLine(cellID);
             //Debug.WriteLine(Position);
 
-            /*if (cellID > 0 && cellID < 9)
-            {
-                _sheetIndex = 7; //bovenste rij bomen zonder hoeken
-            }
-            else if (cellID > 40 && cellID < 49)
-            {
-                _sheetIndex = 1; //onderste rij bomen zonder hoeken
-            }
-            else if (cellID % 10 == 0 && cellID > 9 && cellID < 40)
-            {
-                _sheetIndex = 5; //linker rij bomen zonder hoeken
-            }
-            else if (cellID % 10 == 9 && cellID < 40 && cellID > 9)
-            {
-                _sheetIndex = 3; //rechter rij bomen zonder hoeken
-            }
-            else if (cellID == 0) //TL
-            {
-                _sheetIndex = 11;
-                _mirror = true;
-            }
-            else if (cellID == 9) //TR
-            {
-                _sheetIndex = 11;
-            }
-            else if (cellID == 40) //BL
-            {
-                _sheetIndex = 10;
-                _mirror = true;
-            }
-            else if (cellID == 49) //BR
-            {
-                _sheetIndex = 4;
-            }
-            else */ if (cellID == 25 || cellID == 26)
-            {
-                _sheetIndex = 9;
-                cellHasTree = true;
-            }
-            else
-            {
-                _sheetIndex = 4;
-            }
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

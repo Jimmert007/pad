@@ -212,7 +212,7 @@
 /processorParam:TextureFormat=Color
 /build:spr_tilled_soil.png
 
-#begin spr_tree.jpg
+#begin spr_tree.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -222,9 +222,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:spr_tree.jpg
+/build:spr_tree.png
 
-#begin spr_tree_cut.jpg
+#begin spr_tree_cut.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -234,7 +234,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:spr_tree_cut.jpg
+/build:spr_tree_cut.png
 
 #begin tiles/Niels/cutOutTilesNiels@3x4.png
 /importer:TextureImporter

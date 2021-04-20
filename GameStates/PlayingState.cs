@@ -16,7 +16,7 @@ namespace HarvestValley.GameStates
         Map map;
         Player player;
         GameObjectList plants;
-        GameObjectList trees; //kutboomen
+        GameObjectList trees;
         SpriteGameObject mouseGO;
         EnergyBar energyBar;
         Sleeping sleeping;
@@ -33,14 +33,14 @@ namespace HarvestValley.GameStates
 
         public PlayingState()
         {
-            SpriteSheet mapSpriteSheet = new SpriteSheet("tiles/Niels/cutOutTilesNiels@3x4", 0);
+            SpriteSheet mapSpriteSheet = new SpriteSheet("tiles/spr_grass", 0);
             map = new Map(new Vector2(mapSpriteSheet.Width, mapSpriteSheet.Height));
             Add(map.cells);
             for (int i = 0; i < map.rows; i++)
             {
                 for (int x = 0; x < map.cols; x++)
                 {
-                    Cell c = new Cell(mapSpriteSheet, new Vector2(mapSpriteSheet.Width * x, mapSpriteSheet.Height * i), 1, x + (map.cols * i));
+                    Cell c = new Cell(mapSpriteSheet, new Vector2(mapSpriteSheet.Width / 2 * x, mapSpriteSheet.Height / 2 * i), .5f, x + (map.cols * i));
                     map.cells.Add(c);
                 }
             }
@@ -51,10 +51,13 @@ namespace HarvestValley.GameStates
             {
                 for (int x = 0; x < map.cols; x++)
                 {
-                    Plant p = new Plant(new Vector2(mapSpriteSheet.Width * x, mapSpriteSheet.Height * i), 4);
+                    Plant p = new Plant(new Vector2(mapSpriteSheet.Width / 2 * x, mapSpriteSheet.Height / 2 * i), 2);
                     plants.Add(p);
                 }
             }
+
+            player = new Player("jorrit", new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2), .1f);
+            Add(player);
 
             trees = new GameObjectList();
             Add(trees);
@@ -62,13 +65,10 @@ namespace HarvestValley.GameStates
             {
                 for (int x = 0; x < map.cols; x++)
                 {
-                    Tree t = new Tree(new Vector2(mapSpriteSheet.Width * x, mapSpriteSheet.Height * i), .1f);
+                    Tree t = new Tree(new Vector2(mapSpriteSheet.Width / 2 * x, mapSpriteSheet.Height / 2 * i), .5f);
                     trees.Add(t);
                 }
             }
-
-            player = new Player("jorrit", new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2), .2f);
-            Add(player);
 
             mouseGO = new SpriteGameObject("1px");
             Add(mouseGO);
@@ -89,6 +89,11 @@ namespace HarvestValley.GameStates
 
             foreach (Cell c in map.cells.Children)
             {
+                if (c.Position.X < c.Width || c.Position.X + c.Width > GameEnvironment.Screen.X - c.Width
+                    || c.Position.Y < c.Height || c.Position.Y + c.Height > GameEnvironment.Screen.Y - c.Height)
+                {
+                    c.cellHasTree = true;
+                }
                 if (c.cellHasTree)
                 {
                     (trees.Children[c.cellID] as Tree).growthStage = 1;
@@ -130,6 +135,22 @@ namespace HarvestValley.GameStates
                         sleeping.useOnce = false;
                     }
                     sleeping.Update(gameTime);
+                }
+            }
+
+            foreach (Cell c in map.cells.Children)
+            {
+                if (c.cellHasTree)
+                {
+                    if (player.CollidesWith(c))
+                    {
+                        player.collision = true;
+                        player.Position = player.lastPosition;
+                    } 
+                    else
+                    {
+                        player.collision = false;
+                    }
                 }
             }
 
@@ -182,7 +203,7 @@ namespace HarvestValley.GameStates
                         {
                             if (itemList.itemSelected == "HOE" && !c.cellIsTilled && !c.cellHasTree)
                             {
-                                c.ChangeSpriteTo(Cell.TILESOIL, .5f);
+                                c.ChangeSpriteTo(Cell.TILESOIL, .25f);
                                 c.cellIsTilled = true;
                                 energyBar.percentageLost += energyBar.oneUse;
                             }
