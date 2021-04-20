@@ -10,12 +10,10 @@ namespace HarvestValley
 {
     class Player : SpriteGameObject
     {
-        public bool collision;
         public bool openInventory;
         public bool openMap;
         SpriteSheet left, right, up, down;
         public Cell current;
-        public Vector2 lastPosition;
 
         public Player(string _assetName, Vector2 _position, float _scale) : base(_assetName)
         {
@@ -56,25 +54,33 @@ namespace HarvestValley
             velocity.X = 0;
             velocity.Y = 0;
 
-            if (collision)
-            {
-                velocity = new Vector2(0, 0);
-            }
-            else
-            {
-                //Movement inputs
-                if (Keyboard.GetState().IsKeyDown(Keys.A)) { velocity.X = -5.0f; }
-                else if (Keyboard.GetState().IsKeyDown(Keys.D)) { velocity.X = 5.0f; }
-                if (Keyboard.GetState().IsKeyDown(Keys.W)) { velocity.Y = -5.0f; }
-                else if (Keyboard.GetState().IsKeyDown(Keys.S)) { velocity.Y = 5.0f; }
-                if (Keyboard.GetState().IsKeyDown(Keys.LeftShift)) { velocity *= 2; }
-            }
+            //Movement inputs
+            if (Keyboard.GetState().IsKeyDown(Keys.A)) { velocity.X = -10.0f; }
+            else if (Keyboard.GetState().IsKeyDown(Keys.D)) { velocity.X = 10.0f; }
+            if (Keyboard.GetState().IsKeyDown(Keys.W)) { velocity.Y = -10.0f; }
+            else if (Keyboard.GetState().IsKeyDown(Keys.S)) { velocity.Y = 10.0f; }
+            if (Keyboard.GetState().IsKeyDown(Keys.LeftShift)) { velocity *= 2; }
+
             //Control movement
-            position += velocity;
+            position.X += velocity.X;
+            position.Y += velocity.Y;
 
-            lastPosition = position;
-
-            lastPosition -= velocity;
+          /*  if (position.Y - sprite.Height < 0)
+            {
+                position.Y = 0;
+            }
+            if (position.Y > GameEnvironment.Screen.Y)
+            {
+                position.Y = GameEnvironment.Screen.Y;
+            }
+            if (position.X < 0)
+            {
+                position.X = 0;
+            }
+            if (position.X + sprite.Width > GameEnvironment.Screen.X)
+            {
+                position.X = GameEnvironment.Screen.X - sprite.Width;
+            }*/
         }
     }
 }
