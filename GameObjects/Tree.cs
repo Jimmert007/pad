@@ -43,7 +43,7 @@ namespace HarvestValley.GameObjects
             foreach (SpriteGameObject SGO in Children)
             {
                 SGO.Visible = false;
-                if (health > 0)
+                if (soilHasTree)
                 {
                     if (SGO.Id == growthStage.ToString())
                     {

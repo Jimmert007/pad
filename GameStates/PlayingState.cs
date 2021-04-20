@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HarvestValley.GameObjects;
+using HarvestValley.GameObjects.Tools;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -83,7 +84,7 @@ namespace HarvestValley.GameStates
             Add(hotbar);
 
             itemList = new ItemList();
-            Add(itemList);
+            
 
             font = GameEnvironment.AssetManager.Content.Load<SpriteFont>("GameFont");
 
@@ -117,6 +118,7 @@ namespace HarvestValley.GameStates
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
             if (sleeping.fadeAmount >= 1)
             {
                 foreach (Plant p in plants.Children)
@@ -138,6 +140,26 @@ namespace HarvestValley.GameStates
                 }
             }
 
+            foreach (Item item in itemList.Children)
+            {
+                foreach (Tree t in trees.Children)
+                {
+                    if (t.health <= 0)
+                    {
+                        if (item is Wood)
+                        {
+                            item.itemAmount += GameEnvironment.Random.Next(3, 7);
+                        }
+                        if (item is TreeSeed)
+                        {
+                            item.itemAmount += GameEnvironment.Random.Next(2);
+                            t.health = 4;
+                        }
+
+                    }
+                }
+            }
+
             foreach (Cell c in map.cells.Children)
             {
                 if (c.cellHasTree)
@@ -151,6 +173,7 @@ namespace HarvestValley.GameStates
                     {
                         player.collision = false;
                     }
+                (trees.Children[(int)c.cellID] as Tree).soilHasTree = true;
                 }
             }
 
@@ -220,6 +243,7 @@ namespace HarvestValley.GameStates
                                 }
                             }
 
+                            
                             Tree t = (trees.Children[c.cellID] as Tree);
                             if (itemList.itemSelected == "AXE" && c.cellHasTree && !t.treeHit)
                             {
@@ -230,10 +254,20 @@ namespace HarvestValley.GameStates
                                 if (t.health <= 0)
                                 {
                                     c.cellHasTree = false;
+                                    t.soilHasTree = false;
+                                }
+                            }
+
+                            if (item is TreeSeed)
+                            {
+                                if (itemList.itemSelected == "TREESEED" && !c.cellIsTilled && !c.cellHasPlant && item.itemAmount > 0 && !c.cellHasTree)
+                                {
+                                    item.itemAmount -= 1;
+                                    c.cellHasTree = true;
+                                    energyBar.percentageLost += energyBar.oneUse;
                                 }
                             }
                         }
-
                         if (inputHelper.MouseRightButtonDown())
                         {
                             if (c.cellHasPlant)
@@ -247,6 +281,7 @@ namespace HarvestValley.GameStates
                                 }
                             }
                         }
+
                     }
                 }
             }
@@ -273,12 +308,12 @@ namespace HarvestValley.GameStates
             }
             else if (inputHelper.KeyPressed(Keys.D5))
             {
-                //itemList.itemSelected = "AXE";
+                itemList.itemSelected = "WOOD";
                 hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 4;
             }
             else if (inputHelper.KeyPressed(Keys.D6))
             {
-                //itemList.itemSelected = "WATERINGCAN";
+                itemList.itemSelected = "TREESEED";
                 hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 5;
             }
             else if (inputHelper.KeyPressed(Keys.D7))
@@ -357,7 +392,7 @@ namespace HarvestValley.GameStates
                 Item item = (itemList.Children[i] as Item);
                 if (item.itemAmount > 0)
                 {
-                    spriteBatch.Draw(item.Sprite.Sprite, new Rectangle((int)hotbar.Position.X + hotbar.squareSize * i, (int)hotbar.Position.Y, (int)hotbar.squareSize, (int)hotbar.squareSize), Color.White);
+                    spriteBatch.Draw(item.Sprite.Sprite, new Rectangle((int)hotbar.Position.X + 5 + hotbar.squareSize * i, (int)hotbar.Position.Y + 5, (int)hotbar.squareSize - 10, (int)hotbar.squareSize - 10), Color.White);
                     if (item.isStackable)
                     {
                         spriteBatch.DrawString(font, item.itemAmount.ToString(), new Vector2((int)hotbar.Position.X + 5 + hotbar.squareSize * i, (int)hotbar.Position.Y + 5), Color.Black);
