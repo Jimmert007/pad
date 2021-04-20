@@ -28,7 +28,6 @@ namespace HarvestValley.GameStates
         UIDialogueBox dialogueBox;
         UIText dialogueText;
         int iLines = 0;
-        Wallet wallet;
 
         string[] dialogueLines = { "Dit is een test", "Hallo", "Het werkt", "INSERT TEXT", "Proleet" };
 
@@ -41,7 +40,7 @@ namespace HarvestValley.GameStates
             {
                 for (int x = 0; x < map.cols; x++)
                 {
-                    Cell c = new Cell(mapSpriteSheet, new Vector2(mapSpriteSheet.Width * x, mapSpriteSheet.Height * i), 1, x + (map.cols * i));
+                    Cell c = new Cell(mapSpriteSheet, new Vector2(mapSpriteSheet.Width / 2 * x, mapSpriteSheet.Height / 2 * i), .5f, x + (map.cols * i));
                     map.cells.Add(c);
                 }
             }
@@ -52,12 +51,12 @@ namespace HarvestValley.GameStates
             {
                 for (int x = 0; x < map.cols; x++)
                 {
-                    Plant p = new Plant(new Vector2(mapSpriteSheet.Width * x, mapSpriteSheet.Height * i), 4);
+                    Plant p = new Plant(new Vector2(mapSpriteSheet.Width / 2 * x, mapSpriteSheet.Height / 2 * i), 2);
                     plants.Add(p);
                 }
             }
 
-            player = new Player("jorrit", new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2), .2f);
+            player = new Player("jorrit", new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2), .1f);
             Add(player);
 
             trees = new GameObjectList();
@@ -66,7 +65,7 @@ namespace HarvestValley.GameStates
             {
                 for (int x = 0; x < map.cols; x++)
                 {
-                    Tree t = new Tree(new Vector2(mapSpriteSheet.Width * x, mapSpriteSheet.Height * i), 1f);
+                    Tree t = new Tree(new Vector2(mapSpriteSheet.Width / 2 * x, mapSpriteSheet.Height / 2 * i), .5f);
                     trees.Add(t);
                 }
             }
@@ -90,6 +89,11 @@ namespace HarvestValley.GameStates
 
             foreach (Cell c in map.cells.Children)
             {
+                if (c.Position.X < c.Width || c.Position.X + c.Width > GameEnvironment.Screen.X - c.Width
+                    || c.Position.Y < c.Height || c.Position.Y + c.Height > GameEnvironment.Screen.Y - c.Height)
+                {
+                    c.cellHasTree = true;
+                }
                 if (c.cellHasTree)
                 {
                     (trees.Children[c.cellID] as Tree).growthStage = 1;
@@ -108,9 +112,6 @@ namespace HarvestValley.GameStates
             Add(yesButton);
             Add(noButton);
             Add(dialogueText);
-
-            wallet = new Wallet("spr_wallet");
-            Add(wallet);
         }
 
         public override void Update(GameTime gameTime)
@@ -134,6 +135,22 @@ namespace HarvestValley.GameStates
                         sleeping.useOnce = false;
                     }
                     sleeping.Update(gameTime);
+                }
+            }
+
+            foreach (Cell c in map.cells.Children)
+            {
+                if (c.cellHasTree)
+                {
+                    if (player.CollidesWith(c))
+                    {
+                        player.collision = true;
+                        player.Position = player.lastPosition;
+                    } 
+                    else
+                    {
+                        player.collision = false;
+                    }
                 }
             }
 
@@ -178,10 +195,6 @@ namespace HarvestValley.GameStates
 
             foreach (Cell c in map.cells.Children)
             {
-                if (c.cellHasTree)
-                {
-                    c.dab(player);
-                }
                 foreach (Item item in itemList.Children)
                 {
                     if (c.CollidesWith(mouseGO))
@@ -190,7 +203,7 @@ namespace HarvestValley.GameStates
                         {
                             if (itemList.itemSelected == "HOE" && !c.cellIsTilled && !c.cellHasTree)
                             {
-                                c.ChangeSpriteTo(Cell.TILESOIL, .5f);
+                                c.ChangeSpriteTo(Cell.TILESOIL, .25f);
                                 c.cellIsTilled = true;
                                 energyBar.percentageLost += energyBar.oneUse;
                             }
@@ -351,63 +364,6 @@ namespace HarvestValley.GameStates
                     }
                 }
             }
-
-            #region wallet Draw
-            spriteBatch.Draw(wallet.wallet.Sprite, new Rectangle((int)wallet.Position.X, (int)wallet.Position.Y, (int)wallet.Sprite.Width, (int)wallet.Sprite.Height), Color.White);
-            spriteBatch.Draw(wallet.moneySquare.Sprite, new Rectangle((int)wallet.moneySquarePosition.X, (int)wallet.moneySquarePosition.Y, (int)wallet.moneySquareSize, (int)wallet.Sprite.Height), Color.White); ;
-
-            wallet.money++;
-            for (int i = 0; i < wallet.money.ToString().Length; i++)
-            {
-                for (int r = 0; r < wallet.money.ToString().Length;)
-                {
-                    #region lelijke if
-                    if (wallet.money.ToString()[r] == '0')
-                    {
-
-                        spriteBatch.DrawString(font, "0", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
-                    }
-                    else if (wallet.money.ToString()[r] == '1')
-                    {
-                        spriteBatch.DrawString(font, "1", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
-                    }
-                    else if (wallet.money.ToString()[r] == '2')
-                    {
-                        spriteBatch.DrawString(font, "2", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
-                    }
-                    else if (wallet.money.ToString()[r] == '3')
-                    {
-                        spriteBatch.DrawString(font, "3", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
-                    }
-                    else if (wallet.money.ToString()[r] == '4')
-                    {
-                        spriteBatch.DrawString(font, "4", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
-                    }
-                    else if (wallet.money.ToString()[r] == '5')
-                    {
-                        spriteBatch.DrawString(font, "5", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
-                    }
-                    else if (wallet.money.ToString()[r] == '6')
-                    {
-                        spriteBatch.DrawString(font, "6", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
-                    }
-                    else if (wallet.money.ToString()[r] == '7')
-                    {
-                        spriteBatch.DrawString(font, "7", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
-                    }
-                    else if (wallet.money.ToString()[r] == '8')
-                    {
-                        spriteBatch.DrawString(font, "8", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
-                    }
-                    else if (wallet.money.ToString()[r] == '9')
-                    {
-                        spriteBatch.DrawString(font, "9", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
-                    }
-                    #endregion
-                    r++;
-                }
-            }
-            #endregion
         }
     }
 }
