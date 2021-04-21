@@ -15,6 +15,7 @@ namespace HarvestValley.GameObjects
             Add(new Axe("spr_empty", false, 1));
             Add(new WateringCan("spr_empty", false, 1));
             Add(new Seed("spr_seed1_stage1", true, 10));
+            
             #endregion
         }
     }

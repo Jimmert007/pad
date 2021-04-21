@@ -56,19 +56,14 @@ namespace HarvestValley
             velocity.X = 0;
             velocity.Y = 0;
 
-            if (collision)
-            {
-                velocity = new Vector2(0, 0);
-            }
-            else
-            {
-                //Movement inputs
-                if (Keyboard.GetState().IsKeyDown(Keys.A)) { velocity.X = -5.0f; }
-                else if (Keyboard.GetState().IsKeyDown(Keys.D)) { velocity.X = 5.0f; }
-                if (Keyboard.GetState().IsKeyDown(Keys.W)) { velocity.Y = -5.0f; }
-                else if (Keyboard.GetState().IsKeyDown(Keys.S)) { velocity.Y = 5.0f; }
-                if (Keyboard.GetState().IsKeyDown(Keys.LeftShift)) { velocity *= 2; }
-            }
+
+            //Movement inputs
+            if (Keyboard.GetState().IsKeyDown(Keys.A)) { velocity.X = -5.0f; }
+            else if (Keyboard.GetState().IsKeyDown(Keys.D)) { velocity.X = 5.0f; }
+            if (Keyboard.GetState().IsKeyDown(Keys.W)) { velocity.Y = -5.0f; }
+            else if (Keyboard.GetState().IsKeyDown(Keys.S)) { velocity.Y = 5.0f; }
+            if (Keyboard.GetState().IsKeyDown(Keys.LeftShift)) { velocity *= 2; }
+
             //Control movement
             position += velocity;
 

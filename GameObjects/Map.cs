@@ -12,14 +12,15 @@ namespace HarvestValley
 {
     class Map : GameObject
     {
+        int mapWidth = GameEnvironment.Screen.X * 2, mapHeight = GameEnvironment.Screen.Y * 2;
         public int rows, cols;
         public GameObjectList cells = new GameObjectList();
         public Map(Vector2 _size) : base()
         {
-            cols = (int)MathF.Floor(GameEnvironment.Screen.X / _size.X * 2);
-            rows = (int)MathF.Floor(GameEnvironment.Screen.Y / _size.Y * 2);
+            cols = mapWidth / 128;
+            rows = mapHeight / 128;
 
-            //Debug.WriteLine(cols.ToString() + " x " + rows.ToString() + " totaal " + rows * cols);
+            Debug.WriteLine(cols.ToString() + " x " + rows.ToString() + " totaal " + rows * cols);
         }
 
         public int index(int x, int y)

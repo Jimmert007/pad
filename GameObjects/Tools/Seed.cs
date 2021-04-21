@@ -9,6 +9,7 @@ namespace HarvestValley
     {
         public Seed(string _assetName, bool stackable, int startItemAmount) : base(_assetName, stackable, startItemAmount)
         {
+            
         }
     }
 }

@@ -27,10 +27,8 @@ namespace HarvestValley.GameStates
         UIButton yesButton, noButton;
         UIDialogueBox dialogueBox;
         UIText dialogueText;
-        int iLines = 0;
         Wallet wallet;
 
-        string[] dialogueLines = { "Dit is een test", "Hallo", "Het werkt", "INSERT TEXT", "Proleet" };
 
         public PlayingState()
         {
@@ -121,6 +119,11 @@ namespace HarvestValley.GameStates
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+           /* foreach (Cell c in map.cells.Children)
+            {
+                c.Position -= Vector2.One;
+            }*/
+
             if (sleeping.fadeAmount >= 1)
             {
                 foreach (Plant p in plants.Children)
@@ -148,12 +151,7 @@ namespace HarvestValley.GameStates
                 {
                     if (player.CollidesWith(c))
                     {
-                        player.collision = true;
                         player.Position = player.lastPosition;
-                    } 
-                    else
-                    {
-                        player.collision = false;
                     }
                 }
             }
@@ -165,9 +163,9 @@ namespace HarvestValley.GameStates
             }
 
             //Continuesly draw the UI on top of the UI box
-            dialogueText.Position = new Vector2(dialogueBox.Position.X + yesButton.Sprite.Width / 3, dialogueBox.Position.Y + dialogueBox.Sprite.Height / 3);
+            dialogueText.Position = new Vector2(dialogueBox.Position.X + dialogueText.Size.X * .5f, dialogueBox.Position.Y + dialogueBox.Sprite.Height * .5f);
 
-            dialogueText.Text = dialogueLines[iLines].ToString();
+
             //UI textBox
             if (ui.UIActive)
             {   //Change UI textBox position
@@ -183,7 +181,7 @@ namespace HarvestValley.GameStates
             }
             else if (!ui.UIActive)
             {
-                dialogueBox.Visible = false;
+                dialogueBox.Visible = true;
             }
             else if (!ui.playerDescision)
             {
@@ -311,17 +309,13 @@ namespace HarvestValley.GameStates
             //Cycle through lines on input
             if (inputHelper.KeyPressed(Keys.P))
             {
-                iLines++;
-                if (iLines >= dialogueLines.Length)
-                {
-                    iLines = 0;
-                }
+                
             }
 
             if (ui.playerDescision)
             {
                 //Choices for Player Actions on UI interaction when UI Choice is active
-                for (int iLines = 0; iLines < dialogueLines.Length; iLines++)
+                for (int iLines = 0; iLines < dialogueText.dialogueLines.Length; iLines++)
                 {
                     if (yesButton.CollidesWith(mouseGO) && ui.UIActive && iLines == 0)
                     {
