@@ -12,8 +12,9 @@ namespace HarvestValley
         public int cellID;
         private int _sheetIndex;
         private bool _mirror;
-        public static SpriteGameObject TILESOIL = new SpriteGameObject("spr_tilled_soil");
-        public bool cellIsTilled, cellHasPlant, cellHasTree;
+        public static SpriteGameObject TILESOIL = new SpriteGameObject("tiles/spr_tilled_soil");
+        public static SpriteGameObject TILESOILWATER = new SpriteGameObject("tiles/spr_tilled_soil_water");
+        public bool cellIsTilled, cellHasPlant, cellHasTree, cellHasWater, cellHasSprinkler;
 
         public Cell(SpriteSheet _sprite, Vector2 _position, float _scale, int _id) : base(_sprite)
         {
@@ -22,9 +23,8 @@ namespace HarvestValley
             position = _position;
             cellID = _id;
             _mirror = false;
-            //Debug.WriteLine(cellID);
-            //Debug.WriteLine(Position);
-
+            Debug.WriteLine(cellID);
+            Debug.WriteLine(Position);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

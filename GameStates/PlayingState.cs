@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HarvestValley.GameObjects;
+using HarvestValley.GameObjects.Tools;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -17,6 +18,7 @@ namespace HarvestValley.GameStates
         Player player;
         GameObjectList plants;
         GameObjectList trees;
+        GameObjectList sprinklers;
         SpriteGameObject mouseGO;
         EnergyBar energyBar;
         Sleeping sleeping;
@@ -41,8 +43,10 @@ namespace HarvestValley.GameStates
                 {
                     Cell c = new Cell(mapSpriteSheet, new Vector2(mapSpriteSheet.Width / 2 * x, mapSpriteSheet.Height / 2 * i), .5f, x + (map.cols * i));
                     map.cells.Add(c);
+
                 }
             }
+            
 
             plants = new GameObjectList();
             Add(plants);
@@ -69,6 +73,18 @@ namespace HarvestValley.GameStates
                 }
             }
 
+            sprinklers = new GameObjectList();
+            Add(sprinklers);
+            for (int i = 0; i < map.rows; i++)
+            {
+                for (int x = 0; x < map.cols; x++)
+                {
+                    SprinklerObject s = new SprinklerObject(new Vector2(mapSpriteSheet.Width / 2 * x, mapSpriteSheet.Height / 2 * i), 1f);
+                    sprinklers.Add(s);
+                }
+
+            }
+
             mouseGO = new SpriteGameObject("1px");
             Add(mouseGO);
 
@@ -82,7 +98,7 @@ namespace HarvestValley.GameStates
             Add(hotbar);
 
             itemList = new ItemList();
-            Add(itemList);
+
 
             font = GameEnvironment.AssetManager.Content.Load<SpriteFont>("GameFont");
 
@@ -95,8 +111,9 @@ namespace HarvestValley.GameStates
                 }
                 if (c.cellHasTree)
                 {
-                    (trees.Children[c.cellID] as Tree).growthStage = 1;
                     (trees.Children[c.cellID] as Tree).soilHasTree = true;
+                    (trees.Children[c.cellID] as Tree).growthStage = 3;
+
                 }
             }
 
@@ -119,40 +136,118 @@ namespace HarvestValley.GameStates
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-           /* foreach (Cell c in map.cells.Children)
-            {
-                c.Position -= Vector2.One;
-            }*/
-
             if (sleeping.fadeAmount >= 1)
             {
-                foreach (Plant p in plants.Children)
+                if (sleeping.fadeOut)
                 {
-                    if (sleeping.fadeOut)
+                    foreach (Plant p in plants.Children)
                     {
-                        energyBar.Reset();
-                        if (p.soilHasPlant)
+
+                        if (p.soilHasPlant && p.soilHasWater)
                         {
                             p.growthStage++;
+                            p.soilHasWater = false;
+                        }
+                        foreach (Cell c in map.cells.Children)
+                        {
+                            if (c.cellHasWater)
+                            {
+                                c.cellHasWater = false;
+                                c.ChangeSpriteTo(Cell.TILESOIL, .5f);
+                            }
+                        }
+
+                        energyBar.Reset();
+                    }
+
+                    for (int i = 0; i < map.cells.Children.Count; i++)
+                    {
+                        if ((map.cells.Children[i] as Cell).cellHasSprinkler)
+                        {
+                            foreach (Cell c in map.cells.Children)
+                            {
+                                if ((map.cells.Children[i] as Cell).Position + new Vector2(64, 0) == c.Position && c.cellIsTilled)
+                                { 
+                                    c.cellHasWater = true;
+                                    c.ChangeSpriteTo(Cell.TILESOILWATER, .5f);
+                                    (plants.Children[c.cellID] as Plant).soilHasWater = true;
+                                }
+                                if ((map.cells.Children[i] as Cell).Position + new Vector2(0, 64) == c.Position && c.cellIsTilled)
+                                {
+                                    c.cellHasWater = true;
+                                    c.ChangeSpriteTo(Cell.TILESOILWATER, .5f);
+                                    (plants.Children[c.cellID] as Plant).soilHasWater = true;
+                                }
+                                if ((map.cells.Children[i] as Cell).Position + new Vector2(0, -64) == c.Position && c.cellIsTilled)
+                                {
+                                    c.cellHasWater = true;
+                                    c.ChangeSpriteTo(Cell.TILESOILWATER, .5f);
+                                    (plants.Children[c.cellID] as Plant).soilHasWater = true;
+                                }
+                                if ((map.cells.Children[i] as Cell).Position + new Vector2(-64, 0) == c.Position && c.cellIsTilled)
+                                {
+                                    c.cellHasWater = true;
+                                    c.ChangeSpriteTo(Cell.TILESOILWATER, .5f);
+                                    (plants.Children[c.cellID] as Plant).soilHasWater = true;
+                                }
+                            }
                         }
                     }
-                    if (energyBar.passOut)
+
+                    foreach (Tree t in trees.Children)
                     {
-                        sleeping.Sleep(gameTime);
-                        sleeping.useOnce = false;
+                        if (t.soilHasTree)
+                        {
+                            t.growthStage++;
+                        }
                     }
-                    sleeping.Update(gameTime);
+                }
+                if (energyBar.passOut)
+                {
+                    sleeping.Sleep(gameTime);
+                    sleeping.useOnce = false;
+                }
+                sleeping.Update(gameTime);
+            }
+
+
+            foreach (Item item in itemList.Children)
+            {
+                foreach (Tree t in trees.Children)
+                {
+                    if (t.health <= 0)
+                    {
+                        if (item is Wood)
+                        {
+                            item.itemAmount += GameEnvironment.Random.Next(3, 7);
+                        }
+                        if (item is TreeSeed)
+                        {
+                            item.itemAmount += GameEnvironment.Random.Next(2);
+                            t.health = 4;
+                        }
+
+                    }
                 }
             }
 
             foreach (Cell c in map.cells.Children)
             {
-                if (c.cellHasTree)
+                if (c.cellHasTree || c.cellHasSprinkler)
                 {
                     if (player.CollidesWith(c))
                     {
                         player.Position = player.lastPosition;
                     }
+                    else
+                    {
+                        player.collision = false;
+                    }
+
+                }
+                if (c.cellHasTree)
+                {
+                    (trees.Children[(int)c.cellID] as Tree).soilHasTree = true;
                 }
             }
 
@@ -203,9 +298,9 @@ namespace HarvestValley.GameStates
                     {
                         if (inputHelper.MouseLeftButtonDown())
                         {
-                            if (itemList.itemSelected == "HOE" && !c.cellIsTilled && !c.cellHasTree)
+                            if (itemList.itemSelected == "HOE" && !c.cellIsTilled && !c.cellHasTree && !c.cellHasSprinkler)
                             {
-                                c.ChangeSpriteTo(Cell.TILESOIL, .25f);
+                                c.ChangeSpriteTo(Cell.TILESOIL, .5f);
                                 c.cellIsTilled = true;
                                 energyBar.percentageLost += energyBar.oneUse;
                             }
@@ -222,8 +317,27 @@ namespace HarvestValley.GameStates
                                 }
                             }
 
+                            if (item is Sprinkler)
+                            {
+                                if (itemList.itemSelected == "SPRINKLER" && !c.cellHasPlant && !c.cellHasTree && !c.cellHasSprinkler && item.itemAmount > 0)
+                                {
+                                    item.itemAmount -= 1;
+                                    c.cellHasSprinkler = true;
+                                    energyBar.percentageLost += energyBar.oneUse;
+                                    (sprinklers.Children[c.cellID] as SprinklerObject).sprinklerSprite = 1;
+                                }
+                            }
+
+                            Plant p = (plants.Children[c.cellID] as Plant);
+                            if (itemList.itemSelected == "WATERINGCAN" && c.cellIsTilled)
+                            {
+                                c.cellHasWater = true;
+                                p.soilHasWater = true;
+                                c.ChangeSpriteTo(Cell.TILESOILWATER, .5f);
+                            }
+
                             Tree t = (trees.Children[c.cellID] as Tree);
-                            if (itemList.itemSelected == "AXE" && c.cellHasTree && !t.treeHit)
+                            if (itemList.itemSelected == "AXE" && c.cellHasTree && !t.treeHit && t.growthStage == 3)
                             {
                                 t.treeHit = true;
                                 t.hitTimer = t.hitTimerReset;
@@ -232,10 +346,22 @@ namespace HarvestValley.GameStates
                                 if (t.health <= 0)
                                 {
                                     c.cellHasTree = false;
+                                    t.soilHasTree = false;
+                                }
+                            }
+
+                            if (item is TreeSeed)
+                            {
+                                if (itemList.itemSelected == "TREESEED" && !c.cellIsTilled && !c.cellHasPlant && item.itemAmount > 0 && !c.cellHasTree && c.cellHasSprinkler)
+                                {
+                                    item.itemAmount -= 1;
+                                    c.cellHasTree = true;
+                                    t.soilHasTree = true;
+                                    t.growthStage = 1;
+                                    energyBar.percentageLost += energyBar.oneUse;
                                 }
                             }
                         }
-
                         if (inputHelper.MouseRightButtonDown())
                         {
                             if (c.cellHasPlant)
@@ -249,6 +375,7 @@ namespace HarvestValley.GameStates
                                 }
                             }
                         }
+
                     }
                 }
             }
@@ -275,17 +402,17 @@ namespace HarvestValley.GameStates
             }
             else if (inputHelper.KeyPressed(Keys.D5))
             {
-                //itemList.itemSelected = "AXE";
+                itemList.itemSelected = "WOOD";
                 hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 4;
             }
             else if (inputHelper.KeyPressed(Keys.D6))
             {
-                //itemList.itemSelected = "WATERINGCAN";
+                itemList.itemSelected = "TREESEED";
                 hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 5;
             }
             else if (inputHelper.KeyPressed(Keys.D7))
             {
-                //itemList.itemSelected = "SEED";
+                itemList.itemSelected = "SPRINKLER";
                 hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 6;
             }
             else if (inputHelper.KeyPressed(Keys.D8))
@@ -355,7 +482,7 @@ namespace HarvestValley.GameStates
                 Item item = (itemList.Children[i] as Item);
                 if (item.itemAmount > 0)
                 {
-                    spriteBatch.Draw(item.Sprite.Sprite, new Rectangle((int)hotbar.Position.X + hotbar.squareSize * i, (int)hotbar.Position.Y, (int)hotbar.squareSize, (int)hotbar.squareSize), Color.White);
+                    spriteBatch.Draw(item.Sprite.Sprite, new Rectangle((int)hotbar.Position.X + 5 + hotbar.squareSize * i, (int)hotbar.Position.Y + 5, (int)hotbar.squareSize - 10, (int)hotbar.squareSize - 10), Color.White);
                     if (item.isStackable)
                     {
                         spriteBatch.DrawString(font, item.itemAmount.ToString(), new Vector2((int)hotbar.Position.X + 5 + hotbar.squareSize * i, (int)hotbar.Position.Y + 5), Color.Black);

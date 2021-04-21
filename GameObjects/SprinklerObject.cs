@@ -1,52 +1,42 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework;
 
-namespace HarvestValley
+namespace HarvestValley.GameObjects
 {
-    class Plant : GameObjectList
+    class SprinklerObject : GameObjectList
     {
-        public int growthStage = 0;
-        public SpriteGameObject empty, seed1stage1, seed1stage2, seed1stage3, seed1stage4;
+        public int sprinklerSprite = 0;
+        public SpriteGameObject empty, sprinkler1;
         private float _scale;
-        public bool soilHasPlant, soilHasWater;
-
-        public Plant(Vector2 _postition, float scale) : base()
+        public SprinklerObject(Vector2 _position, float scale) : base()
         {
-            position = _postition;
+            position = _position;
             _scale = scale;
+
             empty = new SpriteGameObject("spr_empty", 0, "0");
-            seed1stage1 = new SpriteGameObject("spr_seed1_stage1", 0, "1");
-            seed1stage2 = new SpriteGameObject("spr_seed1_stage2", 0, "2");
-            seed1stage3 = new SpriteGameObject("spr_seed1_stage3", 0, "3");
-            seed1stage4 = new SpriteGameObject("spr_seed1_stage4", 0, "4");
+            sprinkler1 = new SpriteGameObject("Sprinkler", 0, "1");
             Add(empty);
-            Add(seed1stage1);
-            Add(seed1stage2);
-            Add(seed1stage3);
-            Add(seed1stage4);
-            soilHasPlant = false;
+            Add(sprinkler1);
+
             for (int i = 0; i < children.Count; i++)
             {
                 (children[i] as SpriteGameObject).Scale = _scale;
                 (children[i] as SpriteGameObject).PerPixelCollisionDetection = false;
                 (children[i] as SpriteGameObject).Visible = false;
             }
+
+            sprinkler1.scale = 1.3f;
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (growthStage > 4)
-            {
-                growthStage = 4;
-            }
+            base.Update(gameTime);
             foreach (SpriteGameObject SGO in Children)
             {
                 SGO.Visible = false;
-                if (SGO.Id == growthStage.ToString())
+                if (SGO.Id == sprinklerSprite.ToString())
                 {
                     SGO.Visible = true;
                 }
