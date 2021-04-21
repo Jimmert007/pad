@@ -12,7 +12,7 @@ namespace HarvestValley
         public int growthStage = 0;
         public SpriteGameObject empty, seed1stage1, seed1stage2, seed1stage3, seed1stage4;
         private float _scale;
-        public bool soilHasPlant;
+        public bool soilHasPlant, soilHasWater;
 
         public Plant(Vector2 _postition, float scale) : base()
         {

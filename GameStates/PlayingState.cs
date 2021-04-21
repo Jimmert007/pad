@@ -84,7 +84,7 @@ namespace HarvestValley.GameStates
             Add(hotbar);
 
             itemList = new ItemList();
-            
+
 
             font = GameEnvironment.AssetManager.Content.Load<SpriteFont>("GameFont");
 
@@ -97,8 +97,9 @@ namespace HarvestValley.GameStates
                 }
                 if (c.cellHasTree)
                 {
-                    (trees.Children[c.cellID] as Tree).growthStage = 1;
                     (trees.Children[c.cellID] as Tree).soilHasTree = true;
+                    (trees.Children[c.cellID] as Tree).growthStage = 1;
+
                 }
             }
 
@@ -121,24 +122,44 @@ namespace HarvestValley.GameStates
 
             if (sleeping.fadeAmount >= 1)
             {
-                foreach (Plant p in plants.Children)
+                if (sleeping.fadeOut)
                 {
-                    if (sleeping.fadeOut)
+                    foreach (Plant p in plants.Children)
                     {
-                        energyBar.Reset();
-                        if (p.soilHasPlant)
+
+                        if (p.soilHasPlant && p.soilHasWater)
                         {
                             p.growthStage++;
+                            p.soilHasWater = false;
+                        }
+                        foreach (Cell c in map.cells.Children)
+                        {
+                            if (c.cellHasWater)
+                            {
+                                c.cellHasWater = false;
+                                c.ChangeSpriteTo(Cell.TILESOIL, .5f);
+                            }
+                        }
+
+                        energyBar.Reset();
+                    }
+
+                    foreach (Tree t in trees.Children)
+                    {
+                        if (t.soilHasTree)
+                        {
+                            t.growthStage++;
                         }
                     }
-                    if (energyBar.passOut)
-                    {
-                        sleeping.Sleep(gameTime);
-                        sleeping.useOnce = false;
-                    }
-                    sleeping.Update(gameTime);
                 }
+                if (energyBar.passOut)
+                {
+                    sleeping.Sleep(gameTime);
+                    sleeping.useOnce = false;
+                }
+                sleeping.Update(gameTime);
             }
+
 
             foreach (Item item in itemList.Children)
             {
@@ -168,7 +189,7 @@ namespace HarvestValley.GameStates
                     {
                         player.collision = true;
                         player.Position = player.lastPosition;
-                    } 
+                    }
                     else
                     {
                         player.collision = false;
@@ -226,7 +247,7 @@ namespace HarvestValley.GameStates
                         {
                             if (itemList.itemSelected == "HOE" && !c.cellIsTilled && !c.cellHasTree)
                             {
-                                c.ChangeSpriteTo(Cell.TILESOIL, .25f);
+                                c.ChangeSpriteTo(Cell.TILESOIL, .5f);
                                 c.cellIsTilled = true;
                                 energyBar.percentageLost += energyBar.oneUse;
                             }
@@ -242,10 +263,16 @@ namespace HarvestValley.GameStates
                                     (plants.Children[c.cellID] as Plant).soilHasPlant = true;
                                 }
                             }
+                            Plant p = (plants.Children[c.cellID] as Plant);
+                            if (itemList.itemSelected == "WATERINGCAN" && c.cellIsTilled)
+                            {
+                                c.cellHasWater = true;
+                                p.soilHasWater = true;
+                                c.ChangeSpriteTo(Cell.TILESOILWATER, .5f);
+                            }
 
-                            
                             Tree t = (trees.Children[c.cellID] as Tree);
-                            if (itemList.itemSelected == "AXE" && c.cellHasTree && !t.treeHit)
+                            if (itemList.itemSelected == "AXE" && c.cellHasTree && !t.treeHit && t.growthStage == 3)
                             {
                                 t.treeHit = true;
                                 t.hitTimer = t.hitTimerReset;
@@ -264,6 +291,8 @@ namespace HarvestValley.GameStates
                                 {
                                     item.itemAmount -= 1;
                                     c.cellHasTree = true;
+                                    t.soilHasTree = true;
+                                    t.growthStage = 1;
                                     energyBar.percentageLost += energyBar.oneUse;
                                 }
                             }
