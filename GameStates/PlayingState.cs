@@ -16,6 +16,7 @@ namespace HarvestValley.GameStates
     {
         Map map;
         Player player;
+        CraftingMenu craftingMenu;
         GameObjectList plants;
         GameObjectList trees;
         GameObjectList sprinklers;
@@ -93,6 +94,9 @@ namespace HarvestValley.GameStates
 
             sleeping = new Sleeping("spr_empty");
             Add(sleeping);
+
+            craftingMenu = new CraftingMenu();
+            Add(craftingMenu);
 
             hotbar = new Hotbar("spr_empty");
             Add(hotbar);
