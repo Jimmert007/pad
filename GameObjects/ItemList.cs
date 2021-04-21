@@ -18,6 +18,7 @@ namespace HarvestValley.GameObjects
             Add(new Seed("spr_seed1_stage1", true, 10));
             Add(new Wood("spr_wood", true, 0));
             Add(new TreeSeed("spr_treeseed", true, 0));
+            Add(new Sprinkler("sprinkler", true, 3));
             #endregion
         }
     }
