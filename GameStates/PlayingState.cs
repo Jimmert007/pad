@@ -1,14 +1,12 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using HarvestValley.GameObjects;
 using HarvestValley.GameObjects.Tools;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace HarvestValley.GameStates
 {
@@ -27,13 +25,8 @@ namespace HarvestValley.GameStates
         Hotbar hotbar;
         ItemList itemList;
         SpriteFont font;
-        UI ui;
-        UIButton yesButton, noButton;
-        UIDialogueBox dialogueBox;
-        UIText dialogueText;
-        int iLines = 0;
-
-        string[] dialogueLines = { "Dit is een test", "Hallo", "Het werkt", "INSERT TEXT", "Proleet" };
+        UIList uIList;
+        Executer exec;
 
         public PlayingState()
         {
@@ -86,7 +79,7 @@ namespace HarvestValley.GameStates
                 }
             }
 
-                    sprinklers = new GameObjectList();
+            sprinklers = new GameObjectList();
             Add(sprinklers);
             for (int i = 0; i < map.rows; i++)
             {
@@ -147,16 +140,8 @@ namespace HarvestValley.GameStates
             }
 
             //Initialize UI Elements
-            ui = new UI("ui_bar");
-            dialogueBox = new UIDialogueBox("ui_bar", -1000, -1000, 1);
-            dialogueText = new UIText();
-            yesButton = new UIButton("play", -1000, -1000, .5f);
-            noButton = new UIButton("cancel", -1000, -1000, .5f);
-
-            Add(dialogueBox);
-            Add(yesButton);
-            Add(noButton);
-            Add(dialogueText);
+            Add(uIList = new UIList());
+            Add(exec = new Executer());
         }
 
         public override void Update(GameTime gameTime)
@@ -327,33 +312,6 @@ namespace HarvestValley.GameStates
                 sleeping.Sleep(gameTime);
                 sleeping.useOnce = false;
             }
-
-            //Continuesly draw the UI on top of the UI box
-            dialogueText.Position = new Vector2(dialogueBox.Position.X + yesButton.Sprite.Width / 3, dialogueBox.Position.Y + dialogueBox.Sprite.Height / 3);
-
-            dialogueText.Text = dialogueLines[iLines].ToString();
-            //UI textBox
-            if (ui.UIActive)
-            {   //Change UI textBox position
-                dialogueBox.Position = new Vector2(GameEnvironment.Screen.X / 4, GameEnvironment.Screen.Y / 4);
-            }
-            //  UI for Player Actions
-            if (ui.playerDescision)
-            {
-                //Change UI Choice Positions
-                yesButton.Position = new Vector2(dialogueBox.Position.X, (dialogueBox.Position.Y + (dialogueBox.Sprite.Height * 2)));
-
-                noButton.Position = new Vector2((int)(dialogueBox.Position.X + dialogueBox.Sprite.Width - noButton.Sprite.Width), (int)(yesButton.Position.Y));
-            }
-            else if (!ui.UIActive)
-            {
-                dialogueBox.Visible = false;
-            }
-            else if (!ui.playerDescision)
-            {
-                yesButton.Position = new Vector2(-10000, -10000);
-                noButton.Position = new Vector2(-10000, -10000);
-            }
         }
 
         public override void HandleInput(InputHelper inputHelper)
@@ -511,55 +469,6 @@ namespace HarvestValley.GameStates
                 hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 8;
             }
             #endregion
-
-            if (inputHelper.KeyPressed(Keys.U)) { ui.UIActive = true; }
-            if (inputHelper.KeyPressed(Keys.I)) { ui.playerDescision = true; }
-            if (inputHelper.KeyPressed(Keys.J)) { ui.UIActive = false; }
-            if (inputHelper.KeyPressed(Keys.K)) { ui.playerDescision = false; }
-
-            //Pick a sepcific line to display 
-            //Cycle through lines on input
-            if (inputHelper.KeyPressed(Keys.P))
-            {
-                iLines++;
-                if (iLines >= dialogueLines.Length)
-                {
-                    iLines = 0;
-                }
-            }
-
-            if (ui.playerDescision)
-            {
-                //Choices for Player Actions on UI interaction when UI Choice is active
-                for (int iLines = 0; iLines < dialogueLines.Length; iLines++)
-                {
-                    if (yesButton.CollidesWith(mouseGO) && ui.UIActive && iLines == 0)
-                    {
-                        ui.playerDescision = false;
-                        //Accept player command for action 0
-                    }
-                    if (yesButton.CollidesWith(mouseGO) && ui.UIActive && iLines == 1)
-                    {
-                        ui.playerDescision = false;
-                        //Accept player command for action 1
-                    }
-                    if (yesButton.CollidesWith(mouseGO) && ui.UIActive && iLines == 2)
-                    {
-                        ui.playerDescision = false;
-                        //Accept player command for action 2
-                    }
-                    if (yesButton.CollidesWith(mouseGO) && ui.UIActive && iLines == 3)
-                    {
-                        ui.playerDescision = false;
-                        //Accept player command for action 3
-                    }
-                    if (noButton.CollidesWith(mouseGO) && ui.UIActive)
-                    {
-                        ui.playerDescision = false;
-                        //reject player command
-                    }
-                }
-            }
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
