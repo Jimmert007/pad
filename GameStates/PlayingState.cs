@@ -1,14 +1,13 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using HarvestValley.GameObjects;
 using HarvestValley.GameObjects.Tools;
-using Microsoft.Xna.Framework;
+using HarvestValley.GameObjects.HarvestValley.GameObjects;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace HarvestValley.GameStates
 {
@@ -19,19 +18,17 @@ namespace HarvestValley.GameStates
         CraftingMenu craftingMenu;
         GameObjectList plants;
         GameObjectList trees;
+        GameObjectList stones;
         GameObjectList sprinklers;
         SpriteGameObject mouseGO;
         EnergyBar energyBar;
         Sleeping sleeping;
         Hotbar hotbar;
         ItemList itemList;
-        SpriteFont font;
-        UI ui;
-        UIButton yesButton, noButton;
-        UIDialogueBox dialogueBox;
-        UIText dialogueText;
+        SpriteFont jimFont;
+        UIList uIList;
+        Executer exec;       
         Wallet wallet;
-
 
         public PlayingState()
         {
@@ -47,7 +44,7 @@ namespace HarvestValley.GameStates
 
                 }
             }
-            
+
 
             plants = new GameObjectList();
             Add(plants);
@@ -71,6 +68,16 @@ namespace HarvestValley.GameStates
                 {
                     Tree t = new Tree(new Vector2(mapSpriteSheet.Width / 2 * x, mapSpriteSheet.Height / 2 * i), .5f);
                     trees.Add(t);
+                }
+            }
+            stones = new GameObjectList();
+            Add(stones);
+            for (int i = 0; i < map.rows; i++)
+            {
+                for (int x = 0; x < map.cols; x++)
+                {
+                    Stone s = new Stone(new Vector2(mapSpriteSheet.Width / 2 * x, mapSpriteSheet.Height / 2 * i), .5f);
+                    stones.Add(s);
                 }
             }
 
@@ -103,8 +110,7 @@ namespace HarvestValley.GameStates
 
             itemList = new ItemList();
 
-
-            font = GameEnvironment.AssetManager.Content.Load<SpriteFont>("GameFont");
+            jimFont = GameEnvironment.AssetManager.Content.Load<SpriteFont>("JimFont");
 
             foreach (Cell c in map.cells.Children)
             {
@@ -117,53 +123,40 @@ namespace HarvestValley.GameStates
                 {
                     (trees.Children[c.cellID] as Tree).soilHasTree = true;
                     (trees.Children[c.cellID] as Tree).growthStage = 3;
+                }
 
+                if (!c.cellHasTree)
+                {
+                    int r = GameEnvironment.Random.Next(50);
+                    if (r == 1)
+                    {
+                        c.cellHasStone = true;
+                    }
+                    if (c.cellHasStone)
+                    {
+                        (stones.Children[c.cellID] as Stone).soilHasStone = true;
+                        (stones.Children[c.cellID] as Stone)._sprite = 1;
+                    }
                 }
             }
 
             //Initialize UI Elements
-            ui = new UI("ui_bar");
-            dialogueBox = new UIDialogueBox("ui_bar", -1000, -1000, 1);
-            dialogueText = new UIText();
-            yesButton = new UIButton("play", -1000, -1000, .5f);
-            noButton = new UIButton("cancel", -1000, -1000, .5f);
+            Add(uIList = new UIList());
+            Add(exec = new Executer());
 
-            Add(dialogueBox);
-            Add(yesButton);
-            Add(noButton);
-            Add(dialogueText);
-
-            wallet = new Wallet("spr_wallet");
+            wallet = new Wallet();
             Add(wallet);
+
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
             if (sleeping.fadeAmount >= 1)
             {
                 if (sleeping.fadeOut)
                 {
-                    foreach (Plant p in plants.Children)
-                    {
-
-                        if (p.soilHasPlant && p.soilHasWater)
-                        {
-                            p.growthStage++;
-                            p.soilHasWater = false;
-                        }
-                        foreach (Cell c in map.cells.Children)
-                        {
-                            if (c.cellHasWater)
-                            {
-                                c.cellHasWater = false;
-                                c.ChangeSpriteTo(Cell.TILESOIL, .5f);
-                            }
-                        }
-
-                        energyBar.Reset();
-                    }
-
                     for (int i = 0; i < map.cells.Children.Count; i++)
                     {
                         if ((map.cells.Children[i] as Cell).cellHasSprinkler)
@@ -171,32 +164,84 @@ namespace HarvestValley.GameStates
                             foreach (Cell c in map.cells.Children)
                             {
                                 if ((map.cells.Children[i] as Cell).Position + new Vector2(64, 0) == c.Position && c.cellIsTilled)
-                                { 
+                                {
                                     c.cellHasWater = true;
+                                    c.nextToSprinkler = true;
                                     c.ChangeSpriteTo(Cell.TILESOILWATER, .5f);
                                     (plants.Children[c.cellID] as Plant).soilHasWater = true;
                                 }
                                 if ((map.cells.Children[i] as Cell).Position + new Vector2(0, 64) == c.Position && c.cellIsTilled)
                                 {
                                     c.cellHasWater = true;
+                                    c.nextToSprinkler = true;
                                     c.ChangeSpriteTo(Cell.TILESOILWATER, .5f);
                                     (plants.Children[c.cellID] as Plant).soilHasWater = true;
                                 }
                                 if ((map.cells.Children[i] as Cell).Position + new Vector2(0, -64) == c.Position && c.cellIsTilled)
                                 {
                                     c.cellHasWater = true;
+                                    c.nextToSprinkler = true;
                                     c.ChangeSpriteTo(Cell.TILESOILWATER, .5f);
                                     (plants.Children[c.cellID] as Plant).soilHasWater = true;
                                 }
                                 if ((map.cells.Children[i] as Cell).Position + new Vector2(-64, 0) == c.Position && c.cellIsTilled)
                                 {
                                     c.cellHasWater = true;
+                                    c.nextToSprinkler = true;
                                     c.ChangeSpriteTo(Cell.TILESOILWATER, .5f);
                                     (plants.Children[c.cellID] as Plant).soilHasWater = true;
                                 }
                             }
                         }
                     }
+
+
+                    foreach (Cell c in map.cells.Children)
+                    {
+                        if (!c.cellHasWater && c.cellIsTilled)
+                        {
+                            if (c.randomGrass == 1)
+                            {
+                                c.cellHasPlant = false;
+                                c.cellIsTilled = false;
+                                c.ChangeSpriteTo(Cell.GRASS, .5f);
+
+                                foreach (Plant p in plants.Children)
+                                {
+                                    if (p.Position == c.Position)
+                                    {
+                                        p.soilHasPlant = false;
+                                        p.growthStage = 0;
+                                    }
+                                }
+                            }
+                            c.nextRandom = true;
+                        }
+                        foreach (Plant p in plants.Children)
+                        {
+                            if (p.soilHasPlant && p.soilHasWater)
+                            {
+                                p.growthStage++;
+                                p.soilHasWater = false;
+                            }
+                        }
+                        if (c.cellHasWater && !c.nextToSprinkler)
+                        {
+                            c.cellHasWater = false;
+                            foreach (Plant p in plants.Children)
+                            {
+                                p.soilHasWater = false;
+                            }
+                            c.ChangeSpriteTo(Cell.TILESOIL, .5f);
+                        }
+
+
+                    }
+
+                    energyBar.Reset();
+
+
+
 
                     foreach (Tree t in trees.Children)
                     {
@@ -233,14 +278,26 @@ namespace HarvestValley.GameStates
 
                     }
                 }
+                foreach (Stone s in stones.Children)
+                {
+                    if (s.health <= 0)
+                    {
+                        if (item is Rock)
+                        {
+                            item.itemAmount += GameEnvironment.Random.Next(2, 5);
+                            s.health = 6;
+                        }
+                    }
+                }
             }
 
             foreach (Cell c in map.cells.Children)
             {
-                if (c.cellHasTree || c.cellHasSprinkler)
+                if (c.cellHasTree || c.cellHasSprinkler || c.cellHasStone)
                 {
                     if (player.CollidesWith(c))
                     {
+                        player.collision = true;
                         player.Position = player.lastPosition;
                     }
                     else
@@ -260,33 +317,6 @@ namespace HarvestValley.GameStates
                 sleeping.Sleep(gameTime);
                 sleeping.useOnce = false;
             }
-
-            //Continuesly draw the UI on top of the UI box
-            dialogueText.Position = new Vector2(dialogueBox.Position.X + dialogueText.Size.X * .5f, dialogueBox.Position.Y + dialogueBox.Sprite.Height * .5f);
-
-
-            //UI textBox
-            if (ui.UIActive)
-            {   //Change UI textBox position
-                dialogueBox.Position = new Vector2(GameEnvironment.Screen.X / 4, GameEnvironment.Screen.Y / 4);
-            }
-            //  UI for Player Actions
-            if (ui.playerDescision)
-            {
-                //Change UI Choice Positions
-                yesButton.Position = new Vector2(dialogueBox.Position.X, (dialogueBox.Position.Y + (dialogueBox.Sprite.Height * 2)));
-
-                noButton.Position = new Vector2((int)(dialogueBox.Position.X + dialogueBox.Sprite.Width - noButton.Sprite.Width), (int)(yesButton.Position.Y));
-            }
-            else if (!ui.UIActive)
-            {
-                dialogueBox.Visible = true;
-            }
-            else if (!ui.playerDescision)
-            {
-                yesButton.Position = new Vector2(-10000, -10000);
-                noButton.Position = new Vector2(-10000, -10000);
-            }
         }
 
         public override void HandleInput(InputHelper inputHelper)
@@ -302,7 +332,7 @@ namespace HarvestValley.GameStates
                     {
                         if (inputHelper.MouseLeftButtonDown())
                         {
-                            if (itemList.itemSelected == "HOE" && !c.cellIsTilled && !c.cellHasTree && !c.cellHasSprinkler)
+                            if (itemList.itemSelected == "HOE" && !c.cellIsTilled && !c.cellHasTree && !c.cellHasSprinkler && !c.cellHasStone)
                             {
                                 c.ChangeSpriteTo(Cell.TILESOIL, .5f);
                                 c.cellIsTilled = true;
@@ -323,7 +353,7 @@ namespace HarvestValley.GameStates
 
                             if (item is Sprinkler)
                             {
-                                if (itemList.itemSelected == "SPRINKLER" && !c.cellHasPlant && !c.cellHasTree && !c.cellHasSprinkler && item.itemAmount > 0)
+                                if (itemList.itemSelected == "SPRINKLER" && !c.cellHasPlant && !c.cellHasTree && !c.cellHasSprinkler && item.itemAmount > 0 && !c.cellHasStone)
                                 {
                                     item.itemAmount -= 1;
                                     c.cellHasSprinkler = true;
@@ -338,6 +368,20 @@ namespace HarvestValley.GameStates
                                 c.cellHasWater = true;
                                 p.soilHasWater = true;
                                 c.ChangeSpriteTo(Cell.TILESOILWATER, .5f);
+                            }
+
+                            Stone s = (stones.Children[c.cellID] as Stone);
+                            if (itemList.itemSelected == "PICKAXE" && c.cellHasStone && !s.stoneHit && s._sprite == 1)
+                            {
+                                s.stoneHit = true;
+                                s.hitTimer = s.hitTimerReset;
+                                s.health -= 1;
+                                energyBar.percentageLost += energyBar.oneUse;
+                                if (s.health <= 0)
+                                {
+                                    c.cellHasStone = false;
+                                    s.soilHasStone = false;
+                                }
                             }
 
                             Tree t = (trees.Children[c.cellID] as Tree);
@@ -356,7 +400,7 @@ namespace HarvestValley.GameStates
 
                             if (item is TreeSeed)
                             {
-                                if (itemList.itemSelected == "TREESEED" && !c.cellIsTilled && !c.cellHasPlant && item.itemAmount > 0 && !c.cellHasTree && c.cellHasSprinkler)
+                                if (itemList.itemSelected == "TREESEED" && !c.cellIsTilled && !c.cellHasPlant && item.itemAmount > 0 && !c.cellHasTree && !c.cellHasSprinkler && !c.cellHasStone)
                                 {
                                     item.itemAmount -= 1;
                                     c.cellHasTree = true;
@@ -396,85 +440,40 @@ namespace HarvestValley.GameStates
             }
             else if (inputHelper.KeyPressed(Keys.D3))
             {
-                itemList.itemSelected = "WATERINGCAN";
+                itemList.itemSelected = "PICKAXE";
                 hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 2;
             }
             else if (inputHelper.KeyPressed(Keys.D4))
             {
-                itemList.itemSelected = "SEED";
+                itemList.itemSelected = "WATERINGCAN";
                 hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 3;
             }
             else if (inputHelper.KeyPressed(Keys.D5))
             {
-                itemList.itemSelected = "WOOD";
+                itemList.itemSelected = "SEED";
                 hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 4;
             }
             else if (inputHelper.KeyPressed(Keys.D6))
             {
-                itemList.itemSelected = "TREESEED";
+                itemList.itemSelected = "WOOD";
                 hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 5;
             }
             else if (inputHelper.KeyPressed(Keys.D7))
             {
-                itemList.itemSelected = "SPRINKLER";
+                itemList.itemSelected = "TREESEED";
                 hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 6;
             }
             else if (inputHelper.KeyPressed(Keys.D8))
             {
-                //itemList.itemSelected = "WATERINGCAN";
+                itemList.itemSelected = "ROCK";
                 hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 7;
             }
             else if (inputHelper.KeyPressed(Keys.D9))
             {
-                //itemList.itemSelected = "SEED";
+                itemList.itemSelected = "SPRINKLER";
                 hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 8;
             }
             #endregion
-
-            if (inputHelper.KeyPressed(Keys.U)) { ui.UIActive = true; }
-            if (inputHelper.KeyPressed(Keys.I)) { ui.playerDescision = true; }
-            if (inputHelper.KeyPressed(Keys.J)) { ui.UIActive = false; }
-            if (inputHelper.KeyPressed(Keys.K)) { ui.playerDescision = false; }
-
-            //Pick a sepcific line to display 
-            //Cycle through lines on input
-            if (inputHelper.KeyPressed(Keys.P))
-            {
-                
-            }
-
-            if (ui.playerDescision)
-            {
-                //Choices for Player Actions on UI interaction when UI Choice is active
-                for (int iLines = 0; iLines < dialogueText.dialogueLines.Length; iLines++)
-                {
-                    if (yesButton.CollidesWith(mouseGO) && ui.UIActive && iLines == 0)
-                    {
-                        ui.playerDescision = false;
-                        //Accept player command for action 0
-                    }
-                    if (yesButton.CollidesWith(mouseGO) && ui.UIActive && iLines == 1)
-                    {
-                        ui.playerDescision = false;
-                        //Accept player command for action 1
-                    }
-                    if (yesButton.CollidesWith(mouseGO) && ui.UIActive && iLines == 2)
-                    {
-                        ui.playerDescision = false;
-                        //Accept player command for action 2
-                    }
-                    if (yesButton.CollidesWith(mouseGO) && ui.UIActive && iLines == 3)
-                    {
-                        ui.playerDescision = false;
-                        //Accept player command for action 3
-                    }
-                    if (noButton.CollidesWith(mouseGO) && ui.UIActive)
-                    {
-                        ui.playerDescision = false;
-                        //reject player command
-                    }
-                }
-            }
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -489,68 +488,10 @@ namespace HarvestValley.GameStates
                     spriteBatch.Draw(item.Sprite.Sprite, new Rectangle((int)hotbar.Position.X + 5 + hotbar.squareSize * i, (int)hotbar.Position.Y + 5, (int)hotbar.squareSize - 10, (int)hotbar.squareSize - 10), Color.White);
                     if (item.isStackable)
                     {
-                        spriteBatch.DrawString(font, item.itemAmount.ToString(), new Vector2((int)hotbar.Position.X + 5 + hotbar.squareSize * i, (int)hotbar.Position.Y + 5), Color.Black);
+                        spriteBatch.DrawString(jimFont, item.itemAmount.ToString(), new Vector2((int)hotbar.Position.X + 5 + hotbar.squareSize * i, (int)hotbar.Position.Y + 5), Color.Black);
                     }
                 }
             }
-
-            #region wallet Draw
-            spriteBatch.Draw(wallet.wallet.Sprite, new Rectangle((int)wallet.Position.X, (int)wallet.Position.Y, (int)wallet.Sprite.Width, (int)wallet.Sprite.Height), Color.White);
-            spriteBatch.Draw(wallet.moneySquare.Sprite, new Rectangle((int)wallet.moneySquarePosition.X, (int)wallet.moneySquarePosition.Y, (int)wallet.moneySquareSize, (int)wallet.Sprite.Height), Color.White); ;
-
-            wallet.money++;
-            for (int i = 0; i < wallet.money.ToString().Length; i++)
-            {
-                for (int r = 0; r < wallet.money.ToString().Length;)
-                {
-                    #region lelijke if
-                    if (wallet.money.ToString()[r] == '0')
-                    {
-
-                        spriteBatch.DrawString(font, "0", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
-                    }
-                    else if (wallet.money.ToString()[r] == '1')
-                    {
-                        spriteBatch.DrawString(font, "1", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
-                    }
-                    else if (wallet.money.ToString()[r] == '2')
-                    {
-                        spriteBatch.DrawString(font, "2", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
-                    }
-                    else if (wallet.money.ToString()[r] == '3')
-                    {
-                        spriteBatch.DrawString(font, "3", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
-                    }
-                    else if (wallet.money.ToString()[r] == '4')
-                    {
-                        spriteBatch.DrawString(font, "4", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
-                    }
-                    else if (wallet.money.ToString()[r] == '5')
-                    {
-                        spriteBatch.DrawString(font, "5", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
-                    }
-                    else if (wallet.money.ToString()[r] == '6')
-                    {
-                        spriteBatch.DrawString(font, "6", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
-                    }
-                    else if (wallet.money.ToString()[r] == '7')
-                    {
-                        spriteBatch.DrawString(font, "7", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
-                    }
-                    else if (wallet.money.ToString()[r] == '8')
-                    {
-                        spriteBatch.DrawString(font, "8", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
-                    }
-                    else if (wallet.money.ToString()[r] == '9')
-                    {
-                        spriteBatch.DrawString(font, "9", new Vector2((int)wallet.Position.X + wallet.moneySquareSize / 2 - 10 + wallet.moneySquareSize * r, (int)wallet.Position.Y), Color.Black);
-                    }
-                    #endregion
-                    r++;
-                }
-            }
-            #endregion
-
         }
     }
 }

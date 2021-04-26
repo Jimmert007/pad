@@ -78,23 +78,6 @@ namespace HarvestValley.GameObjects
                             treeHit = false;
                         }
                     }
-                    //if (SGO.Visible)
-                    //{
-                    //    if (!treeHit && soilHasTree)
-                    //    {
-                    //        growthStage = 3;
-                    //    }
-
-                    //    if (treeHit)
-                    //    {
-                    //        growthStage = 4;
-                    //        hitTimer -= 1;
-                    //        if (hitTimer <= 0)
-                    //        {
-                    //            treeHit = false;
-                    //        }
-                    //    }
-                    //}
                 }
             }
         }
