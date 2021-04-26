@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Text;
 using HarvestValley.GameObjects;
 using HarvestValley.GameObjects.Tools;
+using HarvestValley.GameObjects.HarvestValley.GameObjects;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace HarvestValley.GameStates
@@ -27,7 +28,8 @@ namespace HarvestValley.GameStates
         SpriteFont font;
         SpriteFont jimFont;
         UIList uIList;
-        Executer exec;
+        Executer exec;       
+        Wallet wallet;
 
         public PlayingState()
         {
@@ -110,7 +112,11 @@ namespace HarvestValley.GameStates
             itemList = new ItemList();
 
 
+
             jimFont = GameEnvironment.AssetManager.Content.Load<SpriteFont>("JimFont");
+
+            font = GameEnvironment.AssetManager.Content.Load<SpriteFont>("GameFont");
+
 
             foreach (Cell c in map.cells.Children)
             {
@@ -143,6 +149,10 @@ namespace HarvestValley.GameStates
             //Initialize UI Elements
             Add(uIList = new UIList());
             Add(exec = new Executer());
+
+            wallet = new Wallet();
+            Add(wallet);
+
         }
 
         public override void Update(GameTime gameTime)
