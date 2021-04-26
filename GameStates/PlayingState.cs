@@ -303,7 +303,7 @@ namespace HarvestValley.GameStates
 
             foreach (Cell c in map.cells.Children)
             {
-                if (c.cellHasTree || c.cellHasSprinkler)
+                if (c.cellHasTree || c.cellHasSprinkler || c.cellHasStone)
                 {
                     if (player.CollidesWith(c))
                     {
