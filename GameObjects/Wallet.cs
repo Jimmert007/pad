@@ -58,7 +58,7 @@ namespace HarvestValley.GameObjects
             public Wallet()
             {
                 Add(bg = new SpriteGameObject("spr_wallet"));
-                Add(text = new TextGameObject("GameFont"));
+                Add(text = new TextGameObject("JimFont"));
                 text.Position = new Vector2(bg.Position.X + bg.Sprite.Width * .3f, text.Position.Y);
                 position.X = GameEnvironment.Screen.X - bg.Sprite.Width * .3f;
                 bg.Scale *= .3f;

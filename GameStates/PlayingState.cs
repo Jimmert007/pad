@@ -25,7 +25,6 @@ namespace HarvestValley.GameStates
         Sleeping sleeping;
         Hotbar hotbar;
         ItemList itemList;
-        SpriteFont font;
         SpriteFont jimFont;
         UIList uIList;
         Executer exec;       
@@ -111,12 +110,7 @@ namespace HarvestValley.GameStates
 
             itemList = new ItemList();
 
-
-
             jimFont = GameEnvironment.AssetManager.Content.Load<SpriteFont>("JimFont");
-
-            font = GameEnvironment.AssetManager.Content.Load<SpriteFont>("GameFont");
-
 
             foreach (Cell c in map.cells.Children)
             {
