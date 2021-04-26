@@ -14,7 +14,7 @@ namespace HarvestValley.GameObjects
 
         public UIList()
         {
-            Add(new SpriteGameObject("spr_background"));
+            //Add(new SpriteGameObject("spr_background"));
             Add(buttons = new GameObjectList());
             buttons.Add(yes = new Button("checkmark"));
             yes.Position = new Vector2(GameEnvironment.Screen.X * .3f, GameEnvironment.Screen.Y * .5f);
@@ -63,7 +63,7 @@ namespace HarvestValley.GameObjects
                 //Go through all the dialogue lines on input 
                 if (inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.U))
                 {
-                    uiDesiscionDialog.curActive += 1; //For every input the counter goes up by 1
+                    //uiDesiscionDialog.curActive += 1; //For every input the counter goes up by 1
                     if(uiDesiscionDialog.curActive> uiDesiscionDialog.strings.Length) { uiDesiscionDialog.curActive = 0; } //reset the counter if the counter exceeds the max number of lines
                 }
                 if (inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.I))

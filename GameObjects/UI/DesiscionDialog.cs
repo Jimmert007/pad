@@ -13,7 +13,7 @@ namespace HarvestValley.GameObjects
         {
             for (int i = 0; i < strings.Length; i++)
             {
-                TextGameObject x = new TextGameObject("GameFont");
+                TextGameObject x = new TextGameObject("JimFont");
                 x.Text = strings[i];
                 x.Position = new Vector2(GameEnvironment.Screen.X * .5f - x.Size.X * .5f, GameEnvironment.Screen.Y * .2f + x.Size.Y * .5f);
                 Add(x);

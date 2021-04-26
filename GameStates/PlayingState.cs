@@ -25,6 +25,7 @@ namespace HarvestValley.GameStates
         Hotbar hotbar;
         ItemList itemList;
         SpriteFont font;
+        SpriteFont jimFont;
         UIList uIList;
         Executer exec;
 
@@ -109,7 +110,7 @@ namespace HarvestValley.GameStates
             itemList = new ItemList();
 
 
-            font = GameEnvironment.AssetManager.Content.Load<SpriteFont>("GameFont");
+            jimFont = GameEnvironment.AssetManager.Content.Load<SpriteFont>("JimFont");
 
             foreach (Cell c in map.cells.Children)
             {
@@ -483,7 +484,7 @@ namespace HarvestValley.GameStates
                     spriteBatch.Draw(item.Sprite.Sprite, new Rectangle((int)hotbar.Position.X + 5 + hotbar.squareSize * i, (int)hotbar.Position.Y + 5, (int)hotbar.squareSize - 10, (int)hotbar.squareSize - 10), Color.White);
                     if (item.isStackable)
                     {
-                        spriteBatch.DrawString(font, item.itemAmount.ToString(), new Vector2((int)hotbar.Position.X + 5 + hotbar.squareSize * i, (int)hotbar.Position.Y + 5), Color.Black);
+                        spriteBatch.DrawString(jimFont, item.itemAmount.ToString(), new Vector2((int)hotbar.Position.X + 5 + hotbar.squareSize * i, (int)hotbar.Position.Y + 5), Color.Black);
                     }
                 }
             }
