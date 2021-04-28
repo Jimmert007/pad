@@ -209,14 +209,8 @@ namespace HarvestValley.GameStates
                                 c.cellIsTilled = false;
                                 c.ChangeSpriteTo(Cell.GRASS, .5f);
 
-                                foreach (Plant p in plants.Children)
-                                {
-                                    if (p.Position == c.Position)
-                                    {
-                                        p.soilHasPlant = false;
-                                        p.growthStage = 0;
-                                    }
-                                }
+                                (plants.Children[c.cellID] as Plant).soilHasPlant = false;
+                                (plants.Children[c.cellID] as Plant).growthStage = 0;
                             }
                             c.nextRandom = true;
                         }
