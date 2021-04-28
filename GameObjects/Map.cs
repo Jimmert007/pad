@@ -12,9 +12,8 @@ namespace HarvestValley
 {
     class Map : GameObject
     {
-        int mapWidth = GameEnvironment.Screen.X * 2, mapHeight = GameEnvironment.Screen.Y * 2;
+        int mapWidth = GameEnvironment.Screen.X * 4, mapHeight = GameEnvironment.Screen.Y * 4;
         public int rows, cols;
-        public GameObjectList cells = new GameObjectList();
         public Map(Vector2 _size) : base()
         {
             cols = mapWidth / 128;

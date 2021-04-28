@@ -21,7 +21,7 @@ namespace HarvestValley
 
             gameStateManager.AddGameState("menuState", new MenuState());
             gameStateManager.AddGameState("playingState", new PlayingState());
-            gameStateManager.SwitchTo("playingState");
+            gameStateManager.SwitchTo("menuState");
 
             IsMouseVisible = true;
         }

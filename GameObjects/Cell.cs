@@ -25,7 +25,7 @@ namespace HarvestValley
             cellID = _id;
             _mirror = false;
             randomGrass = GameEnvironment.Random.Next(4);
-            //Debug.WriteLine(cellID);
+            //if(cellID > 400) Debug.WriteLine(cellID);
             //Debug.WriteLine(Position);
         }
 
@@ -56,21 +56,6 @@ namespace HarvestValley
         {
             scale = _scale;
             sprite = SGO.Sprite;
-        }
-
-        public void dab(Player p)
-        {
-            if (p.CollidesWith(this))
-            {
-                if (p.Position.X + p.Sprite.Width > position.X)
-                {
-                    p.Position = new Vector2(position.X - p.Sprite.Width * p.scale, p.Position.Y);
-                }
-                else if (p.Position.X < Width)
-                {
-                    p.Position = new Vector2(position.X + Width, p.Position.Y);
-                }
-            }
         }
     }
 }

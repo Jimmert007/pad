@@ -16,6 +16,7 @@ namespace HarvestValley
         SpriteSheet left, right, up, down;
         public Cell current;
         public Vector2 lastPosition;
+        public int speed = 3;
 
         public Player(string _assetName, Vector2 _position, float _scale) : base(_assetName)
         {
@@ -58,11 +59,11 @@ namespace HarvestValley
 
 
             //Movement inputs
-            if (Keyboard.GetState().IsKeyDown(Keys.A)) { velocity.X = -5.0f; }
+           /* if (Keyboard.GetState().IsKeyDown(Keys.A)) { velocity.X = -5.0f; }
             else if (Keyboard.GetState().IsKeyDown(Keys.D)) { velocity.X = 5.0f; }
             if (Keyboard.GetState().IsKeyDown(Keys.W)) { velocity.Y = -5.0f; }
             else if (Keyboard.GetState().IsKeyDown(Keys.S)) { velocity.Y = 5.0f; }
-            if (Keyboard.GetState().IsKeyDown(Keys.LeftShift)) { velocity *= 2; }
+            if (Keyboard.GetState().IsKeyDown(Keys.LeftShift)) { velocity *= 2; }*/
 
             //Control movement
             position += velocity;
