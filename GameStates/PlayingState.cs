@@ -381,7 +381,7 @@ namespace HarvestValley.GameStates
                 {
                     if (c.CollidesWith(mouseGO))
                     {
-                        if (inputHelper.MouseLeftButtonDown())
+                        if (inputHelper.MouseLeftButtonPressed())
                         {
                             if (itemList.itemSelected == "HOE" && !c.cellIsTilled && !c.cellHasTree && !c.cellHasSprinkler && !c.cellHasStone)
                             {
