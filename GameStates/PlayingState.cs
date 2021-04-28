@@ -379,9 +379,9 @@ namespace HarvestValley.GameStates
             {
                 foreach (Item item in itemList.Children)
                 {
-                    if (c.CollidesWith(mouseGO))
+                    if (c.CollidesWith(mouseGO) && c.CollidesWith(player.playerReach))
                     {
-                        if (inputHelper.MouseLeftButtonPressed())
+                        if (inputHelper.MouseLeftButtonDown())
                         {
                             if (itemList.itemSelected == "HOE" && !c.cellIsTilled && !c.cellHasTree && !c.cellHasSprinkler && !c.cellHasStone)
                             {
@@ -421,6 +421,23 @@ namespace HarvestValley.GameStates
                                 c.ChangeSpriteTo(Cell.TILESOILWATER, .5f);
                             }
 
+                            Tree t = (trees.Children[c.cellID] as Tree);
+                            if (item is TreeSeed)
+                            {
+                                if (itemList.itemSelected == "TREESEED" && !c.cellIsTilled && !c.cellHasPlant && item.itemAmount > 0 && !c.cellHasTree && !c.cellHasSprinkler && !c.cellHasStone)
+                                {
+                                    item.itemAmount -= 1;
+                                    c.cellHasTree = true;
+                                    t.soilHasTree = true;
+                                    t.growthStage = 1;
+                                    energyBar.percentageLost += energyBar.oneUse;
+                                }
+                                Debug.WriteLine(t.growthStage);
+                            }
+                        }
+
+                        if (inputHelper.MouseLeftButtonPressed())
+                        {
                             Stone s = (stones.Children[c.cellID] as Stone);
                             if (itemList.itemSelected == "PICKAXE" && c.cellHasStone && !s.stoneHit && s._sprite == 1)
                             {
@@ -444,23 +461,13 @@ namespace HarvestValley.GameStates
                                 energyBar.percentageLost += energyBar.oneUse;
                                 if (t.health <= 0)
                                 {
+                                    t.treeHit = false;
                                     c.cellHasTree = false;
                                     t.soilHasTree = false;
                                 }
                             }
-
-                            if (item is TreeSeed)
-                            {
-                                if (itemList.itemSelected == "TREESEED" && !c.cellIsTilled && !c.cellHasPlant && item.itemAmount > 0 && !c.cellHasTree && !c.cellHasSprinkler && !c.cellHasStone)
-                                {
-                                    item.itemAmount -= 1;
-                                    c.cellHasTree = true;
-                                    t.soilHasTree = true;
-                                    t.growthStage = 1;
-                                    energyBar.percentageLost += energyBar.oneUse;
-                                }
-                            }
                         }
+                        
                         if (inputHelper.MouseRightButtonDown())
                         {
                             if (c.cellHasPlant)

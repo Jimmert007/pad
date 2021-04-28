@@ -17,12 +17,15 @@ namespace HarvestValley
         public Cell current;
         public Vector2 lastPosition;
         public int speed = 3;
+        public SpriteGameObject playerReach;
 
         public Player(string _assetName, Vector2 _position, float _scale) : base(_assetName)
         {
             position = _position;
             scale = _scale;
             PerPixelCollisionDetection = false;
+            playerReach = new SpriteGameObject("spr_player_reach");
+            playerReach.Position = new Vector2(position.X + Width * .5f - playerReach.Sprite.Width * .5f, position.Y + Height * .5f - playerReach.Sprite.Height * .5f);
         }
 
         override public void Reset()
@@ -53,17 +56,18 @@ namespace HarvestValley
 
         override public void Update(GameTime gameTime)
         {
+
             //Continuesly set movement to 0
             velocity.X = 0;
             velocity.Y = 0;
 
 
             //Movement inputs
-           /* if (Keyboard.GetState().IsKeyDown(Keys.A)) { velocity.X = -5.0f; }
-            else if (Keyboard.GetState().IsKeyDown(Keys.D)) { velocity.X = 5.0f; }
-            if (Keyboard.GetState().IsKeyDown(Keys.W)) { velocity.Y = -5.0f; }
-            else if (Keyboard.GetState().IsKeyDown(Keys.S)) { velocity.Y = 5.0f; }
-            if (Keyboard.GetState().IsKeyDown(Keys.LeftShift)) { velocity *= 2; }*/
+            /* if (Keyboard.GetState().IsKeyDown(Keys.A)) { velocity.X = -5.0f; }
+             else if (Keyboard.GetState().IsKeyDown(Keys.D)) { velocity.X = 5.0f; }
+             if (Keyboard.GetState().IsKeyDown(Keys.W)) { velocity.Y = -5.0f; }
+             else if (Keyboard.GetState().IsKeyDown(Keys.S)) { velocity.Y = 5.0f; }
+             if (Keyboard.GetState().IsKeyDown(Keys.LeftShift)) { velocity *= 2; }*/
 
             //Control movement
             position += velocity;
