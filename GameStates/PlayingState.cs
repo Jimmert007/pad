@@ -363,7 +363,7 @@ namespace HarvestValley.GameStates
                         trees.Position = prevPos;
                         stones.Position = prevPos;
                         sprinklers.Position = prevPos;
-                        plants.Position += prevPos;
+                        plants.Position = prevPos;
                     }
                 }
             }
