@@ -7,17 +7,14 @@ namespace HarvestValley.GameObjects
 {
     class SprinklerObject : GameObjectList
     {
-        public int sprinklerSprite = 0;
-        public SpriteGameObject empty, sprinkler1;
+        public int sprinklerSprite = 1;
+        public SpriteGameObject sprinkler1;
         private float _scale;
         public SprinklerObject(Vector2 _position, float scale) : base()
         {
             position = _position;
             _scale = scale;
-
-            empty = new SpriteGameObject("spr_empty", 0, "0");
             sprinkler1 = new SpriteGameObject("Sprinkler", 0, "1");
-            Add(empty);
             Add(sprinkler1);
 
             for (int i = 0; i < children.Count; i++)
