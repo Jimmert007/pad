@@ -32,7 +32,6 @@ namespace HarvestValley.GameStates
         Wallet wallet;
         GameObjectList UI;
         Vector2 prevPos;
-        Vector2[] prevPosCell;
 
         public PlayingState()
         {
@@ -48,8 +47,6 @@ namespace HarvestValley.GameStates
                 }
             }
             Add(cells);
-
-            prevPosCell = new Vector2[cells.Children.Count];
 
             plants = new GameObjectList();
             Add(plants);
@@ -101,24 +98,26 @@ namespace HarvestValley.GameStates
             base.Update(gameTime);
             SleepActions(gameTime);
             ReceiveMaterials();
+        /*    trees.Position += Vector2.One;
+            cells.Position += Vector2.One;*/
         }
 
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
             mouseGO.Position = inputHelper.MousePosition;
-            //CameraSystem(inputHelper);
+            CameraSystem(inputHelper);
 
-            //CheckHoeInput(inputHelper);//gucci
-            //CheckSeedInput(inputHelper);//no bueono
-            //CheckSprinklerInput(inputHelper);//no bueno
-            //CheckWateringCanInput(inputHelper);//gucci
-            //CheckTreeSeedInput(inputHelper);//no bueno
-            //CheckPickaxeInput(inputHelper);
-            //CheckAxeInput(inputHelper);
-            //CheckPlantPickup(inputHelper);
+            CheckHoeInput(inputHelper);
+            CheckSeedInput(inputHelper);
+            CheckSprinklerInput(inputHelper);
+            CheckWateringCanInput(inputHelper);
+            CheckTreeSeedInput(inputHelper);
+            CheckPickaxeInput(inputHelper);
+            CheckAxeInput(inputHelper);
+            CheckPlantPickup(inputHelper);
 
-            //CheckHotbarSelection(inputHelper);
+            CheckHotbarSelection(inputHelper);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -147,7 +146,7 @@ namespace HarvestValley.GameStates
             foreach (Cell c in cells.Children)
             {
                 if (c.Position.X < c.grass.Width || c.Position.X > GameEnvironment.Screen.X - c.grass.Width
-                    || c.Position.Y < c.grass.Height || c.Position.Y > GameEnvironment.Screen.Y- c.grass.Height)
+                    || c.Position.Y < c.grass.Height || c.Position.Y > GameEnvironment.Screen.Y - c.grass.Height)
                 {
                     c.cellHasTree = true;
                     trees.Add(new Tree(c.Position, .5f, 3));
@@ -317,22 +316,43 @@ namespace HarvestValley.GameStates
                 moveVector = new Vector2(moveVector.X, 0);
             }
 
-            foreach (Cell c in cells.Children)
+            for (int i = trees.Children.Count - 1; i >= 0; i--)
             {
-                if (c.cellHasTree || c.cellHasSprinkler || c.cellHasStone)
+                if ((trees.Children[i] as Tree).CollidesWith(player))
                 {
-                    if (c.CellCollidesWith(player))
-                    {
-                        cells.Position = prevPos;
-                        trees.Position = prevPos;
-                        stones.Position = prevPos;
-                        sprinklers.Position = prevPos;
-                        plants.Position = prevPos;
-                    }
+                    cells.Position = prevPos;
+                    trees.Position = prevPos;
+                    stones.Position = prevPos;
+                    sprinklers.Position = prevPos;
+                    plants.Position = prevPos;
                 }
             }
 
-            prevPos = trees.Position;
+            for (int i = stones.Children.Count - 1; i >= 0; i--)
+            {
+                if ((stones.Children[i] as Stone).CollidesWith(player))
+                {
+                    cells.Position = prevPos;
+                    trees.Position = prevPos;
+                    stones.Position = prevPos;
+                    sprinklers.Position = prevPos;
+                    plants.Position = prevPos;
+                }
+            }
+
+            for (int i = sprinklers.Children.Count - 1; i >= 0; i--)
+            {
+                if ((sprinklers.Children[i] as SprinklerObject).CollidesWith(player))
+                {
+                    cells.Position = prevPos;
+                    trees.Position = prevPos;
+                    stones.Position = prevPos;
+                    sprinklers.Position = prevPos;
+                    plants.Position = prevPos;
+                }
+            }
+
+            prevPos = cells.Position;
             cells.Position += moveVector;
             trees.Position += moveVector;
             stones.Position += moveVector;
@@ -497,7 +517,6 @@ namespace HarvestValley.GameStates
                 {
                     if (inputHelper.MouseLeftButtonPressed())
                     {
-
                         if (itemList.itemSelected == "AXE" && !(trees.Children[i] as Tree).treeHit && (trees.Children[i] as Tree).growthStage == 3)
                         {
                             (trees.Children[i] as Tree).treeHit = true;
