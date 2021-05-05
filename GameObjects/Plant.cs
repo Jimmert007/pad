@@ -11,13 +11,11 @@ namespace HarvestValley
     {
         public int growthStage = 1;
         public SpriteGameObject seed1stage1, seed1stage2, seed1stage3, seed1stage4;
-        private float _scale;
         public bool soilHasWater;
 
         public Plant(Vector2 _postition, float scale) : base()
         {
             position = _postition;
-            _scale = scale;
             seed1stage1 = new SpriteGameObject("spr_seed1_stage1", 0, "1");
             seed1stage2 = new SpriteGameObject("spr_seed1_stage2", 0, "2");
             seed1stage3 = new SpriteGameObject("spr_seed1_stage3", 0, "3");
@@ -28,7 +26,7 @@ namespace HarvestValley
             Add(seed1stage4);
             for (int i = 0; i < children.Count; i++)
             {
-                (children[i] as SpriteGameObject).Scale = _scale;
+                (children[i] as SpriteGameObject).Scale = scale;
                 (children[i] as SpriteGameObject).PerPixelCollisionDetection = false;
                 (children[i] as SpriteGameObject).Visible = false;
             }

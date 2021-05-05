@@ -7,55 +7,76 @@ using System.Text;
 
 namespace HarvestValley
 {
-    class Cell : SpriteGameObject
+    class Cell : GameObjectList
     {
-        public int cellID, randomGrass;
-        private int _sheetIndex;
-        private bool _mirror;
-        public static SpriteGameObject TILESOIL = new SpriteGameObject("tiles/spr_tilled_soil");
-        public static SpriteGameObject TILESOILWATER = new SpriteGameObject("tiles/spr_tilled_soil_water");
-        public static SpriteGameObject GRASS = new SpriteGameObject("tiles/spr_grass");
+        public int cellID, randomGrass, spriteID;
+        public SpriteGameObject tileSoil, tileSoilWater, grass;
         public bool cellIsTilled, cellHasPlant, cellHasTree, cellHasWater, cellHasSprinkler, nextRandom, nextToSprinkler, cellHasStone;
 
-        public Cell(SpriteSheet _sprite, Vector2 _position, float _scale, int _id) : base(_sprite)
+        public Cell(Vector2 _position, float _scale, int _id) : base()
         {
-            /* TILESOIL = new SpriteGameObject("spr_tilled_soil");*/
-            scale = _scale;
             position = _position;
             cellID = _id;
-            _mirror = false;
             randomGrass = GameEnvironment.Random.Next(4);
-            //if(cellID > 400) Debug.WriteLine(cellID);
-            //Debug.WriteLine(Position);
+
+            grass = new SpriteGameObject("tiles/spr_grass", 0, "0");
+            tileSoil = new SpriteGameObject("tiles/spr_tilled_soil", 0, "1");
+            tileSoilWater = new SpriteGameObject("tiles/spr_tilled_soil_water", 0, "2");
+
+            Add(grass);
+            Add(tileSoil);
+            Add(tileSoilWater);
+
+            for (int i = 0; i < children.Count; i++)
+            {
+                (children[i] as SpriteGameObject).Scale = _scale;
+                (children[i] as SpriteGameObject).PerPixelCollisionDetection = false;
+                (children[i] as SpriteGameObject).Visible = false;
+            }
+
+            spriteID = 0;
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-           
+
             if (nextRandom)
             {
                 randomGrass = GameEnvironment.Random.Next(4);
                 nextRandom = false;
             }
+
+            foreach (SpriteGameObject SGO in Children)
+            {
+                SGO.Visible = false;
+                if (SGO.Id == spriteID.ToString())
+                {
+                    SGO.Visible = true;
+                }
+            }
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public bool CellCollidesWith(SpriteGameObject other)
         {
-            sprite.SheetIndex = _sheetIndex;
-            sprite.Mirror = _mirror;
-            sprite.Draw(spriteBatch, Position, origin, scale);
+            foreach (SpriteGameObject SGO in children)
+            {
+                if (SGO.CollidesWith(other))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
-        public void ChangeSpriteTo(SpriteGameObject SGO)
+        public void ChangeSpriteTo(int _spriteID)
         {
-            sprite = SGO.Sprite;
-        }
-
-        public void ChangeSpriteTo(SpriteGameObject SGO, float _scale)
-        {
-            scale = _scale;
-            sprite = SGO.Sprite;
+            if (_spriteID > children.Count)
+            {
+                Debug.WriteLine("Verkeerde spriteID van de Cell");
+                return;
+            }
+            spriteID = _spriteID;
         }
     }
 }
