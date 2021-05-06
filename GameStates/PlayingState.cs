@@ -83,7 +83,6 @@ namespace HarvestValley.GameStates
             jimFont = GameEnvironment.AssetManager.Content.Load<SpriteFont>("JimFont");
 
             PlaceStonesAndTrees();
-            Debug.WriteLine(stones.Children.Count + " " + trees.Children.Count);
 
             //Initialize UI Elements
             Add(uIList = new UIList());
@@ -98,8 +97,6 @@ namespace HarvestValley.GameStates
             base.Update(gameTime);
             SleepActions(gameTime);
             ReceiveMaterials();
-        /*    trees.Position += Vector2.One;
-            cells.Position += Vector2.One;*/
         }
 
         public override void HandleInput(InputHelper inputHelper)
@@ -184,33 +181,44 @@ namespace HarvestValley.GameStates
                                     c.cellHasWater = true;
                                     c.nextToSprinkler = true;
                                     c.ChangeSpriteTo(2);
-                                    (plants.Children[c.cellID] as Plant).soilHasWater = true;
+                                    if (c.cellHasPlant)
+                                    {
+                                        //(plants.Children[c.cellID] as Plant).soilHasWater = true;
+                                    }
                                 }
                                 if ((cells.Children[i] as Cell).Position + new Vector2(0, 64) == c.Position && c.cellIsTilled)
                                 {
                                     c.cellHasWater = true;
                                     c.nextToSprinkler = true;
                                     c.ChangeSpriteTo(2);
-                                    (plants.Children[c.cellID] as Plant).soilHasWater = true;
+                                    if (c.cellHasPlant)
+                                    {
+                                        //(plants.Children[c.cellID] as Plant).soilHasWater = true;
+                                    }
                                 }
                                 if ((cells.Children[i] as Cell).Position + new Vector2(0, -64) == c.Position && c.cellIsTilled)
                                 {
                                     c.cellHasWater = true;
                                     c.nextToSprinkler = true;
                                     c.ChangeSpriteTo(2);
-                                    (plants.Children[c.cellID] as Plant).soilHasWater = true;
+                                    if (c.cellHasPlant)
+                                    {
+                                        //(plants.Children[c.cellID] as Plant).soilHasWater = true;
+                                    }
                                 }
                                 if ((cells.Children[i] as Cell).Position + new Vector2(-64, 0) == c.Position && c.cellIsTilled)
                                 {
                                     c.cellHasWater = true;
                                     c.nextToSprinkler = true;
                                     c.ChangeSpriteTo(2);
-                                    (plants.Children[c.cellID] as Plant).soilHasWater = true;
+                                    if (c.cellHasPlant)
+                                    {
+                                        (plants.Children[c.cellID] as Plant).soilHasWater = true;
+                                    }
                                 }
                             }
                         }
                     }
-
 
                     foreach (Cell c in cells.Children)
                     {
@@ -222,7 +230,10 @@ namespace HarvestValley.GameStates
                                 c.cellIsTilled = false;
                                 c.ChangeSpriteTo(0);
 
-                                (plants.Children[c.cellID] as Plant).growthStage = 0;
+                                if (c.cellHasPlant)
+                                {
+                                    (plants.Children[c.cellID] as Plant).growthStage = 0;
+                                }
                             }
                             c.nextRandom = true;
                         }
@@ -409,7 +420,7 @@ namespace HarvestValley.GameStates
         {
             foreach (Cell c in cells.Children)
             {
-                if (c.CellCollidesWith(mouseGO) && c.CellCollidesWith(player.playerReach))
+                if (c.CellCollidesWith(mouseGO) && c.CellCollidesWith(player.playerReach) && !c.CellCollidesWith(player))
                 {
                     if (inputHelper.MouseLeftButtonDown())
                     {

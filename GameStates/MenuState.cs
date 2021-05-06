@@ -26,7 +26,7 @@ namespace HarvestValley.GameStates
                     bgs.Add(bg);
                 }
             }
-            start.Text = "Druk op A om naar het spel te gaan";
+            start.Text = "Druk op de spatietoets om naar het spel te gaan";
             start.Position = new Vector2(GameEnvironment.Screen.X * .5f - start.Size.X * .5f, GameEnvironment.Screen.Y * .5f - start.Size.Y * .5f);
             Add(start);
             title.Text = "Harvest Valley";
@@ -37,7 +37,7 @@ namespace HarvestValley.GameStates
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
-            if (inputHelper.KeyPressed(Keys.A))
+            if (inputHelper.KeyPressed(Keys.Space))
             {
                 GameEnvironment.GameStateManager.SwitchTo("playingState");
             }
