@@ -51,7 +51,6 @@ namespace HarvestValley.GameObjects.UI
                 {
                     if (uiDesiscionDialog.curActive == 0)
                     {
-                        button.PrintDialog(uiDesiscionDialog.GetString() + " " + Executer.Sleep());
                         //insert Sleep() here
                     }
                     else if (uiDesiscionDialog.curActive == 1)
