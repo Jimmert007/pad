@@ -90,12 +90,13 @@ namespace HarvestValley.GameStates
 
             wallet = new Wallet();
             Add(wallet);
+
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            SleepActions(gameTime);
+            SleepActions(gameTime); //works
             ReceiveMaterials();
         }
 
@@ -152,7 +153,7 @@ namespace HarvestValley.GameStates
                 if (!c.cellHasTree)
                 {
                     int r = GameEnvironment.Random.Next(50);
-                    if (r == 1 && !c.CellCollidesWith(player))
+                    if (r == 1 && !c.CellCollidesWith(player.playerReach))
                     {
                         c.cellHasStone = true;
                         stones.Add(new Stone(c.Position, .5f));
@@ -172,18 +173,24 @@ namespace HarvestValley.GameStates
                 {
                     for (int i = 0; i < cells.Children.Count; i++)
                     {
-                        if ((cells.Children[i] as Cell).cellHasSprinkler)
+                        if ((cells.Children[i] as Cell).cellHasSprinkler) //planten naast een sprinkler
                         {
                             foreach (Cell c in cells.Children)
                             {
-                                if ((cells.Children[i] as Cell).Position + new Vector2(64, 0) == c.Position && c.cellIsTilled)
+                                if ((cells.Children[i] as Cell).Position + new Vector2(64, 0) == c.Position && c.cellIsTilled) // rechts
                                 {
                                     c.cellHasWater = true;
                                     c.nextToSprinkler = true;
                                     c.ChangeSpriteTo(2);
                                     if (c.cellHasPlant)
                                     {
-                                        //(plants.Children[c.cellID] as Plant).soilHasWater = true;
+                                        for (int x = plants.Children.Count - 1; x >= 0; x--)
+                                        {
+                                            if (plants.Children[x].Position == c.Position)
+                                            {
+                                                (plants.Children[x] as Plant).soilHasWater = true;
+                                            }
+                                        }
                                     }
                                 }
                                 if ((cells.Children[i] as Cell).Position + new Vector2(0, 64) == c.Position && c.cellIsTilled)
@@ -193,7 +200,13 @@ namespace HarvestValley.GameStates
                                     c.ChangeSpriteTo(2);
                                     if (c.cellHasPlant)
                                     {
-                                        //(plants.Children[c.cellID] as Plant).soilHasWater = true;
+                                        for (int x = plants.Children.Count - 1; x >= 0; x--)
+                                        {
+                                            if (plants.Children[x].Position == c.Position)
+                                            {
+                                                (plants.Children[x] as Plant).soilHasWater = true;
+                                            }
+                                        }
                                     }
                                 }
                                 if ((cells.Children[i] as Cell).Position + new Vector2(0, -64) == c.Position && c.cellIsTilled)
@@ -203,7 +216,13 @@ namespace HarvestValley.GameStates
                                     c.ChangeSpriteTo(2);
                                     if (c.cellHasPlant)
                                     {
-                                        //(plants.Children[c.cellID] as Plant).soilHasWater = true;
+                                        for (int x = plants.Children.Count - 1; x >= 0; x--)
+                                        {
+                                            if (plants.Children[x].Position == c.Position)
+                                            {
+                                                (plants.Children[x] as Plant).soilHasWater = true;
+                                            }
+                                        }
                                     }
                                 }
                                 if ((cells.Children[i] as Cell).Position + new Vector2(-64, 0) == c.Position && c.cellIsTilled)
@@ -213,7 +232,13 @@ namespace HarvestValley.GameStates
                                     c.ChangeSpriteTo(2);
                                     if (c.cellHasPlant)
                                     {
-                                        (plants.Children[c.cellID] as Plant).soilHasWater = true;
+                                        for (int x = plants.Children.Count - 1; x >= 0; x--)
+                                        {
+                                            if (plants.Children[x].Position == c.Position)
+                                            {
+                                                (plants.Children[x] as Plant).soilHasWater = true;
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -224,16 +249,23 @@ namespace HarvestValley.GameStates
                     {
                         if (!c.cellHasWater && c.cellIsTilled)
                         {
-                            if (c.randomGrass == 1)
+                            if (c.randomGrass == 1) //remove grass randomly
                             {
-                                c.cellHasPlant = false;
-                                c.cellIsTilled = false;
                                 c.ChangeSpriteTo(0);
 
                                 if (c.cellHasPlant)
                                 {
-                                    (plants.Children[c.cellID] as Plant).growthStage = 0;
+                                    for (int x = plants.Children.Count - 1; x >= 0; x--)
+                                    {
+                                        if (plants.Children[x].Position == c.Position)
+                                        {
+                                            plants.Remove(plants.Children[x]);
+                                        }
+                                    }
                                 }
+
+                                c.cellHasPlant = false;
+                                c.cellIsTilled = false;
                             }
                             c.nextRandom = true;
                         }
@@ -254,8 +286,6 @@ namespace HarvestValley.GameStates
                             }
                             c.ChangeSpriteTo(1);
                         }
-
-
                     }
 
                     energyBar.Reset();
@@ -566,12 +596,20 @@ namespace HarvestValley.GameStates
                     {
                         if (c.cellHasPlant)
                         {
-                            if ((plants.Children[c.cellID] as Plant).growthStage >= 4)
+                            for (int i = plants.Children.Count - 1; i >= 0; i--)
                             {
-                                //(receive product and new seed)
-                                c.cellHasPlant = false;
-                                (plants.Children[c.cellID] as Plant).growthStage = 0;
+                                if (plants.Children[i].Position == c.Position)
+                                {
+                                    if ((plants.Children[i] as Plant).growthStage >= 4)
+                                    {
+                                        //(receive product and new seed)
+                                        c.cellHasPlant = false;
+                                        plants.Remove(plants.Children[i]);
+                                        plants.Remove(plants.Children[i]);
+                                    }
+                                }
                             }
+
                         }
                     }
                 }
