@@ -9,6 +9,7 @@ using HarvestValley.GameObjects.Tools;
 using HarvestValley.GameObjects.HarvestValley.GameObjects;
 using Microsoft.Xna.Framework.Graphics;
 
+
 namespace HarvestValley.GameStates
 {
     class PlayingState : GameObjectList
@@ -33,9 +34,20 @@ namespace HarvestValley.GameStates
         GameObjectList UI;
         Vector2 prevPos;
         Vector2[] prevPosCell;
+       
+
+        
 
         public PlayingState()
         {
+
+            // werkyt niet geeft fout melding met song
+             GameEnvironment.AssetManager.PlaySound("Alarm");
+            
+            //kan er maar een tegelijke tijd spelen
+           // GameEnvironment.AssetManager.PlayMusic("Intro", true);
+
+
             SpriteSheet mapSpriteSheet = new SpriteSheet("tiles/spr_grass", 0);
             map = new Map(new Vector2(mapSpriteSheet.Width, mapSpriteSheet.Height));
             cells = new GameObjectList();
