@@ -97,7 +97,6 @@ namespace HarvestValley.GameStates
         {
             base.Update(gameTime);
             SleepActions(gameTime); //works
-            ReceiveMaterials();
         }
 
         public override void HandleInput(InputHelper inputHelper)
@@ -143,7 +142,7 @@ namespace HarvestValley.GameStates
         {
             foreach (Cell c in cells.Children)
             {
-                if (c.Position.X < c.grass.Width || c.Position.X > GameEnvironment.Screen.X - c.grass.Width
+                if (c.Position.X < c.grass.Width || c.Position.X >= GameEnvironment.Screen.X - c.grass.Width
                     || c.Position.Y < c.grass.Height || c.Position.Y > GameEnvironment.Screen.Y - c.grass.Height)
                 {
                     c.cellHasTree = true;
@@ -305,27 +304,6 @@ namespace HarvestValley.GameStates
             {
                 sleeping.Sleep(gameTime);
                 sleeping.useOnce = false;
-            }
-        }
-
-        /// <summary>
-        /// Adds materials whenever a stone or tree is broken
-        /// </summary>
-        void ReceiveMaterials()
-        {
-            foreach (Item item in itemList.Children)
-            {
-                foreach (Stone s in stones.Children)
-                {
-                    if (s.health <= 0)
-                    {
-                        if (item is Rock)
-                        {
-                            item.itemAmount += GameEnvironment.Random.Next(2, 5);
-                            s.health = 6;
-                        }
-                    }
-                }
             }
         }
 
@@ -525,23 +503,35 @@ namespace HarvestValley.GameStates
 
         void CheckPickaxeInput(InputHelper inputHelper)
         {
-            foreach (Cell c in cells.Children)
+            for (int i = stones.Children.Count - 1; i >= 0; i--)
             {
-                if (c.CellCollidesWith(mouseGO) && c.CellCollidesWith(player.playerReach))
+                Stone s = stones.Children[i] as Stone;
+                if (s.CollidesWith(mouseGO) && s.CollidesWith(player.playerReach))
                 {
                     if (inputHelper.MouseLeftButtonPressed())
                     {
-                        for (int i = stones.Children.Count - 1; i >= 0; i--)
+                        if (itemList.itemSelected == "PICKAXE" && !(stones.Children[i] as Stone).stoneHit && (stones.Children[i] as Stone)._sprite == 0)
                         {
-                            if (itemList.itemSelected == "PICKAXE" && c.cellHasStone && !(stones.Children[i] as Stone).stoneHit && (stones.Children[i] as Stone)._sprite == 1)
+                            (stones.Children[i] as Stone).stoneHit = true;
+                            (stones.Children[i] as Stone).hitTimer = (stones.Children[i] as Stone).hitTimerReset;
+                            (stones.Children[i] as Stone).health -= 1;
+                            energyBar.percentageLost += energyBar.oneUse;
+                            if ((stones.Children[i] as Stone).health <= 0)
                             {
-                                (stones.Children[i] as Stone).stoneHit = true;
-                                (stones.Children[i] as Stone).hitTimer = (stones.Children[i] as Stone).hitTimerReset;
-                                (stones.Children[i] as Stone).health -= 1;
-                                energyBar.percentageLost += energyBar.oneUse;
-                                if ((stones.Children[i] as Stone).health <= 0)
+                                foreach (Cell c in cells.Children)
                                 {
-                                    c.cellHasStone = false;
+                                    if (c.Position == s.Position)
+                                    {
+                                        c.cellHasStone = false;
+                                    }
+                                }
+                                stones.Remove(stones.Children[i]);
+                                foreach (Item item in itemList.Children)
+                                {
+                                    if (item is Rock)
+                                    {
+                                        item.itemAmount += GameEnvironment.Random.Next(2, 5);
+                                    }
                                 }
                             }
                         }
@@ -567,6 +557,13 @@ namespace HarvestValley.GameStates
                             if ((trees.Children[i] as Tree).health <= 0)
                             {
                                 (trees.Children[i] as Tree).treeHit = false;
+                                foreach (Cell c in cells.Children)
+                                {
+                                    if (c.Position == (trees.Children[i] as Tree).Position)
+                                    {
+                                        c.cellHasTree = false;
+                                    }
+                                }
                                 trees.Remove(trees.Children[i]);
                                 foreach (Item item in itemList.Children)
                                 {
@@ -605,11 +602,9 @@ namespace HarvestValley.GameStates
                                         //(receive product and new seed)
                                         c.cellHasPlant = false;
                                         plants.Remove(plants.Children[i]);
-                                        plants.Remove(plants.Children[i]);
                                     }
                                 }
                             }
-
                         }
                     }
                 }
