@@ -41,11 +41,11 @@ namespace HarvestValley.GameStates
         public PlayingState()
         {
 
-            // werkyt niet geeft fout melding met song
-             GameEnvironment.AssetManager.PlaySound("Alarm");
+            // werkt niet geeft fout melding met song
+            // GameEnvironment.AssetManager.PlaySound("Alarm");
             
             //kan er maar een tegelijke tijd spelen
-           // GameEnvironment.AssetManager.PlayMusic("Intro", true);
+            GameEnvironment.AssetManager.PlayMusic("Intro", true);
 
 
             SpriteSheet mapSpriteSheet = new SpriteSheet("tiles/spr_grass", 0);
