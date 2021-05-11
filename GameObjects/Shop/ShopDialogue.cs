@@ -2,20 +2,23 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework.Input;
 
-namespace HarvestValley.GameObjects
+
+namespace HarvestValley.GameObjects.Shop
+{
+    class ShopDialogue : GameObjectList
     {
-    class DesiscionDialog : GameObjectList
-    {
-        public string[] strings = { "Do you want to sleep?", "Do you want to throw this item away?", "Do you want to buy this item?", "Do you want to sell this item?", "tttttring???" };
+        public string[] strings = { "Welcome to the shop", "What do you want to do?", "How many do you want to buy?", "How many do you want to sell?", "Buy", "Sell", "Cancel" };
         public int curActive = 0;
-        public DesiscionDialog()
+        public bool uiDesiscion = false;
+        public ShopDialogue()
         {
             for (int i = 0; i < strings.Length; i++)
             {
-                TextGameObject x = new TextGameObject("JimFont");
+                TextGameObject x = new TextGameObject("GameFont");
                 x.Text = strings[i];
-                x.Position = new Vector2(GameEnvironment.Screen.X * .5f - x.Size.X * .5f, GameEnvironment.Screen.Y * .2f + x.Size.Y * .5f);
+                x.Position = new Vector2(GameEnvironment.Screen.X * .5f - x.Size.X * .5f, GameEnvironment.Screen.Y * .1f );
                 Add(x);
             }
         }
@@ -23,6 +26,7 @@ namespace HarvestValley.GameObjects
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            if (curActive > strings.Length - 1) { curActive = 0; } //reset the counter if the counter exceeds the max number of lines
             foreach (TextGameObject TGO in Children)
             {
                 if (TGO.Text == strings[curActive])
@@ -34,21 +38,17 @@ namespace HarvestValley.GameObjects
                     TGO.Visible = false;
                 }
             }
+            if (uiDesiscion) { Visible = true; }
+            else { Visible = false; }
         }
 
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
-            if (inputHelper.AnyKeyPressed)
+            //Go through all the dialogue lines on input 
+            if (inputHelper.KeyPressed(Keys.U))
             {
-                if (curActive < strings.Length - 1)
-                {
-                    curActive++;
-                }
-                else
-                {
-                    curActive = 0;
-                }
+                curActive += 1; //For every input the counter goes up by 1
             }
         }
 
@@ -58,3 +58,4 @@ namespace HarvestValley.GameObjects
         }
     }
 }
+

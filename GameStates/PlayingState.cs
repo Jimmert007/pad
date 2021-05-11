@@ -7,6 +7,8 @@ using System.Text;
 using HarvestValley.GameObjects;
 using HarvestValley.GameObjects.Tools;
 using HarvestValley.GameObjects.HarvestValley.GameObjects;
+using HarvestValley.GameObjects.UI;
+using HarvestValley.GameObjects.Shop;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace HarvestValley.GameStates
@@ -28,6 +30,7 @@ namespace HarvestValley.GameStates
         ItemList itemList;
         SpriteFont jimFont;
         UIList uIList;
+        ShopMenuUIList shop;
         Executer exec;
         Wallet wallet;
         GameObjectList UI;
@@ -146,7 +149,7 @@ namespace HarvestValley.GameStates
 
             //Initialize UI Elements
             Add(uIList = new UIList());
-            Add(exec = new Executer());
+            Add(shop = new ShopMenuUIList());
 
             wallet = new Wallet();
             Add(wallet);
