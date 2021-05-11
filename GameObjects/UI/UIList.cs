@@ -2,35 +2,49 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework.Input;
 
-namespace HarvestValley.GameObjects
+namespace HarvestValley.GameObjects.UI
 {
     class UIList : GameObjectList
     {
         GameObjectList buttons;
         Button yes, no;
-        DesiscionDialog uiDesiscionDialog;
-        public bool uiActive, uiDesiscion;
+        SingleLineCycleDialog uiDesiscionDialog;
+        UIBox uIBox;
+        public bool uiActive;
 
         public UIList()
         {
-            //Add(new SpriteGameObject("spr_background"));
             Add(buttons = new GameObjectList());
+            Add(uIBox = new UIBox("ui_bar"));
+            uIBox.Position = new Vector2(GameEnvironment.Screen.X * .5f, GameEnvironment.Screen.Y * .35f);
             buttons.Add(yes = new Button("checkmark"));
-            yes.Position = new Vector2(GameEnvironment.Screen.X * .3f, GameEnvironment.Screen.Y * .5f);
+            yes.Position = new Vector2(uIBox.Position.X - uIBox.Width/3, GameEnvironment.Screen.Y * .6f);
             //yes.Scale = .5f;
             buttons.Add(no = new Button("cross"));
-            no.Position = new Vector2(GameEnvironment.Screen.X * .6f, GameEnvironment.Screen.Y * .5f);
+            no.Position = new Vector2(uIBox.Position.X + uIBox.Width/5, GameEnvironment.Screen.Y * .6f);
             //no.Scale = .5f;
-            Add(uiDesiscionDialog = new DesiscionDialog());
+            Add(uiDesiscionDialog = new SingleLineCycleDialog());
 
             uiActive = false;
-            uiDesiscion = false;
+            uiDesiscionDialog.uiDesiscion = false;
         }
 
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
+            //Activate UI bools
+            if (inputHelper.KeyPressed(Keys.I))
+            {
+                //IMPORTANT
+                //Activate specific text 
+                uiActive = true;
+                uiDesiscionDialog.uiDesiscion = true;
+                uiDesiscionDialog.curActive = 3;
+            }
+
+            //Set different methods for each button
             foreach (Button button in buttons.Children)
             {
                 if (inputHelper.MouseLeftButtonPressed() && button.collidesWithMouse(inputHelper.MousePosition))
@@ -40,7 +54,7 @@ namespace HarvestValley.GameObjects
                         button.PrintDialog(uiDesiscionDialog.GetString() + " " + Executer.Sleep());
                         //insert Sleep() here
                     }
-                    else if(uiDesiscionDialog.curActive == 1)
+                    else if (uiDesiscionDialog.curActive == 1)
                     {
                         //insert DeleteItem() here
                     }
@@ -56,20 +70,8 @@ namespace HarvestValley.GameObjects
                     {
                         button.PrintDialog(uiDesiscionDialog.GetString());
                     }
-                    uiDesiscion = false;
+                    uiDesiscionDialog.uiDesiscion = false;
                     uiActive = false;
-                }
-
-                //Go through all the dialogue lines on input 
-                if (inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.U))
-                {
-                    //uiDesiscionDialog.curActive += 1; //For every input the counter goes up by 1
-                    if(uiDesiscionDialog.curActive> uiDesiscionDialog.strings.Length) { uiDesiscionDialog.curActive = 0; } //reset the counter if the counter exceeds the max number of lines
-                }
-                if (inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.I))
-                {
-                    uiActive = true;
-                    uiDesiscion = true;
                 }
             }
         }
@@ -78,9 +80,9 @@ namespace HarvestValley.GameObjects
         {
             base.Update(gameTime);
 
-            if (uiActive) { uiDesiscionDialog.Visible = true; }
-            else { uiDesiscionDialog.Visible = false; }
-            if (uiDesiscion) { yes.Visible = true; no.Visible = true; }
+            if (uiActive) { uiDesiscionDialog.Visible = true; uIBox.Visible = true; }
+            else { uiDesiscionDialog.Visible = false; uIBox.Visible = false; }
+            if (uiDesiscionDialog.uiDesiscion) { yes.Visible = true; no.Visible = true; }
             else { yes.Visible = false; no.Visible = false; }
         }
     }
