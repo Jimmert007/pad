@@ -8,6 +8,7 @@ using HarvestValley.GameObjects;
 using HarvestValley.GameObjects.Tools;
 using HarvestValley.GameObjects.HarvestValley.GameObjects;
 using Microsoft.Xna.Framework.Graphics;
+using HarvestValley.GameObjects.Tutorial;
 
 namespace HarvestValley.GameStates
 {
@@ -22,6 +23,7 @@ namespace HarvestValley.GameStates
         GameObjectList stones;
         GameObjectList sprinklers;
         SpriteGameObject mouseGO;
+        TutorialStepList tutorialStepList;
         EnergyBar energyBar;
         Sleeping sleeping;
         Hotbar hotbar;
@@ -91,12 +93,15 @@ namespace HarvestValley.GameStates
             wallet = new Wallet();
             Add(wallet);
 
+            tutorialStepList = new TutorialStepList();
+            Add(tutorialStepList);
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
             SleepActions(gameTime); //works
+            CheckMouseCollisionWithTutorial();
         }
 
         public override void HandleInput(InputHelper inputHelper)
@@ -113,7 +118,7 @@ namespace HarvestValley.GameStates
             CheckPickaxeInput(inputHelper);
             CheckAxeInput(inputHelper);
             CheckPlantPickup(inputHelper);
-
+            
             CheckHotbarSelection(inputHelper);
         }
 
@@ -135,7 +140,19 @@ namespace HarvestValley.GameStates
             }
         }
 
-        /// <summary>
+        void CheckMouseCollisionWithTutorial()
+        {
+            if (mouseGO.CollidesWith(tutorialStepList.Children[0] as SpriteGameObject))
+            {
+                tutorialStepList.mouseCollides = true;
+            }
+            else if (!mouseGO.CollidesWith(tutorialStepList.Children[0] as SpriteGameObject))
+            {
+                tutorialStepList.mouseCollides = false;
+            }
+        }
+
+        /// <summary> 
         /// Places the initial stones and trees on the map
         /// </summary>
         void PlaceStonesAndTrees()
