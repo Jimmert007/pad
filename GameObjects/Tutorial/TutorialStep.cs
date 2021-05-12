@@ -23,10 +23,17 @@ namespace HarvestValley.GameObjects.Tutorial
             this.tutorialText = tutorialText;
             backgroundSprite = new SpriteSheet("TutorialBackground");
             textSprite = GameEnvironment.AssetManager.Content.Load<SpriteFont>("JimFont");
+            text = new TextGameObject("JimFont");
             foreach (GameObject GO in children)
             {
                 GO.Visible = false;
             }
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            text.Text = tutorialText;
         }
 
         public override void HandleInput(InputHelper inputHelper)
@@ -40,7 +47,7 @@ namespace HarvestValley.GameObjects.Tutorial
             base.Draw(gameTime, spriteBatch);
             if (mouseCollides)
             {
-                spriteBatch.Draw(backgroundSprite.Sprite, new Rectangle((int)tutorialPosition.X, (int)tutorialPosition.Y, (int)530, (int)50), Color.White);
+                spriteBatch.Draw(backgroundSprite.Sprite, new Rectangle((int)tutorialPosition.X, (int)tutorialPosition.Y, (int)text.Size.X + 10, (int)text.Size.Y + 10), Color.White);
                 spriteBatch.DrawString(textSprite, tutorialText, new Vector2((int)tutorialPosition.X + 5, (int)tutorialPosition.Y + 5), Color.Black);
             }
         }

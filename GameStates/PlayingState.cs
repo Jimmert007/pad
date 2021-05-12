@@ -33,6 +33,7 @@ namespace HarvestValley.GameStates
         Executer exec;
         Wallet wallet;
         GameObjectList UI;
+        GameObjectList tent;
         Vector2 prevPos;
 
         public PlayingState()
@@ -71,6 +72,10 @@ namespace HarvestValley.GameStates
             energyBar = new EnergyBar("spr_empty", GameEnvironment.Screen.X - 60, GameEnvironment.Screen.Y - 220, 40, 200);
             Add(energyBar);
 
+            tent = new GameObjectList();
+            Add(tent);
+            tent.Add(new Tent());
+
             sleeping = new Sleeping("spr_empty");
             Add(sleeping);
 
@@ -84,6 +89,7 @@ namespace HarvestValley.GameStates
 
             jimFont = GameEnvironment.AssetManager.Content.Load<SpriteFont>("JimFont");
 
+            SpawnTent();
             PlaceStonesAndTrees();
 
             //Initialize UI Elements
@@ -140,6 +146,20 @@ namespace HarvestValley.GameStates
             }
         }
 
+        void SpawnTent()
+        {
+            foreach (Cell c in cells.Children)
+            {
+                if (c.Position == new Vector2(128, 128)
+                    || c.Position == new Vector2(192, 128)
+                    || c.Position == new Vector2(128, 192)
+                    || c.Position == new Vector2(192, 192))
+                {
+                    c.cellHasTent = true;
+                }
+            }
+        }
+
         void CheckMouseCollisionWithTutorial()
         {
             if (mouseGO.CollidesWith(tutorialStepList.Children[0] as SpriteGameObject))
@@ -159,20 +179,23 @@ namespace HarvestValley.GameStates
         {
             foreach (Cell c in cells.Children)
             {
-                if (c.Position.X < c.grass.Width || c.Position.X >= GameEnvironment.Screen.X - c.grass.Width
-                    || c.Position.Y < c.grass.Height || c.Position.Y > GameEnvironment.Screen.Y - c.grass.Height)
+                if (!c.cellHasTent)
                 {
-                    c.cellHasTree = true;
-                    trees.Add(new Tree(c.Position, .5f, 3));
-                }
-
-                if (!c.cellHasTree)
-                {
-                    int r = GameEnvironment.Random.Next(50);
-                    if (r == 1 && !c.CellCollidesWith(player.playerReach))
+                    if (c.Position.X < c.grass.Width || c.Position.X >= GameEnvironment.Screen.X - c.grass.Width
+                        || c.Position.Y < c.grass.Height || c.Position.Y > GameEnvironment.Screen.Y - c.grass.Height)
                     {
-                        c.cellHasStone = true;
-                        stones.Add(new Stone(c.Position, .5f));
+                        c.cellHasTree = true;
+                        trees.Add(new Tree(c.Position, .5f, 3));
+                    }
+
+                    if (!c.cellHasTree)
+                    {
+                        int r = GameEnvironment.Random.Next(50);
+                        if (r == 1 && !c.CellCollidesWith(player.playerReach))
+                        {
+                            c.cellHasStone = true;
+                            stones.Add(new Stone(c.Position, .5f));
+                        }
                     }
                 }
             }
@@ -361,8 +384,23 @@ namespace HarvestValley.GameStates
                     stones.Position = prevPos;
                     sprinklers.Position = prevPos;
                     plants.Position = prevPos;
+                    tent.Position = prevPos;
                 }
             }
+
+            for (int i = tent.Children.Count - 1; i >= 0; i--)
+            {
+                if ((tent.Children[i] as Tent).CollidesWith(player))
+                {
+                    cells.Position = prevPos;
+                    trees.Position = prevPos;
+                    stones.Position = prevPos;
+                    sprinklers.Position = prevPos;
+                    plants.Position = prevPos;
+                    tent.Position = prevPos;
+                }
+            }
+
 
             for (int i = stones.Children.Count - 1; i >= 0; i--)
             {
@@ -373,6 +411,7 @@ namespace HarvestValley.GameStates
                     stones.Position = prevPos;
                     sprinklers.Position = prevPos;
                     plants.Position = prevPos;
+                    tent.Position = prevPos;
                 }
             }
 
@@ -385,10 +424,12 @@ namespace HarvestValley.GameStates
                     stones.Position = prevPos;
                     sprinklers.Position = prevPos;
                     plants.Position = prevPos;
+                    tent.Position = prevPos;
                 }
             }
 
             prevPos = cells.Position;
+            tent.Position += moveVector;
             cells.Position += moveVector;
             trees.Position += moveVector;
             stones.Position += moveVector;
@@ -406,6 +447,11 @@ namespace HarvestValley.GameStates
                     {
                         if (itemList.itemSelected == "HOE" && !c.cellIsTilled && !c.cellHasTree && !c.cellHasSprinkler && !c.cellHasStone)
                         {
+                            if (!tutorialStepList.step1completed)
+                            {
+                                tutorialStepList.step += 1;
+                                tutorialStepList.step1completed = true;
+                            }
                             c.ChangeSpriteTo(1);
                             c.cellIsTilled = true;
                             energyBar.percentageLost += energyBar.oneUse;
@@ -429,6 +475,11 @@ namespace HarvestValley.GameStates
                             {
                                 if (itemList.itemSelected == "SEED" && c.cellIsTilled && !c.cellHasPlant && item.itemAmount > 0)
                                 {
+                                    if (!tutorialStepList.step2completed)
+                                    {
+                                        tutorialStepList.step += 1;
+                                        tutorialStepList.step2completed = true;
+                                    }
                                     item.itemAmount -= 1;
                                     c.cellHasPlant = true;
                                     energyBar.percentageLost += energyBar.oneUse;
@@ -479,6 +530,11 @@ namespace HarvestValley.GameStates
                         {
                             if (itemList.itemSelected == "WATERINGCAN" && c.cellIsTilled)
                             {
+                                if (!tutorialStepList.step3completed)
+                                {
+                                    tutorialStepList.step += 1;
+                                    tutorialStepList.step3completed = true;
+                                }
                                 c.cellHasWater = true;
                                 (plants.Children[i] as Plant).soilHasWater = true;
                                 c.ChangeSpriteTo(2);
