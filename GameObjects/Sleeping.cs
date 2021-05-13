@@ -11,7 +11,7 @@ namespace HarvestValley
     class Sleeping : SpriteGameObject
     {
         public float fadeAmount = 0;
-        public bool useOnce = true;
+        public bool useOnce = true, sleepHitboxHit;
         public bool fade = false;
         public bool fadeIn, fadeOut;
         Color color1, color2, finalColor;
@@ -26,7 +26,7 @@ namespace HarvestValley
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter) && useOnce/* && insert cords check*/)
+            if (sleepHitboxHit && useOnce/* && insert cords check*/)
             {
                 Sleep(gameTime);
                 useOnce = false;

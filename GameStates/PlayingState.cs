@@ -73,8 +73,8 @@ namespace HarvestValley.GameStates
             Add(energyBar);
 
             tent = new GameObjectList();
-            Add(tent);
             tent.Add(new Tent());
+            Add(tent);
 
             sleeping = new Sleeping("spr_empty");
             Add(sleeping);
@@ -108,6 +108,7 @@ namespace HarvestValley.GameStates
             base.Update(gameTime);
             SleepActions(gameTime); //works
             CheckMouseCollisionWithTutorial();
+            CheckSleepHitbox();
         }
 
         public override void HandleInput(InputHelper inputHelper)
@@ -124,7 +125,7 @@ namespace HarvestValley.GameStates
             CheckPickaxeInput(inputHelper);
             CheckAxeInput(inputHelper);
             CheckPlantPickup(inputHelper);
-            
+
             CheckHotbarSelection(inputHelper);
         }
 
@@ -143,6 +144,18 @@ namespace HarvestValley.GameStates
                         spriteBatch.DrawString(jimFont, item.itemAmount.ToString(), new Vector2((int)hotbar.Position.X + 5 + hotbar.squareSize * i, (int)hotbar.Position.Y + 5), Color.Black);
                     }
                 }
+            }
+        }
+
+        void CheckSleepHitbox()
+        {
+            if ((tent.Children[0] as Tent).CollidesWithSleep(player))
+            {
+                sleeping.sleepHitboxHit = true;
+            }
+            else
+            {
+                sleeping.sleepHitboxHit = false;
             }
         }
 
@@ -206,8 +219,19 @@ namespace HarvestValley.GameStates
         /// </summary>
         void SleepActions(GameTime gameTime)
         {
+            if (sleeping.fadeIn)
+            {
+                player.sleeping = true;
+                player.Visible = false;
+            }
+            else if (sleeping.fadeOut)
+            {
+                player.sleeping = false;
+                player.Visible = true;
+            }
             if (sleeping.fadeAmount >= 1)
             {
+                player.sleepingPosition = true;
                 if (sleeping.fadeOut)
                 {
                     for (int i = 0; i < cells.Children.Count; i++)
@@ -388,19 +412,25 @@ namespace HarvestValley.GameStates
                 }
             }
 
-            for (int i = tent.Children.Count - 1; i >= 0; i--)
+            if (player.sleeping)
             {
-                if ((tent.Children[i] as Tent).CollidesWith(player))
-                {
-                    cells.Position = prevPos;
-                    trees.Position = prevPos;
-                    stones.Position = prevPos;
-                    sprinklers.Position = prevPos;
-                    plants.Position = prevPos;
-                    tent.Position = prevPos;
-                }
+                cells.Position = prevPos;
+                trees.Position = prevPos;
+                stones.Position = prevPos;
+                sprinklers.Position = prevPos;
+                plants.Position = prevPos;
+                tent.Position = prevPos;
             }
 
+            if ((tent.Children[0] as Tent).CollidesWith(player))
+            {
+                cells.Position = prevPos;
+                trees.Position = prevPos;
+                stones.Position = prevPos;
+                sprinklers.Position = prevPos;
+                plants.Position = prevPos;
+                tent.Position = prevPos;
+            }
 
             for (int i = stones.Children.Count - 1; i >= 0; i--)
             {
@@ -445,7 +475,7 @@ namespace HarvestValley.GameStates
                 {
                     if (inputHelper.MouseLeftButtonDown())
                     {
-                        if (itemList.itemSelected == "HOE" && !c.cellIsTilled && !c.cellHasTree && !c.cellHasSprinkler && !c.cellHasStone)
+                        if (itemList.itemSelected == "HOE" && !c.cellIsTilled && !c.cellHasTent && !c.cellHasTree && !c.cellHasSprinkler && !c.cellHasStone)
                         {
                             if (!tutorialStepList.step1completed)
                             {
@@ -504,7 +534,7 @@ namespace HarvestValley.GameStates
                         {
                             if (item is Sprinkler)
                             {
-                                if (itemList.itemSelected == "SPRINKLER" && !c.cellHasPlant && !c.cellHasTree && !c.cellHasSprinkler && item.itemAmount > 0 && !c.cellHasStone)
+                                if (itemList.itemSelected == "SPRINKLER" && !c.cellHasPlant && !c.cellHasTent && !c.cellHasTree && !c.cellHasSprinkler && item.itemAmount > 0 && !c.cellHasStone)
                                 {
                                     item.itemAmount -= 1;
                                     c.cellHasSprinkler = true;
@@ -559,7 +589,7 @@ namespace HarvestValley.GameStates
                             {
                                 if (item is TreeSeed)
                                 {
-                                    if (itemList.itemSelected == "TREESEED" && !c.cellIsTilled && !c.cellHasPlant && item.itemAmount > 0 && !c.cellHasTree && !c.cellHasSprinkler && !c.cellHasStone)
+                                    if (itemList.itemSelected == "TREESEED" && !c.cellIsTilled && !c.cellHasTent && !c.cellHasPlant && item.itemAmount > 0 && !c.cellHasTree && !c.cellHasSprinkler && !c.cellHasStone)
                                     {
                                         item.itemAmount -= 1;
                                         c.cellHasTree = true;

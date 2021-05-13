@@ -10,7 +10,7 @@ namespace HarvestValley
 {
     class Player : SpriteGameObject
     {
-        public bool collision;
+        public bool collision, sleeping, sleepingPosition;
         public bool openInventory;
         public bool openMap;
         SpriteSheet left, right, up, down;
@@ -61,7 +61,11 @@ namespace HarvestValley
             velocity.X = 0;
             velocity.Y = 0;
 
-
+            if (sleepingPosition)
+            {
+                position += new Vector2(0, 20);
+                sleepingPosition = false;
+            }
             //Movement inputs
             /* if (Keyboard.GetState().IsKeyDown(Keys.A)) { velocity.X = -5.0f; }
              else if (Keyboard.GetState().IsKeyDown(Keys.D)) { velocity.X = 5.0f; }
