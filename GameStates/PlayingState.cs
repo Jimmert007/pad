@@ -41,7 +41,7 @@ namespace HarvestValley.GameStates
             // GameEnvironment.AssetManager.PlaySound("Alarm");
             
             //kan er maar een tegelijke tijd spelen
-            GameEnvironment.AssetManager.PlayMusic("Intro", true);
+            //GameEnvironment.AssetManager.PlayMusic("Intro", true);
 
 
             SpriteSheet mapSpriteSheet = new SpriteSheet("tiles/spr_grass", 0);
@@ -398,6 +398,7 @@ namespace HarvestValley.GameStates
                     {
                         if (itemList.itemSelected == "HOE" && !c.cellIsTilled && !c.cellHasTree && !c.cellHasSprinkler && !c.cellHasStone)
                         {
+                            GameEnvironment.AssetManager.PlaySound("dog-barking");
                             c.ChangeSpriteTo(1);
                             c.cellIsTilled = true;
                             energyBar.percentageLost += energyBar.oneUse;
@@ -521,6 +522,7 @@ namespace HarvestValley.GameStates
                     {
                         if (itemList.itemSelected == "PICKAXE" && !(stones.Children[i] as Stone).stoneHit && (stones.Children[i] as Stone)._sprite == 0)
                         {
+                            GameEnvironment.AssetManager.PlaySound("PickaxeSwing");
                             (stones.Children[i] as Stone).stoneHit = true;
                             (stones.Children[i] as Stone).hitTimer = (stones.Children[i] as Stone).hitTimerReset;
                             (stones.Children[i] as Stone).health -= 1;
@@ -559,6 +561,7 @@ namespace HarvestValley.GameStates
                     {
                         if (itemList.itemSelected == "AXE" && !(trees.Children[i] as Tree).treeHit && (trees.Children[i] as Tree).growthStage == 3)
                         {
+                            GameEnvironment.AssetManager.PlaySound("AxeSwing");
                             (trees.Children[i] as Tree).treeHit = true;
                             (trees.Children[i] as Tree).hitTimer = (trees.Children[i] as Tree).hitTimerReset;
                             (trees.Children[i] as Tree).health -= 1;

@@ -27,19 +27,19 @@
 
 #begin Alarm.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Alarm.ogg
 
 #begin AxeSwing.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:AxeSwing.ogg
 
 #begin birds-singing-in-the-trees.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:birds-singing-in-the-trees.ogg
 
@@ -69,25 +69,25 @@
 
 #begin ChoppingWood.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:ChoppingWood.ogg
 
 #begin clock-chimes.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:clock-chimes.ogg
 
 #begin Coin_Drop.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Coin_Drop.ogg
 
 #begin crackling-fireplace.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:crackling-fireplace.ogg
 
@@ -105,7 +105,7 @@
 
 #begin dog-barking.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:dog-barking.ogg
 
@@ -135,7 +135,7 @@
 
 #begin footsteps-on-tall-grass.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:footsteps-on-tall-grass.ogg
 
@@ -148,27 +148,21 @@
 
 #begin Hammering_Sound.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Hammering_Sound.ogg
 
 #begin Hard_drive_clicking.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Hard_drive_clicking.ogg
 
 #begin Intro.ogg
 /importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Intro.ogg
-
-#begin intro.wav
-/importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:intro.wav
+/build:Intro.ogg
 
 #begin JimFont.spritefont
 /importer:FontDescriptionImporter
@@ -191,25 +185,25 @@
 
 #begin keyboard-typing.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:keyboard-typing.ogg
 
 #begin light-rain.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:light-rain.ogg
 
 #begin Metal_Rattling.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Metal_Rattling.ogg
 
 #begin Night_Sounds_Crickets.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Night_Sounds_Crickets.ogg
 
@@ -227,15 +221,9 @@
 
 #begin person-yawns.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:person-yawns.ogg
-
-#begin Pickaxe.ogg
-/importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Pickaxe.ogg
 
 #begin pickaxe.PNG
 /importer:TextureImporter
@@ -248,6 +236,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:pickaxe.PNG
+
+#begin PickaxeSwing.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:PickaxeSwing.ogg
 
 #begin play.png
 /importer:TextureImporter
@@ -263,7 +257,7 @@
 
 #begin rain-and-thunder.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:rain-and-thunder.ogg
 
@@ -281,19 +275,19 @@
 
 #begin rooster_crowing.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:rooster_crowing.ogg
 
 #begin small-group-cheer-and-applause.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:small-group-cheer-and-applause.ogg
 
 #begin Splitting Wood.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Splitting Wood.ogg
 
@@ -791,13 +785,13 @@
 
 #begin thought.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:thought.ogg
 
 #begin Tick.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Tick.ogg
 
@@ -863,7 +857,7 @@
 
 #begin Tree_Fall_Small.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Tree_Fall_Small.ogg
 
@@ -881,19 +875,19 @@
 
 #begin Water Splash.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Water Splash.ogg
 
 #begin Water_Churning.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Water_Churning.ogg
 
 #begin Woah_male.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Woah_male.ogg
 
