@@ -14,6 +14,7 @@ namespace HarvestValley
         public bool openInventory;
         public bool openMap;
         SpriteSheet left, right, up, down;
+        public Vector2 newSleepingPosition = new Vector2(0, 10);
         public Cell current;
         public Vector2 lastPosition;
         public int speed = 3;
@@ -61,11 +62,7 @@ namespace HarvestValley
             velocity.X = 0;
             velocity.Y = 0;
 
-            if (sleepingPosition)
-            {
-                position += new Vector2(0, 20);
-                sleepingPosition = false;
-            }
+
             //Movement inputs
             /* if (Keyboard.GetState().IsKeyDown(Keys.A)) { velocity.X = -5.0f; }
              else if (Keyboard.GetState().IsKeyDown(Keys.D)) { velocity.X = 5.0f; }

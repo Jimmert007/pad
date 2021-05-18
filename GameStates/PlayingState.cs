@@ -106,7 +106,7 @@ namespace HarvestValley.GameStates
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            SleepActions(gameTime); //works
+            SleepActions(gameTime);
             CheckMouseCollisionWithTutorial();
             CheckSleepHitbox();
         }
@@ -152,6 +152,11 @@ namespace HarvestValley.GameStates
             if ((tent.Children[0] as Tent).CollidesWithSleep(player))
             {
                 sleeping.sleepHitboxHit = true;
+                if (!tutorialStepList.step5completed && tutorialStepList.step == 5)
+                {
+                    tutorialStepList.step += 1;
+                    tutorialStepList.step5completed = true;
+                }
             }
             else
             {
@@ -412,6 +417,17 @@ namespace HarvestValley.GameStates
                 }
             }
 
+            if (player.sleepingPosition)
+            {
+                cells.Position = prevPos - player.newSleepingPosition;
+                trees.Position = prevPos - player.newSleepingPosition;
+                stones.Position = prevPos - player.newSleepingPosition;
+                sprinklers.Position = prevPos - player.newSleepingPosition;
+                plants.Position = prevPos - player.newSleepingPosition;
+                tent.Position = prevPos - player.newSleepingPosition;
+                player.sleepingPosition = false;
+            }
+
             if (player.sleeping)
             {
                 cells.Position = prevPos;
@@ -477,7 +493,7 @@ namespace HarvestValley.GameStates
                     {
                         if (itemList.itemSelected == "HOE" && !c.cellIsTilled && !c.cellHasTent && !c.cellHasTree && !c.cellHasSprinkler && !c.cellHasStone)
                         {
-                            if (!tutorialStepList.step1completed)
+                            if (!tutorialStepList.step1completed && tutorialStepList.step == 1)
                             {
                                 tutorialStepList.step += 1;
                                 tutorialStepList.step1completed = true;
@@ -505,7 +521,7 @@ namespace HarvestValley.GameStates
                             {
                                 if (itemList.itemSelected == "SEED" && c.cellIsTilled && !c.cellHasPlant && item.itemAmount > 0)
                                 {
-                                    if (!tutorialStepList.step2completed)
+                                    if (!tutorialStepList.step2completed && tutorialStepList.step == 2)
                                     {
                                         tutorialStepList.step += 1;
                                         tutorialStepList.step2completed = true;
@@ -560,7 +576,7 @@ namespace HarvestValley.GameStates
                         {
                             if (itemList.itemSelected == "WATERINGCAN" && c.cellIsTilled)
                             {
-                                if (!tutorialStepList.step3completed)
+                                if (!tutorialStepList.step3completed && tutorialStepList.step == 3)
                                 {
                                     tutorialStepList.step += 1;
                                     tutorialStepList.step3completed = true;
@@ -621,6 +637,11 @@ namespace HarvestValley.GameStates
                             energyBar.percentageLost += energyBar.oneUse;
                             if ((stones.Children[i] as Stone).health <= 0)
                             {
+                                if (!tutorialStepList.step4completed && tutorialStepList.step == 4)
+                                {
+                                    tutorialStepList.step += 1;
+                                    tutorialStepList.step4completed = true;
+                                }
                                 foreach (Cell c in cells.Children)
                                 {
                                     if (c.Position == s.Position)
@@ -659,6 +680,11 @@ namespace HarvestValley.GameStates
                             energyBar.percentageLost += energyBar.oneUse;
                             if ((trees.Children[i] as Tree).health <= 0)
                             {
+                                if (!tutorialStepList.step4completed && tutorialStepList.step == 4)
+                                {
+                                    tutorialStepList.step += 1;
+                                    tutorialStepList.step4completed = true;
+                                }
                                 (trees.Children[i] as Tree).treeHit = false;
                                 foreach (Cell c in cells.Children)
                                 {
@@ -702,6 +728,11 @@ namespace HarvestValley.GameStates
                                 {
                                     if ((plants.Children[i] as Plant).growthStage >= 4)
                                     {
+                                        if (!tutorialStepList.step6completed && tutorialStepList.step == 6)
+                                        {
+                                            tutorialStepList.step += 1;
+                                            tutorialStepList.step6completed = true;
+                                        }
                                         //(receive product and new seed)
                                         c.cellHasPlant = false;
                                         plants.Remove(plants.Children[i]);
