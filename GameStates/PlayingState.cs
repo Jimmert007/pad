@@ -35,6 +35,8 @@ namespace HarvestValley.GameStates
         GameObjectList UI;
         GameObjectList tent;
         Vector2 prevPos;
+        int mapSizeX = GameEnvironment.Screen.X, mapSizeY = GameEnvironment.Screen.Y, cellSize = 64,
+            outerringRandomTree = 4, outerringRandomStone = 2, middleringRandomTree = 4, middleringRandomStone = 6, innerringRandomTree = 20, innerringRandomStone = 30;
 
         public PlayingState()
         {
@@ -45,7 +47,7 @@ namespace HarvestValley.GameStates
             {
                 for (int x = 0; x < map.cols; x++)
                 {
-                    Cell c = new Cell(new Vector2(mapSpriteSheet.Width / 2 * x, mapSpriteSheet.Height / 2 * i), .5f, x + (map.cols * i));
+                    Cell c = new Cell(new Vector2(mapSpriteSheet.Width / 2 * x - GameEnvironment.Screen.X, mapSpriteSheet.Height / 2 * i - GameEnvironment.Screen.Y), .5f, x + (map.cols * i));
                     cells.Add(c);
                 }
             }
@@ -199,22 +201,183 @@ namespace HarvestValley.GameStates
             {
                 if (!c.cellHasTent)
                 {
-                    if (c.Position.X < c.grass.Width || c.Position.X >= GameEnvironment.Screen.X - c.grass.Width
-                        || c.Position.Y < c.grass.Height || c.Position.Y > GameEnvironment.Screen.Y - c.grass.Height)
+                    #region outer ring
+                    if (c.Position.X > -mapSizeX - 10 && c.Position.X < -mapSizeX + 5 * cellSize
+                    && c.Position.Y > -mapSizeY + 4 * cellSize && c.Position.Y < GameEnvironment.Screen.Y + mapSizeY - 5 * cellSize)
                     {
-                        c.cellHasTree = true;
-                        trees.Add(new Tree(c.Position, .5f, 3));
-                    }
-
-                    if (!c.cellHasTree)
-                    {
-                        int r = GameEnvironment.Random.Next(50);
-                        if (r == 1 && !c.CellCollidesWith(player.playerReach))
+                        int r = GameEnvironment.Random.Next(outerringRandomTree);
+                        if (r > 0 && !c.CellCollidesWith(player.playerReach))
                         {
-                            c.cellHasStone = true;
-                            stones.Add(new Stone(c.Position, .5f));
+                            c.cellHasTree = true;
+                            trees.Add(new Tree(c.Position, .5f, 3));
+                        }
+                        if (!c.cellHasTree)
+                        {
+                            int s = GameEnvironment.Random.Next(outerringRandomStone);
+                            if (s == 0 && !c.CellCollidesWith(player.playerReach))
+                            {
+                                c.cellHasStone = true;
+                                stones.Add(new Stone(c.Position, .5f));
+                            }
                         }
                     }
+                    if (c.Position.X > GameEnvironment.Screen.X + mapSizeX - 5 * cellSize - 10 && c.Position.X < GameEnvironment.Screen.X + mapSizeX
+                    && c.Position.Y > -mapSizeY + 4 * cellSize && c.Position.Y < GameEnvironment.Screen.Y + mapSizeY - 5 * cellSize)
+                    {
+                        int r = GameEnvironment.Random.Next(outerringRandomTree);
+                        if (r > 0 && !c.CellCollidesWith(player.playerReach))
+                        {
+                            c.cellHasTree = true;
+                            trees.Add(new Tree(c.Position, .5f, 3));
+                        }
+                        if (!c.cellHasTree)
+                        {
+                            int s = GameEnvironment.Random.Next(outerringRandomStone);
+                            if (s == 0 && !c.CellCollidesWith(player.playerReach))
+                            {
+                                c.cellHasStone = true;
+                                stones.Add(new Stone(c.Position, .5f));
+                            }
+                        }
+                    }
+                    if (c.Position.Y > -mapSizeY - 10 && c.Position.Y < -mapSizeY + 5 * cellSize)
+                    {
+                        int r = GameEnvironment.Random.Next(outerringRandomTree);
+                        if (r > 0 && !c.CellCollidesWith(player.playerReach))
+                        {
+                            c.cellHasTree = true;
+                            trees.Add(new Tree(c.Position, .5f, 3));
+                        }
+                        if (!c.cellHasTree)
+                        {
+                            int s = GameEnvironment.Random.Next(outerringRandomStone);
+                            if (s == 0 && !c.CellCollidesWith(player.playerReach))
+                            {
+                                c.cellHasStone = true;
+                                stones.Add(new Stone(c.Position, .5f));
+                            }
+                        }
+                    }
+                    if (c.Position.Y > GameEnvironment.Screen.Y + mapSizeY - 5 * cellSize - 60 && c.Position.Y < GameEnvironment.Screen.Y + mapSizeY)
+                    {
+                        int r = GameEnvironment.Random.Next(outerringRandomTree);
+                        if (r > 0 && !c.CellCollidesWith(player.playerReach))
+                        {
+                            c.cellHasTree = true;
+                            trees.Add(new Tree(c.Position, .5f, 3));
+                        }
+                        if (!c.cellHasTree)
+                        {
+                            int s = GameEnvironment.Random.Next(outerringRandomStone);
+                            if (s == 0 && !c.CellCollidesWith(player.playerReach))
+                            {
+                                c.cellHasStone = true;
+                                stones.Add(new Stone(c.Position, .5f));
+                            }
+                        }
+                    }
+                    #endregion
+
+                    #region middle ring
+                    if (c.Position.X > -mapSizeX - 10 + 5 * cellSize && c.Position.X < -mapSizeX + 10 * cellSize
+                    && c.Position.Y > -mapSizeY + 4 * cellSize && c.Position.Y < GameEnvironment.Screen.Y + mapSizeY - 5 * cellSize)
+                    {
+                        int r = GameEnvironment.Random.Next(middleringRandomTree);
+                        if (r == 0 && !c.CellCollidesWith(player.playerReach))
+                        {
+                            c.cellHasTree = true;
+                            trees.Add(new Tree(c.Position, .5f, 3));
+                        }
+                        if (!c.cellHasTree)
+                        {
+                            int s = GameEnvironment.Random.Next(middleringRandomStone);
+                            if (s == 0 && !c.CellCollidesWith(player.playerReach))
+                            {
+                                c.cellHasStone = true;
+                                stones.Add(new Stone(c.Position, .5f));
+                            }
+                        }
+                    }
+                    if (c.Position.X > GameEnvironment.Screen.X + mapSizeX - 10 * cellSize - 10 && c.Position.X < GameEnvironment.Screen.X + mapSizeX - 5 * cellSize
+                    && c.Position.Y > -mapSizeY + 4 * cellSize && c.Position.Y < GameEnvironment.Screen.Y + mapSizeY - 5 * cellSize)
+                    {
+                        int r = GameEnvironment.Random.Next(middleringRandomTree);
+                        if (r == 0 && !c.CellCollidesWith(player.playerReach))
+                        {
+                            c.cellHasTree = true;
+                            trees.Add(new Tree(c.Position, .5f, 3));
+                        }
+                        if (!c.cellHasTree)
+                        {
+                            int s = GameEnvironment.Random.Next(middleringRandomStone);
+                            if (s == 0 && !c.CellCollidesWith(player.playerReach))
+                            {
+                                c.cellHasStone = true;
+                                stones.Add(new Stone(c.Position, .5f));
+                            }
+                        }
+                    }
+                    if (c.Position.Y > -mapSizeY - 10 + 5 * cellSize && c.Position.Y < -mapSizeY + 10 * cellSize
+                    && c.Position.X > -mapSizeX + 9 * cellSize && c.Position.X < GameEnvironment.Screen.X + mapSizeX - 10 * cellSize)
+                    {
+                        int r = GameEnvironment.Random.Next(middleringRandomTree);
+                        if (r == 0 && !c.CellCollidesWith(player.playerReach))
+                        {
+                            c.cellHasTree = true;
+                            trees.Add(new Tree(c.Position, .5f, 3));
+                        }
+                        if (!c.cellHasTree)
+                        {
+                            int s = GameEnvironment.Random.Next(middleringRandomStone);
+                            if (s == 0 && !c.CellCollidesWith(player.playerReach))
+                            {
+                                c.cellHasStone = true;
+                                stones.Add(new Stone(c.Position, .5f));
+                            }
+                        }
+                    }
+                    if (c.Position.Y > GameEnvironment.Screen.Y + mapSizeY - 11 * cellSize && c.Position.Y - 60 < GameEnvironment.Screen.Y + mapSizeY - 6 * cellSize
+                        && c.Position.X > -mapSizeX + 9 * cellSize && c.Position.X < GameEnvironment.Screen.X + mapSizeX - 10 * cellSize)
+                    {
+                        int r = GameEnvironment.Random.Next(middleringRandomTree);
+                        if (r == 0 && !c.CellCollidesWith(player.playerReach))
+                        {
+                            c.cellHasTree = true;
+                            trees.Add(new Tree(c.Position, .5f, 3));
+                        }
+                        if (!c.cellHasTree)
+                        {
+                            int s = GameEnvironment.Random.Next(middleringRandomStone);
+                            if (s == 0 && !c.CellCollidesWith(player.playerReach))
+                            {
+                                c.cellHasStone = true;
+                                stones.Add(new Stone(c.Position, .5f));
+                            }
+                        }
+                    }
+                    #endregion
+
+                    #region inner ring
+                    if (c.Position.X > -mapSizeX + 10 * cellSize && c.Position.X < GameEnvironment.Screen.X + mapSizeX - 10 * cellSize
+                    && c.Position.Y > -mapSizeY + 10 * cellSize && c.Position.Y < GameEnvironment.Screen.Y + mapSizeY - 10 * cellSize)
+                    {
+                        int r = GameEnvironment.Random.Next(innerringRandomTree);
+                        if (r == 0 && !c.CellCollidesWith(player.playerReach))
+                        {
+                            c.cellHasTree = true;
+                            trees.Add(new Tree(c.Position, .5f, 3));
+                        }
+                        if (!c.cellHasTree)
+                        {
+                            int s = GameEnvironment.Random.Next(innerringRandomStone);
+                            if (s == 0 && !c.CellCollidesWith(player.playerReach))
+                            {
+                                c.cellHasStone = true;
+                                stones.Add(new Stone(c.Position, .5f));
+                            }
+                        }
+                    }
+                    #endregion
                 }
             }
         }
