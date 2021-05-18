@@ -7,6 +7,7 @@ using HarvestValley.GameObjects.Shop;
 using HarvestValley.GameObjects;
 using HarvestValley.GameObjects.UI;
 using HarvestValley.GameObjects.Tools;
+using System.Diagnostics;
 
 namespace HarvestValley.GameObjects.Shop
 {
@@ -19,8 +20,8 @@ namespace HarvestValley.GameObjects.Shop
         UIBox uIBox;
         SpriteGameObject Coin;
         ShopButtons shopButtons;
-        public bool shopActive, buyActive, buyAmount, sellActive, sellAmount= false;
-        private int shopItemAmount = 0;
+        public bool shopActive, buyActive, buyAmount, sellActive, sellAmount = false;
+        private int shopItemAmount = 0, offset = 128;
         public string[] shopDialogueLines = { "Welcome to the shop", "What do you want to do?", "What do you want to buy?", "What do you want to sell?", "How many do you want to buy?", "How many do you want to sell?", "Buy", "Sell", "Cancel" };
         public int[] shopItemAmmount = { 0, 0, 1, -1, 10, -10, 0, 0 };
 
@@ -37,32 +38,7 @@ namespace HarvestValley.GameObjects.Shop
             Add(cancelLine = new TextGameObject("JimFont"));
             Add(mouseGO = new SpriteGameObject("1px"));
 
-            //Set the text lines for the unchangable dialogue lines
-            welcomeLine.Text = shopDialogueLines[0];
-            questionLine.Text = shopDialogueLines[1];
-            buyLine.Text = shopDialogueLines[6];
-            sellLine.Text = shopDialogueLines[7];
-            cancelLine.Text = shopDialogueLines[8];
-
-            //Set the position of Shop elements
-            uIBox.Position = new Vector2(GameEnvironment.Screen.X * .5f, GameEnvironment.Screen.Y * .35f);
-            welcomeLine.Position = new Vector2(GameEnvironment.Screen.X * .5f - welcomeLine.Size.X * .5f, GameEnvironment.Screen.Y * .1f);
-            questionLine.Position = new Vector2(GameEnvironment.Screen.X * .5f - questionLine.Size.X * .5f, GameEnvironment.Screen.Y * .2f);
-
-            buyLine.Position = new Vector2(GameEnvironment.Screen.X * 1 / 3 - buyLine.Size.X * .5f, GameEnvironment.Screen.Y * .7f);
-            sellLine.Position = new Vector2(GameEnvironment.Screen.X * .5f - sellLine.Size.X * .5f, GameEnvironment.Screen.Y * .7f);
-            cancelLine.Position = new Vector2(GameEnvironment.Screen.X * 2 / 3 - cancelLine.Size.X * .5f, GameEnvironment.Screen.Y * .7f);
-
-            //Set UI elements invisible at the start of the game 
-            uIBox.Visible = false; welcomeLine.Visible = false; questionLine.Visible = false; buyLine.Visible = false; cancelLine.Visible = false; sellLine.Visible = false;
-            for (int i = 0; i < shopButtons.Children.Count; i++)
-            {
-                shopButtons.shopButtons[i].Visible = false;
-            }
-            foreach (Item x in shopItems.Children)
-            {
-                x.Visible = false;
-            }
+            ResetShop();
         }
 
         public override void HandleInput(InputHelper inputHelper)
@@ -75,6 +51,8 @@ namespace HarvestValley.GameObjects.Shop
             {
                 shopActive = true;
             }
+
+            if (inputHelper.KeyPressed(Keys.B)) { ResetShop(); }
 
             if (shopActive)
             {
@@ -118,9 +96,32 @@ namespace HarvestValley.GameObjects.Shop
             }
         }
 
-        public void ResetShop()
+        public void ResetShop()  //Resets all the shop elements
         {
-            //Resets all the shop elements
+            //Set the text lines for the shop
+            welcomeLine.Text = shopDialogueLines[0];
+            questionLine.Text = shopDialogueLines[1];
+            buyLine.Text = shopDialogueLines[6];
+            sellLine.Text = shopDialogueLines[7];
+            cancelLine.Text = shopDialogueLines[8];
+
+            //Set the position of Shop elements
+            uIBox.Position = new Vector2(GameEnvironment.Screen.X * .5f, GameEnvironment.Screen.Y * .35f);
+            welcomeLine.Position = new Vector2(GameEnvironment.Screen.X * .5f - welcomeLine.Size.X * .5f, GameEnvironment.Screen.Y * .1f);
+            questionLine.Position = new Vector2(GameEnvironment.Screen.X * .5f - questionLine.Size.X * .5f, GameEnvironment.Screen.Y * .2f);
+
+            buyLine.Position = new Vector2(GameEnvironment.Screen.X * 1 / 3 - buyLine.Size.X * .5f, GameEnvironment.Screen.Y * .7f);
+            sellLine.Position = new Vector2(GameEnvironment.Screen.X * .5f - sellLine.Size.X * .5f, GameEnvironment.Screen.Y * .7f);
+            cancelLine.Position = new Vector2(GameEnvironment.Screen.X * 2 / 3 - cancelLine.Size.X * .5f, GameEnvironment.Screen.Y * .7f);
+
+            shopButtons.shopButtons[1].Position = new Vector2(GameEnvironment.Screen.X * 2 / 3 - shopButtons.shopButtons[1].Sprite.Width / 2, GameEnvironment.Screen.Y * .6f);
+
+            //Make Shop Items invisible
+            foreach (Item x in shopItems.Children)
+            {
+                x.Visible = false;
+            }
+            //Set the ui lines invisible
             uIBox.Visible = false;
             welcomeLine.Visible = false;
             questionLine.Visible = false;
@@ -128,11 +129,13 @@ namespace HarvestValley.GameObjects.Shop
             cancelLine.Visible = false;
             sellLine.Visible = false;
 
+            //Resets the buttons
             for (int i = 0; i < shopButtons.shopButtons.Length; i++)
             {
                 shopButtons.shopButtons[i].Visible = false;
             }
 
+            //Resets the bools
             shopActive = false;
             buyActive = false;
             sellActive = false;
@@ -142,6 +145,7 @@ namespace HarvestValley.GameObjects.Shop
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            Debug.WriteLine(buyActive);
 
             if (shopActive)
             {   //Set the welcome page elements of the shop on true
@@ -167,52 +171,61 @@ namespace HarvestValley.GameObjects.Shop
 
                 //Turn on the buy page elements of the shop true
                 questionLine.Text = shopDialogueLines[2];
-                shopButtons.shopButtons[1].Position = new Vector2(GameEnvironment.Screen.X* 1 / 2 - shopButtons.shopButtons[1].Sprite.Width / 2, GameEnvironment.Screen.Y * .6f);
-                foreach (Item x in shopItems.Children)
-                {
-                    if (x.isStackable)
-                    {
-                        for (int i = 0; i > shopItems.Children.Count - 1; i++)
-                        {
-                            x.Position = new Vector2(GameEnvironment.Screen.X / shopItems.Children.Count * i, GameEnvironment.Screen.Y / 6);
-                            x.Visible = true;
-                        }
-                    }
-                    else { x.Visible = false; }
-                }
-            }
-            if (sellActive)
-            {
-                questionLine.Text = shopDialogueLines[3];
-                foreach (Item x in shopItems.Children)
-                {
-                    if (x.isStackable)
-                    {
-                        for (int i = 0; i < shopItems.Children.Count; i++)
-                        {
-                            x.Position = new Vector2(GameEnvironment.Screen.X / shopItems.Children.Count, GameEnvironment.Screen.Y / 6);
-                            x.Visible = true;
-                        }
-                    }
-                }
-            }
-            if (buyAmount)
-            {
-                //Question line
-                questionLine.Text = shopDialogueLines[4];
+                shopButtons.shopButtons[1].Position = new Vector2(GameEnvironment.Screen.X * 1 / 2 - shopButtons.shopButtons[1].Sprite.Width / 2, GameEnvironment.Screen.Y * .6f);
 
-                foreach (Item x in shopItems.Children)
+                int stackable = 0;
+                for (int i = 0; i < shopItems.Children.Count; i++)
                 {
-                    if (x.selectedItem)
+                    Item item = (shopItems.Children[i] as Item);
+
+                    if (item.isStackable)
                     {
-                        x.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2);
+                        stackable++;
+                        Debug.WriteLine(GameEnvironment.Screen.X / 4);
                     }
+
                 }
-                //Buy and sell Buttons
-                shopButtons.shopButtons[6].Position = new Vector2(GameEnvironment.Screen.X / 3, GameEnvironment.Screen.Y * 2 / 3);
-                shopButtons.shopButtons[7].Position = new Vector2(GameEnvironment.Screen.X / 3, GameEnvironment.Screen.Y / 3);
+                for (int i = 0; i < stackable; i++)
+                {
+                    shopItems.Children[i].Visible = true;
+                    shopItems.Children[i].Position = new Vector2(GameEnvironment.Screen.X / 4 + (offset * i), GameEnvironment.Screen.Y / 2);
+
+                }
             }
-            if (sellAmount) { questionLine.Text = shopDialogueLines[5]; }
+            //if (sellActive)
+            //{
+            //    questionLine.Text = shopDialogueLines[3];
+            //    shopButtons.shopButtons[1].Position = new Vector2(GameEnvironment.Screen.X * 1 / 2 - shopButtons.shopButtons[1].Sprite.Width / 2, GameEnvironment.Screen.Y * .6f);
+            //    for (int i = 0; i < shopItems.Children.Count; i++)
+            //    {
+            //        Item item = (shopItems.Children[i] as Item);
+
+            //        if (item.isStackable)
+            //        {
+            //            item.Visible = true;
+            //            item.Position = new Vector2(GameEnvironment.Screen.X / 4 + (offset * i), GameEnvironment.Screen.Y / 2);
+            //            Debug.WriteLine(item.Position);
+            //        }
+
+            //    }
+            //}
+            //if (buyAmount)
+            //{
+            //    //Question line
+            //    questionLine.Text = shopDialogueLines[4];
+
+            //    foreach (Item x in shopItems.Children)
+            //    {
+            //        if (x.selectedItem)
+            //        {
+            //            x.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2);
+            //        }
+            //    }
+            //    //Buy and sell Buttons
+            //    shopButtons.shopButtons[6].Position = new Vector2(GameEnvironment.Screen.X / 3, GameEnvironment.Screen.Y * 2 / 3);
+            //    shopButtons.shopButtons[7].Position = new Vector2(GameEnvironment.Screen.X / 3, GameEnvironment.Screen.Y / 3);
+            //}
+            //if (sellAmount) { questionLine.Text = shopDialogueLines[5]; }
         }
 
         public void BuyItem()
