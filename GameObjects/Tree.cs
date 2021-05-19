@@ -10,7 +10,7 @@ namespace HarvestValley.GameObjects
     class Tree : GameObjectList
     {
         public int hitTimer;
-        public int hitTimerReset = 60;
+        public int hitTimerReset = 120;
         public bool treeHit = false;
         public int health = 4;
         SpriteGameObject treeHitbox, tree1stage1, tree1stage2, tree1stage3, treeCut;

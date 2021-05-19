@@ -124,7 +124,7 @@ namespace HarvestValley.GameStates
 
             for (int i = 0; i < SFXs.Length; i++)
             {
-                SFXs[i] = GameEnvironment.AssetManager.Content.Load<SoundEffect>(soundEffectStrings[i]);
+                SFXs[i] = GameEnvironment.AssetManager.Content.Load<SoundEffect>("Sound/" + soundEffectStrings[i]);
                 SEIs[i] = SFXs[i].CreateInstance();
             }
 
@@ -442,12 +442,11 @@ namespace HarvestValley.GameStates
                 player.sleepingPosition = true;
 
                 //Play RoosterCrowing
-                //GameEnvironment.AssetManager.PlaySound(SEIs[6]);
+                GameEnvironment.AssetManager.PlaySound(SEIs[6]);
                 //Play PersonYawns
-                GameEnvironment.AssetManager.PlaySound(SEIs[5]);
+                //GameEnvironment.AssetManager.PlaySound(SEIs[5]);
                 if (sleeping.fadeOut)
                 {
-
                     for (int i = 0; i < cells.Children.Count; i++)
                     {
                         if ((cells.Children[i] as Cell).cellHasSprinkler) //planten naast een sprinkler
@@ -587,8 +586,6 @@ namespace HarvestValley.GameStates
 
         void CameraSystem(InputHelper inputHelper)
         {
-
-
             Vector2 moveVector = Vector2.Zero;
 
             if (!inputHelper.IsKeyDown(Keys.A) && !inputHelper.IsKeyDown(Keys.S) && !inputHelper.IsKeyDown(Keys.D) && !inputHelper.IsKeyDown(Keys.W))
@@ -599,30 +596,32 @@ namespace HarvestValley.GameStates
             if (inputHelper.IsKeyDown(Keys.A))
             {
                 moveVector = new Vector2(player.speed, moveVector.Y);
-                GameEnvironment.AssetManager.PlaySound(SEIs[0]);
+                GameEnvironment.AssetManager.PlayOnce(SEIs[0]);
             }
             if (inputHelper.IsKeyDown(Keys.D))
             {
                 moveVector = new Vector2(-player.speed, moveVector.Y);
-                GameEnvironment.AssetManager.PlaySound(SEIs[0]);
+                GameEnvironment.AssetManager.PlayOnce(SEIs[0]);
             }
             if (inputHelper.IsKeyDown(Keys.D) && inputHelper.IsKeyDown(Keys.A))
             {
                 moveVector = new Vector2(0, moveVector.Y);
+                GameEnvironment.AssetManager.StopSound(SEIs[0]);
             }
             if (inputHelper.IsKeyDown(Keys.S))
             {
                 moveVector = new Vector2(moveVector.X, -player.speed);
-                GameEnvironment.AssetManager.PlaySound(SEIs[0]);
+                GameEnvironment.AssetManager.PlayOnce(SEIs[0]);
             }
             if (inputHelper.IsKeyDown(Keys.W))
             {
                 moveVector = new Vector2(moveVector.X, player.speed);
-                GameEnvironment.AssetManager.PlaySound(SEIs[0]);
+                GameEnvironment.AssetManager.PlayOnce(SEIs[0]);
             }
             if (inputHelper.IsKeyDown(Keys.W) && inputHelper.IsKeyDown(Keys.S))
             {
                 moveVector = new Vector2(moveVector.X, 0);
+                GameEnvironment.AssetManager.StopSound(SEIs[0]);
             }
 
             for (int i = trees.Children.Count - 1; i >= 0; i--)

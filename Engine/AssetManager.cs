@@ -27,8 +27,18 @@ public class AssetManager
         SoundEffect snd = contentManager.Load<SoundEffect>(assetName);
         snd.Play();
     }
+
+    public void PlayOnce(SoundEffectInstance SEI)
+    {
+        SEI.Play();
+    }
+
     public void PlaySound(SoundEffectInstance SEI)
     {
+        if(SEI.State == SoundState.Playing)
+        {
+            SEI.Stop();
+        }
         SEI.Play();
     }
 
