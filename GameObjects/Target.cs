@@ -19,7 +19,8 @@ namespace HarvestValley.GameObjects
         GameObjectList stackableItemsList;
         int rewardAmount;
         Wallet wallet;
-        public Target(ItemList _itemList, Wallet _wallet)
+        Player player;
+        public Target(ItemList _itemList, Wallet _wallet, Player _player)
         {
             Add(panel_bg = new SpriteGameObject("spr_target_bg"));
             panel_bg.Origin = panel_bg.Sprite.Center;
@@ -79,6 +80,8 @@ namespace HarvestValley.GameObjects
             congratsText.Position = panel_bg.Position - congratsText.Size * .5f;
             congratsText.Visible = false;
             wallet = _wallet;
+            player = _player;
+            player.sleeping = true;
         }
 
         public override void Update(GameTime gameTime)
@@ -91,6 +94,7 @@ namespace HarvestValley.GameObjects
                 welcomeText.Visible = false;
                 button.Visible = false;
                 congratsText.Visible = false;
+                player.sleeping = false;
             }
             if (currentAmount >= TargetAmount)
             {

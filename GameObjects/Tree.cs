@@ -77,7 +77,6 @@ namespace HarvestValley.GameObjects
                     {
                         treeHit = false;
                     }
-
                 }
             }
 

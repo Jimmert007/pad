@@ -22,7 +22,7 @@ namespace HarvestValley
             scale = _scale;
             PerPixelCollisionDetection = false;
             playerReach = new SpriteGameObject("spr_player_reach");
-            playerReach.Position = new Vector2(position.X + Width * .5f - playerReach.Sprite.Width * .5f, position.Y + Height * .5f - playerReach.Sprite.Height * .5f);
+            playerReach.Position = GameEnvironment.Screen.ToVector2() * .5f - new Vector2(playerReach.Width * .5f, playerReach.Height * .5f);
         }
 
         override public void Reset()
@@ -42,37 +42,11 @@ namespace HarvestValley
             return false;
         }
 
-        /*        public override void HandleInput(InputHelper inputHelper)
-                {
-                    SpriteGameObject MouseGO = new SpriteGameObject();
-                    MouseGO.Position = Mouse.GetState().Position;
-                    if(CollidesWith(new Mouse.GetState().Position)
-                    Debug.WriteLine()
-                    base.HandleInput(inputHelper);
-                }*/
-
-        override public void Update(GameTime gameTime)
+        /*public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-
-            //Continuesly set movement to 0
-            velocity.X = 0;
-            velocity.Y = 0;
-
-
-            //Movement inputs
-            /* if (Keyboard.GetState().IsKeyDown(Keys.A)) { velocity.X = -5.0f; }
-             else if (Keyboard.GetState().IsKeyDown(Keys.D)) { velocity.X = 5.0f; }
-             if (Keyboard.GetState().IsKeyDown(Keys.W)) { velocity.Y = -5.0f; }
-             else if (Keyboard.GetState().IsKeyDown(Keys.S)) { velocity.Y = 5.0f; }
-             if (Keyboard.GetState().IsKeyDown(Keys.LeftShift)) { velocity *= 2; }*/
-
-            //Control movement
-            position += velocity;
-
-            lastPosition = position;
-
-            lastPosition -= velocity;
-        }
+            base.Draw(gameTime, spriteBatch);
+            spriteBatch.Draw(playerReach.Sprite.Sprite, new Rectangle((int)playerReach.Position.X, (int)playerReach.Position.Y, playerReach.Width, playerReach.Height), new Color(255,0,0,.5f));
+        }*/
     }
 }
 

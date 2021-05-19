@@ -10,12 +10,14 @@ namespace HarvestValley.GameObjects
     {
         public int hitTimer, hitTimerReset = 60, health = 6, _sprite = 0;
         public bool stoneHit;
-        SpriteGameObject stone1, stoneMine;
+        SpriteGameObject stoneHitbox, stone1, stoneMine;
         public Stone(Vector2 _position, float _scale) : base()
         {
             position = _position;
-            stone1 = new SpriteGameObject("Stone", 0, "0");
-            stoneMine = new SpriteGameObject("Stone", 0, "1");
+            stoneHitbox = new SpriteGameObject("ObjectBackground", 0, "0");
+            stone1 = new SpriteGameObject("Stone", 0, "1");
+            stoneMine = new SpriteGameObject("Stone", 0, "2");
+            Add(stoneHitbox);
             Add(stone1);
             Add(stoneMine);
 
@@ -27,8 +29,8 @@ namespace HarvestValley.GameObjects
                 (children[i] as SpriteGameObject).PerPixelCollisionDetection = false;
                 (children[i] as SpriteGameObject).Visible = false;
             }
-
-            _sprite = 0;
+            _sprite = 1;
+            stoneHitbox.scale = 1;
         }
 
         public override void Update(GameTime gameTime)
@@ -45,7 +47,7 @@ namespace HarvestValley.GameObjects
                 }
                 if (stoneHit)
                 {
-                    _sprite = 1;
+                    _sprite = 2;
                     hitTimer -= 1;
                     if (hitTimer <= 0)
                     {
@@ -54,9 +56,10 @@ namespace HarvestValley.GameObjects
                 }
                 if (!stoneHit)
                 {
-                    _sprite = 0;
+                    _sprite = 1;
                 }
             }
+            stoneHitbox.Visible = true;
         }
 
         public bool CollidesWith(SpriteGameObject obj)
