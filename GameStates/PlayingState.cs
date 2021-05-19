@@ -8,6 +8,7 @@ using HarvestValley.GameObjects;
 using HarvestValley.GameObjects.Tools;
 using HarvestValley.GameObjects.HarvestValley.GameObjects;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 namespace HarvestValley.GameStates
 {
@@ -32,6 +33,11 @@ namespace HarvestValley.GameStates
         Wallet wallet;
         GameObjectList UI;
         Vector2 prevPos;
+        Target target;
+
+        string[] soundEffectStrings = { "Alarm", "Alarm", "Alarm", "Alarm" };
+        SoundEffect[] SFXs;
+        SoundEffectInstance[] SEIs;
 
         public PlayingState()
         {
@@ -84,6 +90,8 @@ namespace HarvestValley.GameStates
 
             PlaceStonesAndTrees();
 
+            Add(target = new Target(itemList));
+
             //Initialize UI Elements
             Add(uIList = new UIList());
             Add(exec = new Executer());
@@ -91,6 +99,14 @@ namespace HarvestValley.GameStates
             wallet = new Wallet();
             Add(wallet);
 
+            SFXs = new SoundEffect[soundEffectStrings.Length];
+            SEIs = new SoundEffectInstance[SFXs.Length];
+
+            for (int i = 0; i < SFXs.Length; i++)
+            {
+                SFXs[i] = GameEnvironment.AssetManager.Content.Load<SoundEffect>(soundEffectStrings[i]);
+                SEIs[i] = SFXs[i].CreateInstance();
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -115,6 +131,27 @@ namespace HarvestValley.GameStates
             CheckPlantPickup(inputHelper);
 
             CheckHotbarSelection(inputHelper);
+
+            if (inputHelper.IsKeyDown(Keys.Q))
+            {
+                GameEnvironment.AssetManager.PlaySound(SEIs[0]);
+            }
+            if (inputHelper.IsKeyDown(Keys.R))
+            {
+                GameEnvironment.AssetManager.PlaySound(SEIs[0]);
+            }
+            if (inputHelper.IsKeyDown(Keys.E))
+            {
+                GameEnvironment.AssetManager.StopSound(SEIs[0]);
+            }
+            if (inputHelper.IsKeyDown(Keys.O))
+            {
+                GameEnvironment.AssetManager.PlaySound(SEIs[3]);
+            }
+            if (inputHelper.IsKeyDown(Keys.P))
+            {
+                GameEnvironment.AssetManager.StopSound(SEIs[3]);
+            }
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)

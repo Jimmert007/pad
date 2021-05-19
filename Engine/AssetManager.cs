@@ -16,7 +16,7 @@ public class AssetManager
     public Texture2D GetSprite(string assetName)
     {
         if (assetName == "")
-        { 
+        {
             return null;
         }
         return contentManager.Load<Texture2D>(assetName);
@@ -26,6 +26,16 @@ public class AssetManager
     {
         SoundEffect snd = contentManager.Load<SoundEffect>(assetName);
         snd.Play();
+    }
+
+    public void PlaySound(SoundEffectInstance SEI)
+    {
+        SEI.Play();
+    }
+
+    public void StopSound(SoundEffectInstance SEI)
+    {
+        SEI.Stop();
     }
 
     public void PlayMusic(string assetName, bool repeat = true)

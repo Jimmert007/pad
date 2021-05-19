@@ -25,6 +25,12 @@
 /processorParam:TextureFormat=Color
 /build:1px.png
 
+#begin Alarm.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Alarm.ogg
+
 #begin cancel.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -495,6 +501,18 @@
 /processorParam:TextureFormat=Color
 /build:spr_soil.png
 
+#begin spr_target_bg.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:spr_target_bg.png
+
 #begin spr_titlescreen.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -626,6 +644,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:spr_wood.png
+
+#begin spr_yes_button.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:spr_yes_button.png
 
 #begin Sprinkler.png
 /importer:TextureImporter
