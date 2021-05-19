@@ -8,7 +8,7 @@ using HarvestValley.GameObjects;
 using HarvestValley.GameObjects.Tools;
 using HarvestValley.GameObjects.HarvestValley.GameObjects;
 using Microsoft.Xna.Framework.Graphics;
-
+using Microsoft.Xna.Framework.Audio;
 
 namespace HarvestValley.GameStates
 {
@@ -34,14 +34,21 @@ namespace HarvestValley.GameStates
         GameObjectList UI;
         Vector2 prevPos;
 
+        string[] soundEffectStrings = { "FootstepsOnGrass", "AxeSwing", "PickaxeSwing", "TreeFalling" , "WaterSplash" , "PersonYawns", "RoosterCrowing" , "MetalRattling" };
+        SoundEffect[] SFXs;
+        SoundEffectInstance[] SEIs;
+
         public PlayingState()
         {
-
-            // werkt niet geeft fout melding met song
-            // GameEnvironment.AssetManager.PlaySound("Alarm");
-            
-            //kan er maar een tegelijke tijd spelen
             //GameEnvironment.AssetManager.PlayMusic("Intro", true);
+            SFXs = new SoundEffect[soundEffectStrings.Length];
+            SEIs = new SoundEffectInstance[SFXs.Length];
+
+            for (int i = 0; i < SFXs.Length; i++)
+            {
+                SFXs[i] = GameEnvironment.AssetManager.Content.Load<SoundEffect>("Sound/" + soundEffectStrings[i]);
+                SEIs[i] = SFXs[i].CreateInstance();
+            }
 
 
             SpriteSheet mapSpriteSheet = new SpriteSheet("tiles/spr_grass", 0);
@@ -175,10 +182,16 @@ namespace HarvestValley.GameStates
         /// </summary>
         void SleepActions(GameTime gameTime)
         {
+           
             if (sleeping.fadeAmount >= 1)
             {
+                //Play RoosterCrowing
+                GameEnvironment.AssetManager.PlaySound(SEIs[6]);
+                //Play PersonYawns
+                GameEnvironment.AssetManager.PlaySound(SEIs[5]);
                 if (sleeping.fadeOut)
                 {
+                    
                     for (int i = 0; i < cells.Children.Count; i++)
                     {
                         if ((cells.Children[i] as Cell).cellHasSprinkler) //planten naast een sprinkler
@@ -318,14 +331,24 @@ namespace HarvestValley.GameStates
 
         void CameraSystem(InputHelper inputHelper)
         {
+
+
             Vector2 moveVector = Vector2.Zero;
+
+            if (!inputHelper.IsKeyDown(Keys.A) && !inputHelper.IsKeyDown(Keys.S) && !inputHelper.IsKeyDown(Keys.D) && !inputHelper.IsKeyDown(Keys.W))
+            {
+                GameEnvironment.AssetManager.StopSound(SEIs[0]);
+            }
+
             if (inputHelper.IsKeyDown(Keys.A))
             {
                 moveVector = new Vector2(player.speed, moveVector.Y);
+                GameEnvironment.AssetManager.PlaySound(SEIs[0]);
             }
             if (inputHelper.IsKeyDown(Keys.D))
             {
                 moveVector = new Vector2(-player.speed, moveVector.Y);
+                GameEnvironment.AssetManager.PlaySound(SEIs[0]);
             }
             if (inputHelper.IsKeyDown(Keys.D) && inputHelper.IsKeyDown(Keys.A))
             {
@@ -334,10 +357,12 @@ namespace HarvestValley.GameStates
             if (inputHelper.IsKeyDown(Keys.S))
             {
                 moveVector = new Vector2(moveVector.X, -player.speed);
+                GameEnvironment.AssetManager.PlaySound(SEIs[0]);
             }
             if (inputHelper.IsKeyDown(Keys.W))
             {
                 moveVector = new Vector2(moveVector.X, player.speed);
+                GameEnvironment.AssetManager.PlaySound(SEIs[0]);
             }
             if (inputHelper.IsKeyDown(Keys.W) && inputHelper.IsKeyDown(Keys.S))
             {
@@ -398,7 +423,7 @@ namespace HarvestValley.GameStates
                     {
                         if (itemList.itemSelected == "HOE" && !c.cellIsTilled && !c.cellHasTree && !c.cellHasSprinkler && !c.cellHasStone)
                         {
-                            GameEnvironment.AssetManager.PlaySound("dog-barking");
+                           
                             c.ChangeSpriteTo(1);
                             c.cellIsTilled = true;
                             energyBar.percentageLost += energyBar.oneUse;
@@ -448,6 +473,8 @@ namespace HarvestValley.GameStates
                             {
                                 if (itemList.itemSelected == "SPRINKLER" && !c.cellHasPlant && !c.cellHasTree && !c.cellHasSprinkler && item.itemAmount > 0 && !c.cellHasStone)
                                 {
+                                    //Play WaterSplash
+                                    GameEnvironment.AssetManager.PlaySound(SEIs[7]);
                                     item.itemAmount -= 1;
                                     c.cellHasSprinkler = true;
                                     energyBar.percentageLost += energyBar.oneUse;
@@ -466,12 +493,15 @@ namespace HarvestValley.GameStates
             {
                 if (c.CellCollidesWith(mouseGO) && c.CellCollidesWith(player.playerReach))
                 {
-                    if (inputHelper.MouseLeftButtonDown())
+                    if (inputHelper.MouseLeftButtonPressed())
                     {
                         for (int i = plants.Children.Count - 1; i >= 0; i--)
                         {
                             if (itemList.itemSelected == "WATERINGCAN" && c.cellIsTilled)
                             {
+                                //Play WaterSplash
+                                GameEnvironment.AssetManager.PlaySound(SEIs[4]);
+
                                 c.cellHasWater = true;
                                 (plants.Children[i] as Plant).soilHasWater = true;
                                 c.ChangeSpriteTo(2);
@@ -522,7 +552,9 @@ namespace HarvestValley.GameStates
                     {
                         if (itemList.itemSelected == "PICKAXE" && !(stones.Children[i] as Stone).stoneHit && (stones.Children[i] as Stone)._sprite == 0)
                         {
-                            GameEnvironment.AssetManager.PlaySound("PickaxeSwing");
+                            //play PickaxeSwing
+                            GameEnvironment.AssetManager.PlaySound(SEIs[2]);
+
                             (stones.Children[i] as Stone).stoneHit = true;
                             (stones.Children[i] as Stone).hitTimer = (stones.Children[i] as Stone).hitTimerReset;
                             (stones.Children[i] as Stone).health -= 1;
@@ -561,7 +593,7 @@ namespace HarvestValley.GameStates
                     {
                         if (itemList.itemSelected == "AXE" && !(trees.Children[i] as Tree).treeHit && (trees.Children[i] as Tree).growthStage == 3)
                         {
-                            GameEnvironment.AssetManager.PlaySound("AxeSwing");
+                            GameEnvironment.AssetManager.PlaySound(SEIs[1]);
                             (trees.Children[i] as Tree).treeHit = true;
                             (trees.Children[i] as Tree).hitTimer = (trees.Children[i] as Tree).hitTimerReset;
                             (trees.Children[i] as Tree).health -= 1;
@@ -577,6 +609,10 @@ namespace HarvestValley.GameStates
                                     }
                                 }
                                 trees.Remove(trees.Children[i]);
+
+                                //play TreeFalling
+                                GameEnvironment.AssetManager.PlaySound(SEIs[3]);
+
                                 foreach (Item item in itemList.Children)
                                 {
                                     if (item is Wood)
