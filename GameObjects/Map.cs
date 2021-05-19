@@ -12,12 +12,12 @@ namespace HarvestValley
 {
     class Map : GameObject
     {
-        int mapWidth = GameEnvironment.Screen.X * 4, mapHeight = GameEnvironment.Screen.Y * 4;
+        int mapWidth = GameEnvironment.Screen.X * 3, mapHeight = GameEnvironment.Screen.Y * 3;
         public int rows, cols;
         public Map() : base()
         {
-            cols = mapWidth / 128;
-            rows = mapHeight / 128;
+            cols = mapWidth / 64;
+            rows = mapHeight / 64;
 
             Debug.WriteLine(cols.ToString() + " x " + rows.ToString() + " totaal " + rows * cols);
         }

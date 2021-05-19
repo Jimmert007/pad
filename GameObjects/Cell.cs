@@ -11,7 +11,7 @@ namespace HarvestValley
     {
         public int cellID, randomGrass, spriteID;
         public SpriteGameObject tileSoil, tileSoilWater, grass;
-        public bool cellIsTilled, cellHasPlant, cellHasTree, cellHasWater, cellHasSprinkler, nextRandom, nextToSprinkler, cellHasStone;
+        public bool cellIsTilled, cellHasPlant, cellHasTree, cellHasWater, cellHasSprinkler, nextRandom, nextToSprinkler, cellHasStone, cellHasTent;
 
         public Cell(Vector2 _position, float _scale, int _id) : base()
         {
@@ -33,7 +33,7 @@ namespace HarvestValley
                 (children[i] as SpriteGameObject).PerPixelCollisionDetection = false;
                 (children[i] as SpriteGameObject).Visible = false;
             }
-
+            children[0].Visible = true;
             spriteID = 0;
         }
 

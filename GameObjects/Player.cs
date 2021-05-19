@@ -10,18 +10,15 @@ namespace HarvestValley
 {
     class Player : SpriteGameObject
     {
-        public bool collision;
-        public bool openInventory;
-        public bool openMap;
-        SpriteSheet left, right, up, down;
-        public Cell current;
+        public bool sleeping, sleepingPosition;
+        public Vector2 newSleepingPosition = new Vector2(0, 10);
         public Vector2 lastPosition;
         public int speed = 3;
         public SpriteGameObject playerReach;
 
         public Player(string _assetName, Vector2 _position, float _scale) : base(_assetName)
         {
-            position = _position;
+            position = _position - new Vector2(32, 32);
             scale = _scale;
             PerPixelCollisionDetection = false;
             playerReach = new SpriteGameObject("spr_player_reach");
