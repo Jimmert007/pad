@@ -56,39 +56,55 @@ namespace HarvestValley.GameObjects.Shop
 
             if (shopActive)
             {
-                if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[6].collidesWithMouse(inputHelper.MousePosition)) { buyActive = true; shopActive = false; }
-                if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[7].collidesWithMouse(inputHelper.MousePosition)) { sellActive = true; shopActive = false; }
-                if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[1].collidesWithMouse(inputHelper.MousePosition)) { shopActive = false; }
+                if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[6].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[6].Visible) { buyActive = true; shopActive = false; }
+                if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[7].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[7].Visible) { sellActive = true; shopActive = false; }
+                if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[1].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[1].Visible) { shopActive = false; }
             }
             if (buyActive)
             {
-                foreach (Item x in shopItems.Children) { if (inputHelper.MouseLeftButtonPressed() && x.CollidesWith(mouseGO)) { x.selectedItem = true; buyAmount = true; } }
-                if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[1].collidesWithMouse(inputHelper.MousePosition)) { buyActive = false; shopActive = true; }
+                foreach (Item x in shopItems.Children) { if (inputHelper.MouseLeftButtonPressed() && x.CollidesWith(mouseGO) && x.Visible) { x.selectedItem = true; buyAmount = true; buyActive = false; } }
+                if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[1].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[1].Visible) { buyActive = false; shopActive = true; }
             }
             if (sellActive)
             {
                 //prop een selectedItem bool in iedere item, foreach x.sleecteditem = true;
-                foreach (Item x in shopItems.Children) { if (inputHelper.MouseLeftButtonPressed() && x.CollidesWith(mouseGO)) { x.selectedItem = true; sellAmount = true; } }
-                if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[1].collidesWithMouse(inputHelper.MousePosition)) { shopActive = true; sellActive = false; }
+                foreach (Item x in shopItems.Children) { if (inputHelper.MouseLeftButtonPressed() && x.CollidesWith(mouseGO) && x.Visible) { x.selectedItem = true; sellAmount = true; } }
+                if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[1].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[1].Visible) { shopActive = true; sellActive = false; }
             }
             if (buyAmount)
             {
-                foreach (Item x in shopItems.Children)
+                if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[6].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[6].Visible)
                 {
-                    if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[6].collidesWithMouse(inputHelper.MousePosition) && x.selectedItem) { x.itemAmount += shopItemAmount; }
-                    if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[1].collidesWithMouse(inputHelper.MousePosition)) { buyAmount = false; buyActive = true; }
+                    foreach (Item x in shopItems.Children)
+                    {
+                        if (x.selectedItem)
+                        {
+                            //Add item amount on the hotbar
+                            x.itemAmount += shopItemAmount;
+                            x.selectedItem = false;
+                        }
+                    }
+                }
+                if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[1].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[1].Visible)
+                {
+                    buyAmount = false; buyActive = true;
+                    foreach (Item x in shopItems.Children)
+                    {
+                        x.selectedItem = false;
+                    }
                 }
             }
+
             if (sellAmount)
             {
                 foreach (Item x in shopItems.Children)
                 {
-                    if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[6].collidesWithMouse(inputHelper.MousePosition) && x.selectedItem) { x.itemAmount -= shopItemAmount; }
-                    if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[1].collidesWithMouse(inputHelper.MousePosition)) { sellAmount = false; sellActive = true; }
+                    if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[6].collidesWithMouse(inputHelper.MousePosition) && x.selectedItem && x.Visible) { x.itemAmount -= shopItemAmount; x.selectedItem = false; }
+                    if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[1].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[6].Visible) { sellAmount = false; sellActive = true; x.selectedItem = false; }
                 }
                 for (int i = 0; i < shopButtons.shopButtons.Length; i++)
                 {
-                    if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[i].collidesWithMouse(inputHelper.MousePosition))
+                    if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[i].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[i].Visible)
                     {
                         shopItemAmount += shopItemAmmount[i];
                     }
@@ -106,7 +122,7 @@ namespace HarvestValley.GameObjects.Shop
             cancelLine.Text = shopDialogueLines[8];
 
             //Set the position of Shop elements
-            uIBox.Position = new Vector2(GameEnvironment.Screen.X * .5f- uIBox.Sprite.Width *.5f, GameEnvironment.Screen.Y * .35f);
+            uIBox.Position = new Vector2(GameEnvironment.Screen.X * .5f - uIBox.Sprite.Width * .5f, GameEnvironment.Screen.Y * .35f);
             welcomeLine.Position = new Vector2(GameEnvironment.Screen.X * .5f - welcomeLine.Size.X * .5f, GameEnvironment.Screen.Y * .1f);
             questionLine.Position = new Vector2(GameEnvironment.Screen.X * .5f - questionLine.Size.X * .5f, GameEnvironment.Screen.Y * .2f);
 
@@ -156,7 +172,7 @@ namespace HarvestValley.GameObjects.Shop
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            Debug.WriteLine(buyActive);
+            Debug.WriteLine(shopActive);
 
             if (shopActive)
             {   //Set the welcome page elements of the shop on true
@@ -170,7 +186,7 @@ namespace HarvestValley.GameObjects.Shop
                 shopButtons.shopButtons[7].Visible = true;
                 shopButtons.shopButtons[1].Visible = true;
             }
-            if (buyActive)
+            if (!shopActive)
             {
                 //Deactivate the welcome page elements
                 welcomeLine.Visible = false;
@@ -179,6 +195,10 @@ namespace HarvestValley.GameObjects.Shop
                 sellLine.Visible = false;
                 shopButtons.shopButtons[7].Visible = false;
                 shopButtons.shopButtons[6].Visible = false;
+            }
+            if (buyActive)
+            {
+
 
                 //Turn on the buy page elements of the shop true
                 questionLine.Text = shopDialogueLines[2];
@@ -207,18 +227,20 @@ namespace HarvestValley.GameObjects.Shop
             }
             if (buyAmount)
             {
-                buyActive = false;                                 //Turn of the buying page
-                questionLine.Text = shopDialogueLines[4];        //Change the question line
-                
+                welcomeLine.Visible = false;
+                buyLine.Visible = false;
+                cancelLine.Visible = false;
+                sellLine.Visible = false;
+                questionLine.Text = shopDialogueLines[4];        //Change the question line 
                 foreach (Item x in shopItems.Children)
-                {   
+                {
                     if (!x.selectedItem)        //Turn the non-selected items invisible
                     {
                         x.Visible = false;
                     }
                     if (x.selectedItem)         //Change the position of the selected item
                     {
-                        x.Position = new Vector2(GameEnvironment.Screen.X / 2 - x.Sprite.Width/2, GameEnvironment.Screen.Y / 3);
+                        x.Position = new Vector2(GameEnvironment.Screen.X / 2 - x.Sprite.Width / 2, GameEnvironment.Screen.Y / 3);
                     }
                 }
 
@@ -227,10 +249,10 @@ namespace HarvestValley.GameObjects.Shop
                 {
                     shopButtons.shopButtons[i].Visible = true;
                 }
-                
+
                 //Set the positions of the item amount, buy and sell buttons
-                shopButtons.shopButtons[6].Position = new Vector2(GameEnvironment.Screen.X * 2 / 3 - shopButtons.shopButtons[6].Sprite.Width/2, GameEnvironment.Screen.Y*2/3 );
-                shopButtons.shopButtons[7].Position = new Vector2(GameEnvironment.Screen.X / 3- shopButtons.shopButtons[7].Sprite.Width/2, GameEnvironment.Screen.Y* 2/ 3);
+                shopButtons.shopButtons[6].Position = new Vector2(GameEnvironment.Screen.X * 2 / 3 - shopButtons.shopButtons[6].Sprite.Width / 2, GameEnvironment.Screen.Y * 2 / 3);
+                shopButtons.shopButtons[7].Position = new Vector2(GameEnvironment.Screen.X / 3 - shopButtons.shopButtons[7].Sprite.Width / 2, GameEnvironment.Screen.Y * 2 / 3);
             }
             //if (sellAmount) { questionLine.Text = shopDialogueLines[5]; }
         }
