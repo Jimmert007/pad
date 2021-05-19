@@ -97,16 +97,24 @@ namespace HarvestValley.GameObjects.Shop
 
             if (sellAmount)
             {
-                foreach (Item x in shopItems.Children)
+                if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[6].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[6].Visible)
                 {
-                    if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[6].collidesWithMouse(inputHelper.MousePosition) && x.selectedItem && x.Visible) { x.itemAmount -= shopItemAmount; x.selectedItem = false; }
-                    if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[1].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[6].Visible) { sellAmount = false; sellActive = true; x.selectedItem = false; }
-                }
-                for (int i = 0; i < shopButtons.shopButtons.Length; i++)
-                {
-                    if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[i].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[i].Visible)
+                    foreach (Item x in shopItems.Children)
                     {
-                        shopItemAmount += shopItemAmmount[i];
+                        if (x.selectedItem)
+                        {
+                            //Add item amount on the hotbar
+                            x.itemAmount -= shopItemAmount;
+                            x.selectedItem = false;
+                        }
+                    }
+                }
+                if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[1].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[1].Visible)
+                {
+                    sellAmount = false; buyActive = true;
+                    foreach (Item x in shopItems.Children)
+                    {
+                        x.selectedItem = false;
                     }
                 }
             }
