@@ -34,7 +34,7 @@ namespace HarvestValley.GameStates
         GameObjectList UI;
         Vector2 prevPos;
 
-        string[] soundEffectStrings = { "FootstepsOnGrass", "AxeSwing", "PickaxeSwing", "TreeFalling" , "WaterSplash" , "PersonYawns", "RoosterCrowing" , "MetalRattling" };
+        string[] soundEffectStrings = { "FootstepsOnGrass", "AxeSwing", "PickaxeSwing", "TreeFalling" , "WaterSplash" , "PersonYawns", "RoosterCrowing" , "MetalRattling", "HittingGround", "Shaking1"  };
         SoundEffect[] SFXs;
         SoundEffectInstance[] SEIs;
 
@@ -186,7 +186,7 @@ namespace HarvestValley.GameStates
             if (sleeping.fadeAmount >= 1)
             {
                 //Play RoosterCrowing
-                GameEnvironment.AssetManager.PlaySound(SEIs[6]);
+                //GameEnvironment.AssetManager.PlaySound(SEIs[6]);
                 //Play PersonYawns
                 GameEnvironment.AssetManager.PlaySound(SEIs[5]);
                 if (sleeping.fadeOut)
@@ -423,7 +423,9 @@ namespace HarvestValley.GameStates
                     {
                         if (itemList.itemSelected == "HOE" && !c.cellIsTilled && !c.cellHasTree && !c.cellHasSprinkler && !c.cellHasStone)
                         {
-                           
+                            //Play HittingGround
+                            GameEnvironment.AssetManager.PlaySound(SEIs[8]);
+
                             c.ChangeSpriteTo(1);
                             c.cellIsTilled = true;
                             energyBar.percentageLost += energyBar.oneUse;
@@ -447,6 +449,9 @@ namespace HarvestValley.GameStates
                             {
                                 if (itemList.itemSelected == "SEED" && c.cellIsTilled && !c.cellHasPlant && item.itemAmount > 0)
                                 {
+
+                                    //Play Shakking1
+                                    GameEnvironment.AssetManager.PlaySound(SEIs[9]);
                                     item.itemAmount -= 1;
                                     c.cellHasPlant = true;
                                     energyBar.percentageLost += energyBar.oneUse;
@@ -473,12 +478,13 @@ namespace HarvestValley.GameStates
                             {
                                 if (itemList.itemSelected == "SPRINKLER" && !c.cellHasPlant && !c.cellHasTree && !c.cellHasSprinkler && item.itemAmount > 0 && !c.cellHasStone)
                                 {
-                                    //Play WaterSplash
-                                    GameEnvironment.AssetManager.PlaySound(SEIs[7]);
+                                   
                                     item.itemAmount -= 1;
                                     c.cellHasSprinkler = true;
                                     energyBar.percentageLost += energyBar.oneUse;
                                     sprinklers.Add(new SprinklerObject(c.Position, 1));
+                                    //Play WaterSplash
+                                    GameEnvironment.AssetManager.PlaySound(SEIs[7]);
                                 }
                             }
                         }

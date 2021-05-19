@@ -231,6 +231,12 @@
 /processorParam:Quality=Best
 /build:Sound/HarddriveClicking.ogg
 
+#begin Sound/HittingGround.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/HittingGround.ogg
+
 #begin Sound/Intro.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor
@@ -284,6 +290,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sound/RoosterCrowing.ogg
+
+#begin Sound/Shaking1.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/Shaking1.ogg
 
 #begin Sound/SplittingWood.ogg
 /importer:OggImporter
