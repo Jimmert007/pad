@@ -91,8 +91,8 @@ namespace HarvestValley.GameStates
 
             jimFont = GameEnvironment.AssetManager.Content.Load<SpriteFont>("JimFont");
 
-            SpawnTent();
-            PlaceStonesAndTrees();
+
+
 
             //Initialize UI Elements
             Add(uIList = new UIList());
@@ -103,6 +103,9 @@ namespace HarvestValley.GameStates
 
             tutorialStepList = new TutorialStepList();
             Add(tutorialStepList);
+
+            SpawnTent();
+            PlaceStonesAndTrees();
         }
 
         public override void Update(GameTime gameTime)
@@ -170,12 +173,12 @@ namespace HarvestValley.GameStates
         {
             foreach (Cell c in cells.Children)
             {
-                if (c.Position == new Vector2(128, 128)
-                    || c.Position == new Vector2(192, 128)
-                    || c.Position == new Vector2(128, 192)
-                    || c.Position == new Vector2(192, 192))
+                foreach (Tent t in tent.Children)
                 {
-                    c.cellHasTent = true;
+                    if (c.CellCollidesWith(t.Children[0] as SpriteGameObject))
+                    {
+                        c.cellHasTent = true;
+                    }
                 }
             }
         }

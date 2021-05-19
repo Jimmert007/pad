@@ -33,7 +33,7 @@ namespace HarvestValley
                 (children[i] as SpriteGameObject).PerPixelCollisionDetection = false;
                 (children[i] as SpriteGameObject).Visible = false;
             }
-
+            children[0].Visible = true;
             spriteID = 0;
         }
 
