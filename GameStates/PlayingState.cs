@@ -90,14 +90,14 @@ namespace HarvestValley.GameStates
 
             PlaceStonesAndTrees();
 
-            Add(target = new Target(itemList));
-
             //Initialize UI Elements
             Add(uIList = new UIList());
             Add(exec = new Executer());
 
             wallet = new Wallet();
             Add(wallet);
+
+            Add(target = new Target(itemList, wallet));
 
             SFXs = new SoundEffect[soundEffectStrings.Length];
             SEIs = new SoundEffectInstance[SFXs.Length];
@@ -112,7 +112,8 @@ namespace HarvestValley.GameStates
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            SleepActions(gameTime); //works
+            SleepActions(gameTime); 
+            
         }
 
         public override void HandleInput(InputHelper inputHelper)
@@ -169,6 +170,14 @@ namespace HarvestValley.GameStates
                         spriteBatch.DrawString(jimFont, item.itemAmount.ToString(), new Vector2((int)hotbar.Position.X + 5 + hotbar.squareSize * i, (int)hotbar.Position.Y + 5), Color.Black);
                     }
                 }
+            }
+        }
+
+        void ConvertFromHotbarToMoney(Item item, int amount)
+        {
+            if(item != null && item.isStackable)
+            {
+                target.AddToTarget(amount);
             }
         }
 
@@ -567,7 +576,9 @@ namespace HarvestValley.GameStates
                                 {
                                     if (item is Rock)
                                     {
-                                        item.itemAmount += GameEnvironment.Random.Next(2, 5);
+                                        int randomAddition = GameEnvironment.Random.Next(2, 5);
+                                        item.itemAmount += randomAddition;
+                                        ConvertFromHotbarToMoney(item, randomAddition);
                                     }
                                 }
                             }
@@ -606,11 +617,15 @@ namespace HarvestValley.GameStates
                                 {
                                     if (item is Wood)
                                     {
-                                        item.itemAmount += GameEnvironment.Random.Next(3, 7);
+                                        int randomAddition = GameEnvironment.Random.Next(3, 7);
+                                        item.itemAmount +=randomAddition;
+                                        ConvertFromHotbarToMoney(item, randomAddition);
                                     }
                                     if (item is TreeSeed)
                                     {
-                                        item.itemAmount += GameEnvironment.Random.Next(2);
+                                        int randomAddition = GameEnvironment.Random.Next(2);
+                                        item.itemAmount += randomAddition;
+                                        ConvertFromHotbarToMoney(item, randomAddition);
                                     }
                                 }
                             }

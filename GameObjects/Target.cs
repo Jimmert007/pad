@@ -1,4 +1,5 @@
-﻿using HarvestValley.GameObjects.Tools;
+﻿using HarvestValley.GameObjects.HarvestValley.GameObjects;
+using HarvestValley.GameObjects.Tools;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,12 @@ namespace HarvestValley.GameObjects
         TextGameObject welcomeText, targetText, congratsText;
         TargetButton button;
         int targetAmount, min = 100, max = 200, currentAmount;
-        Item targetItem;
+        public Item targetItem;
         string targetName;
         GameObjectList stackableItemsList;
         int rewardAmount;
-        public Target(ItemList _itemList)
+        Wallet wallet;
+        public Target(ItemList _itemList, Wallet _wallet)
         {
             Add(panel_bg = new SpriteGameObject("spr_target_bg"));
             panel_bg.Origin = panel_bg.Sprite.Center;
@@ -34,8 +36,7 @@ namespace HarvestValley.GameObjects
                 }
             }
 
-            //targetItem = (stackableItemsList.Children[GameEnvironment.Random.Next(stackableItemsList.Children.Count)] as Item);
-            targetItem = (stackableItemsList.Children[0] as Item);
+            targetItem = (stackableItemsList.Children[GameEnvironment.Random.Next(stackableItemsList.Children.Count)] as Item);
             targetName = targetItem.Sprite.Sprite.Name;
 
             string[] removeFromString = { "spr", "stage", "1" };
@@ -77,6 +78,7 @@ namespace HarvestValley.GameObjects
                 "Veel plezier nog!";
             congratsText.Position = panel_bg.Position - congratsText.Size * .5f;
             congratsText.Visible = false;
+            wallet = _wallet;
         }
 
         public override void Update(GameTime gameTime)
@@ -88,7 +90,7 @@ namespace HarvestValley.GameObjects
                 panel_bg.Visible = false;
                 welcomeText.Visible = false;
                 button.Visible = false;
-                congratsText.Visible = true;
+                congratsText.Visible = false;
             }
             if (currentAmount >= TargetAmount)
             {
@@ -102,6 +104,7 @@ namespace HarvestValley.GameObjects
             button.Visible = true;
             congratsText.Visible = true;
             //TO DO add the reward to a value? gold? idk?
+            wallet.AddMoney(rewardAmount);
         }
 
         public void AddToTarget(int addition)

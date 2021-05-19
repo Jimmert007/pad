@@ -76,13 +76,9 @@ namespace HarvestValley.GameObjects
                 text.Position = new Vector2(bg.Position.X + bg.Sprite.Width * .3f / 5 * .5f - text.Size.X / text.Text.Length * .5f, bg.Position.Y + bg.Sprite.Height * .3f * .5f - text.Size.Y * .5f);
             }
 
-            public override void HandleInput(InputHelper inputHelper)
+            public void AddMoney(int amout)
             {
-                base.HandleInput(inputHelper);
-                if (inputHelper.KeyPressed(Keys.Z))
-                {
-                    newMoney = money + 10;
-                }
+                newMoney = money + amout;
             }
         }
     }
