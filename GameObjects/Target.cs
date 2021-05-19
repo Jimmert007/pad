@@ -10,7 +10,7 @@ namespace HarvestValley.GameObjects
     class Target : GameObjectList
     {
         SpriteGameObject panel_bg;
-        TextGameObject text;
+        TextGameObject welcomeText, targetText;
         TargetButton button;
         int targetAmount, min = 100, max = 200, currentAmount;
         Item targetItem;
@@ -21,8 +21,8 @@ namespace HarvestValley.GameObjects
             Add(panel_bg = new SpriteGameObject("spr_target_bg"));
             panel_bg.Origin = panel_bg.Sprite.Center;
             panel_bg.Position = GameEnvironment.Screen.ToVector2() * .5f;
-            Add(text = new TextGameObject("JimFont"));
-            text.Color = Color.Black;
+            Add(welcomeText = new TextGameObject("JimFont"));
+            welcomeText.Color = Color.Black;
             targetAmount = GameEnvironment.Random.Next(min, max);
             stackableItemsList = new GameObjectList();
             foreach (Item item in _itemList.Children)
@@ -33,42 +33,60 @@ namespace HarvestValley.GameObjects
                 }
             }
 
-            targetItem = (stackableItemsList.Children[GameEnvironment.Random.Next(stackableItemsList.Children.Count)] as Item);
+            //targetItem = (stackableItemsList.Children[GameEnvironment.Random.Next(stackableItemsList.Children.Count)] as Item);
+            targetItem = (stackableItemsList.Children[0] as Item);
             targetName = targetItem.Sprite.Sprite.Name;
-            Debug.WriteLine(targetName);
-            if (targetName.Contains("spr"))
+
+            string[] removeFromString = { "spr", "stage", "1" };
+            for (int i = 0; i < removeFromString.Length; i++)
             {
-                targetName = targetName.Replace("spr", "");
-            }
-            foreach (char c in targetName)
-            {
-                if (c.ToString() == "_")
+                if (targetName.Contains(removeFromString[i]))
                 {
-                    c.ToString().Replace("_", " ");
+                    targetName = targetName.Replace(removeFromString[i], "");
                 }
+            }
+
+            if (targetName.Contains("_"))
+            {
+                targetName = targetName.Replace("_", " ");
             }
 
             Debug.WriteLine("target " + targetName);
 
-            text.Text = "Welkom bij Harvest Valley!\n \n " +
-                "Het is de bedoeling om het land waar je op staat \n" +
-                "om te toveren naar een productieve boerderij. \n " +
+            welcomeText.Text =
+                "Welkom bij Harvest Valley!\n\n" +
+                "Het is de bedoeling om het land waar je op staat\n" +
+                "om te toveren naar een productieve boerderij.\n" +
                 "Je eerste doel is om " + targetAmount.ToString() + " " + targetName + " te verzamelen.\n" +
                 "Veel plezier!";
-            text.Position = panel_bg.Position - text.Size * .5f;
+            welcomeText.Position = panel_bg.Position - welcomeText.Size * .5f;
             Add(button = new TargetButton());
             button.Position = panel_bg.Position + new Vector2(panel_bg.Width * .5f - button.Sprite.Width, panel_bg.Height * .5f - button.Sprite.Height * 1.5f);
+            Add(targetText = new TextGameObject("JimFont"));
+            targetText.Color = Color.Black;
         }
 
-        public override void HandleInput(InputHelper inputHelper)
+        public override void Update(GameTime gameTime)
         {
-            base.HandleInput(inputHelper);
-            if (inputHelper.MouseLeftButtonDown() && button.Overlap())
+            base.Update(gameTime);
+            targetText.Text = "Doel " + currentAmount + " / " + targetAmount + " " + targetName;
+            if (button.OnClick)
             {
                 panel_bg.Visible = false;
+                welcomeText.Visible = false;
                 button.Visible = false;
-                text.Visible = false;
             }
+        }
+
+        public void AddToTarget(int addition)
+        {
+            TargetAmount += addition;
+        }
+
+        public int TargetAmount
+        {
+            set { targetAmount = value; }
+            get { return targetAmount; }
         }
     }
 }
