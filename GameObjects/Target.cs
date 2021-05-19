@@ -13,13 +13,15 @@ namespace HarvestValley.GameObjects
         SpriteGameObject panel_bg;
         TextGameObject welcomeText, targetText, congratsText;
         TargetButton button;
-        int targetAmount, min = 100, max = 200, currentAmount;
+        int targetAmount, currentAmount;
+        int[] minWoodSeedStone = { 100, 25, 75 };
         public Item targetItem;
         string targetName;
         GameObjectList stackableItemsList;
         int rewardAmount;
         Wallet wallet;
         Player player;
+        public bool collected;
         public Target(ItemList _itemList, Wallet _wallet, Player _player)
         {
             Add(panel_bg = new SpriteGameObject("UI/spr_target_bg"));
@@ -27,20 +29,24 @@ namespace HarvestValley.GameObjects
             panel_bg.Position = GameEnvironment.Screen.ToVector2() * .5f;
             Add(welcomeText = new TextGameObject("Fonts/JimFont"));
             welcomeText.Color = Color.Black;
-            targetAmount = GameEnvironment.Random.Next(min, max);
             stackableItemsList = new GameObjectList();
             foreach (Item item in _itemList.Children)
             {
-                if (item.isStackable && !(item is Sprinkler))
+                if (item.isStackable && !(item is Sprinkler) && !(item is Seed))//seed nu uit want kan je niet krijgen
                 {
                     stackableItemsList.Add(item);
                 }
             }
 
-            targetItem = (stackableItemsList.Children[GameEnvironment.Random.Next(stackableItemsList.Children.Count)] as Item);
+            int r = GameEnvironment.Random.Next(stackableItemsList.Children.Count);
+            Debug.WriteLine(r);
+
+            targetItem = (stackableItemsList.Children[r] as Item);
             targetName = targetItem.Sprite.Sprite.Name;
 
-            string[] removeFromString = { "spr", "stage", "1" };
+            targetAmount = GameEnvironment.Random.Next(minWoodSeedStone[r], minWoodSeedStone[r] * 2);
+
+            string[] removeFromString = { "spr", "stage", "1", "Items", "/", "_", "Environment" };
             for (int i = 0; i < removeFromString.Length; i++)
             {
                 if (targetName.Contains(removeFromString[i]))
@@ -49,12 +55,7 @@ namespace HarvestValley.GameObjects
                 }
             }
 
-            if (targetName.Contains("_"))
-            {
-                targetName = targetName.Replace("_", " ");
-            }
-
-            Debug.WriteLine("target " + targetName);
+            //Debug.WriteLine("target " + targetName);
 
             welcomeText.Text =
                 "Welkom bij Harvest Valley!\n\n" +
@@ -67,7 +68,7 @@ namespace HarvestValley.GameObjects
             button.Position = panel_bg.Position + new Vector2(panel_bg.Width * .5f - button.Sprite.Width, panel_bg.Height * .5f - button.Sprite.Height * 1.5f);
             Add(targetText = new TextGameObject("Fonts/JimFont"));
             targetText.Color = Color.Black;
-
+            targetText.Position = new Vector2(0, 50);
             rewardAmount = 500;
             Add(congratsText = new TextGameObject("Fonts/JimFont"));
             congratsText.Color = Color.Black;
@@ -75,7 +76,7 @@ namespace HarvestValley.GameObjects
                 "Gefeliciteerd!\n\n" +
                 "Je hebt het doel bereikt, \n" +
                 "Klik op de knop om verder te spelen en .\n" +
-                "je prijs (" + rewardAmount + ") te verzilveren.\n" +
+                "je prijs (" + rewardAmount + " coins) te verzilveren.\n" +
                 "Veel plezier nog!";
             congratsText.Position = panel_bg.Position - congratsText.Size * .5f;
             congratsText.Visible = false;
@@ -93,10 +94,16 @@ namespace HarvestValley.GameObjects
                 panel_bg.Visible = false;
                 welcomeText.Visible = false;
                 button.Visible = false;
-                congratsText.Visible = false;
                 player.sleeping = false;
+                if (currentAmount >= targetAmount)
+                {
+                    collected = true;
+                    congratsText.Visible = false;
+                    wallet.AddMoney(rewardAmount);
+                    targetText.Visible = false;
+                }
             }
-            if (currentAmount >= TargetAmount)
+            if (currentAmount >= targetAmount && !collected)
             {
                 MadeIt();
             }
@@ -104,22 +111,21 @@ namespace HarvestValley.GameObjects
 
         void MadeIt()
         {
+            player.sleeping = true;
             panel_bg.Visible = true;
             button.Visible = true;
             congratsText.Visible = true;
-            //TO DO add the reward to a value? gold? idk?
-            wallet.AddMoney(rewardAmount);
         }
 
         public void AddToTarget(int addition)
         {
-            TargetAmount += addition;
+            CurrentAmount += addition;
         }
 
-        public int TargetAmount
+        public int CurrentAmount
         {
-            set { targetAmount = value; }
-            get { return targetAmount; }
+            set { currentAmount = value; }
+            get { return currentAmount; }
         }
     }
 }

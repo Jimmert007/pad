@@ -182,7 +182,7 @@ namespace HarvestValley.GameStates
 
         void ConvertFromHotbarToMoney(Item item, int amount)
         {
-            if (item != null && item.isStackable)
+            if (item == target.targetItem && item.isStackable && !target.collected)
             {
                 target.AddToTarget(amount);
             }
