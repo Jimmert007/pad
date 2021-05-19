@@ -21,9 +21,9 @@ namespace HarvestValley.GameObjects.Tutorial
         {
             this.step = step;
             this.tutorialText = tutorialText;
-            backgroundSprite = new SpriteSheet("TutorialBackground");
-            textSprite = GameEnvironment.AssetManager.Content.Load<SpriteFont>("JimFont");
-            text = new TextGameObject("JimFont");
+            backgroundSprite = new SpriteSheet("UI/TutorialBackground");
+            textSprite = GameEnvironment.AssetManager.Content.Load<SpriteFont>("Fonts/JimFont");
+            text = new TextGameObject("Fonts/JimFont");
             foreach (GameObject GO in children)
             {
                 GO.Visible = false;

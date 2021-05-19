@@ -74,7 +74,7 @@ namespace HarvestValley.GameStates
             plants = new GameObjectList();
             Add(plants);
 
-            player = new Player("jorrit", new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2), .1f);
+            player = new Player("Player/jorrit", new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2), .1f);
             Add(player);
 
             stones = new GameObjectList();
@@ -86,28 +86,28 @@ namespace HarvestValley.GameStates
             sprinklers = new GameObjectList();
             Add(sprinklers);
 
-            mouseGO = new SpriteGameObject("1px");
+            mouseGO = new SpriteGameObject("Player/1px");
             Add(mouseGO);
 
-            energyBar = new EnergyBar("spr_empty", GameEnvironment.Screen.X - 60, GameEnvironment.Screen.Y - 220, 40, 200);
+            energyBar = new EnergyBar("UI/spr_empty", GameEnvironment.Screen.X - 60, GameEnvironment.Screen.Y - 220, 40, 200);
             Add(energyBar);
 
             tent = new GameObjectList();
             tent.Add(new Tent());
             Add(tent);
 
-            sleeping = new Sleeping("spr_empty");
+            sleeping = new Sleeping("UI/spr_empty");
             Add(sleeping);
 
             craftingMenu = new CraftingMenu();
             Add(craftingMenu);
 
-            hotbar = new Hotbar("spr_empty");
+            hotbar = new Hotbar("UI/spr_empty");
             Add(hotbar);
 
             itemList = new ItemList();
 
-            jimFont = GameEnvironment.AssetManager.Content.Load<SpriteFont>("JimFont");
+            jimFont = GameEnvironment.AssetManager.Content.Load<SpriteFont>("Fonts/JimFont");
 
             //Initialize UI Elements
             Add(uIList = new UIList());

@@ -20,7 +20,7 @@ namespace HarvestValley
         {
             color1 = new Color(0, 0, 0, 0);
             color2 = new Color(0, 0, 0, 255);
-            fadeSprite = new SpriteSheet("EnergyBarBackground");
+            fadeSprite = new SpriteSheet("UI/EnergyBarBackground");
         }
 
         public override void Update(GameTime gameTime)

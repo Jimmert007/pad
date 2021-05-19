@@ -14,9 +14,9 @@ namespace HarvestValley.GameObjects
         public Stone(Vector2 _position, float _scale) : base()
         {
             position = _position;
-            stoneHitbox = new SpriteGameObject("ObjectBackground", 0, "0");
-            stone1 = new SpriteGameObject("Stone", 0, "1");
-            stoneMine = new SpriteGameObject("Stone", 0, "2");
+            stoneHitbox = new SpriteGameObject("UI/ObjectBackground", 0, "0");
+            stone1 = new SpriteGameObject("Environment/Stone", 0, "1");
+            stoneMine = new SpriteGameObject("Environment/Stone", 0, "2");
             Add(stoneHitbox);
             Add(stone1);
             Add(stoneMine);

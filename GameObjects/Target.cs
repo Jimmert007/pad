@@ -22,10 +22,10 @@ namespace HarvestValley.GameObjects
         Player player;
         public Target(ItemList _itemList, Wallet _wallet, Player _player)
         {
-            Add(panel_bg = new SpriteGameObject("spr_target_bg"));
+            Add(panel_bg = new SpriteGameObject("UI/spr_target_bg"));
             panel_bg.Origin = panel_bg.Sprite.Center;
             panel_bg.Position = GameEnvironment.Screen.ToVector2() * .5f;
-            Add(welcomeText = new TextGameObject("JimFont"));
+            Add(welcomeText = new TextGameObject("Fonts/JimFont"));
             welcomeText.Color = Color.Black;
             targetAmount = GameEnvironment.Random.Next(min, max);
             stackableItemsList = new GameObjectList();
@@ -65,11 +65,11 @@ namespace HarvestValley.GameObjects
             welcomeText.Position = panel_bg.Position - welcomeText.Size * .5f;
             Add(button = new TargetButton());
             button.Position = panel_bg.Position + new Vector2(panel_bg.Width * .5f - button.Sprite.Width, panel_bg.Height * .5f - button.Sprite.Height * 1.5f);
-            Add(targetText = new TextGameObject("JimFont"));
+            Add(targetText = new TextGameObject("Fonts/JimFont"));
             targetText.Color = Color.Black;
 
             rewardAmount = 500;
-            Add(congratsText = new TextGameObject("JimFont"));
+            Add(congratsText = new TextGameObject("Fonts/JimFont"));
             congratsText.Color = Color.Black;
             congratsText.Text =
                 "Gefeliciteerd!\n\n" +

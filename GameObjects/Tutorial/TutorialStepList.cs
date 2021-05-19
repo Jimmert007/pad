@@ -26,7 +26,7 @@ namespace HarvestValley.GameObjects.Tutorial
                     "button on the plants.";
         public TutorialStepList()
         {
-            tutorialBox = new SpriteGameObject("TutorialSquare");
+            tutorialBox = new SpriteGameObject("UI/TutorialSquare");
             Add(tutorialBox);
             Add(new TutorialStep(1, step1));
             Add(new TutorialStep(2, step2));

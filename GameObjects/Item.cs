@@ -18,7 +18,7 @@ namespace HarvestValley.GameObjects
         {
             isStackable = stackable;
             itemAmount = startItemAmount;
-            hotbar = new SpriteSheet("spr_hotbar");
+            hotbar = new SpriteSheet("UI/spr_hotbar");
         }
     }
 }

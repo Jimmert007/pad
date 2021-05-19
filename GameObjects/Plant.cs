@@ -16,10 +16,10 @@ namespace HarvestValley
         public Plant(Vector2 _postition, float scale) : base()
         {
             position = _postition;
-            seed1stage1 = new SpriteGameObject("spr_seed1_stage1", 0, "1");
-            seed1stage2 = new SpriteGameObject("spr_seed1_stage2", 0, "2");
-            seed1stage3 = new SpriteGameObject("spr_seed1_stage3", 0, "3");
-            seed1stage4 = new SpriteGameObject("spr_seed1_stage4", 0, "4");
+            seed1stage1 = new SpriteGameObject("Environment/spr_seed1_stage1", 0, "1");
+            seed1stage2 = new SpriteGameObject("Environment/spr_seed1_stage2", 0, "2");
+            seed1stage3 = new SpriteGameObject("Environment/spr_seed1_stage3", 0, "3");
+            seed1stage4 = new SpriteGameObject("Environment/spr_seed1_stage4", 0, "4");
             Add(seed1stage1);
             Add(seed1stage2);
             Add(seed1stage3);

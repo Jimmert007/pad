@@ -20,8 +20,8 @@ namespace HarvestValley.GameObjects
         {
             position.X = _x;
             position.Y = _y;
-            energyBarBackground = new SpriteSheet("EnergyBarBackground");
-            energyBarPercentage = new SpriteSheet("EnergyBarPercentage");
+            energyBarBackground = new SpriteSheet("UI/EnergyBarBackground");
+            energyBarPercentage = new SpriteSheet("UI/EnergyBarPercentage");
             oneUse = (_h - 10) / 100;
             percentagePosition.X = position.X + 5;
             percentageSize.X = _w - 10;

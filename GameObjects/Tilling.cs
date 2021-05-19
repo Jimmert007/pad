@@ -16,7 +16,7 @@ namespace HarvestValley
         //creating variables
 
         public String item = "SEED";
-        public string tilled = "spr_tilled_soil";
+        public string tilled = "tiles/spr_tilled_soil";
 
         public Tilling(string _assetName, Vector2 _position, float _scale) : base(_assetName)
         {

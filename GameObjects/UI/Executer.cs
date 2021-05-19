@@ -9,7 +9,7 @@ namespace HarvestValley.GameObjects
     {
         public Executer()
         {
-            Add(new SpriteGameObject("1px"));
+            Add(new SpriteGameObject("Player/1px"));
         }
 
         public static string Sleep()

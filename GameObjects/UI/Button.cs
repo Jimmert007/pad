@@ -8,7 +8,7 @@ namespace HarvestValley.GameObjects
 {
     class Button : SpriteGameObject
     {
-        public Button(string _assetName = "1px") : base(_assetName)
+        public Button(string _assetName = "Player/1px") : base(_assetName)
         {
 
         }

@@ -12,7 +12,7 @@ namespace HarvestValley.GameObjects
         TextGameObject crafting, sprinklerCost;
         public CraftingMenu() : base()
         {
-            CraftingBackground = new SpriteGameObject("EnergyBarBackground");
+            CraftingBackground = new SpriteGameObject("UI/EnergyBarBackground");
             //Add(CraftingBackground);
         }
     }

@@ -18,11 +18,11 @@ namespace HarvestValley.GameObjects
         public Tree(Vector2 _position, float _scale, int growthStage) : base()
         {
             position = _position;
-            treeHitbox = new SpriteGameObject("ObjectBackground", 0, "0");
-            tree1stage1 = new SpriteGameObject("spr_tree", 0, "1");
-            tree1stage2 = new SpriteGameObject("spr_tree", 0, "2");
-            tree1stage3 = new SpriteGameObject("spr_tree", 0, "3");
-            treeCut = new SpriteGameObject("spr_tree_cut", 0, "4");
+            treeHitbox = new SpriteGameObject("UI/ObjectBackground", 0, "0");
+            tree1stage1 = new SpriteGameObject("Environment/spr_tree", 0, "1");
+            tree1stage2 = new SpriteGameObject("Environment/spr_tree", 0, "2");
+            tree1stage3 = new SpriteGameObject("Environment/spr_tree", 0, "3");
+            treeCut = new SpriteGameObject("Environment/spr_tree_cut", 0, "4");
             Add(treeHitbox);
             Add(tree1stage1);
             Add(tree1stage2);

@@ -16,10 +16,10 @@ namespace HarvestValley.GameObjects
         {
             //Add(new SpriteGameObject("spr_background"));
             Add(buttons = new GameObjectList());
-            buttons.Add(yes = new Button("checkmark"));
+            buttons.Add(yes = new Button("UI/checkmark"));
             yes.Position = new Vector2(GameEnvironment.Screen.X * .3f, GameEnvironment.Screen.Y * .5f);
             //yes.Scale = .5f;
-            buttons.Add(no = new Button("cross"));
+            buttons.Add(no = new Button("UI/cross"));
             no.Position = new Vector2(GameEnvironment.Screen.X * .6f, GameEnvironment.Screen.Y * .5f);
             //no.Scale = .5f;
             Add(uiDesiscionDialog = new DesiscionDialog());

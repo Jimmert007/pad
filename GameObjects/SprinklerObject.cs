@@ -14,7 +14,7 @@ namespace HarvestValley.GameObjects
         {
             position = _position;
             _scale = scale;
-            sprinkler1 = new SpriteGameObject("Sprinkler", 0, "1");
+            sprinkler1 = new SpriteGameObject("Environment/Sprinkler", 0, "1");
             Add(sprinkler1);
 
             for (int i = 0; i < children.Count; i++)

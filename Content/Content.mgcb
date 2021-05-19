@@ -13,7 +13,7 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Enironment/SleepCollision.png
+#begin Environment/SleepCollision.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -23,9 +23,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Enironment/SleepCollision.png
+/build:Environment/SleepCollision.png
 
-#begin Enironment/spr_seed1_stage1.png
+#begin Environment/spr_seed1_stage1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -35,9 +35,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Enironment/spr_seed1_stage1.png
+/build:Environment/spr_seed1_stage1.png
 
-#begin Enironment/spr_seed1_stage2.png
+#begin Environment/spr_seed1_stage2.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -47,9 +47,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Enironment/spr_seed1_stage2.png
+/build:Environment/spr_seed1_stage2.png
 
-#begin Enironment/spr_seed1_stage3.png
+#begin Environment/spr_seed1_stage3.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -59,9 +59,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Enironment/spr_seed1_stage3.png
+/build:Environment/spr_seed1_stage3.png
 
-#begin Enironment/spr_seed1_stage4.png
+#begin Environment/spr_seed1_stage4.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -71,9 +71,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Enironment/spr_seed1_stage4.png
+/build:Environment/spr_seed1_stage4.png
 
-#begin Enironment/spr_tree.png
+#begin Environment/spr_tree.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -83,9 +83,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Enironment/spr_tree.png
+/build:Environment/spr_tree.png
 
-#begin Enironment/spr_tree_cut.png
+#begin Environment/spr_tree_cut.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -95,9 +95,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Enironment/spr_tree_cut.png
+/build:Environment/spr_tree_cut.png
 
-#begin Enironment/Sprinkler.png
+#begin Environment/Sprinkler.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -107,9 +107,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Enironment/Sprinkler.png
+/build:Environment/Sprinkler.png
 
-#begin Enironment/Stone.png
+#begin Environment/Stone.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -119,9 +119,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Enironment/Stone.png
+/build:Environment/Stone.png
 
-#begin Enironment/Tent.png
+#begin Environment/Tent.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -131,7 +131,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Enironment/Tent.png
+/build:Environment/Tent.png
 
 #begin Fonts/GameFont.spritefont
 /importer:FontDescriptionImporter
@@ -249,12 +249,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Player/spr_player_reach.png
-
-#begin Sound/Alarm.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sound/Alarm.ogg
 
 #begin Sound/Alarm.ogg
 /importer:OggImporter

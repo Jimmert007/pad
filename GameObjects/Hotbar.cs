@@ -17,8 +17,8 @@ namespace HarvestValley.GameObjects
         public Hotbar(string _assetName) : base(_assetName)
         {
             hotbarItemList = new List<GameObject>();
-            hotbar = new SpriteGameObject("spr_hotbar");
-            selectedSquare = new SpriteGameObject("spr_selected_square");
+            hotbar = new SpriteGameObject("UI/spr_hotbar");
+            selectedSquare = new SpriteGameObject("UI/spr_selected_square");
            // selectedSquare.Origin = selectedSquare.Sprite.Center;
             sprite = hotbar.Sprite;
 

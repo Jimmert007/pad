@@ -8,8 +8,8 @@ namespace HarvestValley.GameStates
 {
     class MenuState : GameObjectList
     {
-        TextGameObject start = new TextGameObject("JimFont");
-        TextGameObject title = new TextGameObject("GameFont");
+        TextGameObject start = new TextGameObject("Fonts/JimFont");
+        TextGameObject title = new TextGameObject("Fonts/GameFont");
         GameObjectList bgs;
         SpriteGameObject bg;
 
@@ -21,7 +21,7 @@ namespace HarvestValley.GameStates
             {
                 for (int x = 0; x < 2; x++)
                 {
-                    bg = new SpriteGameObject("spr_menu_bg");
+                    bg = new SpriteGameObject("UI/spr_menu_bg");
                     bg.Position = new Vector2(GameEnvironment.Screen.X * .5f - x * bg.Width, GameEnvironment.Screen.Y * .5f - i * bg.Height);
                     bgs.Add(bg);
                 }

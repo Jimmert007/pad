@@ -10,10 +10,10 @@ namespace HarvestValley.GameObjects
     {
         SpriteGameObject mouseGO;
         private bool _onClick;
-        public TargetButton(string _assetName = "spr_yes_button") : base(_assetName)
+        public TargetButton(string _assetName = "UI/spr_yes_button") : base(_assetName)
         {
             origin = sprite.Center;
-            mouseGO = new SpriteGameObject("1px");
+            mouseGO = new SpriteGameObject("Player/1px");
         }
 
         public override void HandleInput(InputHelper inputHelper)

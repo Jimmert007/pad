@@ -10,9 +10,9 @@ namespace HarvestValley.GameObjects
         public SpriteGameObject tent, tentCollision, sleepCollision;
         public Tent()
         {
-            Add(tentCollision = new SpriteGameObject("TentCollision"));
-            Add(sleepCollision = new SpriteGameObject("SleepCollision"));
-            Add(tent = new SpriteGameObject("Tent"));
+            Add(tentCollision = new SpriteGameObject("UI/TentCollision"));
+            Add(sleepCollision = new SpriteGameObject("Environment/SleepCollision"));
+            Add(tent = new SpriteGameObject("Environment/Tent"));
             tent.Position = new Vector2(128, 128);
             tent.Origin = new Vector2(0, 55);
             sleepCollision.Position = new Vector2(tent.Position.X + 39, tent.Position.Y + 60);

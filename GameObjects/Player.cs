@@ -21,7 +21,7 @@ namespace HarvestValley
             position = _position - new Vector2(32, 32);
             scale = _scale;
             PerPixelCollisionDetection = false;
-            playerReach = new SpriteGameObject("spr_player_reach");
+            playerReach = new SpriteGameObject("Player/spr_player_reach");
             playerReach.Position = GameEnvironment.Screen.ToVector2() * .5f - new Vector2(playerReach.Width * .5f, playerReach.Height * .5f);
         }
 
