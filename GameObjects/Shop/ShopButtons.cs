@@ -44,11 +44,6 @@ namespace HarvestValley.GameObjects.Shop
             shopButtons[6] = buy;
             shopButtons[7] = sell;
 
-            //Set positions of the 3 main shop buttons
-            shopButtons[7].Position = new Vector2(GameEnvironment.Screen.X * 1 / 2 - shopButtons[7].Sprite.Width / 2, GameEnvironment.Screen.Y * .6f);
-            shopButtons[1].Position = new Vector2(GameEnvironment.Screen.X * 2/ 3 - shopButtons[1].Sprite.Width / 2, GameEnvironment.Screen.Y * .6f);
-            shopButtons[6].Position = new Vector2(GameEnvironment.Screen.X * 1/3 - shopButtons[6].Sprite.Width/2, GameEnvironment.Screen.Y * .6f);
-
         }
 
     }

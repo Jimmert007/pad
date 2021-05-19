@@ -129,11 +129,22 @@ namespace HarvestValley.GameObjects.Shop
             cancelLine.Visible = false;
             sellLine.Visible = false;
 
-            //Resets the buttons
+            //Resets the shop buttons
             for (int i = 0; i < shopButtons.shopButtons.Length; i++)
             {
                 shopButtons.shopButtons[i].Visible = false;
             }
+
+            //Set positions of the 3 main shop buttons
+            shopButtons.shopButtons[7].Position = new Vector2(GameEnvironment.Screen.X * 1 / 2 - shopButtons.shopButtons[7].Sprite.Width / 2, GameEnvironment.Screen.Y * .6f);
+            shopButtons.shopButtons[1].Position = new Vector2(GameEnvironment.Screen.X * 2 / 3 - shopButtons.shopButtons[1].Sprite.Width / 2, GameEnvironment.Screen.Y * .6f);
+            shopButtons.shopButtons[6].Position = new Vector2(GameEnvironment.Screen.X * 1 / 3 - shopButtons.shopButtons[6].Sprite.Width / 2, GameEnvironment.Screen.Y * .6f);
+
+            //Set positions of the itam amount buttons
+            shopButtons.shopButtons[2].Position = new Vector2(GameEnvironment.Screen.X * 4 / 7, GameEnvironment.Screen.Y / 2);      //Add item button position
+            shopButtons.shopButtons[3].Position = new Vector2(GameEnvironment.Screen.X * 3 / 7, GameEnvironment.Screen.Y / 2);      //Reduce item button position
+            shopButtons.shopButtons[4].Position = new Vector2(GameEnvironment.Screen.X * .5f, GameEnvironment.Screen.Y * 2 / 7);    //Add 10 itams button position
+            shopButtons.shopButtons[5].Position = new Vector2(GameEnvironment.Screen.X * .5f, GameEnvironment.Screen.Y * 5 / 7);    //Reduce 10 items position
 
             //Resets the bools
             shopActive = false;
@@ -207,21 +218,19 @@ namespace HarvestValley.GameObjects.Shop
                     }
                     if (x.selectedItem)         //Change the position of the selected item
                     {
-                        x.Position = new Vector2(GameEnvironment.Screen.X / 2 - x.Sprite.Width/2, GameEnvironment.Screen.Y / 2);
+                        x.Position = new Vector2(GameEnvironment.Screen.X / 2 - x.Sprite.Width/2, GameEnvironment.Screen.Y / 3);
                     }
                 }
 
-                //Add item amount buttons
-                //shopButtons.shopButtons[2].Visible = true;
-                //shopButtons.shopButtons[3].Visible = true;
-                //shopButtons.shopButtons[4].Visible = true;
-                //shopButtons.shopButtons[5].Visible = true;
-
-                //Buy and sell Buttons
-                shopButtons.shopButtons[6].Visible = true;
-                shopButtons.shopButtons[7].Visible = true;
-                shopButtons.shopButtons[6].Position = new Vector2(GameEnvironment.Screen.X * 2 / 3, GameEnvironment.Screen.Y/2 );
-                shopButtons.shopButtons[7].Position = new Vector2(GameEnvironment.Screen.X / 3, GameEnvironment.Screen.Y / 2);
+                //Make item amount, buy and sell buttons visible
+                for (int i = 2; i < 8; i++)
+                {
+                    shopButtons.shopButtons[i].Visible = true;
+                }
+                
+                //Set the positions of the item amount, buy and sell buttons
+                shopButtons.shopButtons[6].Position = new Vector2(GameEnvironment.Screen.X * 2 / 3 - shopButtons.shopButtons[6].Sprite.Width/2, GameEnvironment.Screen.Y*2/3 );
+                shopButtons.shopButtons[7].Position = new Vector2(GameEnvironment.Screen.X / 3- shopButtons.shopButtons[7].Sprite.Width/2, GameEnvironment.Screen.Y* 2/ 3);
             }
             //if (sellAmount) { questionLine.Text = shopDialogueLines[5]; }
         }
