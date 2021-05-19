@@ -10,12 +10,13 @@ namespace HarvestValley.GameObjects
     class Target : GameObjectList
     {
         SpriteGameObject panel_bg;
-        TextGameObject welcomeText, targetText;
+        TextGameObject welcomeText, targetText, congratsText;
         TargetButton button;
         int targetAmount, min = 100, max = 200, currentAmount;
         Item targetItem;
         string targetName;
         GameObjectList stackableItemsList;
+        int rewardAmount;
         public Target(ItemList _itemList)
         {
             Add(panel_bg = new SpriteGameObject("spr_target_bg"));
@@ -64,6 +65,18 @@ namespace HarvestValley.GameObjects
             button.Position = panel_bg.Position + new Vector2(panel_bg.Width * .5f - button.Sprite.Width, panel_bg.Height * .5f - button.Sprite.Height * 1.5f);
             Add(targetText = new TextGameObject("JimFont"));
             targetText.Color = Color.Black;
+
+            rewardAmount = 500;
+            Add(congratsText = new TextGameObject("JimFont"));
+            congratsText.Color = Color.Black;
+            congratsText.Text =
+                "Gefeliciteerd!\n\n" +
+                "Je hebt het doel bereikt, \n" +
+                "Klik op de knop om verder te spelen en .\n" +
+                "je prijs (" + rewardAmount + ") te verzilveren.\n" +
+                "Veel plezier nog!";
+            congratsText.Position = panel_bg.Position - congratsText.Size * .5f;
+            congratsText.Visible = false;
         }
 
         public override void Update(GameTime gameTime)
@@ -75,7 +88,20 @@ namespace HarvestValley.GameObjects
                 panel_bg.Visible = false;
                 welcomeText.Visible = false;
                 button.Visible = false;
+                congratsText.Visible = true;
             }
+            if (currentAmount >= TargetAmount)
+            {
+                MadeIt();
+            }
+        }
+
+        void MadeIt()
+        {
+            panel_bg.Visible = true;
+            button.Visible = true;
+            congratsText.Visible = true;
+            //TO DO add the reward to a value? gold? idk?
         }
 
         public void AddToTarget(int addition)
