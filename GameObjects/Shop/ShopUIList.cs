@@ -82,6 +82,7 @@ namespace HarvestValley.GameObjects.Shop
                     }
 
                 }
+               
                 //Inputs for the confirm button
                 if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[6].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[6].Visible)
                 {
@@ -94,7 +95,9 @@ namespace HarvestValley.GameObjects.Shop
                             x.selectedItem = false;
                         }
                     }
+                    ResetShop();
                 }
+               
                 //Inputs for the cancel button
                 if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[1].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[1].Visible)
                 {
@@ -106,7 +109,6 @@ namespace HarvestValley.GameObjects.Shop
                     buyAmount = false;
                 }
             }
-
             if (sellAmount)
             {
                 //Make item amount, buy and sell buttons visible
@@ -130,6 +132,7 @@ namespace HarvestValley.GameObjects.Shop
                             x.selectedItem = false;
                         }
                     }
+                    ResetShop();
                 }
                 //Inputs for the cancel button
                 if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[1].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[1].Visible)
