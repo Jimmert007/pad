@@ -14,19 +14,14 @@ using HarvestValley.GameObjects.Tutorial;
 
 namespace HarvestValley.GameObjects
 {
-
-   public class Sounds : GameObjectList
+    public class Sounds : GameObjectList
     {
-
-
-        public string[] soundEffectStrings = { "FootstepsOnGrass", "AxeSwing", "PickaxeSwing", "TreeFalling", "WaterSplash", "PersonYawns", "RoosterCrowing", "MetalRattling", "HittingGround", "Shaking1", "ButtonClick", "WheatPickup" };
+        public string[] soundEffectStrings = { "FootstepsOnGrass", "AxeSwing", "PickaxeSwing", "TreeFalling", "WaterSplash", "PersonYawns", "RoosterCrowing", "MetalRattling", "HittingGround", "Shaking1", "ButtonClick", "WheatPickup", "CoinDrop" };
         public SoundEffect[] SFXs;
-       public SoundEffectInstance[] SEIs;
-
+        public SoundEffectInstance[] SEIs;
 
         public Sounds()
         {
-
             SFXs = new SoundEffect[soundEffectStrings.Length];
             SEIs = new SoundEffectInstance[SFXs.Length];
 
@@ -35,16 +30,7 @@ namespace HarvestValley.GameObjects
                 SFXs[s] = GameEnvironment.AssetManager.Content.Load<SoundEffect>("Sound/" + soundEffectStrings[s]);
                 SEIs[s] = SFXs[s].CreateInstance();
             }
-
         }
-        public void soundplay()
-        {
-
-        }
-
-
-
-
     }
-   
+
 }
