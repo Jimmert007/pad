@@ -16,23 +16,23 @@ namespace HarvestValley.GameObjects.Shop
                 shopButtons[i] = new Button();
             }
 
-            Add(confirm = new Button("checkmark"));
+            Add(confirm = new Button("UI/checkmark"));
             confirm.Position = new Vector2(GameEnvironment.Screen.X * .3f, GameEnvironment.Screen.Y * .6f);
             //yes.Scale = .5f;
-            Add(cancel = new Button("cross"));
+            Add(cancel = new Button("UI/cross"));
             cancel.Position = new Vector2(GameEnvironment.Screen.X * .6f, GameEnvironment.Screen.Y * .6f);
             //no.Scale = .5f;
-            Add(addItem = new Button("cross"));
+            Add(addItem = new Button("UI/cross"));
             //addItem.Position = new Vector2(GameEnvironment.Screen.X * .6f, GameEnvironment.Screen.Y * .6f);
-            Add(reduceItem = new Button("cross"));
+            Add(reduceItem = new Button("UI/cross"));
             //reduceItem.Position = new Vector2(GameEnvironment.Screen.X * .6f, GameEnvironment.Screen.Y * .6f);
-            Add(add10Items = new Button("cross"));
+            Add(add10Items = new Button("UI/cross"));
             //add10Items.Position = new Vector2(GameEnvironment.Screen.X * .6f, GameEnvironment.Screen.Y * .6f);
-            Add(reduce10Items = new Button("cross"));
+            Add(reduce10Items = new Button("UI/cross"));
             //reduce10Items.Position = new Vector2(GameEnvironment.Screen.X * .6f, GameEnvironment.Screen.Y * .6f);
-            Add(buy = new Button("checkmark"));
+            Add(buy = new Button("UI/checkmark"));
             //buy.Position = new Vector2(GameEnvironment.Screen.X * .6f, GameEnvironment.Screen.Y * .6f);
-            Add(sell = new Button("cross"));
+            Add(sell = new Button("UI/cross"));
             //sell.Position = new Vector2(GameEnvironment.Screen.X * .6f, GameEnvironment.Screen.Y * .6f);
 
             shopButtons[0] = confirm;

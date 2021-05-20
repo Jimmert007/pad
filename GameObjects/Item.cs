@@ -14,10 +14,11 @@ namespace HarvestValley.GameObjects
         public bool isStackable;
         public bool selectedItem = false;
         public SpriteSheet hotbar;
-        public Item(string _assetName, bool stackable, int startItemAmount) : base(_assetName)
+        public Item(string _assetName, bool stackable, int startItemAmount, float _scale) : base(_assetName)
         {
             isStackable = stackable;
             itemAmount = startItemAmount;
+            scale = _scale;
         }
     }
 }

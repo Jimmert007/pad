@@ -17,12 +17,12 @@ namespace HarvestValley.GameObjects.UI
         public UIList()
         {
             Add(buttons = new GameObjectList());
-            Add(uIBox = new UIBox("ui_bar"));
+            Add(uIBox = new UIBox("UI/ui_bar"));
             uIBox.Position = new Vector2(GameEnvironment.Screen.X * .5f, GameEnvironment.Screen.Y * .35f);
-            buttons.Add(yes = new Button("checkmark"));
+            buttons.Add(yes = new Button("UI/checkmark"));
             yes.Position = new Vector2(uIBox.Position.X - uIBox.Width/3, GameEnvironment.Screen.Y * .6f);
             //yes.Scale = .5f;
-            buttons.Add(no = new Button("cross"));
+            buttons.Add(no = new Button("UI/cross"));
             no.Position = new Vector2(uIBox.Position.X + uIBox.Width/5, GameEnvironment.Screen.Y * .6f);
             //no.Scale = .5f;
             Add(uiDesiscionDialog = new SingleLineCycleDialog());

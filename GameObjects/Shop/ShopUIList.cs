@@ -31,15 +31,15 @@ namespace HarvestValley.GameObjects.Shop
         public ShopMenuUIList(ItemList _itemList)
         {
             //Add all the instances of the Shop elements
-            Add(uIBox = new UIBox("ui_bar"));
+            Add(uIBox = new UIBox("UI/ui_bar"));
             Add(shopButtons = new ShopButtons());
             Add(shopItems = new ShopItems());
-            Add(topLine = new TextGameObject("JimFont"));
-            Add(bottomLine = new TextGameObject("JimFont"));
-            Add(buyLine = new TextGameObject("JimFont"));
-            Add(sellLine = new TextGameObject("JimFont"));
-            Add(cancelLine = new TextGameObject("JimFont"));
-            Add(mouseGO = new SpriteGameObject("1px"));
+            Add(topLine = new TextGameObject("Fonts/JimFont"));
+            Add(bottomLine = new TextGameObject("Fonts/JimFont"));
+            Add(buyLine = new TextGameObject("Fonts/JimFont"));
+            Add(sellLine = new TextGameObject("Fonts/JimFont"));
+            Add(cancelLine = new TextGameObject("Fonts/JimFont"));
+            Add(mouseGO = new SpriteGameObject("Player/1px"));
             itemList = _itemList;
 
             ResetShop();
