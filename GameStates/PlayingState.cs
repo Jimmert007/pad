@@ -35,23 +35,14 @@ namespace HarvestValley.GameStates
         UIList uIList;
         ShopMenuUIList shop;
         Wallet wallet;
-        GameObjectList UI;
         GameObjectList tent;
         Vector2 prevPos;
         Target target;
         Sounds sounds;
         
-        int mapSizeX = GameEnvironment.Screen.X, mapSizeY = GameEnvironment.Screen.Y, cellSize = 64,
-            outerringRandomTree = 4, outerringRandomStone = 2, middleringRandomTree = 4, middleringRandomStone = 6, innerringRandomTree = 20, innerringRandomStone = 30;
-
         public PlayingState()
         {
             sounds = new Sounds();
-            for (int s = 0; s < sounds.SFXs.Length; s++)
-            {
-                sounds.SFXs[s] = GameEnvironment.AssetManager.Content.Load<SoundEffect>("Sound/" + sounds.soundEffectStrings[s]);
-                sounds.SEIs[s] = sounds.SFXs[s].CreateInstance();
-            }
 
             SpriteSheet mapSpriteSheet = new SpriteSheet("tiles/spr_grass", 0);
             map = new Map();
