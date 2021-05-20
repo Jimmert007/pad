@@ -105,7 +105,6 @@ namespace HarvestValley.GameStates
 
             jimFont = GameEnvironment.AssetManager.Content.Load<SpriteFont>("Fonts/JimFont");
 
-            Add(target = new Target(itemList, wallet, player));
 
             //Initialize UI Elements
             Add(uIList = new UIList());
@@ -113,6 +112,8 @@ namespace HarvestValley.GameStates
 
             wallet = new Wallet();
             Add(wallet);
+
+            Add(target = new Target(itemList, wallet, player));
 
             tutorialStepList = new TutorialStepList();
             Add(tutorialStepList);
