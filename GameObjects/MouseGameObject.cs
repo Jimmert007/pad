@@ -7,7 +7,7 @@ namespace HarvestValley.GameObjects
     class MouseGameObject : GameObjectList
     {
         SpriteGameObject mouseSprite, collideSprite;
-        public MouseGameObject(string _assetName = "UI/mouse") : base()
+        public MouseGameObject(string _assetName = "UI/spr_mouse") : base()
         {
             collideSprite = new SpriteGameObject("Player/1px");
             collideSprite.PerPixelCollisionDetection = false;
