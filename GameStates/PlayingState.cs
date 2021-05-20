@@ -105,7 +105,6 @@ namespace HarvestValley.GameStates
 
             jimFont = GameEnvironment.AssetManager.Content.Load<SpriteFont>("Fonts/JimFont");
 
-
             //Initialize UI Elements
             Add(uIList = new UIList());
             Add(exec = new Executer());

@@ -108,6 +108,7 @@ namespace HarvestValley.GameObjects
                     congratsText.Visible = false;
                     wallet.AddMoney(rewardAmount);
                     targetText.Visible = false;
+                    targetUI.Visible = false;
                 }
             }
             if (currentAmount >= targetAmount && !collected)
