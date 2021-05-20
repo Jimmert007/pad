@@ -7,6 +7,8 @@ using System.Text;
 using HarvestValley.GameObjects;
 using HarvestValley.GameObjects.Tools;
 using HarvestValley.GameObjects.HarvestValley.GameObjects;
+using HarvestValley.GameObjects.UI;
+using HarvestValley.GameObjects.Shop;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using HarvestValley.GameObjects.Tutorial;
@@ -31,7 +33,7 @@ namespace HarvestValley.GameStates
         ItemList itemList;
         SpriteFont jimFont;
         UIList uIList;
-        Executer exec;
+        ShopMenuUIList shop;
         Wallet wallet;
         GameObjectList UI;
         GameObjectList tent;
@@ -97,13 +99,11 @@ namespace HarvestValley.GameStates
             hotbar = new Hotbar(itemList);
             Add(hotbar);
 
-
-
             jimFont = GameEnvironment.AssetManager.Content.Load<SpriteFont>("Fonts/JimFont");
 
-            //Initialize UI Elements
+            ////Initialize UI Elements
             Add(uIList = new UIList());
-            Add(exec = new Executer());
+            Add(shop = new ShopMenuUIList(itemList));
 
             wallet = new Wallet();
             Add(wallet);

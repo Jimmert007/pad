@@ -12,11 +12,12 @@ namespace HarvestValley.GameObjects
     {
         public int itemAmount = 0;
         public bool isStackable;
-        public Item(string _assetName, bool stackable, int startItemAmount, float scale) : base(_assetName)
+        public bool selectedItem = false;
+        public SpriteSheet hotbar;
+        public Item(string _assetName, bool stackable, int startItemAmount) : base(_assetName)
         {
             isStackable = stackable;
             itemAmount = startItemAmount;
-            this.scale = scale;
         }
     }
 }
