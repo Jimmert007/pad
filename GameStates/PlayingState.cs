@@ -114,15 +114,6 @@ namespace HarvestValley.GameStates
             wallet = new Wallet();
             Add(wallet);
 
-            SFXs = new SoundEffect[soundEffectStrings.Length];
-            SEIs = new SoundEffectInstance[SFXs.Length];
-
-            for (int i = 0; i < SFXs.Length; i++)
-            {
-                SFXs[i] = GameEnvironment.AssetManager.Content.Load<SoundEffect>("Sound/" + soundEffectStrings[i]);
-                SEIs[i] = SFXs[i].CreateInstance();
-            }
-
             tutorialStepList = new TutorialStepList();
             Add(tutorialStepList);
 
