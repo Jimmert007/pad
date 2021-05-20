@@ -39,7 +39,7 @@ namespace HarvestValley.GameObjects
             }
 
             int r = GameEnvironment.Random.Next(stackableItemsList.Children.Count);
-            Debug.WriteLine(r);
+            //Debug.WriteLine(r);
             targetItem = (stackableItemsList.Children[r] as Item);
             targetName = targetItem.Sprite.Sprite.Name;
 
@@ -54,14 +54,19 @@ namespace HarvestValley.GameObjects
                 }
             }
 
+            if (targetName[targetName.Length - 1] != 's' && targetName != "wood")
+            {
+                targetName += "s";
+            }
+
             //Debug.WriteLine("target " + targetName);
 
             welcomeText.Text =
-                "Welkom bij Harvest Valley!\n\n" +
-                "Het is de bedoeling om het land waar je op staat\n" +
-                "om te toveren naar een productieve boerderij.\n" +
-                "Je eerste doel is om " + targetAmount.ToString() + " " + targetName + " te verzamelen.\n" +
-                "Veel plezier!";
+                "Welcome to Harvest Valley!\n\n" +
+                "Try to convert the messy landscape\n" +
+                "to a productive farm\n" +
+                "Your target is to gather " + targetAmount.ToString() + " " + targetName + ".\n" +
+                "Enjoy!";
             welcomeText.Position = panel_bg.Position - welcomeText.Size * .5f;
             Add(button = new TargetButton());
             button.Position = panel_bg.Position + new Vector2(panel_bg.Width * .5f - button.Sprite.Width, panel_bg.Height * .5f - button.Sprite.Height * 1.5f);
@@ -73,11 +78,11 @@ namespace HarvestValley.GameObjects
             Add(congratsText = new TextGameObject("Fonts/JimFont"));
             congratsText.Color = Color.Black;
             congratsText.Text =
-                "Gefeliciteerd!\n\n" +
-                "Je hebt het doel bereikt, \n" +
-                "Klik op de knop om verder te spelen en .\n" +
-                "je prijs (" + rewardAmount + " coins) te verzilveren.\n" +
-                "Veel plezier nog!";
+                "Congrats!\n\n" +
+                "You've completed the task, \n" +
+                "Press the button to continue and \n" +
+                "collect your reward (" + rewardAmount + " coins).\n" +
+                "Have fun!";
             congratsText.Position = panel_bg.Position - congratsText.Size * .5f;
             congratsText.Visible = false;
             wallet = _wallet;
@@ -88,7 +93,7 @@ namespace HarvestValley.GameObjects
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            targetText.Text = "Doel " + currentAmount + " / " + targetAmount + " " + targetName;
+            targetText.Text = "Task: " + currentAmount + " / " + targetAmount + " " + targetName;
             targetText.Position = targetUI.Position + (new Vector2(targetUI.Width, targetUI.Height) * .5f) - targetText.Size * .5f;
 
             if (button.OnClick)

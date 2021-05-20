@@ -26,7 +26,7 @@ namespace HarvestValley.GameStates
                     bgs.Add(bg);
                 }
             }
-            start.Text = "Druk op de spatietoets om naar het spel te gaan";
+            start.Text = "Press Spacebar to start playing";
             start.Position = new Vector2(GameEnvironment.Screen.X * .5f - start.Size.X * .5f, GameEnvironment.Screen.Y * .5f - start.Size.Y * .5f);
             Add(start);
             title.Text = "Harvest Valley";
