@@ -20,8 +20,10 @@ namespace HarvestValley.GameObjects
         int rewardAmount;
         Wallet wallet;
         Player player;
+        Sounds sound;
         public Target(ItemList _itemList, Wallet _wallet, Player _player)
         {
+            sound = new Sounds();
             Add(panel_bg = new SpriteGameObject("UI/spr_target_bg"));
             panel_bg.Origin = panel_bg.Sprite.Center;
             panel_bg.Position = GameEnvironment.Screen.ToVector2() * .5f;
@@ -95,6 +97,8 @@ namespace HarvestValley.GameObjects
                 button.Visible = false;
                 congratsText.Visible = false;
                 player.sleeping = false;
+                //Play WheatPickup
+                GameEnvironment.AssetManager.PlaySound(sound.SEIs[10]);
             }
             if (currentAmount >= TargetAmount)
             {
