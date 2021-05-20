@@ -14,7 +14,7 @@ namespace HarvestValley.GameObjects
         TextGameObject welcomeText, targetText, congratsText;
         TargetButton button;
         int targetAmount, currentAmount;
-        int[] minWoodSeedStone = { 100, 25, 75 };
+        int[] minTSeedWoodRockWheat = { 25, 100, 75, 100 };
         public Item targetItem;
         string targetName;
         GameObjectList stackableItemsList;
@@ -43,7 +43,7 @@ namespace HarvestValley.GameObjects
             targetItem = (stackableItemsList.Children[r] as Item);
             targetName = targetItem.Sprite.Sprite.Name;
 
-            targetAmount = GameEnvironment.Random.Next(minWoodSeedStone[r], minWoodSeedStone[r] * 2);
+            targetAmount = GameEnvironment.Random.Next(minTSeedWoodRockWheat[r], minTSeedWoodRockWheat[r] * 2);
 
             string[] removeFromString = { "spr", "stage", "1", "Items", "/", "_", "Environment" };
             for (int i = 0; i < removeFromString.Length; i++)
@@ -54,7 +54,9 @@ namespace HarvestValley.GameObjects
                 }
             }
 
-            if (targetName[targetName.Length - 1] != 's' && targetName != "wood")
+            targetName = targetName.ToLower();
+
+            if (targetName[targetName.Length - 1] != 's' && targetName != "wood" && targetName != "wheat")
             {
                 targetName += "s";
             }
