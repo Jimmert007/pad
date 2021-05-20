@@ -23,7 +23,7 @@ namespace HarvestValley.GameStates
         GameObjectList trees;
         GameObjectList stones;
         GameObjectList sprinklers;
-        SpriteGameObject mouseGO;
+        MouseGameObject MouseGO;
         TutorialStepList tutorialStepList;
         EnergyBar energyBar;
         Sleeping sleeping;
@@ -41,7 +41,7 @@ namespace HarvestValley.GameStates
         int mapSizeX = GameEnvironment.Screen.X, mapSizeY = GameEnvironment.Screen.Y, cellSize = 64,
             outerringRandomTree = 4, outerringRandomStone = 2, middleringRandomTree = 4, middleringRandomStone = 6, innerringRandomTree = 20, innerringRandomStone = 30;
 
-        string[] soundEffectStrings = { "FootstepsOnGrass", "AxeSwing", "PickaxeSwing", "TreeFalling", "WaterSplash", "PersonYawns", "RoosterCrowing", "MetalRattling", "HittingGround", "Shaking1" };
+        string[] soundEffectStrings = { "FootstepsOnGrass", "AxeSwing", "PickaxeSwing", "TreeFalling", "WaterSplash", "PersonYawns", "RoosterCrowing", "MetalRattling", "HittingGround", "Shaking1", "CoinDrop" };
         SoundEffect[] SFXs;
         SoundEffectInstance[] SEIs;
 
@@ -56,7 +56,6 @@ namespace HarvestValley.GameStates
                 SFXs[i] = GameEnvironment.AssetManager.Content.Load<SoundEffect>("Sound/" + soundEffectStrings[i]);
                 SEIs[i] = SFXs[i].CreateInstance();
             }
-
 
             SpriteSheet mapSpriteSheet = new SpriteSheet("tiles/spr_grass", 0);
             map = new Map();
@@ -86,9 +85,6 @@ namespace HarvestValley.GameStates
             sprinklers = new GameObjectList();
             Add(sprinklers);
 
-            mouseGO = new SpriteGameObject("Player/1px");
-            Add(mouseGO);
-
             energyBar = new EnergyBar("UI/spr_empty", GameEnvironment.Screen.X - 60, GameEnvironment.Screen.Y - 220, 40, 200);
             Add(energyBar);
 
@@ -109,15 +105,14 @@ namespace HarvestValley.GameStates
 
             jimFont = GameEnvironment.AssetManager.Content.Load<SpriteFont>("Fonts/JimFont");
 
+            Add(target = new Target(itemList, wallet, player));
+
             //Initialize UI Elements
             Add(uIList = new UIList());
             Add(exec = new Executer());
 
             wallet = new Wallet();
             Add(wallet);
-
-
-            Add(target = new Target(itemList, wallet, player));
 
             SFXs = new SoundEffect[soundEffectStrings.Length];
             SEIs = new SoundEffectInstance[SFXs.Length];
@@ -131,6 +126,8 @@ namespace HarvestValley.GameStates
             tutorialStepList = new TutorialStepList();
             Add(tutorialStepList);
 
+            Add(MouseGO = new MouseGameObject());
+
             SpawnTent();
             PlaceStonesAndTrees();
         }
@@ -141,12 +138,16 @@ namespace HarvestValley.GameStates
             SleepActions(gameTime);
             CheckMouseCollisionWithTutorial();
             CheckSleepHitbox();
+            if (wallet.PlayCoinsound())
+            {
+                wallet.playedSound = true;
+                GameEnvironment.AssetManager.PlaySound(SEIs[10]); //play coindrop
+            }
         }
 
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
-            mouseGO.Position = inputHelper.MousePosition;
             CameraSystem(inputHelper);
 
             CheckHoeInput(inputHelper);
@@ -178,7 +179,6 @@ namespace HarvestValley.GameStates
                 }
             }
         }
-
 
         void ConvertFromHotbarToMoney(Item item, int amount)
         {
@@ -222,11 +222,11 @@ namespace HarvestValley.GameStates
 
         void CheckMouseCollisionWithTutorial()
         {
-            if (mouseGO.CollidesWith(tutorialStepList.Children[0] as SpriteGameObject))
+            if (MouseGO.CollidesWith(tutorialStepList.Children[0] as SpriteGameObject))
             {
                 tutorialStepList.mouseCollides = true;
             }
-            else if (!mouseGO.CollidesWith(tutorialStepList.Children[0] as SpriteGameObject))
+            else if (!MouseGO.CollidesWith(tutorialStepList.Children[0] as SpriteGameObject))
             {
                 tutorialStepList.mouseCollides = false;
             }
@@ -606,7 +606,6 @@ namespace HarvestValley.GameStates
             if (inputHelper.IsKeyDown(Keys.D) && inputHelper.IsKeyDown(Keys.A))
             {
                 moveVector = new Vector2(0, moveVector.Y);
-                GameEnvironment.AssetManager.StopSound(SEIs[0]);
             }
             if (inputHelper.IsKeyDown(Keys.S))
             {
@@ -621,7 +620,6 @@ namespace HarvestValley.GameStates
             if (inputHelper.IsKeyDown(Keys.W) && inputHelper.IsKeyDown(Keys.S))
             {
                 moveVector = new Vector2(moveVector.X, 0);
-                GameEnvironment.AssetManager.StopSound(SEIs[0]);
             }
 
             for (int i = trees.Children.Count - 1; i >= 0; i--)
@@ -707,7 +705,7 @@ namespace HarvestValley.GameStates
         {
             foreach (Cell c in cells.Children)
             {
-                if (c.CellCollidesWith(mouseGO) && c.CellCollidesWith(player.playerReach))
+                if (c.CellCollidesWith(MouseGO.HitBox) && c.CellCollidesWith(player.playerReach))
                 {
                     if (inputHelper.MouseLeftButtonDown())
                     {
@@ -734,7 +732,7 @@ namespace HarvestValley.GameStates
         {
             foreach (Cell c in cells.Children)
             {
-                if (c.CellCollidesWith(mouseGO) && c.CellCollidesWith(player.playerReach))
+                if (c.CellCollidesWith(MouseGO.HitBox) && c.CellCollidesWith(player.playerReach))
                 {
                     if (inputHelper.MouseLeftButtonDown())
                     {
@@ -769,7 +767,7 @@ namespace HarvestValley.GameStates
         {
             foreach (Cell c in cells.Children)
             {
-                if (c.CellCollidesWith(mouseGO) && c.CellCollidesWith(player.playerReach) && !c.CellCollidesWith(player))
+                if (c.CellCollidesWith(MouseGO.HitBox) && c.CellCollidesWith(player.playerReach) && !c.CellCollidesWith(player))
                 {
                     if (inputHelper.MouseLeftButtonDown())
                     {
@@ -779,7 +777,6 @@ namespace HarvestValley.GameStates
                             {
                                 if (itemList.itemSelected == "SPRINKLER" && !c.cellHasPlant && !c.cellHasTent && !c.cellHasTree && !c.cellHasSprinkler && item.itemAmount > 0 && !c.cellHasStone)
                                 {
-
                                     item.itemAmount -= 1;
                                     c.cellHasSprinkler = true;
                                     energyBar.percentageLost += energyBar.oneUse;
@@ -798,7 +795,7 @@ namespace HarvestValley.GameStates
         {
             foreach (Cell c in cells.Children)
             {
-                if (c.CellCollidesWith(mouseGO) && c.CellCollidesWith(player.playerReach))
+                if (c.CellCollidesWith(MouseGO.HitBox) && c.CellCollidesWith(player.playerReach))
                 {
                     if (inputHelper.MouseLeftButtonPressed())
                     {
@@ -828,7 +825,7 @@ namespace HarvestValley.GameStates
         {
             foreach (Cell c in cells.Children)
             {
-                if (c.CellCollidesWith(mouseGO) && c.CellCollidesWith(player.playerReach) && !c.CellCollidesWith(player))
+                if (c.CellCollidesWith(MouseGO.HitBox) && c.CellCollidesWith(player.playerReach) && !c.CellCollidesWith(player))
                 {
                     if (inputHelper.MouseLeftButtonDown())
                     {
@@ -858,7 +855,7 @@ namespace HarvestValley.GameStates
             for (int i = stones.Children.Count - 1; i >= 0; i--)
             {
                 Stone s = stones.Children[i] as Stone;
-                if (s.CollidesWith(mouseGO) && s.CollidesWith(player.playerReach))
+                if (s.CollidesWith(MouseGO.HitBox) && s.CollidesWith(player.playerReach))
                 {
                     if (inputHelper.MouseLeftButtonPressed())
                     {
@@ -906,7 +903,7 @@ namespace HarvestValley.GameStates
         {
             for (int i = trees.Children.Count - 1; i >= 0; i--)
             {
-                if ((trees.Children[i] as Tree).CollidesWith(mouseGO) && (trees.Children[i] as Tree).CollidesWith(player.playerReach))
+                if ((trees.Children[i] as Tree).CollidesWith(MouseGO.HitBox) && (trees.Children[i] as Tree).CollidesWith(player.playerReach))
                 {
                     if (inputHelper.MouseLeftButtonPressed())
                     {
@@ -963,7 +960,7 @@ namespace HarvestValley.GameStates
         {
             foreach (Cell c in cells.Children)
             {
-                if (c.CellCollidesWith(mouseGO) && c.CellCollidesWith(player.playerReach))
+                if (c.CellCollidesWith(MouseGO.HitBox) && c.CellCollidesWith(player.playerReach))
                 {
                     if (inputHelper.MouseRightButtonDown())
                     {

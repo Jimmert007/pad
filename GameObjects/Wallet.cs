@@ -12,41 +12,6 @@ using System.Text;
 
 namespace HarvestValley.GameObjects
 {
-    /*   class Wallet : SpriteGameObject
-       {
-           public List<GameObject> walletMoneyList;
-           public SpriteSheet wallet, moneySquare;
-           public int moneySquareSize;
-
-           //als je deze aan past moet je de font in content ook aanpassen
-           public int walletWidth ;
-           public Vector2 moneySquarePosition;
-           public int money;
-
-           public Wallet(string _assetName) : base(_assetName)
-           {
-               walletWidth = GameEnvironment.Screen.X / 4;
-
-               position.X = GameEnvironment.Screen.X - walletWidth;
-               position.Y = 0;
-
-               walletMoneyList = new List<GameObject>();
-               wallet = new SpriteSheet("spr_wallet");
-               moneySquare = new SpriteSheet("spr_empty");
-
-               moneySquareSize = walletWidth / 5;
-
-               moneySquarePosition.X = position.X;
-               moneySquarePosition.Y = position.Y;
-               money = 0;
-           }
-       }
-
-   }*/
-
-
-
-
     namespace HarvestValley.GameObjects
     {
         class Wallet : GameObjectList
@@ -54,6 +19,7 @@ namespace HarvestValley.GameObjects
             TextGameObject text;
             SpriteGameObject bg;
             int money, newMoney;
+            public bool playedSound;
 
             public Wallet()
             {
@@ -74,6 +40,11 @@ namespace HarvestValley.GameObjects
                 }
                 text.Text = money.ToString();
                 text.Position = new Vector2(bg.Position.X + bg.Sprite.Width * .3f / 5 * .5f - text.Size.X / text.Text.Length * .5f, bg.Position.Y + bg.Sprite.Height * .3f * .5f - text.Size.Y * .5f);
+            }
+
+            public bool PlayCoinsound()
+            {
+                return (money == newMoney && money > 0 && !playedSound);
             }
 
             public void AddMoney(int amout)

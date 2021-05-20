@@ -39,8 +39,6 @@ namespace HarvestValley.GameObjects
             }
 
             int r = GameEnvironment.Random.Next(stackableItemsList.Children.Count);
-            Debug.WriteLine(r);
-
             targetItem = (stackableItemsList.Children[r] as Item);
             targetName = targetItem.Sprite.Sprite.Name;
 
