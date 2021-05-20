@@ -128,7 +128,7 @@ namespace HarvestValley.GameStates
             if (wallet.PlayCoinsound())
             {
                 wallet.playedSound = true;
-                GameEnvironment.AssetManager.PlaySound(sounds.SEIs[10]); //play coindrop
+                GameEnvironment.AssetManager.PlaySound(sounds.SEIs[12]); //play coindrop
             }
         }
 
