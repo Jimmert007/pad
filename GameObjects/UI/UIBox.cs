@@ -9,7 +9,7 @@ namespace HarvestValley.GameObjects.UI
     {
         public UIBox(string _assetName) : base(_assetName)
         {
-            //Scale = 2;
+            Scale = 2;
         }
     }
 }

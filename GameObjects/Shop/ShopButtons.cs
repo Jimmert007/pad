@@ -19,7 +19,7 @@ namespace HarvestValley.GameObjects.Shop
             Add(confirm = new Button("checkmark"));
             confirm.Position = new Vector2(GameEnvironment.Screen.X * .3f, GameEnvironment.Screen.Y * .6f);
             //yes.Scale = .5f;
-            Add(cancel = new Button("cancel"));
+            Add(cancel = new Button("cross"));
             cancel.Position = new Vector2(GameEnvironment.Screen.X * .6f, GameEnvironment.Screen.Y * .6f);
             //no.Scale = .5f;
             Add(addItem = new Button("cross"));
