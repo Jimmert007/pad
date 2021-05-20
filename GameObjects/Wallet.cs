@@ -17,18 +17,18 @@ namespace HarvestValley.GameObjects
         class Wallet : GameObjectList
         {
             TextGameObject text;
-            SpriteGameObject bg;
+            SpriteGameObject bg, coin;
             int money, newMoney;
             public bool playedSound;
 
             public Wallet()
             {
-                Add(bg = new SpriteGameObject("UI/spr_wallet"));
+                Add(bg = new SpriteGameObject("UI/spr_money_container"));
                 Add(text = new TextGameObject("Fonts/JimFont"));
-                text.Position = new Vector2(bg.Position.X + bg.Sprite.Width * .3f, text.Position.Y);
-                position.X = GameEnvironment.Screen.X - bg.Sprite.Width * .3f;
-                bg.Scale *= .3f;
                 text.Color = Color.Black;
+                Add(coin = new SpriteGameObject("UI/spr_coin"));
+                bg.Position = new Vector2(GameEnvironment.Screen.X - bg.Sprite.Width - coin.Sprite.Width, 0);
+                coin.Position = new Vector2(bg.Position.X + bg.Sprite.Width, bg.Position.Y + bg.Sprite.Height * .5f - coin.Sprite.Height * .5f);
             }
 
             public override void Update(GameTime gameTime)
@@ -39,7 +39,7 @@ namespace HarvestValley.GameObjects
                     money++;
                 }
                 text.Text = money.ToString();
-                text.Position = new Vector2(bg.Position.X + bg.Sprite.Width * .3f / 5 * .5f - text.Size.X / text.Text.Length * .5f, bg.Position.Y + bg.Sprite.Height * .3f * .5f - text.Size.Y * .5f);
+                text.Position = new Vector2(bg.Position.X + bg.Sprite.Width * .5f - text.Size.X * .5f, bg.Position.Y + bg.Sprite.Height * .5f - text.Size.Y * .5f);
             }
 
             public bool PlayCoinsound()
