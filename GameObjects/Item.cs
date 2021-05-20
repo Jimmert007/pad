@@ -10,15 +10,13 @@ namespace HarvestValley.GameObjects
 {
     class Item : SpriteGameObject
     {
-      /*  public List<Item> items = new List<Item>();*/
         public int itemAmount = 0;
         public bool isStackable;
-        public SpriteSheet hotbar;
-        public Item(string _assetName, bool stackable, int startItemAmount) : base(_assetName)
+        public Item(string _assetName, bool stackable, int startItemAmount, float scale) : base(_assetName)
         {
             isStackable = stackable;
             itemAmount = startItemAmount;
-            hotbar = new SpriteSheet("UI/spr_hotbar");
+            this.scale = scale;
         }
     }
 }

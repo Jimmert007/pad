@@ -12,6 +12,10 @@ namespace HarvestValley
 {
     class Map : GameObject
     {
+        public int mapSizeX = GameEnvironment.Screen.X, mapSizeY = GameEnvironment.Screen.Y, cellSize = 64,
+            outerringRandomTree = 4, outerringRandomStone = 2, middleringRandomTree = 4, middleringRandomStone = 6, innerringRandomTree = 20, innerringRandomStone = 30;
+
+
         int mapWidth = GameEnvironment.Screen.X * 3, mapHeight = GameEnvironment.Screen.Y * 3;
         public int rows, cols;
         public Map() : base()

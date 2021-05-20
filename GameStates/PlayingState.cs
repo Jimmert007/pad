@@ -39,10 +39,8 @@ namespace HarvestValley.GameStates
         Target target;
         Sounds sounds;
         
-
         int mapSizeX = GameEnvironment.Screen.X, mapSizeY = GameEnvironment.Screen.Y, cellSize = 64,
             outerringRandomTree = 4, outerringRandomStone = 2, middleringRandomTree = 4, middleringRandomStone = 6, innerringRandomTree = 20, innerringRandomStone = 30;
-
 
         public PlayingState()
         {
@@ -94,10 +92,12 @@ namespace HarvestValley.GameStates
             craftingMenu = new CraftingMenu();
             Add(craftingMenu);
 
-            hotbar = new Hotbar("UI/spr_empty");
+            itemList = new ItemList();
+
+            hotbar = new Hotbar(itemList);
             Add(hotbar);
 
-            itemList = new ItemList();
+
 
             jimFont = GameEnvironment.AssetManager.Content.Load<SpriteFont>("Fonts/JimFont");
 
@@ -130,6 +130,7 @@ namespace HarvestValley.GameStates
                 wallet.playedSound = true;
                 GameEnvironment.AssetManager.PlaySound(sounds.SEIs[12]); //play coindrop
             }
+            CheckPlantsWater();
         }
 
         public override void HandleInput(InputHelper inputHelper)
@@ -147,24 +148,6 @@ namespace HarvestValley.GameStates
             CheckPlantPickup(inputHelper);
 
             CheckHotbarSelection(inputHelper);
-        }
-
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            base.Draw(gameTime, spriteBatch);
-            spriteBatch.Draw(hotbar.selectedSquare.Sprite.Sprite, new Rectangle((int)hotbar.selectedSquarePosition.X, (int)hotbar.selectedSquarePosition.Y, (int)hotbar.squareSize + 5, (int)hotbar.squareSize + 5), Color.White); ;
-            for (int i = 0; i < itemList.Children.Count; i++)
-            {
-                Item item = (itemList.Children[i] as Item);
-                if (item.itemAmount > 0)
-                {
-                    spriteBatch.Draw(item.Sprite.Sprite, new Rectangle((int)hotbar.Position.X + 5 + hotbar.squareSize * i, (int)hotbar.Position.Y + 5, (int)hotbar.squareSize - 10, (int)hotbar.squareSize - 10), Color.White);
-                    if (item.isStackable)
-                    {
-                        spriteBatch.DrawString(jimFont, item.itemAmount.ToString(), new Vector2((int)hotbar.Position.X + 5 + hotbar.squareSize * i, (int)hotbar.Position.Y + 5), Color.Black);
-                    }
-                }
-            }
         }
 
         void ConvertFromHotbarToMoney(Item item, int amount)
@@ -229,10 +212,10 @@ namespace HarvestValley.GameStates
                 if (!c.cellHasTent)
                 {
                     #region outer ring
-                    if (c.Position.X > -mapSizeX - 10 && c.Position.X < -mapSizeX + 5 * cellSize
-                    && c.Position.Y > -mapSizeY + 4 * cellSize && c.Position.Y < GameEnvironment.Screen.Y + mapSizeY - 5 * cellSize)
+                    if (c.Position.X > -map.mapSizeX - 10 && c.Position.X < -map.mapSizeX + 5 * map.cellSize
+                    && c.Position.Y > -map.mapSizeY + 4 * map.cellSize && c.Position.Y < GameEnvironment.Screen.Y + map.mapSizeY - 5 * map.cellSize)
                     {
-                        int r = GameEnvironment.Random.Next(outerringRandomTree);
+                        int r = GameEnvironment.Random.Next(map.outerringRandomTree);
                         if (r > 0 && !c.CellCollidesWith(player.playerReach))
                         {
                             c.cellHasTree = true;
@@ -240,7 +223,7 @@ namespace HarvestValley.GameStates
                         }
                         if (!c.cellHasTree)
                         {
-                            int s = GameEnvironment.Random.Next(outerringRandomStone);
+                            int s = GameEnvironment.Random.Next(map.outerringRandomStone);
                             if (s == 0 && !c.CellCollidesWith(player.playerReach))
                             {
                                 c.cellHasStone = true;
@@ -248,10 +231,10 @@ namespace HarvestValley.GameStates
                             }
                         }
                     }
-                    if (c.Position.X > GameEnvironment.Screen.X + mapSizeX - 5 * cellSize - 10 && c.Position.X < GameEnvironment.Screen.X + mapSizeX
-                    && c.Position.Y > -mapSizeY + 4 * cellSize && c.Position.Y < GameEnvironment.Screen.Y + mapSizeY - 5 * cellSize)
+                    if (c.Position.X > GameEnvironment.Screen.X + map.mapSizeX - 5 * map.cellSize - 10 && c.Position.X < GameEnvironment.Screen.X + map.mapSizeX
+                    && c.Position.Y > -map.mapSizeY + 4 * map.cellSize && c.Position.Y < GameEnvironment.Screen.Y + map.mapSizeY - 5 * map.cellSize)
                     {
-                        int r = GameEnvironment.Random.Next(outerringRandomTree);
+                        int r = GameEnvironment.Random.Next(map.outerringRandomTree);
                         if (r > 0 && !c.CellCollidesWith(player.playerReach))
                         {
                             c.cellHasTree = true;
@@ -259,7 +242,7 @@ namespace HarvestValley.GameStates
                         }
                         if (!c.cellHasTree)
                         {
-                            int s = GameEnvironment.Random.Next(outerringRandomStone);
+                            int s = GameEnvironment.Random.Next(map.outerringRandomStone);
                             if (s == 0 && !c.CellCollidesWith(player.playerReach))
                             {
                                 c.cellHasStone = true;
@@ -267,9 +250,9 @@ namespace HarvestValley.GameStates
                             }
                         }
                     }
-                    if (c.Position.Y > -mapSizeY - 10 && c.Position.Y < -mapSizeY + 5 * cellSize)
+                    if (c.Position.Y > -map.mapSizeY - 10 && c.Position.Y < -map.mapSizeY + 5 * map.cellSize)
                     {
-                        int r = GameEnvironment.Random.Next(outerringRandomTree);
+                        int r = GameEnvironment.Random.Next(map.outerringRandomTree);
                         if (r > 0 && !c.CellCollidesWith(player.playerReach))
                         {
                             c.cellHasTree = true;
@@ -277,7 +260,7 @@ namespace HarvestValley.GameStates
                         }
                         if (!c.cellHasTree)
                         {
-                            int s = GameEnvironment.Random.Next(outerringRandomStone);
+                            int s = GameEnvironment.Random.Next(map.outerringRandomStone);
                             if (s == 0 && !c.CellCollidesWith(player.playerReach))
                             {
                                 c.cellHasStone = true;
@@ -285,9 +268,9 @@ namespace HarvestValley.GameStates
                             }
                         }
                     }
-                    if (c.Position.Y > GameEnvironment.Screen.Y + mapSizeY - 5 * cellSize - 60 && c.Position.Y < GameEnvironment.Screen.Y + mapSizeY)
+                    if (c.Position.Y > GameEnvironment.Screen.Y + map.mapSizeY - 5 * map.cellSize - 60 && c.Position.Y < GameEnvironment.Screen.Y + map.mapSizeY)
                     {
-                        int r = GameEnvironment.Random.Next(outerringRandomTree);
+                        int r = GameEnvironment.Random.Next(map.outerringRandomTree);
                         if (r > 0 && !c.CellCollidesWith(player.playerReach))
                         {
                             c.cellHasTree = true;
@@ -295,7 +278,7 @@ namespace HarvestValley.GameStates
                         }
                         if (!c.cellHasTree)
                         {
-                            int s = GameEnvironment.Random.Next(outerringRandomStone);
+                            int s = GameEnvironment.Random.Next(map.outerringRandomStone);
                             if (s == 0 && !c.CellCollidesWith(player.playerReach))
                             {
                                 c.cellHasStone = true;
@@ -306,10 +289,10 @@ namespace HarvestValley.GameStates
                     #endregion
 
                     #region middle ring
-                    if (c.Position.X > -mapSizeX - 10 + 5 * cellSize && c.Position.X < -mapSizeX + 10 * cellSize
-                    && c.Position.Y > -mapSizeY + 4 * cellSize && c.Position.Y < GameEnvironment.Screen.Y + mapSizeY - 5 * cellSize)
+                    if (c.Position.X > -map.mapSizeX - 10 + 5 * map.cellSize && c.Position.X < -map.mapSizeX + 10 * map.cellSize
+                    && c.Position.Y > -map.mapSizeY + 4 * map.cellSize && c.Position.Y < GameEnvironment.Screen.Y + map.mapSizeY - 5 * map.cellSize)
                     {
-                        int r = GameEnvironment.Random.Next(middleringRandomTree);
+                        int r = GameEnvironment.Random.Next(map.middleringRandomTree);
                         if (r == 0 && !c.CellCollidesWith(player.playerReach))
                         {
                             c.cellHasTree = true;
@@ -317,7 +300,7 @@ namespace HarvestValley.GameStates
                         }
                         if (!c.cellHasTree)
                         {
-                            int s = GameEnvironment.Random.Next(middleringRandomStone);
+                            int s = GameEnvironment.Random.Next(map.middleringRandomStone);
                             if (s == 0 && !c.CellCollidesWith(player.playerReach))
                             {
                                 c.cellHasStone = true;
@@ -325,10 +308,10 @@ namespace HarvestValley.GameStates
                             }
                         }
                     }
-                    if (c.Position.X > GameEnvironment.Screen.X + mapSizeX - 10 * cellSize - 10 && c.Position.X < GameEnvironment.Screen.X + mapSizeX - 5 * cellSize
-                    && c.Position.Y > -mapSizeY + 4 * cellSize && c.Position.Y < GameEnvironment.Screen.Y + mapSizeY - 5 * cellSize)
+                    if (c.Position.X > GameEnvironment.Screen.X + map.mapSizeX - 10 * map.cellSize - 10 && c.Position.X < GameEnvironment.Screen.X + map.mapSizeX - 5 * map.cellSize
+                    && c.Position.Y > -map.mapSizeY + 4 * map.cellSize && c.Position.Y < GameEnvironment.Screen.Y + map.mapSizeY - 5 * map.cellSize)
                     {
-                        int r = GameEnvironment.Random.Next(middleringRandomTree);
+                        int r = GameEnvironment.Random.Next(map.middleringRandomTree);
                         if (r == 0 && !c.CellCollidesWith(player.playerReach))
                         {
                             c.cellHasTree = true;
@@ -336,7 +319,7 @@ namespace HarvestValley.GameStates
                         }
                         if (!c.cellHasTree)
                         {
-                            int s = GameEnvironment.Random.Next(middleringRandomStone);
+                            int s = GameEnvironment.Random.Next(map.middleringRandomStone);
                             if (s == 0 && !c.CellCollidesWith(player.playerReach))
                             {
                                 c.cellHasStone = true;
@@ -344,10 +327,10 @@ namespace HarvestValley.GameStates
                             }
                         }
                     }
-                    if (c.Position.Y > -mapSizeY - 10 + 5 * cellSize && c.Position.Y < -mapSizeY + 10 * cellSize
-                    && c.Position.X > -mapSizeX + 9 * cellSize && c.Position.X < GameEnvironment.Screen.X + mapSizeX - 10 * cellSize)
+                    if (c.Position.Y > -map.mapSizeY - 10 + 5 * map.cellSize && c.Position.Y < -map.mapSizeY + 10 * map.cellSize
+                    && c.Position.X > -map.mapSizeX + 9 * map.cellSize && c.Position.X < GameEnvironment.Screen.X + map.mapSizeX - 10 * map.cellSize)
                     {
-                        int r = GameEnvironment.Random.Next(middleringRandomTree);
+                        int r = GameEnvironment.Random.Next(map.middleringRandomTree);
                         if (r == 0 && !c.CellCollidesWith(player.playerReach))
                         {
                             c.cellHasTree = true;
@@ -355,7 +338,7 @@ namespace HarvestValley.GameStates
                         }
                         if (!c.cellHasTree)
                         {
-                            int s = GameEnvironment.Random.Next(middleringRandomStone);
+                            int s = GameEnvironment.Random.Next(map.middleringRandomStone);
                             if (s == 0 && !c.CellCollidesWith(player.playerReach))
                             {
                                 c.cellHasStone = true;
@@ -363,10 +346,10 @@ namespace HarvestValley.GameStates
                             }
                         }
                     }
-                    if (c.Position.Y > GameEnvironment.Screen.Y + mapSizeY - 11 * cellSize && c.Position.Y - 60 < GameEnvironment.Screen.Y + mapSizeY - 6 * cellSize
-                        && c.Position.X > -mapSizeX + 9 * cellSize && c.Position.X < GameEnvironment.Screen.X + mapSizeX - 10 * cellSize)
+                    if (c.Position.Y > GameEnvironment.Screen.Y + map.mapSizeY - 11 * map.cellSize && c.Position.Y - 60 < GameEnvironment.Screen.Y + map.mapSizeY - 6 * map.cellSize
+                        && c.Position.X > -map.mapSizeX + 9 * map.cellSize && c.Position.X < GameEnvironment.Screen.X + map.mapSizeX - 10 * map.cellSize)
                     {
-                        int r = GameEnvironment.Random.Next(middleringRandomTree);
+                        int r = GameEnvironment.Random.Next(map.middleringRandomTree);
                         if (r == 0 && !c.CellCollidesWith(player.playerReach))
                         {
                             c.cellHasTree = true;
@@ -374,7 +357,7 @@ namespace HarvestValley.GameStates
                         }
                         if (!c.cellHasTree)
                         {
-                            int s = GameEnvironment.Random.Next(middleringRandomStone);
+                            int s = GameEnvironment.Random.Next(map.middleringRandomStone);
                             if (s == 0 && !c.CellCollidesWith(player.playerReach))
                             {
                                 c.cellHasStone = true;
@@ -385,10 +368,10 @@ namespace HarvestValley.GameStates
                     #endregion
 
                     #region inner ring
-                    if (c.Position.X > -mapSizeX + 10 * cellSize && c.Position.X < GameEnvironment.Screen.X + mapSizeX - 10 * cellSize
-                    && c.Position.Y > -mapSizeY + 10 * cellSize && c.Position.Y < GameEnvironment.Screen.Y + mapSizeY - 10 * cellSize)
+                    if (c.Position.X > -map.mapSizeX + 10 * map.cellSize && c.Position.X < GameEnvironment.Screen.X + map.mapSizeX - 10 * map.cellSize
+                    && c.Position.Y > -map.mapSizeY + 10 * map.cellSize && c.Position.Y < GameEnvironment.Screen.Y + map.mapSizeY - 10 * map.cellSize)
                     {
-                        int r = GameEnvironment.Random.Next(innerringRandomTree);
+                        int r = GameEnvironment.Random.Next(map.innerringRandomTree);
                         if (r == 0 && !c.CellCollidesWith(player.playerReach))
                         {
                             c.cellHasTree = true;
@@ -396,7 +379,7 @@ namespace HarvestValley.GameStates
                         }
                         if (!c.cellHasTree)
                         {
-                            int s = GameEnvironment.Random.Next(innerringRandomStone);
+                            int s = GameEnvironment.Random.Next(map.innerringRandomStone);
                             if (s == 0 && !c.CellCollidesWith(player.playerReach))
                             {
                                 c.cellHasStone = true;
@@ -571,6 +554,27 @@ namespace HarvestValley.GameStates
             }
         }
 
+        void CheckPlantsWater()
+        {
+            foreach (Cell c in cells.Children)
+            {
+                for (int i = plants.Children.Count - 1; i >= 0; i--)
+                {
+                    if (c.Position == plants.Children[i].Position)
+                    {
+                        if (c.cellHasWater)
+                        {
+                            (plants.Children[i] as Plant).soilHasWater = true;
+                        }
+                        if (!c.cellHasWater)
+                        {
+                            (plants.Children[i] as Plant).soilHasWater = false;
+                        }
+                    }
+                }
+            }
+        }
+
         void CameraSystem(InputHelper inputHelper)
         {
             Vector2 moveVector = Vector2.Zero;
@@ -729,7 +733,7 @@ namespace HarvestValley.GameStates
                         {
                             if (item is Seed)
                             {
-                                if (itemList.itemSelected == "SEED" && c.cellIsTilled && !c.cellHasPlant && item.itemAmount > 0)
+                                if (itemList.itemSelected == "SEED" && c.cellIsTilled && !c.cellHasPlant && item.itemAmount > 0 && !c.cellHasSprinkler)
                                 {
                                     if (!tutorialStepList.step2completed && tutorialStepList.step == 2)
                                     {
@@ -788,22 +792,18 @@ namespace HarvestValley.GameStates
                 {
                     if (inputHelper.MouseLeftButtonPressed())
                     {
-                        for (int i = plants.Children.Count - 1; i >= 0; i--)
+                        if (itemList.itemSelected == "WATERINGCAN" && c.cellIsTilled)
                         {
-                            if (itemList.itemSelected == "WATERINGCAN" && c.cellIsTilled)
+                            if (!tutorialStepList.step3completed && tutorialStepList.step == 3)
                             {
-                                if (!tutorialStepList.step3completed && tutorialStepList.step == 3)
-                                {
-                                    tutorialStepList.step += 1;
-                                    tutorialStepList.step3completed = true;
-                                }
-                                //Play WaterSplash
-                                GameEnvironment.AssetManager.PlaySound(sounds.SEIs[4]);
-
-                                c.cellHasWater = true;
-                                (plants.Children[i] as Plant).soilHasWater = true;
-                                c.ChangeSpriteTo(2);
+                                tutorialStepList.step += 1;
+                                tutorialStepList.step3completed = true;
                             }
+                            //Play WaterSplash
+                            GameEnvironment.AssetManager.PlaySound(sounds.SEIs[4]);
+
+                            c.cellHasWater = true;
+                            c.ChangeSpriteTo(2);
                         }
                     }
                 }
@@ -966,6 +966,14 @@ namespace HarvestValley.GameStates
                                             tutorialStepList.step += 1;
                                             tutorialStepList.step6completed = true;
                                         }
+                                        foreach (Item item in itemList.Children)
+                                        {
+                                            if (item is Wheat)
+                                            {
+                                                item.itemAmount += GameEnvironment.Random.Next(1, 3);
+                                            }
+                                        }
+
                                         //(receive product and new seed)
                                         c.cellHasPlant = false;
                                         plants.Remove(plants.Children[i]);
@@ -982,52 +990,117 @@ namespace HarvestValley.GameStates
 
         void CheckHotbarSelection(InputHelper inputHelper)
         {
+            //keyboard input
+            #region keyboard input
             if (inputHelper.KeyPressed(Keys.D1))
             {
                 itemList.itemSelected = "HOE";
-                hotbar.selectedSquarePosition.X = hotbar.Position.X;
+                hotbar.selectedSquare.Position = hotbar.hotbarSquares.Children[0].Position;
             }
             else if (inputHelper.KeyPressed(Keys.D2))
             {
                 itemList.itemSelected = "AXE";
-                hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize;
-               
+                hotbar.selectedSquare.Position = hotbar.hotbarSquares.Children[1].Position;
             }
             else if (inputHelper.KeyPressed(Keys.D3))
             {
                 itemList.itemSelected = "PICKAXE";
-                hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 2;
+                hotbar.selectedSquare.Position = hotbar.hotbarSquares.Children[2].Position;
             }
             else if (inputHelper.KeyPressed(Keys.D4))
             {
                 itemList.itemSelected = "WATERINGCAN";
-                hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 3;
+                hotbar.selectedSquare.Position = hotbar.hotbarSquares.Children[3].Position;
             }
             else if (inputHelper.KeyPressed(Keys.D5))
             {
                 itemList.itemSelected = "SEED";
-                hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 4;
+                hotbar.selectedSquare.Position = hotbar.hotbarSquares.Children[4].Position;
             }
             else if (inputHelper.KeyPressed(Keys.D6))
             {
-                itemList.itemSelected = "WOOD";
-                hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 5;
+                itemList.itemSelected = "TREESEED";
+                hotbar.selectedSquare.Position = hotbar.hotbarSquares.Children[5].Position;
             }
             else if (inputHelper.KeyPressed(Keys.D7))
             {
-                itemList.itemSelected = "TREESEED";
-                hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 6;
+                itemList.itemSelected = "SPRINKLER";
+                hotbar.selectedSquare.Position = hotbar.hotbarSquares.Children[6].Position;
             }
             else if (inputHelper.KeyPressed(Keys.D8))
             {
-                itemList.itemSelected = "ROCK";
-                hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 7;
+                itemList.itemSelected = "WOOD";
+                hotbar.selectedSquare.Position = hotbar.hotbarSquares.Children[7].Position;
             }
             else if (inputHelper.KeyPressed(Keys.D9))
             {
-                itemList.itemSelected = "SPRINKLER";
-                hotbar.selectedSquarePosition.X = hotbar.Position.X + hotbar.squareSize * 8;
+                itemList.itemSelected = "ROCK";
+                hotbar.selectedSquare.Position = hotbar.hotbarSquares.Children[8].Position;
             }
+            else if (inputHelper.KeyPressed(Keys.D0))
+            {
+                itemList.itemSelected = "WHEAT";
+                hotbar.selectedSquare.Position = hotbar.hotbarSquares.Children[9].Position;
+            }
+            #endregion
+
+
+            //mouse input
+            #region mouse input
+            if (inputHelper.MouseLeftButtonPressed())
+            {
+                if (MouseGO.CollidesWith(hotbar.hotbarSquares.Children[0] as SpriteGameObject))
+                {
+                    itemList.itemSelected = "HOE";
+                    hotbar.selectedSquare.Position = hotbar.hotbarSquares.Children[0].Position;
+                }
+                else if (MouseGO.CollidesWith(hotbar.hotbarSquares.Children[1] as SpriteGameObject))
+                {
+                    itemList.itemSelected = "AXE";
+                    hotbar.selectedSquare.Position = hotbar.hotbarSquares.Children[1].Position;
+                }
+                else if (MouseGO.CollidesWith(hotbar.hotbarSquares.Children[2] as SpriteGameObject))
+                {
+                    itemList.itemSelected = "PICKAXE";
+                    hotbar.selectedSquare.Position = hotbar.hotbarSquares.Children[2].Position;
+                }
+                else if (MouseGO.CollidesWith(hotbar.hotbarSquares.Children[3] as SpriteGameObject))
+                {
+                    itemList.itemSelected = "WATERINGCAN";
+                    hotbar.selectedSquare.Position = hotbar.hotbarSquares.Children[3].Position;
+                }
+                else if (MouseGO.CollidesWith(hotbar.hotbarSquares.Children[4] as SpriteGameObject))
+                {
+                    itemList.itemSelected = "SEED";
+                    hotbar.selectedSquare.Position = hotbar.hotbarSquares.Children[4].Position;
+                }
+                else if (MouseGO.CollidesWith(hotbar.hotbarSquares.Children[5] as SpriteGameObject))
+                {
+                    itemList.itemSelected = "WOOD";
+                    hotbar.selectedSquare.Position = hotbar.hotbarSquares.Children[5].Position;
+                }
+                else if (MouseGO.CollidesWith(hotbar.hotbarSquares.Children[6] as SpriteGameObject))
+                {
+                    itemList.itemSelected = "TREESEED";
+                    hotbar.selectedSquare.Position = hotbar.hotbarSquares.Children[6].Position;
+                }
+                else if (MouseGO.CollidesWith(hotbar.hotbarSquares.Children[7] as SpriteGameObject))
+                {
+                    itemList.itemSelected = "ROCK";
+                    hotbar.selectedSquare.Position = hotbar.hotbarSquares.Children[7].Position;
+                }
+                else if (MouseGO.CollidesWith(hotbar.hotbarSquares.Children[8] as SpriteGameObject))
+                {
+                    itemList.itemSelected = "SPRINKLER";
+                    hotbar.selectedSquare.Position = hotbar.hotbarSquares.Children[8].Position;
+                }
+                else if (MouseGO.CollidesWith(hotbar.hotbarSquares.Children[9] as SpriteGameObject))
+                {
+                    itemList.itemSelected = "WHEAT";
+                    hotbar.selectedSquare.Position = hotbar.hotbarSquares.Children[9].Position;
+                }
+            }
+            #endregion
         }
     }
 }

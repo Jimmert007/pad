@@ -8,7 +8,7 @@ namespace HarvestValley
 {
     class WateringCan :  Item
     {
-        public WateringCan(string _assetName, bool stackable, int startItemAmount) : base(_assetName, stackable, startItemAmount)
+        public WateringCan(string _assetName, bool stackable, int startItemAmount, float scale) : base(_assetName, stackable, startItemAmount, scale)
         {
         }
     }
