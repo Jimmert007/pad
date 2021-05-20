@@ -86,9 +86,9 @@ namespace HarvestValley.GameStates
 
             PlaceStonesAndTrees();
 
-            //Initialize UI Elements
+            ////Initialize UI Elements
             Add(uIList = new UIList());
-            Add(shop = new ShopMenuUIList());
+            Add(shop = new ShopMenuUIList(itemList));
 
             wallet = new Wallet();
             Add(wallet);
