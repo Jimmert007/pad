@@ -10,7 +10,7 @@ namespace HarvestValley.GameObjects
 {
     class Target : GameObjectList
     {
-        SpriteGameObject panel_bg;
+        SpriteGameObject panel_bg, targetUI;
         TextGameObject welcomeText, targetText, congratsText;
         TargetButton button;
         int targetAmount, currentAmount;
@@ -39,6 +39,7 @@ namespace HarvestValley.GameObjects
             }
 
             int r = GameEnvironment.Random.Next(stackableItemsList.Children.Count);
+            Debug.WriteLine(r);
             targetItem = (stackableItemsList.Children[r] as Item);
             targetName = targetItem.Sprite.Sprite.Name;
 
@@ -64,9 +65,10 @@ namespace HarvestValley.GameObjects
             welcomeText.Position = panel_bg.Position - welcomeText.Size * .5f;
             Add(button = new TargetButton());
             button.Position = panel_bg.Position + new Vector2(panel_bg.Width * .5f - button.Sprite.Width, panel_bg.Height * .5f - button.Sprite.Height * 1.5f);
+            Add(targetUI = new SpriteGameObject("UI/spr_target_ui_bar"));
+            targetUI.Position = new Vector2(0, 50);
             Add(targetText = new TextGameObject("Fonts/JimFont"));
             targetText.Color = Color.Black;
-            targetText.Position = new Vector2(0, 50);
             rewardAmount = 500;
             Add(congratsText = new TextGameObject("Fonts/JimFont"));
             congratsText.Color = Color.Black;
@@ -87,6 +89,8 @@ namespace HarvestValley.GameObjects
         {
             base.Update(gameTime);
             targetText.Text = "Doel " + currentAmount + " / " + targetAmount + " " + targetName;
+            targetText.Position = targetUI.Position + (new Vector2(targetUI.Width, targetUI.Height) * .5f) - targetText.Size * .5f;
+
             if (button.OnClick)
             {
                 panel_bg.Visible = false;
