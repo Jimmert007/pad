@@ -25,6 +25,8 @@ namespace HarvestValley.GameStates
         GameObjectList trees;
         GameObjectList stones;
         GameObjectList sprinklers;
+        GameObjectList cliff;
+        GameObjectList borderGrass;
         MouseGameObject MouseGO;
         TutorialStepList tutorialStepList;
         EnergyBar energyBar;
@@ -39,7 +41,7 @@ namespace HarvestValley.GameStates
         Vector2 prevPos;
         Target target;
         Sounds sounds;
-        
+
         public PlayingState()
         {
             sounds = new Sounds();
@@ -56,6 +58,13 @@ namespace HarvestValley.GameStates
                 }
             }
             Add(cells);
+
+            cliff = new GameObjectList();
+            Add(cliff);
+
+            borderGrass = new GameObjectList();
+            Add(borderGrass);
+            BuildBorder();
 
             plants = new GameObjectList();
             Add(plants);
@@ -190,6 +199,42 @@ namespace HarvestValley.GameStates
             else if (!MouseGO.CollidesWith(tutorialStepList.Children[0] as SpriteGameObject))
             {
                 tutorialStepList.mouseCollides = false;
+            }
+        }
+
+        void BuildBorder()
+        {
+            for (int x = 0; x < map.cols; x++)
+            {
+                cliff.Add(new Cliff(new Vector2(-map.mapSizeX + map.cellSize * x, -map.mapSizeY - map.cellSize), 0));
+                cliff.Add(new Cliff(new Vector2(-map.mapSizeX + map.cellSize * x, map.rows * map.cellSize - map.mapSizeY), 180));
+            }
+            cliff.Add(new Cliff(new Vector2(-map.mapSizeX - map.cellSize, -map.mapSizeY - map.cellSize), 0, 2));
+            cliff.Add(new Cliff(new Vector2(GameEnvironment.Screen.X + map.mapSizeX, -map.mapSizeY - map.cellSize), 90, 2));
+            for (int y = 0; y < map.rows; y++)
+            {
+                cliff.Add(new Cliff(new Vector2(-map.mapSizeX - map.cellSize, -map.mapSizeY + map.cellSize * y), 270));
+                cliff.Add(new Cliff(new Vector2(GameEnvironment.Screen.X + map.mapSizeX, -map.mapSizeY + map.cellSize * y), 90));
+            }
+            cliff.Add(new Cliff(new Vector2(-map.mapSizeX - map.cellSize, map.rows * map.cellSize - map.mapSizeY), 270, 2));
+            cliff.Add(new Cliff(new Vector2(GameEnvironment.Screen.X + map.mapSizeX, map.rows * map.cellSize - map.mapSizeY), 180, 2));
+
+            for (int i = 0; i < map.cols + 2; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    borderGrass.Add(new SpriteGameObject("tiles/spr_grass") { Position = new Vector2(-map.mapSizeX - map.cellSize + map.cellSize * i, -map.mapSizeY - map.cellSize * 6 + map.cellSize * j), scale = .5f });
+                    borderGrass.Add(new SpriteGameObject("tiles/spr_grass") { Position = new Vector2(-map.mapSizeX - map.cellSize + map.cellSize * i, map.rows * map.cellSize - map.mapSizeY + map.cellSize * 5 - map.cellSize * j), scale = .5f });
+                }
+            }
+
+            for (int i = 0; i < 9; i++)
+            {
+                for (int j = 0; j < map.rows + 12; j++)
+                {
+                    borderGrass.Add(new SpriteGameObject("tiles/spr_grass") { Position = new Vector2(-map.mapSizeX - map.cellSize * 10 + map.cellSize * i, -map.mapSizeY - map.cellSize * 6 + map.cellSize * j), scale = .5f });
+                    borderGrass.Add(new SpriteGameObject("tiles/spr_grass") { Position = new Vector2(GameEnvironment.Screen.X + map.mapSizeX + map.cellSize + map.cellSize * i, -map.mapSizeY - map.cellSize * 6 + map.cellSize * j), scale = .5f });
+                }
             }
         }
 
@@ -606,18 +651,38 @@ namespace HarvestValley.GameStates
                 GameEnvironment.AssetManager.StopSound(sounds.SEIs[0]);
             }
 
-            for (int i = trees.Children.Count - 1; i >= 0; i--)
-            {
-                if ((trees.Children[i] as Tree).CollidesWith(player))
-                {
-                    cells.Position = prevPos;
-                    trees.Position = prevPos;
-                    stones.Position = prevPos;
-                    sprinklers.Position = prevPos;
-                    plants.Position = prevPos;
-                    tent.Position = prevPos;
-                }
-            }
+            //for (int i = trees.Children.Count - 1; i >= 0; i--)
+            //{
+            //    if ((trees.Children[i] as Tree).CollidesWith(player))
+            //    {
+            //        cells.Position = prevPos;
+            //        trees.Position = prevPos;
+            //        stones.Position = prevPos;
+            //        sprinklers.Position = prevPos;
+            //        plants.Position = prevPos;
+            //        tent.Position = prevPos;
+            //        cliff.Position = prevPos;
+            //        borderGrass.Position = prevPos;
+            //    }
+            //}
+
+            //foreach (Cliff c in cliff.Children)
+            //{
+            //    foreach (RotatingSpriteGameObject r in c.Children)
+            //    {
+            //        if (r.CollidesWith(player))
+            //        {
+            //            cells.Position = prevPos;
+            //            trees.Position = prevPos;
+            //            stones.Position = prevPos;
+            //            sprinklers.Position = prevPos;
+            //            plants.Position = prevPos;
+            //            tent.Position = prevPos;
+            //            cliff.Position = prevPos;
+            //            borderGrass.Position = prevPos;
+            //        }
+            //    }
+            //}
 
             if (player.sleepingPosition)
             {
@@ -627,6 +692,8 @@ namespace HarvestValley.GameStates
                 sprinklers.Position = prevPos - player.newSleepingPosition;
                 plants.Position = prevPos - player.newSleepingPosition;
                 tent.Position = prevPos - player.newSleepingPosition;
+                cliff.Position = prevPos - player.newSleepingPosition;
+                borderGrass.Position = prevPos;
                 player.sleepingPosition = false;
             }
 
@@ -638,6 +705,8 @@ namespace HarvestValley.GameStates
                 sprinklers.Position = prevPos;
                 plants.Position = prevPos;
                 tent.Position = prevPos;
+                cliff.Position = prevPos;
+                borderGrass.Position = prevPos;
             }
 
             if ((tent.Children[0] as Tent).CollidesWith(player))
@@ -648,6 +717,8 @@ namespace HarvestValley.GameStates
                 sprinklers.Position = prevPos;
                 plants.Position = prevPos;
                 tent.Position = prevPos;
+                cliff.Position = prevPos;
+                borderGrass.Position = prevPos;
             }
 
             for (int i = stones.Children.Count - 1; i >= 0; i--)
@@ -660,6 +731,8 @@ namespace HarvestValley.GameStates
                     sprinklers.Position = prevPos;
                     plants.Position = prevPos;
                     tent.Position = prevPos;
+                    cliff.Position = prevPos;
+                    borderGrass.Position = prevPos;
                 }
             }
 
@@ -673,10 +746,14 @@ namespace HarvestValley.GameStates
                     sprinklers.Position = prevPos;
                     plants.Position = prevPos;
                     tent.Position = prevPos;
+                    cliff.Position = prevPos;
+                    borderGrass.Position = prevPos;
                 }
             }
 
             prevPos = cells.Position;
+            borderGrass.Position += moveVector;
+            cliff.Position += moveVector;
             tent.Position += moveVector;
             cells.Position += moveVector;
             trees.Position += moveVector;
@@ -783,7 +860,7 @@ namespace HarvestValley.GameStates
                 {
                     if (inputHelper.MouseLeftButtonPressed())
                     {
-                        if (itemList.itemSelected == "WATERINGCAN" && c.cellIsTilled)
+                        if (itemList.itemSelected == "WATERINGCAN" && c.cellIsTilled && !c.cellHasWater)
                         {
                             if (!tutorialStepList.step3completed && tutorialStepList.step == 3)
                             {
