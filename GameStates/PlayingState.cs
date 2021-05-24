@@ -37,7 +37,8 @@ namespace HarvestValley.GameStates
         ItemList itemList;
         SpriteFont jimFont;
         UIList uIList;
-        ShopMenuUIList shop;
+        ShopMenuUIList shopUI;
+        GameObjectList shopPC;
         Wallet wallet;
         GameObjectList tent;
         Vector2 prevPos;
@@ -107,9 +108,13 @@ namespace HarvestValley.GameStates
 
             jimFont = GameEnvironment.AssetManager.Content.Load<SpriteFont>("Fonts/JimFont");
 
+            shopPC = new GameObjectList();
+            shopPC.Add(new ShopPC(tent.Children[0] as Tent));
+            Add(shopPC);
+
             ////Initialize UI Elements
             Add(uIList = new UIList());
-            Add(shop = new ShopMenuUIList(itemList));
+            Add(shopUI = new ShopMenuUIList(itemList, (tent.Children[0] as Tent), MouseGO));
 
             wallet = new Wallet();
             Add(wallet);
@@ -121,6 +126,7 @@ namespace HarvestValley.GameStates
 
             Add(MouseGO);
             SpawnTent();
+            SpawnPC();
             PlaceStonesAndTrees();
         }
 
@@ -144,7 +150,7 @@ namespace HarvestValley.GameStates
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
-            if (!target.panel_bg.Visible && !options.optionsVisible && !options.exitConfirmation)
+            if (!target.panel_bg.Visible && !options.optionsVisible && !options.exitConfirmation && !shopUI.IsActive)
             {
                 CameraSystem(inputHelper);
                 CheckHoeInput(inputHelper);
@@ -156,6 +162,16 @@ namespace HarvestValley.GameStates
                 CheckAxeInput(inputHelper);
                 CheckPlantPickup(inputHelper);
                 CheckHotbarSelection(inputHelper);
+                ToggleShopMenu(inputHelper);
+            }
+        }
+
+        void ToggleShopMenu(InputHelper inputHelper)
+        {
+            //Activate UI bools
+            if (inputHelper.MouseLeftButtonPressed() && MouseGO.CollidesWith((shopPC.Children[0] as ShopPC).Sprite) && player.playerReach.CollidesWith((shopPC.Children[0] as ShopPC).Sprite))
+            {
+                shopUI.InitShopWelcomePage();
             }
         }
 
@@ -198,16 +214,15 @@ namespace HarvestValley.GameStates
                 }
             }
         }
+
         void SpawnPC()
         {
             foreach (Cell c in cells.Children)
             {
-                 
-                if (c.CellCollidesWith(shop.Children[0] as SpriteGameObject))
+                if (c.CellCollidesWith((shopPC.Children[0] as ShopPC).Sprite))
                 {
-                    c.cellHasShop= true;
+                    c.cellHasShop = true;
                 }
-
             }
         }
         void CheckMouseCollisionWithTutorial()
@@ -265,7 +280,7 @@ namespace HarvestValley.GameStates
         {
             foreach (Cell c in cells.Children)
             {
-                if (!c.cellHasTent)
+                if (!c.cellHasTent && !c.cellHasShop)
                 {
                     #region outer ring
                     if (c.Position.X > -map.mapSizeX - 10 && c.Position.X < -map.mapSizeX + 5 * map.cellSize
@@ -672,14 +687,7 @@ namespace HarvestValley.GameStates
             {
                 if ((trees.Children[i] as Tree).CollidesWith(player))
                 {
-                    cells.Position = prevPos;
-                    trees.Position = prevPos;
-                    stones.Position = prevPos;
-                    sprinklers.Position = prevPos;
-                    plants.Position = prevPos;
-                    tent.Position = prevPos;
-                    cliff.Position = prevPos;
-                    borderGrass.Position = prevPos;
+                    SetPreviousPosition();
                 }
             }
 
@@ -689,14 +697,7 @@ namespace HarvestValley.GameStates
                 {
                     if (r.CollidesWith(player))
                     {
-                        cells.Position = prevPos;
-                        trees.Position = prevPos;
-                        stones.Position = prevPos;
-                        sprinklers.Position = prevPos;
-                        plants.Position = prevPos;
-                        tent.Position = prevPos;
-                        cliff.Position = prevPos;
-                        borderGrass.Position = prevPos;
+                        SetPreviousPosition();
                     }
                 }
             }
@@ -710,46 +711,26 @@ namespace HarvestValley.GameStates
                 plants.Position = prevPos - player.newSleepingPosition;
                 tent.Position = prevPos - player.newSleepingPosition;
                 cliff.Position = prevPos - player.newSleepingPosition;
-                borderGrass.Position = prevPos;
+                borderGrass.Position = prevPos - player.newSleepingPosition;
+                shopPC.Position = prevPos - player.newSleepingPosition;
                 player.sleepingPosition = false;
             }
 
             if (player.sleeping)
             {
-                cells.Position = prevPos;
-                trees.Position = prevPos;
-                stones.Position = prevPos;
-                sprinklers.Position = prevPos;
-                plants.Position = prevPos;
-                tent.Position = prevPos;
-                cliff.Position = prevPos;
-                borderGrass.Position = prevPos;
+                SetPreviousPosition();
             }
 
             if ((tent.Children[0] as Tent).CollidesWith(player))
             {
-                cells.Position = prevPos;
-                trees.Position = prevPos;
-                stones.Position = prevPos;
-                sprinklers.Position = prevPos;
-                plants.Position = prevPos;
-                tent.Position = prevPos;
-                cliff.Position = prevPos;
-                borderGrass.Position = prevPos;
+                SetPreviousPosition();
             }
 
             for (int i = stones.Children.Count - 1; i >= 0; i--)
             {
                 if ((stones.Children[i] as Stone).CollidesWith(player))
                 {
-                    cells.Position = prevPos;
-                    trees.Position = prevPos;
-                    stones.Position = prevPos;
-                    sprinklers.Position = prevPos;
-                    plants.Position = prevPos;
-                    tent.Position = prevPos;
-                    cliff.Position = prevPos;
-                    borderGrass.Position = prevPos;
+                    SetPreviousPosition();
                 }
             }
 
@@ -757,15 +738,13 @@ namespace HarvestValley.GameStates
             {
                 if ((sprinklers.Children[i] as SprinklerObject).CollidesWith(player))
                 {
-                    cells.Position = prevPos;
-                    trees.Position = prevPos;
-                    stones.Position = prevPos;
-                    sprinklers.Position = prevPos;
-                    plants.Position = prevPos;
-                    tent.Position = prevPos;
-                    cliff.Position = prevPos;
-                    borderGrass.Position = prevPos;
+                    SetPreviousPosition();
                 }
+            }
+
+            if((shopPC.Children[0] as ShopPC).CollidesWith(player))
+            {
+                SetPreviousPosition();
             }
 
             prevPos = cells.Position;
@@ -777,6 +756,20 @@ namespace HarvestValley.GameStates
             stones.Position += moveVector;
             sprinklers.Position += moveVector;
             plants.Position += moveVector;
+            shopPC.Position += moveVector;
+        }
+
+        void SetPreviousPosition()
+        {
+            cells.Position = prevPos;
+            trees.Position = prevPos;
+            stones.Position = prevPos;
+            sprinklers.Position = prevPos;
+            plants.Position = prevPos;
+            tent.Position = prevPos;
+            cliff.Position = prevPos;
+            borderGrass.Position = prevPos;
+            shopPC.Position = prevPos;
         }
 
         void CheckHoeInput(InputHelper inputHelper)
@@ -787,7 +780,7 @@ namespace HarvestValley.GameStates
                 {
                     if (inputHelper.MouseLeftButtonDown())
                     {
-                        if (itemList.itemSelected == "HOE" && !c.cellIsTilled && !c.cellHasTent && !c.cellHasTree && !c.cellHasSprinkler && !c.cellHasStone)
+                        if (itemList.itemSelected == "HOE" && !c.cellIsTilled && !c.cellHasTent && !c.cellHasTree && !c.cellHasSprinkler && !c.cellHasStone && !c.cellHasShop)
                         {
                             if (!tutorialStepList.step1completed && tutorialStepList.step == 1)
                             {
@@ -853,7 +846,7 @@ namespace HarvestValley.GameStates
                         {
                             if (item is Sprinkler)
                             {
-                                if (itemList.itemSelected == "SPRINKLER" && !c.cellHasPlant && !c.cellHasTent && !c.cellHasTree && !c.cellHasSprinkler && item.itemAmount > 0 && !c.cellHasStone)
+                                if (itemList.itemSelected == "SPRINKLER" && !c.cellHasPlant && !c.cellHasTent && !c.cellHasTree && !c.cellHasSprinkler && item.itemAmount > 0 && !c.cellHasStone && !c.cellHasShop)
                                 {
                                     item.itemAmount -= 1;
                                     c.cellHasSprinkler = true;
@@ -909,7 +902,7 @@ namespace HarvestValley.GameStates
                             {
                                 if (item is TreeSeed)
                                 {
-                                    if (itemList.itemSelected == "TREESEED" && !c.cellIsTilled && !c.cellHasTent && !c.cellHasPlant && item.itemAmount > 0 && !c.cellHasTree && !c.cellHasSprinkler && !c.cellHasStone)
+                                    if (itemList.itemSelected == "TREESEED" && !c.cellIsTilled && !c.cellHasTent && !c.cellHasPlant && item.itemAmount > 0 && !c.cellHasTree && !c.cellHasSprinkler && !c.cellHasStone && !c.cellHasShop)
                                     {
                                         GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[13]);
                                         item.itemAmount -= 1;
