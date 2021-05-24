@@ -10,7 +10,7 @@ namespace HarvestValley.GameObjects
 {
     class Target : GameObjectList
     {
-        SpriteGameObject panel_bg, targetUI;
+        public SpriteGameObject panel_bg, targetUI;
         TextGameObject welcomeText, targetText, congratsText;
         TargetButton button;
         int targetAmount, currentAmount;
@@ -71,7 +71,8 @@ namespace HarvestValley.GameObjects
                 "Enjoy!";
             welcomeText.Position = panel_bg.Position - welcomeText.Size * .5f;
             Add(button = new TargetButton());
-            button.Position = panel_bg.Position + new Vector2(panel_bg.Width * .5f - button.Sprite.Width, panel_bg.Height * .5f - button.Sprite.Height * 1.5f);
+            button.scale = 2;
+            button.Position = panel_bg.Position + new Vector2(panel_bg.Width * .5f - button.Sprite.Width * 2, panel_bg.Height * .5f - button.Sprite.Height * 2);
             Add(targetUI = new SpriteGameObject("UI/spr_target_ui_bar"));
             targetUI.Position = new Vector2(GameEnvironment.Screen.X * .5f - targetUI.Sprite.Width * .5f, 0);
             Add(targetText = new TextGameObject("Fonts/JimFont"));
