@@ -198,7 +198,18 @@ namespace HarvestValley.GameStates
                 }
             }
         }
+        void SpawnPC()
+        {
+            foreach (Cell c in cells.Children)
+            {
+                 
+                if (c.CellCollidesWith(shop.Children[0] as SpriteGameObject))
+                {
+                    c.cellHasShop= true;
+                }
 
+            }
+        }
         void CheckMouseCollisionWithTutorial()
         {
             if (MouseGO.CollidesWith(tutorialStepList.Children[0] as SpriteGameObject))

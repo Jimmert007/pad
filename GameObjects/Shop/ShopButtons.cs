@@ -17,10 +17,10 @@ namespace HarvestValley.GameObjects.Shop
             }
 
             Add(confirm = new Button("UI/checkmark"));
-            confirm.Position = new Vector2(GameEnvironment.Screen.X * .3f, GameEnvironment.Screen.Y * .6f);
+            //confirm.Position = new Vector2(GameEnvironment.Screen.X * .3f, GameEnvironment.Screen.Y * .6f);
             //yes.Scale = .5f;
             Add(cancel = new Button("UI/cross"));
-            cancel.Position = new Vector2(GameEnvironment.Screen.X * .6f, GameEnvironment.Screen.Y * .6f);
+            //cancel.Position = new Vector2(GameEnvironment.Screen.X * .6f, GameEnvironment.Screen.Y * .6f);
             //no.Scale = .5f;
             Add(addItem = new Button("UI/cross"));
             //addItem.Position = new Vector2(GameEnvironment.Screen.X * .6f, GameEnvironment.Screen.Y * .6f);
