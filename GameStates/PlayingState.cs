@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.Text;
 using HarvestValley.GameObjects;
 using HarvestValley.GameObjects.Tools;
-using HarvestValley.GameObjects.HarvestValley.GameObjects;
 using HarvestValley.GameObjects.UI;
 using HarvestValley.GameObjects.Shop;
 using Microsoft.Xna.Framework.Graphics;

@@ -19,16 +19,21 @@ namespace HarvestValley.GameObjects.Shop
         TextGameObject topLine, bottomLine, buyLine, sellLine, cancelLine;
         UIBox uIBox;
         ShopButtons shopButtons;
+        Wallet wallet;
         public bool shopActive, buyActive, buyAmount, sellActive, sellAmount = false;
         private int shopItemAmount = 0, offset = 128;
         public string[] shopDialogueLines = { "Welcome to the shop", "What do you want to do?", "What do you want to buy?", "What do you want to sell?", "How many do you want to buy?", "How many do you want to sell?", "Buy", "Sell", "Cancel" };
         public int[] itemAmount = { 0, 0, 1, -1, 10, -10, 0, 0 };
+        public int[] reduceMoney = { -10, -5, -7, -20, -100 };
+        public int[] addMoney = { 5, 2, 3, 10, 50 };
         ItemList itemList;
         Item selectedShopItem;
 
         public ShopMenuUIList(ItemList _itemList, Tent tent, MouseGameObject MGO)
         {
             //Add all the instances of the Shop elements
+            Add(wallet = new Wallet());
+
             Add(uIBox = new UIBox("UI/ui_bar"));
             Add(shopButtons = new ShopButtons());
             Add(shopItems = new ShopItems());
@@ -43,11 +48,10 @@ namespace HarvestValley.GameObjects.Shop
 
             ResetShop();
         }
-
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
-            //if (inputHelper.KeyPressed(Keys.B)) { ResetShop(); }
+            if (inputHelper.KeyPressed(Keys.V)) { InitShopWelcomePage(); }
             if (shopActive)
             {
                 if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[6].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[6].Visible) { InitBuyPage(); }
@@ -84,7 +88,9 @@ namespace HarvestValley.GameObjects.Shop
                         {
                             x.itemAmount += shopItemAmount;
                             selectedShopItem.selectedItem = false;
+
                             //Reduce money for specified item here
+                            ReduceMoney();
                             InitBuyPage();
                         }
                     }
@@ -103,9 +109,17 @@ namespace HarvestValley.GameObjects.Shop
                 {
                     if (shopButtons.shopButtons[i].collidesWithMouse(inputHelper.MousePosition) && inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[i].Visible)
                     {
-                        shopItemAmount += itemAmount[i];
+                        foreach (Item x in itemList.Children)
+                        {
+                            if (x.GetType() == selectedShopItem.GetType())
+                            {
+                                if (x.itemAmount > 0)
+                                {
+                                    shopItemAmount += itemAmount[i];
+                                }
+                            }
+                        }
                     }
-
                 }
                 //Inputs for the confirm button
                 if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[0].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[0].Visible)
@@ -116,10 +130,8 @@ namespace HarvestValley.GameObjects.Shop
                         if (x.GetType() == selectedShopItem.GetType())
                         {
                             x.itemAmount -= shopItemAmount;
-
                             //Add money here for specifed item here
-                            //if(selectedShopItem. == wood)
-
+                            AddMoney();
                             selectedShopItem.selectedItem = false;
                             InitSellPage();
                         }
@@ -359,7 +371,30 @@ namespace HarvestValley.GameObjects.Shop
             shopButtons.shopButtons[0].Position = new Vector2(GameEnvironment.Screen.X * 2 / 3 - shopButtons.shopButtons[0].Sprite.Width / 2, GameEnvironment.Screen.Y * 2 / 3);
             shopButtons.shopButtons[1].Position = new Vector2(GameEnvironment.Screen.X / 3 - shopButtons.shopButtons[1].Sprite.Width / 2, GameEnvironment.Screen.Y * 2 / 3);
         }
-
+        public void AddMoney()
+        {
+            for (int i = 0; i < reduceMoney.Length; i++)
+            {
+                if (selectedShopItem.GetType() == shopItems.Children[i].GetType())
+                {
+                    //Add money
+                    wallet.AddMoney(addMoney[i]);
+                    Debug.WriteLine("Added");
+                }
+            }
+        }
+        public void ReduceMoney()
+        {
+            for (int i = 0; i < reduceMoney.Length; i++)
+            {
+                if (selectedShopItem.GetType() == shopItems.Children[i].GetType() && wallet.money > 0)
+                {
+                    //Reduce money
+                    wallet.AddMoney(reduceMoney[i]);
+                    Debug.WriteLine("reduced");
+                }
+            }
+        }
         public bool IsActive
         {
             get { return shopActive || buyActive || buyAmount || sellActive || sellAmount; }
