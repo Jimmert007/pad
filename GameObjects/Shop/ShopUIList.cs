@@ -25,9 +25,13 @@ namespace HarvestValley.GameObjects.Shop
         public int[] itemAmount = { 0, 0, 1, -1, 10, -10, 0, 0 };
         ItemList itemList;
         Item selectedShopItem;
+        SpriteGameObject shopPC;
 
         public ShopMenuUIList(ItemList _itemList)
         {
+            Add((shopPC = new SpriteGameObject("UI/spr_selected_square")));
+            shopPC.Position = new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2);
+
             //Add all the instances of the Shop elements
             Add(uIBox = new UIBox("UI/ui_bar"));
             Add(shopButtons = new ShopButtons());
@@ -38,6 +42,8 @@ namespace HarvestValley.GameObjects.Shop
             Add(sellLine = new TextGameObject("Fonts/JimFont"));
             Add(cancelLine = new TextGameObject("Fonts/JimFont"));
             Add(mouseGO = new SpriteGameObject("Player/1px"));
+
+
             itemList = _itemList;
 
             ResetShop();
@@ -49,11 +55,11 @@ namespace HarvestValley.GameObjects.Shop
             mouseGO.Position = inputHelper.MousePosition;
 
             //Activate UI bools
-            if (inputHelper.KeyPressed(Keys.V))
+            if (inputHelper.MouseLeftButtonPressed() && shopPC.CollidesWith(mouseGO))
             {
                 InitShopWelcomePage();
             }
-            if (inputHelper.KeyPressed(Keys.B)) { ResetShop(); }
+            //if (inputHelper.KeyPressed(Keys.B)) { ResetShop(); }
             if (shopActive)
             {
                 if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[6].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[6].Visible) { InitBuyPage(); }
