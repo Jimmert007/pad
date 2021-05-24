@@ -651,38 +651,38 @@ namespace HarvestValley.GameStates
                 GameEnvironment.AssetManager.StopSound(sounds.SEIs[0]);
             }
 
-            //for (int i = trees.Children.Count - 1; i >= 0; i--)
-            //{
-            //    if ((trees.Children[i] as Tree).CollidesWith(player))
-            //    {
-            //        cells.Position = prevPos;
-            //        trees.Position = prevPos;
-            //        stones.Position = prevPos;
-            //        sprinklers.Position = prevPos;
-            //        plants.Position = prevPos;
-            //        tent.Position = prevPos;
-            //        cliff.Position = prevPos;
-            //        borderGrass.Position = prevPos;
-            //    }
-            //}
+            for (int i = trees.Children.Count - 1; i >= 0; i--)
+            {
+                if ((trees.Children[i] as Tree).CollidesWith(player))
+                {
+                    cells.Position = prevPos;
+                    trees.Position = prevPos;
+                    stones.Position = prevPos;
+                    sprinklers.Position = prevPos;
+                    plants.Position = prevPos;
+                    tent.Position = prevPos;
+                    cliff.Position = prevPos;
+                    borderGrass.Position = prevPos;
+                }
+            }
 
-            //foreach (Cliff c in cliff.Children)
-            //{
-            //    foreach (RotatingSpriteGameObject r in c.Children)
-            //    {
-            //        if (r.CollidesWith(player))
-            //        {
-            //            cells.Position = prevPos;
-            //            trees.Position = prevPos;
-            //            stones.Position = prevPos;
-            //            sprinklers.Position = prevPos;
-            //            plants.Position = prevPos;
-            //            tent.Position = prevPos;
-            //            cliff.Position = prevPos;
-            //            borderGrass.Position = prevPos;
-            //        }
-            //    }
-            //}
+            foreach (Cliff c in cliff.Children)
+            {
+                foreach (RotatingSpriteGameObject r in c.Children)
+                {
+                    if (r.CollidesWith(player))
+                    {
+                        cells.Position = prevPos;
+                        trees.Position = prevPos;
+                        stones.Position = prevPos;
+                        sprinklers.Position = prevPos;
+                        plants.Position = prevPos;
+                        tent.Position = prevPos;
+                        cliff.Position = prevPos;
+                        borderGrass.Position = prevPos;
+                    }
+                }
+            }
 
             if (player.sleepingPosition)
             {
