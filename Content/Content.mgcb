@@ -264,7 +264,7 @@
 
 #begin Sound/Alarm.ogg
 /importer:OggImporter
-/processor:SongProcessor
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sound/Alarm.ogg
 
@@ -388,6 +388,12 @@
 /processorParam:Quality=Best
 /build:Sound/PickaxeSwing.ogg
 
+#begin Sound/PlacingTree.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/PlacingTree.ogg
+
 #begin Sound/RainAndThunder.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor
@@ -442,11 +448,11 @@
 /processorParam:Quality=Best
 /build:Sound/WaterSplash.ogg
 
-#begin Sound/WheatPickup.wav
-/importer:WavImporter
+#begin Sound/WheatPickup.ogg
+/importer:OggImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Sound/WheatPickup.wav
+/build:Sound/WheatPickup.ogg
 
 #begin Sound/WoahMale.ogg
 /importer:OggImporter

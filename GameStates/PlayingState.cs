@@ -39,7 +39,7 @@ namespace HarvestValley.GameStates
         Vector2 prevPos;
         Target target;
         Sounds sounds;
-        
+
         public PlayingState()
         {
             sounds = new Sounds();
@@ -574,36 +574,34 @@ namespace HarvestValley.GameStates
             {
                 GameEnvironment.AssetManager.StopSound(sounds.SEIs[0]);
             }
+            else
+            {
+                GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[0]);
+            }
 
             if (inputHelper.IsKeyDown(Keys.A))
             {
                 moveVector = new Vector2(player.speed, moveVector.Y);
-                GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[0]);
             }
             if (inputHelper.IsKeyDown(Keys.D))
             {
                 moveVector = new Vector2(-player.speed, moveVector.Y);
-                GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[0]);
             }
             if (inputHelper.IsKeyDown(Keys.D) && inputHelper.IsKeyDown(Keys.A))
             {
                 moveVector = new Vector2(0, moveVector.Y);
-                GameEnvironment.AssetManager.StopSound(sounds.SEIs[0]);
             }
             if (inputHelper.IsKeyDown(Keys.S))
             {
                 moveVector = new Vector2(moveVector.X, -player.speed);
-                GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[0]);
             }
             if (inputHelper.IsKeyDown(Keys.W))
             {
                 moveVector = new Vector2(moveVector.X, player.speed);
-                GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[0]);
             }
             if (inputHelper.IsKeyDown(Keys.W) && inputHelper.IsKeyDown(Keys.S))
             {
                 moveVector = new Vector2(moveVector.X, 0);
-                GameEnvironment.AssetManager.StopSound(sounds.SEIs[0]);
             }
 
             for (int i = trees.Children.Count - 1; i >= 0; i--)
@@ -817,6 +815,7 @@ namespace HarvestValley.GameStates
                                 {
                                     if (itemList.itemSelected == "TREESEED" && !c.cellIsTilled && !c.cellHasTent && !c.cellHasPlant && item.itemAmount > 0 && !c.cellHasTree && !c.cellHasSprinkler && !c.cellHasStone)
                                     {
+                                        GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[13]);
                                         item.itemAmount -= 1;
                                         c.cellHasTree = true;
                                         trees.Add(new Tree(c.Position, .5f, 1));
