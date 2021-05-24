@@ -13,44 +13,72 @@ namespace HarvestValley.GameObjects
         public int hitTimerReset = 120;
         public bool treeHit = false;
         public int health = 4;
-        SpriteGameObject treeHitbox, tree1stage1, tree1stage2, tree1stage3, treeCut;
-        public int growthStage = 1;
+        SpriteGameObject treeHitbox;
+        GameObjectList trees, stages;
+
+        public int growthStage = 0;
+        int activeSeason;
         public Tree(Vector2 _position, float _scale, int growthStage) : base()
         {
             position = _position;
-            treeHitbox = new SpriteGameObject("UI/ObjectBackground", 0, "0");
-            tree1stage1 = new SpriteGameObject("Environment/spr_tree", 0, "1");
-            tree1stage2 = new SpriteGameObject("Environment/spr_tree", 0, "2");
-            tree1stage3 = new SpriteGameObject("Environment/spr_tree", 0, "3");
-            treeCut = new SpriteGameObject("Environment/spr_tree_cut", 0, "4");
-            Add(treeHitbox);
-            Add(tree1stage1);
-            Add(tree1stage2);
-            Add(tree1stage3);
-            Add(treeCut);
-
-            tree1stage1.Origin = new Vector2(0, 45);
-            tree1stage2.Origin = new Vector2(0, 45);
-            tree1stage3.Origin = new Vector2(0, 45);
-
-            tree1stage1.Position = new Vector2(16, 16);
-            tree1stage2.Position = new Vector2(8, 8);
-
-            treeCut.Origin = new Vector2(5, 50);
-
-
+            Add(treeHitbox = new SpriteGameObject("UI/ObjectBackground", 0, "0"));
             for (int i = 0; i < children.Count; i++)
             {
                 (children[i] as SpriteGameObject).Scale = _scale;
                 (children[i] as SpriteGameObject).PerPixelCollisionDetection = false;
                 (children[i] as SpriteGameObject).Visible = false;
             }
-
             treeHitbox.scale = 1;
-            tree1stage1.scale = .25f;
-            tree1stage2.scale = .375f;
-            tree1stage3.scale = .5f;
 
+            trees = new GameObjectList();
+            trees.Add(new SpriteGameObject("Environment/spr_tree", 0, "0"));
+            trees.Add(new SpriteGameObject("Environment/spr_tree_red", 0, "1"));
+            trees.Add(new SpriteGameObject("Environment/spr_tree_white", 0, "2"));
+            trees.Add(new SpriteGameObject("Environment/spr_tree_lightgreen", 0, "3"));
+            Add(trees);
+
+            for (int i = 0; i < trees.Children.Count; i++)
+            {
+                (trees.Children[i] as SpriteGameObject).Scale = _scale;
+                (trees.Children[i] as SpriteGameObject).PerPixelCollisionDetection = false;
+                (trees.Children[i] as SpriteGameObject).Visible = false;
+            }
+
+            stages = new GameObjectList();
+            foreach (SpriteGameObject SGO in trees.Children)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    SpriteGameObject _stage;
+                    if (i < 3)
+                    {
+                        _stage = new SpriteGameObject(SGO.Sprite.Sprite.Name, 0, i.ToString());
+                        _stage.Origin = new Vector2(0, 45);
+                        if (i == 0)
+                        {
+                            _stage.Position = new Vector2(16, 16);
+                            _stage.scale = .25f;
+                        }
+                        else if (i == 1)
+                        {
+                            _stage.Position = new Vector2(8, 8);
+                            _stage.scale = .375f;
+                        }
+                        else
+                        {
+                            _stage.scale = .5f;
+                        }
+                    }
+                    else
+                    {
+                        _stage = new SpriteGameObject("Environment/spr_tree_cut", 0, i.ToString());
+                        _stage.Origin = new Vector2(5, 50);
+                    }
+                    _stage.PerPixelCollisionDetection = false;
+                    _stage.Visible = false;
+                    stages.Add(_stage);
+                }
+            }
 
             this.growthStage = growthStage;
         }
@@ -58,30 +86,13 @@ namespace HarvestValley.GameObjects
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (growthStage > 3)
+            foreach (SpriteGameObject SGO in trees.Children)
             {
-                growthStage = 3;
-            }
-            foreach (SpriteGameObject SGO in Children)
-            {
-                SGO.Visible = false;
-                if (SGO.Id == growthStage.ToString())
+                if (SGO.Id == activeSeason.ToString())
                 {
-                    SGO.Visible = true;
-                }
-                if (treeHit)
-                {
-                    growthStage = 4;
-                    hitTimer -= 1;
-                    if (hitTimer <= 0)
-                    {
-                        treeHit = false;
-                    }
+                    
                 }
             }
-
-
-            treeHitbox.Visible = true;
         }
 
         public bool CollidesWith(SpriteGameObject obj)
@@ -95,6 +106,5 @@ namespace HarvestValley.GameObjects
             }
             return false;
         }
-    
     }
 }
