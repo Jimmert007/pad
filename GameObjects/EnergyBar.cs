@@ -51,6 +51,10 @@ namespace HarvestValley.GameObjects
         public override void Reset()
         {
             percentageLost = 0;
+            if (passOut)
+            {
+                percentageLost = 100;
+            }
             passOut = false;
         }
     }
