@@ -127,7 +127,7 @@ namespace HarvestValley.GameStates
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (!target.panel_bg.Visible && !options.optionsVisible)
+            if (!target.panel_bg.Visible && !options.optionsVisible && !options.exitConfirmation)
             {
                 SleepActions(gameTime);
                 CheckMouseCollisionWithTutorial();
@@ -144,7 +144,7 @@ namespace HarvestValley.GameStates
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
-            if (!target.panel_bg.Visible && !options.optionsVisible)
+            if (!target.panel_bg.Visible && !options.optionsVisible && !options.exitConfirmation)
             {
                 CameraSystem(inputHelper);
                 CheckHoeInput(inputHelper);

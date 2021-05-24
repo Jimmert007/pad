@@ -29,8 +29,7 @@ namespace HarvestValley.GameObjects
             Add(optionText);
 
             closeButton = new SpriteGameObject("UI/spr_yes_button");
-            closeButton.scale = 2;
-            closeButton.Position = optionBackground.Position + new Vector2(optionBackground.Width - closeButton.Sprite.Width * 3, optionBackground.Height - closeButton.Sprite.Height * 3);
+            closeButton.Position = optionBackground.Position + new Vector2(optionBackground.Width - closeButton.Sprite.Width, optionBackground.Height - closeButton.Sprite.Height);
             Add(closeButton);
             #endregion
 
@@ -84,13 +83,11 @@ namespace HarvestValley.GameObjects
             Add(exitGameConfirmation);
 
             exitConfirmedButton = new SpriteGameObject("UI/spr_yes_button");
-            exitConfirmedButton.scale = 2;
             exitConfirmedButton.Position = closeButton.Position;
             Add(exitConfirmedButton);
 
             stayButton = new SpriteGameObject("UI/spr_no_button");
-            stayButton.scale = 2;
-            stayButton.Position = new Vector2(optionBackground.Position.X + stayButton.Width * .5f, closeButton.Position.Y);
+            stayButton.Position = new Vector2(optionBackground.Position.X, closeButton.Position.Y);
             Add(stayButton);
             #endregion
 
