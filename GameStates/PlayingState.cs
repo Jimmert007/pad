@@ -12,12 +12,14 @@ using HarvestValley.GameObjects.Shop;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using HarvestValley.GameObjects.Tutorial;
+using Microsoft.Xna.Framework.Media;
 
 namespace HarvestValley.GameStates
 {
     class PlayingState : GameObjectList
     {
         Map map;
+        Options options;
         GameObjectList cells;
         Player player;
         CraftingMenu craftingMenu;
@@ -45,6 +47,7 @@ namespace HarvestValley.GameStates
         public PlayingState()
         {
             sounds = new Sounds();
+            MouseGO = new MouseGameObject();
 
             SpriteSheet mapSpriteSheet = new SpriteSheet("tiles/spr_grass", 0);
             map = new Map();
@@ -94,6 +97,9 @@ namespace HarvestValley.GameStates
             craftingMenu = new CraftingMenu();
             Add(craftingMenu);
 
+            options = new Options(MouseGO);
+            Add(options);
+
             itemList = new ItemList();
 
             hotbar = new Hotbar(itemList);
@@ -113,8 +119,7 @@ namespace HarvestValley.GameStates
             tutorialStepList = new TutorialStepList();
             Add(tutorialStepList);
 
-            Add(MouseGO = new MouseGameObject());
-
+            Add(MouseGO);
             SpawnTent();
             PlaceStonesAndTrees();
         }
@@ -122,32 +127,36 @@ namespace HarvestValley.GameStates
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            SleepActions(gameTime);
-            CheckMouseCollisionWithTutorial();
-            CheckSleepHitbox();
-            if (wallet.PlayCoinsound())
+            if (!target.panel_bg.Visible && !options.optionsVisible)
             {
-                wallet.playedSound = true;
-                GameEnvironment.AssetManager.PlaySound(sounds.SEIs[12]); //play coindrop
+                SleepActions(gameTime);
+                CheckMouseCollisionWithTutorial();
+                CheckSleepHitbox();
+                if (wallet.PlayCoinsound())
+                {
+                    wallet.playedSound = true;
+                    GameEnvironment.AssetManager.PlaySound(sounds.SEIs[12]); //play coindrop
+                }
+                CheckPlantsWater();
             }
-            CheckPlantsWater();
         }
 
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
-            CameraSystem(inputHelper);
-
-            CheckHoeInput(inputHelper);
-            CheckSeedInput(inputHelper);
-            CheckSprinklerInput(inputHelper);
-            CheckWateringCanInput(inputHelper);
-            CheckTreeSeedInput(inputHelper);
-            CheckPickaxeInput(inputHelper);
-            CheckAxeInput(inputHelper);
-            CheckPlantPickup(inputHelper);
-
-            CheckHotbarSelection(inputHelper);
+            if (!target.panel_bg.Visible && !options.optionsVisible)
+            {
+                CameraSystem(inputHelper);
+                CheckHoeInput(inputHelper);
+                CheckSeedInput(inputHelper);
+                CheckSprinklerInput(inputHelper);
+                CheckWateringCanInput(inputHelper);
+                CheckTreeSeedInput(inputHelper);
+                CheckPickaxeInput(inputHelper);
+                CheckAxeInput(inputHelper);
+                CheckPlantPickup(inputHelper);
+                CheckHotbarSelection(inputHelper);
+            }
         }
 
         void ConvertFromHotbarToMoney(Item item, int amount)
@@ -619,7 +628,6 @@ namespace HarvestValley.GameStates
             {
                 GameEnvironment.AssetManager.StopSound(sounds.SEIs[0]);
             }
-
             if (inputHelper.IsKeyDown(Keys.A))
             {
                 moveVector = new Vector2(player.speed, moveVector.Y);
@@ -1040,9 +1048,11 @@ namespace HarvestValley.GameStates
                                             {
                                                 item.itemAmount += GameEnvironment.Random.Next(1, 3);
                                             }
+                                            if (item is Seed)
+                                            {
+                                                item.itemAmount += GameEnvironment.Random.Next(1, 3);
+                                            }
                                         }
-
-                                        //(receive product and new seed)
                                         c.cellHasPlant = false;
                                         plants.Remove(plants.Children[i]);
                                         //Play WheatPickup
@@ -1144,22 +1154,22 @@ namespace HarvestValley.GameStates
                 }
                 else if (MouseGO.CollidesWith(hotbar.hotbarSquares.Children[5] as SpriteGameObject))
                 {
-                    itemList.itemSelected = "WOOD";
+                    itemList.itemSelected = "TREESEED";
                     hotbar.selectedSquare.Position = hotbar.hotbarSquares.Children[5].Position;
                 }
                 else if (MouseGO.CollidesWith(hotbar.hotbarSquares.Children[6] as SpriteGameObject))
                 {
-                    itemList.itemSelected = "TREESEED";
+                    itemList.itemSelected = "SPRINKLER";
                     hotbar.selectedSquare.Position = hotbar.hotbarSquares.Children[6].Position;
                 }
                 else if (MouseGO.CollidesWith(hotbar.hotbarSquares.Children[7] as SpriteGameObject))
                 {
-                    itemList.itemSelected = "ROCK";
+                    itemList.itemSelected = "WOOD";
                     hotbar.selectedSquare.Position = hotbar.hotbarSquares.Children[7].Position;
                 }
                 else if (MouseGO.CollidesWith(hotbar.hotbarSquares.Children[8] as SpriteGameObject))
                 {
-                    itemList.itemSelected = "SPRINKLER";
+                    itemList.itemSelected = "ROCK";
                     hotbar.selectedSquare.Position = hotbar.hotbarSquares.Children[8].Position;
                 }
                 else if (MouseGO.CollidesWith(hotbar.hotbarSquares.Children[9] as SpriteGameObject))

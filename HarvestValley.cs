@@ -25,6 +25,7 @@ namespace HarvestValley
             
 
             gameStateManager.AddGameState("menuState", new MenuState());
+            gameStateManager.AddGameState("creditsState", new CreditsState());
             gameStateManager.AddGameState("playingState", new PlayingState());
             gameStateManager.SwitchTo("menuState");
 

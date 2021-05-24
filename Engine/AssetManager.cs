@@ -7,6 +7,7 @@ using System;
 public class AssetManager
 {
     protected ContentManager contentManager;
+    public float volume = .5f;
 
     public AssetManager(ContentManager content)
     {
@@ -30,11 +31,13 @@ public class AssetManager
 
     public void PlayOnce(SoundEffectInstance SEI)
     {
+        SEI.Volume = volume;
         SEI.Play();
     }
 
     public void PlaySound(SoundEffectInstance SEI)
     {
+        SEI.Volume = volume;
         if(SEI.State == SoundState.Playing)
         {
             SEI.Stop();
