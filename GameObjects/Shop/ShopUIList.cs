@@ -84,18 +84,25 @@ namespace HarvestValley.GameObjects.Shop
                     {
                         shopItemAmount += itemAmount[i];
                     }
-
                 }
 
                 //Inputs for the confirm button
                 if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[0].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[0].Visible)
                 {
                     //Add item amount on the hotbar
-                    selectedShopItem.itemAmount += shopItemAmount;
-                    selectedShopItem.selectedItem = false;
+                    foreach (Item x in itemList.Children)
+                    {
+                        if (x.GetType() == selectedShopItem.GetType())
+                        {
+                            x.itemAmount += shopItemAmount;
+                            selectedShopItem.selectedItem = false;
+                            ResetShop();
 
-                    Debug.WriteLine(selectedShopItem.itemAmount);
-                    ResetShop();
+                        }
+                    }
+
+                
+
                 }
 
                 //Inputs for the cancel button
@@ -124,12 +131,14 @@ namespace HarvestValley.GameObjects.Shop
                 if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[6].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[6].Visible)
                 {
                     //Add item amount on the hotbar
-                    selectedShopItem.itemAmount += shopItemAmount;
-                    selectedShopItem.selectedItem = false;
-
-                    Debug.WriteLine(selectedShopItem.itemAmount);
-                    ResetShop();
-                    ResetShop();
+                    foreach (Item x in itemList.Children)
+                    {
+                        if (x == selectedShopItem)
+                        {
+                            x.itemAmount += shopItemAmount;
+                            selectedShopItem.selectedItem = false;
+                        }
+                    }
                 }
                 //Inputs for the cancel button
                 if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[1].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[1].Visible)
@@ -216,9 +225,6 @@ namespace HarvestValley.GameObjects.Shop
             {
                 bottomLine.Text = shopItemAmount.ToString();
             }
-
-            //Debug.WriteLine(buyAmount);
-
         }
 
         public void ResetShopWelcomePage()
