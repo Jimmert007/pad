@@ -22,8 +22,10 @@ namespace HarvestValley.GameObjects
         Wallet wallet;
         Player player;
         public bool collected;
+        Sounds sounds;
         public Target(ItemList _itemList, Wallet _wallet, Player _player)
         {
+            sounds = new Sounds();
             Add(panel_bg = new SpriteGameObject("UI/spr_target_bg"));
             panel_bg.Origin = panel_bg.Sprite.Center;
             panel_bg.Position = GameEnvironment.Screen.ToVector2() * .5f;
@@ -100,6 +102,7 @@ namespace HarvestValley.GameObjects
 
             if (button.OnClick)
             {
+                GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
                 panel_bg.Visible = false;
                 welcomeText.Visible = false;
                 button.Visible = false;
