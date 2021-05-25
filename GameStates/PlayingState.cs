@@ -34,8 +34,6 @@ namespace HarvestValley.GameStates
         Sleeping sleeping;
         Hotbar hotbar;
         ItemList itemList;
-        SpriteFont jimFont;
-        UIList uIList;
         ShopMenuUIList shopUI;
         GameObjectList shopPC;
         Wallet wallet;
@@ -101,19 +99,14 @@ namespace HarvestValley.GameStates
             craftingMenu = new CraftingMenu();
             Add(craftingMenu);
 
-
-
             itemList = new ItemList();
 
             hotbar = new Hotbar(itemList);
             Add(hotbar);
 
-            jimFont = GameEnvironment.AssetManager.Content.Load<SpriteFont>("Fonts/JimFont");
-
             wallet = new Wallet();
 
             ////Initialize UI Elements
-            Add(uIList = new UIList());
             Add(shopUI = new ShopMenuUIList(itemList, (tent.Children[0] as Tent), MouseGO, wallet));
 
             Add(wallet);
