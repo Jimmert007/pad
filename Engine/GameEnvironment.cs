@@ -118,6 +118,10 @@ public class GameEnvironment : Game
     protected void HandleInput()
     {
         inputHelper.Update();
+        if (inputHelper.KeyPressed(Keys.F11))
+        {
+            FullScreen = !FullScreen;
+        }
         gameStateManager.HandleInput(inputHelper);
     }
 

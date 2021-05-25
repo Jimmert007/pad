@@ -76,7 +76,6 @@ namespace HarvestValley.GameObjects
             base.Update(gameTime);
             targetText.Text = "Quest: " + currentAmount + " / " + targetAmount + " " + targetName;
             targetText.Position = targetUI.Position + (new Vector2(targetUI.Width, targetUI.Height) * .5f) - targetText.Size * .5f;
-
             if (button.OnClick)
             {
                 GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);

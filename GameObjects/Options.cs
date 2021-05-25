@@ -8,7 +8,7 @@ namespace HarvestValley.GameObjects
     class Options : GameObjectList
     {
         SpriteGameObject options, optionBackground, closeButton, muteButton, unmuteButton, plusButton, minusButton, exitButton, exitConfirmedButton, stayButton;
-        TextGameObject optionText, soundOptionText, volume, exitGame, exitGameConfirmation;
+        TextGameObject optionText, soundOptionText, volume, exitGame, exitGameConfirmation, fullscreenText;
         MouseGameObject mouseGO;
         public bool optionsVisible, exitConfirmation;
         public Options(MouseGameObject mouseGO)
@@ -60,6 +60,14 @@ namespace HarvestValley.GameObjects
             unmuteButton = new SpriteGameObject("UI/SoundON");
             unmuteButton.Position = plusButton.Position + new Vector2(50, 0);
             Add(unmuteButton);
+            #endregion
+
+            #region fullscreen toggle
+            fullscreenText = new TextGameObject("Fonts/JimFont");
+            fullscreenText.Color = Color.Black;
+            fullscreenText.Text = "Press F11 to toggle fullscreen";
+            fullscreenText.Position = new Vector2(GameEnvironment.Screen.X * .5f - fullscreenText.Size.X * .5f, optionBackground.Position.Y + 225 - fullscreenText.Size.Y * .5f);
+            Add(fullscreenText);
             #endregion
 
             #region exit game

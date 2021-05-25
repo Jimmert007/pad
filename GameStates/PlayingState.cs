@@ -101,8 +101,7 @@ namespace HarvestValley.GameStates
             craftingMenu = new CraftingMenu();
             Add(craftingMenu);
 
-            options = new Options(MouseGO);
-            Add(options);
+
 
             itemList = new ItemList();
 
@@ -119,7 +118,11 @@ namespace HarvestValley.GameStates
 
             Add(wallet);
 
+            options = new Options(MouseGO);
+
             Add(target = new Target(itemList, wallet, player, sounds));
+
+            Add(options);
 
             tutorialStepList = new TutorialStepList(MouseGO);
             Add(tutorialStepList);
@@ -133,7 +136,7 @@ namespace HarvestValley.GameStates
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (UIIsActive)
+            if (!UIIsActive)
             {
                 SleepActions(gameTime);
                 CheckSleepHitbox();
@@ -145,7 +148,7 @@ namespace HarvestValley.GameStates
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
-            if (UIIsActive)
+            if (!UIIsActive)
             {
                 CameraSystem(inputHelper);
                 CheckHoeInput(inputHelper);
@@ -171,8 +174,7 @@ namespace HarvestValley.GameStates
 
         bool UIIsActive
         {
-            get { return !target.panel_bg.Visible && !options.IsActive && !shopUI.IsActive; }
-
+            get { return target.panel_bg.Visible || options.IsActive || shopUI.IsActive; }
         }
 
         void ToggleShopMenu(InputHelper inputHelper)
