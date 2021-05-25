@@ -15,11 +15,12 @@ namespace HarvestValley.GameObjects
 {
     public class Sounds : GameObjectList
     {
-        public string[] soundEffectStrings = { "FootstepsOnGrass", "AxeSwing", "PickaxeSwing", "TreeFalling", "WaterSplash", "PersonYawns", "RoosterCrowing", "MetalRattling", "HittingGround", "Shaking1", "ButtonClick", "WheatPickup", "CoinDrop" , "PlacingTree" };
+        public string[] soundEffectStrings = { "FootstepsOnGrass", "AxeSwing", "PickaxeSwing", "TreeFalling", "WaterSplash", "WaterSplash", "RoosterCrowing", "MetalRattling", "HittingGround", "Shaking1", "ButtonClick", "WheatPickup", "CoinDrop" , "PlacingTree" };
 
         public SoundEffect[] SFXs;
         public SoundEffectInstance[] SEIs;
-
+        
+       
         public Sounds()
         {
             SFXs = new SoundEffect[soundEffectStrings.Length];

@@ -293,23 +293,11 @@
 /processorParam:TextureFormat=Color
 /build:Player/spr_player_reach.png
 
-#begin Sound/Alarm.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sound/Alarm.ogg
-
 #begin Sound/AxeSwing.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sound/AxeSwing.ogg
-
-#begin Sound/BirdSinging.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sound/BirdSinging.ogg
 
 #begin Sound/ButtonClick.ogg
 /importer:OggImporter
@@ -317,59 +305,17 @@
 /processorParam:Quality=Best
 /build:Sound/ButtonClick.ogg
 
-#begin Sound/ChoppingWood.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sound/ChoppingWood.ogg
-
-#begin Sound/ClockChimes.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sound/ClockChimes.ogg
-
 #begin Sound/CoinDrop.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sound/CoinDrop.ogg
 
-#begin Sound/CracklingFireplace.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sound/CracklingFireplace.ogg
-
-#begin Sound/DogBarking.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sound/DogBarking.ogg
-
 #begin Sound/FootstepsOnGrass.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sound/FootstepsOnGrass.ogg
-
-#begin Sound/GroupCheer.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sound/GroupCheer.ogg
-
-#begin Sound/HammeringSound.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sound/HammeringSound.ogg
-
-#begin Sound/HarddriveClicking.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sound/HarddriveClicking.ogg
 
 #begin Sound/HittingGround.ogg
 /importer:OggImporter
@@ -383,36 +329,6 @@
 /processorParam:Quality=Best
 /build:Sound/Intro.ogg
 
-#begin Sound/KeyboardTyping.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sound/KeyboardTyping.ogg
-
-#begin Sound/LightRain.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sound/LightRain.ogg
-
-#begin Sound/MetalRattling.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sound/MetalRattling.ogg
-
-#begin Sound/NightSoundsCrickets.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sound/NightSoundsCrickets.ogg
-
-#begin Sound/PersonYawns.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sound/PersonYawns.ogg
-
 #begin Sound/PickaxeSwing.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor
@@ -425,12 +341,6 @@
 /processorParam:Quality=Best
 /build:Sound/PlacingTree.ogg
 
-#begin Sound/RainAndThunder.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sound/RainAndThunder.ogg
-
 #begin Sound/RoosterCrowing.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor
@@ -442,24 +352,6 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sound/Shaking1.ogg
-
-#begin Sound/SplittingWood.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sound/SplittingWood.ogg
-
-#begin Sound/Thought.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sound/Thought.ogg
-
-#begin Sound/Tick.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sound/Tick.ogg
 
 #begin Sound/TreeFalling.ogg
 /importer:OggImporter
@@ -484,12 +376,6 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sound/WheatPickup.ogg
-
-#begin Sound/WoahMale.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Sound/WoahMale.ogg
 
 #begin tiles/Cliff.png
 /importer:TextureImporter
