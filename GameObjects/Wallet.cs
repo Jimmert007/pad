@@ -49,5 +49,11 @@ namespace HarvestValley.GameObjects
         {
             newMoney = money + amout;
         }
+
+        public int Money
+        {
+            get { return newMoney; }
+        }
     }
 }
+

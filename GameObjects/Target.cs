@@ -1,4 +1,4 @@
-﻿using HarvestValley.GameObjects.Tools;
+using HarvestValley.GameObjects.Tools;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ namespace HarvestValley.GameObjects
         TargetButton button;
         int targetAmount, currentAmount;
         //int[] minSeedTSeedWoodRockWheat = {150, 25, 100, 75, 150 };
-        int[] minSeedTSeedWoodRockWheat = { 5, 5, 5, 5, 5 };
+        int[] minSeedTSeedWoodRockWheat = { 1, 1, 1, 1, 1 };
         public Item targetItem;
         string targetName;
         GameObjectList stackableItemsList;
