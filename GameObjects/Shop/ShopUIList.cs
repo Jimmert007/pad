@@ -30,10 +30,10 @@ namespace HarvestValley.GameObjects.Shop
         ItemList itemList;
         Item selectedShopItem;
 
-        public ShopMenuUIList(ItemList _itemList, Tent tent, MouseGameObject MGO)
+        public ShopMenuUIList(ItemList _itemList, Tent tent, MouseGameObject MGO, Wallet _wallet)
         {
             //Add all the instances of the Shop elements
-            Add(wallet = new Wallet());
+            wallet = _wallet;
 
             Add(uIBox = new UIBox("UI/spr_target_bg"));
             Add(shopButtons = new ShopButtons());
@@ -401,7 +401,7 @@ namespace HarvestValley.GameObjects.Shop
         public void ReduceMoney()
         {
             //Add money here for specifed item here
-            if (wallet.money >= totalCost)
+            if (wallet.Money >= totalCost)
             {
                 for (int i = 0; i < reduceMoney.Length; i++)
                 {
@@ -410,7 +410,7 @@ namespace HarvestValley.GameObjects.Shop
                         totalCost = reduceMoney[i] * shopItemAmount;
                         //Add money
                         wallet.AddMoney(totalCost);
-                        Debug.WriteLine("Added");
+                        Debug.WriteLine("reducted");
                     }
                 }
             }

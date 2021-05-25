@@ -111,11 +111,12 @@ namespace HarvestValley.GameStates
             shopPC.Add(new ShopPC(tent.Children[0] as Tent));
             Add(shopPC);
 
+            wallet = new Wallet();
+
             ////Initialize UI Elements
             Add(uIList = new UIList());
-            Add(shopUI = new ShopMenuUIList(itemList, (tent.Children[0] as Tent), MouseGO));
+            Add(shopUI = new ShopMenuUIList(itemList, (tent.Children[0] as Tent), MouseGO, wallet));
 
-            wallet = new Wallet();
             Add(wallet);
 
             Add(target = new Target(itemList, wallet, player, sounds));
