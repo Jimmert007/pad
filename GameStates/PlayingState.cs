@@ -865,6 +865,9 @@ namespace HarvestValley.GameStates
                 SprinklerObject s = sprinklers.Children[i] as SprinklerObject;
                 if (inputHelper.MouseRightButtonPressed() && s.CollidesWith(player.playerReach) && s.CollidesWith(MouseGO.HitBox))
                 {
+                    energyBar.percentageLost += energyBar.oneUse;
+                    //Play WaterSplash
+                    GameEnvironment.AssetManager.PlaySound(sounds.SEIs[7]);
                     foreach (Cell c in cells.Children)
                     {
                         if (c.Position == s.Position)
