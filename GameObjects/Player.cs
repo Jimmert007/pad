@@ -13,6 +13,7 @@ namespace HarvestValley
         public bool sleeping, sleepingPosition;
         public Vector2 newSleepingPosition = new Vector2(0, 10);
         float time, maxTimer = 120;
+        public int speed = 3;
         bool _deductEnergy;
         public SpriteGameObject playerReach, moveLeft, moveRight;
 

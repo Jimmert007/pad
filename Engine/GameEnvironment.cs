@@ -118,14 +118,6 @@ public class GameEnvironment : Game
     protected void HandleInput()
     {
         inputHelper.Update();
-        if (inputHelper.KeyPressed(Keys.Escape))
-        {
-            Exit();
-        }
-        if (inputHelper.KeyPressed(Keys.F5))
-        {
-            FullScreen = !FullScreen;
-        }
         gameStateManager.HandleInput(inputHelper);
     }
 
