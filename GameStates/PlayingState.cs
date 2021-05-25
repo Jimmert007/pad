@@ -138,6 +138,7 @@ namespace HarvestValley.GameStates
                 CheckMouseCollisionWithTutorial();
                 CheckSleepHitbox();
                 CheckPlantsWater();
+                PlayerEnergy();
             }
         }
 
@@ -157,6 +158,14 @@ namespace HarvestValley.GameStates
                 CheckPlantPickup(inputHelper);
                 CheckHotbarSelection(inputHelper);
                 ToggleShopMenu(inputHelper);
+            }
+        }
+
+        void PlayerEnergy()
+        {
+            if (player.DeductEnergy)
+            {
+                energyBar.percentageLost += energyBar.oneUse;
             }
         }
 

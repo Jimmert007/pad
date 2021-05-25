@@ -15,6 +15,8 @@ namespace HarvestValley
         public Vector2 lastPosition;
         public int speed = 3;
         public SpriteGameObject playerReach;
+        float time, maxTimer = 120;
+        bool _deductEnergy;
 
         public Player(string _assetName, Vector2 _position, float _scale) : base(_assetName)
         {
@@ -40,6 +42,35 @@ namespace HarvestValley
                 return true;
             }
             return false;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            if (time > maxTimer)
+            {
+                time = 0;
+                DeductEnergy = true;
+            }
+            else
+            {
+                DeductEnergy = false;
+            }
+        }
+
+        public override void HandleInput(InputHelper inputHelper)
+        {
+            base.HandleInput(inputHelper);
+            if (inputHelper.IsKeyDown(Keys.A) || inputHelper.IsKeyDown(Keys.D) || inputHelper.IsKeyDown(Keys.W) || inputHelper.IsKeyDown(Keys.S))
+            {
+                time++;
+            }
+        }
+
+        public bool DeductEnergy
+        {
+            get { return _deductEnergy; }
+            set { _deductEnergy = value; }
         }
 
         /*public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
