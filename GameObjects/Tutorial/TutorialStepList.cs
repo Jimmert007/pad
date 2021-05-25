@@ -28,7 +28,8 @@ namespace HarvestValley.GameObjects.Tutorial
                     "button on the plants.",
             step7 = "You can sell the harvested wheat, rocks and wood in the shop next to the tent. \n" +
                     "Click on the computer to open it.",
-            step8 = "";
+            step8 = "In the shop next to the tent you can sell items, but also buy usefull items \n" +
+                    "like sprinklers to keep your plants watered.";
 
         public TutorialStepList(MouseGameObject mouseGO)
         {
