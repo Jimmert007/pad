@@ -15,7 +15,7 @@ namespace HarvestValley.GameObjects
         public ShopItems()
         {
             #region Adding Items
-            Add(new Seed("Environment/spr_seed1_stage1", true, 10));
+            Add(new Seed("Environment/spr_seed1_stage1", true, 15) { scale = 2 });
             Add(new Wood("Items/spr_wood", true, 0));
             Add(new TreeSeed("Items/spr_treeseed", true, 5));
             Add(new Rock("Items/rock", true, 0));
