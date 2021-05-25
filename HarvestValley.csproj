@@ -7,7 +7,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <ApplicationIcon>Apple_Stage_5_Fruit.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Icon.ico" />
