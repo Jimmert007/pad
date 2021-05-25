@@ -184,5 +184,9 @@ namespace HarvestValley.GameObjects
                 }
             }
         }
+        public bool IsActive
+        {
+            get { return optionsVisible || exitConfirmation; }
+        }
     }
 }

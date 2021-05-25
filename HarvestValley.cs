@@ -22,10 +22,7 @@ namespace HarvestValley
             screen = new Point(1280, 720);
             ApplyResolutionSettings();
 
-            
-
             gameStateManager.AddGameState("menuState", new MenuState());
-            gameStateManager.AddGameState("creditsState", new CreditsState());
             gameStateManager.AddGameState("playingState", new PlayingState());
             gameStateManager.SwitchTo("menuState");
 

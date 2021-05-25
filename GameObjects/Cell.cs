@@ -78,5 +78,10 @@ namespace HarvestValley
             }
             spriteID = _spriteID;
         }
+
+        public bool HasCollision
+        {
+            get { return cellHasTree || cellHasSprinkler || cellHasStone || cellHasTent || cellHasShop; }
+        }
     }
 }
