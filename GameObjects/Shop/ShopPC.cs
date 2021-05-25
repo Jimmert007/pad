@@ -14,12 +14,10 @@ namespace HarvestValley.GameObjects.Shop
             Position = _tent.Children[0].Position + new Vector2((_tent.Children[0] as SpriteGameObject).Sprite.Width, 0);
             shopPC.PerPixelCollisionDetection = false;
         }
-
         public SpriteGameObject Sprite
         {
             get { return (children[0] as SpriteGameObject); }
         }
-
         public bool CollidesWith(SpriteGameObject obj)
         {
             return ((children[0] as SpriteGameObject).CollidesWith(obj));
