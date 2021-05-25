@@ -329,6 +329,12 @@
 /processorParam:Quality=Best
 /build:Sound/Intro.ogg
 
+#begin Sound/MetalRattling.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/MetalRattling.ogg
+
 #begin Sound/PickaxeSwing.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor
