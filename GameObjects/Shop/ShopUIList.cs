@@ -30,6 +30,7 @@ namespace HarvestValley.GameObjects.Shop
         ItemList itemList;
         Item selectedShopItem;
         Sounds sounds;
+        TextGameObject[] iconPrices;
 
         public ShopMenuUIList(ItemList _itemList, Tent tent, MouseGameObject MGO, Wallet _wallet)
         {
@@ -46,6 +47,14 @@ namespace HarvestValley.GameObjects.Shop
             mouseGO = MGO;
             itemList = _itemList;
             ResetShop();
+
+            iconPrices = new TextGameObject[shopItems.Children.Count];
+            for (int i = 0; i < iconPrices.Length; i++)
+            {
+                iconPrices[i] = new TextGameObject("Fonts/JimFont");
+                iconPrices[i].Text = "";
+                Add(iconPrices[i]);
+            }
             foreach (GameObject TGO in children)
             {
                 if (TGO is TextGameObject)
@@ -253,6 +262,10 @@ namespace HarvestValley.GameObjects.Shop
         }
         public void InitShopWelcomePage()
         {//Set the welcome page elements of the shop on true
+            for (int i = 0; i < iconPrices.Length; i++)
+            {
+                iconPrices[i].Visible = false;
+            }
             shopActive = true;
             topLine.Text = shopDialogueLines[1];
             bottomLine.Text = shopDialogueLines[0];
@@ -281,6 +294,10 @@ namespace HarvestValley.GameObjects.Shop
         }
         public void InitBuyPage()
         {
+            for (int i = 0; i < iconPrices.Length; i++)
+            {
+                iconPrices[i].Visible = true;
+            }
             //Turn off elements from Welcome page
             buyActive = true;
             shopActive = false;
@@ -302,11 +319,15 @@ namespace HarvestValley.GameObjects.Shop
             {
                 shopItems.Children[i].Visible = true;
                 shopItems.Children[i].Position = new Vector2(GameEnvironment.Screen.X / 3 + offset / 2 + (offset * i), GameEnvironment.Screen.Y * 2 / 5);
+                iconPrices[i].Position = shopItems.Children[i].Position + new Vector2(0, 64);
+                iconPrices[i].Text = reduceMoney[i].ToString();
             }
             for (int i = shopItems.Children.Count / 2; i < shopItems.Children.Count; i++)
             {
                 shopItems.Children[i].Visible = true;
                 shopItems.Children[i].Position = new Vector2(offset * .75f + (offset * i), GameEnvironment.Screen.Y * 3 / 5);
+                iconPrices[i].Position = shopItems.Children[i].Position + new Vector2(0, 64);
+                iconPrices[i].Text = reduceMoney[i].ToString();
             }
 
             //Make item amount, buy and sell buttons invisible
@@ -318,6 +339,10 @@ namespace HarvestValley.GameObjects.Shop
         }
         public void InitConfirmBuy()
         {
+            for (int i = 0; i < iconPrices.Length; i++)
+            {
+                iconPrices[i].Visible = false;
+            }
             //Turn off elements from Buy page
             buyAmount = true;
             buyActive = false;
@@ -344,6 +369,10 @@ namespace HarvestValley.GameObjects.Shop
         }
         public void InitSellPage()
         {
+            for (int i = 0; i < iconPrices.Length; i++)
+            {
+                iconPrices[i].Visible = true;
+            }
             //Turn off elements from Welcome page
             sellActive = true;
             shopActive = false;
@@ -366,11 +395,15 @@ namespace HarvestValley.GameObjects.Shop
             {
                 shopItems.Children[i].Visible = true;
                 shopItems.Children[i].Position = new Vector2(GameEnvironment.Screen.X / 3 + offset / 2 + (offset * i), GameEnvironment.Screen.Y * 2 / 5);
+                iconPrices[i].Position = shopItems.Children[i].Position + new Vector2(0, 64);
+                iconPrices[i].Text = addMoney[i].ToString();
             }
             for (int i = shopItems.Children.Count / 2; i < shopItems.Children.Count; i++)
             {
                 shopItems.Children[i].Visible = true;
                 shopItems.Children[i].Position = new Vector2(offset * .75f + (offset * i), GameEnvironment.Screen.Y * 3 / 5);
+                iconPrices[i].Position = shopItems.Children[i].Position + new Vector2(0, 64);
+                iconPrices[i].Text = addMoney[i].ToString();
             }
             //Make item amount, buy and sell buttons invisible
             for (int i = 2; i < 6; i++)
@@ -381,6 +414,10 @@ namespace HarvestValley.GameObjects.Shop
         }
         public void InitConfirmSell()
         {
+            for (int i = 0; i < iconPrices.Length; i++)
+            {
+                iconPrices[i].Visible = false;
+            }
             //Turn off elements from sell page
             sellAmount = true;
             sellActive = false;
