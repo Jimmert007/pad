@@ -90,8 +90,6 @@ namespace HarvestValley.GameStates
             sprinklers = new GameObjectList();
             Add(sprinklers);
 
-
-
             energyBar = new EnergyBar("UI/spr_empty", GameEnvironment.Screen.X - 60, GameEnvironment.Screen.Y - 220, 40, 200);
             Add(energyBar);
 
