@@ -193,9 +193,9 @@ namespace HarvestValley.GameObjects.Shop
             uIBox.Scale = 1;
             topLine.Position = new Vector2(GameEnvironment.Screen.X * .5f - topLine.Size.X * .5f, GameEnvironment.Screen.Y * .2f);
             bottomLine.Position = new Vector2(GameEnvironment.Screen.X * .5f - bottomLine.Size.X * .5f, GameEnvironment.Screen.Y * .4f);
-            sellLine.Position = new Vector2(GameEnvironment.Screen.X * 1 / 2 - shopButtons.shopButtons[7].Sprite.Width / 2, GameEnvironment.Screen.Y * .6f);
-            cancelLine.Position = new Vector2(GameEnvironment.Screen.X * 3 / 5 - shopButtons.shopButtons[1].Sprite.Width / 2, GameEnvironment.Screen.Y * .6f);
-            buyLine.Position = new Vector2(GameEnvironment.Screen.X * 2 / 5 - shopButtons.shopButtons[6].Sprite.Width / 2, GameEnvironment.Screen.Y * .6f);
+            sellLine.Position = new Vector2(GameEnvironment.Screen.X * 1 / 2 - sellLine.Size.X / 2, GameEnvironment.Screen.Y * .6f);
+            cancelLine.Position = new Vector2(GameEnvironment.Screen.X * 3 / 5 - cancelLine.Size.X / 2, GameEnvironment.Screen.Y * .6f);
+            buyLine.Position = new Vector2(GameEnvironment.Screen.X * 2 / 5 - buyLine.Size.X / 2, GameEnvironment.Screen.Y * .6f);
             shopButtons.shopButtons[1].Position = new Vector2(GameEnvironment.Screen.X * 2 / 3 - shopButtons.shopButtons[1].Sprite.Width / 2, GameEnvironment.Screen.Y * .6f);
 
             //Make Shop Items invisible
