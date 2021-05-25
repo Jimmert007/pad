@@ -147,6 +147,7 @@ namespace HarvestValley.GameStates
                 CheckHoeInput(inputHelper);
                 CheckSeedInput(inputHelper);
                 CheckSprinklerInput(inputHelper);
+                PickupSprinkler(inputHelper);
                 CheckWateringCanInput(inputHelper);
                 CheckTreeSeedInput(inputHelper);
                 CheckPickaxeInput(inputHelper);
@@ -830,7 +831,7 @@ namespace HarvestValley.GameStates
             {
                 if (c.CellCollidesWith(MouseGO.HitBox) && c.CellCollidesWith(player.playerReach) && !c.CellCollidesWith(player))
                 {
-                    if (inputHelper.MouseLeftButtonDown())
+                    if (inputHelper.MouseLeftButtonPressed())
                     {
                         foreach (Item item in itemList.Children)
                         {
@@ -848,6 +849,35 @@ namespace HarvestValley.GameStates
                             }
                         }
                     }
+                }
+            }
+        }
+
+        void PickupSprinkler(InputHelper inputHelper)
+        {
+            for (int i = sprinklers.Children.Count - 1; i >= 0; i--)
+            {
+                SprinklerObject s = sprinklers.Children[i] as SprinklerObject;
+                if (inputHelper.MouseRightButtonPressed() && s.CollidesWith(player.playerReach) && s.CollidesWith(MouseGO.HitBox))
+                {
+                    energyBar.percentageLost += energyBar.oneUse;
+                    //Play WaterSplash
+                    GameEnvironment.AssetManager.PlaySound(sounds.SEIs[7]);
+                    foreach (Cell c in cells.Children)
+                    {
+                        if (c.Position == s.Position)
+                        {
+                            c.cellHasSprinkler = false;
+                        }
+                    }
+                    foreach (Item item in itemList.Children)
+                    {
+                        if (item is Sprinkler)
+                        {
+                            item.itemAmount += 1;
+                        }
+                    }
+                    sprinklers.Remove(sprinklers.Children[i]);
                 }
             }
         }
