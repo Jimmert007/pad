@@ -24,8 +24,9 @@ namespace HarvestValley.GameObjects.Shop
         private int shopItemAmount = 0, offset = 128;
         public string[] shopDialogueLines = { "Welcome to the shop", "What do you want to do?", "What do you want to buy?", "What do you want to sell?", "How many do you want to buy?", "How many do you want to sell?", "Buy", "Sell", "Cancel" };
         public int[] itemAmount = { 0, 0, 1, -1, 10, -10, 0, 0 };
-        public int[] reduceMoney = { -10, -5, -7, -20, -100 };
-        public int[] addMoney = { 5, 2, 3, 10, 50 };
+        public int[] reduceMoney = { -10, -5, -7, -20, -100, -10 };
+        public int[] addMoney = { 5, 2, 3, 10, 50, 5 };
+        public int totalCost, totalGained;
         ItemList itemList;
         Item selectedShopItem;
 
@@ -86,11 +87,13 @@ namespace HarvestValley.GameObjects.Shop
                     {
                         if (x.GetType() == selectedShopItem.GetType())
                         {
+
                             x.itemAmount += shopItemAmount;
-                            selectedShopItem.selectedItem = false;
 
                             //Reduce money for specified item here
                             ReduceMoney();
+
+                            selectedShopItem.selectedItem = false;
                             InitBuyPage();
                         }
                     }
@@ -129,9 +132,11 @@ namespace HarvestValley.GameObjects.Shop
                     {
                         if (x.GetType() == selectedShopItem.GetType())
                         {
-                            x.itemAmount -= shopItemAmount;
-                            //Add money here for specifed item here
-                            AddMoney();
+                            if (shopItemAmount <= x.itemAmount)
+                            {
+                                x.itemAmount -= shopItemAmount;
+                                AddMoney();
+                            }
                             selectedShopItem.selectedItem = false;
                             InitSellPage();
                         }
@@ -155,8 +160,8 @@ namespace HarvestValley.GameObjects.Shop
             cancelLine.Text = shopDialogueLines[8];
 
             //Set the position of Shop elements
-            uIBox.Position = new Vector2(GameEnvironment.Screen.X * .5f - uIBox.Sprite.Width/2, GameEnvironment.Screen.Y /2-uIBox.Sprite.Height/2); 
-           // uIBox.Origin = uIBox.Center;
+            uIBox.Position = new Vector2(GameEnvironment.Screen.X * .5f - uIBox.Sprite.Width / 2, GameEnvironment.Screen.Y / 2 - uIBox.Sprite.Height / 2);
+            // uIBox.Origin = uIBox.Center;
             uIBox.Scale = 1;
             topLine.Position = new Vector2(GameEnvironment.Screen.X * .5f - topLine.Size.X * .5f, GameEnvironment.Screen.Y * .1f);
             bottomLine.Position = new Vector2(GameEnvironment.Screen.X * .5f - bottomLine.Size.X * .5f, GameEnvironment.Screen.Y * .2f);
@@ -192,9 +197,9 @@ namespace HarvestValley.GameObjects.Shop
             shopButtons.shopButtons[6].Position = new Vector2(GameEnvironment.Screen.X * 1 / 3 - shopButtons.shopButtons[6].Sprite.Width / 2, GameEnvironment.Screen.Y * .6f);
 
             //Set positions of the itam amount buttons
-            shopButtons.shopButtons[2].Position = new Vector2(GameEnvironment.Screen.X * 4 / 7 - shopButtons.shopButtons[2].Sprite.Width / 2, GameEnvironment.Screen.Y *2/3 - shopButtons.shopButtons[2].Sprite.Height / 2);      //Add item button position
-            shopButtons.shopButtons[3].Position = new Vector2(GameEnvironment.Screen.X * 3 / 7 - shopButtons.shopButtons[3].Sprite.Width / 2, GameEnvironment.Screen.Y * 2/3 - shopButtons.shopButtons[3].Sprite.Height / 2);      //Reduce item button position
-            shopButtons.shopButtons[4].Position = new Vector2(GameEnvironment.Screen.X * .5f - shopButtons.shopButtons[4].Sprite.Width / 2, GameEnvironment.Screen.Y * 4 /7);    //Add 10 itams button position
+            shopButtons.shopButtons[2].Position = new Vector2(GameEnvironment.Screen.X * 4 / 7 - shopButtons.shopButtons[2].Sprite.Width / 2, GameEnvironment.Screen.Y * 2 / 3 - shopButtons.shopButtons[2].Sprite.Height / 2);      //Add item button position
+            shopButtons.shopButtons[3].Position = new Vector2(GameEnvironment.Screen.X * 3 / 7 - shopButtons.shopButtons[3].Sprite.Width / 2, GameEnvironment.Screen.Y * 2 / 3 - shopButtons.shopButtons[3].Sprite.Height / 2);      //Reduce item button position
+            shopButtons.shopButtons[4].Position = new Vector2(GameEnvironment.Screen.X * .5f - shopButtons.shopButtons[4].Sprite.Width / 2, GameEnvironment.Screen.Y * 4 / 7);    //Add 10 itams button position
             shopButtons.shopButtons[5].Position = new Vector2(GameEnvironment.Screen.X * .5f - shopButtons.shopButtons[5].Sprite.Width / 2, GameEnvironment.Screen.Y * 5 / 7);    //Reduce 10 items position
 
             //Resets the bools
@@ -299,7 +304,7 @@ namespace HarvestValley.GameObjects.Shop
 
             if (selectedShopItem.selectedItem)         //Change the position of the selected item
             {
-                selectedShopItem.Position = new Vector2(GameEnvironment.Screen.X / 2 - selectedShopItem.Sprite.Width / 2, GameEnvironment.Screen.Y / 2 - selectedShopItem.Sprite.Height/2);
+                selectedShopItem.Position = new Vector2(GameEnvironment.Screen.X / 2 - selectedShopItem.Sprite.Width / 2, GameEnvironment.Screen.Y / 2 - selectedShopItem.Sprite.Height / 2);
             }
             //Make item amount, buy and sell buttons visible
             for (int i = 0; i < 6; i++)
@@ -377,29 +382,36 @@ namespace HarvestValley.GameObjects.Shop
             //Set the positions of the item amount, cancel and sell buttons
             shopButtons.shopButtons[0].Position = new Vector2(GameEnvironment.Screen.X * 2 / 3 - shopButtons.shopButtons[0].Sprite.Width / 2, GameEnvironment.Screen.Y * 2 / 3);
             shopButtons.shopButtons[1].Position = new Vector2(GameEnvironment.Screen.X / 3 - shopButtons.shopButtons[1].Sprite.Width / 2, GameEnvironment.Screen.Y * 2 / 3);
-            
+
         }
         public void AddMoney()
         {
+            //Add money here for specifed item here
             for (int i = 0; i < reduceMoney.Length; i++)
             {
-                if (selectedShopItem.GetType() == shopItems.Children[i].GetType())
+                if (shopItems.Children[i].GetType() == selectedShopItem.GetType())
                 {
+                    totalGained = addMoney[i] * shopItemAmount;
                     //Add money
-                    wallet.AddMoney(addMoney[i]);
+                    wallet.AddMoney(totalGained);
                     Debug.WriteLine("Added");
                 }
             }
         }
         public void ReduceMoney()
         {
-            for (int i = 0; i < reduceMoney.Length; i++)
+            //Add money here for specifed item here
+            if (wallet.money >= totalCost)
             {
-                if (selectedShopItem.GetType() == shopItems.Children[i].GetType() && wallet.money > 0)
+                for (int i = 0; i < reduceMoney.Length; i++)
                 {
-                    //Reduce money
-                    wallet.AddMoney(reduceMoney[i]);
-                    Debug.WriteLine("reduced");
+                    if (shopItems.Children[i].GetType() == selectedShopItem.GetType())
+                    {
+                        totalCost = reduceMoney[i] * shopItemAmount;
+                        //Add money
+                        wallet.AddMoney(totalCost);
+                        Debug.WriteLine("Added");
+                    }
                 }
             }
         }
