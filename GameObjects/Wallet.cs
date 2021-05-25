@@ -32,9 +32,16 @@ namespace HarvestValley.GameObjects
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (money < newMoney)
+            if (money != newMoney)
             {
-                money++;
+                if (money < newMoney)
+                {
+                    money++;
+                }
+                else if (money > newMoney)
+                {
+                    money--;
+                }
             }
             text.Text = money.ToString();
             text.Position = new Vector2(bg.Position.X + bg.Sprite.Width * .5f - text.Size.X * .5f, bg.Position.Y + bg.Sprite.Height * .5f - text.Size.Y * .5f);

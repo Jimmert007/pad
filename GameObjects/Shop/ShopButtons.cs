@@ -31,9 +31,9 @@ namespace HarvestValley.GameObjects.Shop
             //add10Items.Position = new Vector2(GameEnvironment.Screen.X * .6f, GameEnvironment.Screen.Y * .6f);
             Add(reduce10Items = new Button("UI/Minus"));
             //reduce10Items.Position = new Vector2(GameEnvironment.Screen.X * .6f, GameEnvironment.Screen.Y * .6f);
-            Add(buy = new Button("UI/checkmark"));
+            Add(buy = new Button("UI/spr_shop_buy"));
             //buy.Position = new Vector2(GameEnvironment.Screen.X * .6f, GameEnvironment.Screen.Y * .6f);
-            Add(sell = new Button("UI/cross"));
+            Add(sell = new Button("UI/spr_shop_sell"));
             //sell.Position = new Vector2(GameEnvironment.Screen.X * .6f, GameEnvironment.Screen.Y * .6f);
 
             shopButtons[0] = confirm;
