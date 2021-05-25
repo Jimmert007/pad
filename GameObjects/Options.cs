@@ -11,6 +11,7 @@ namespace HarvestValley.GameObjects
         TextGameObject optionText, soundOptionText, volume, exitGame, exitGameConfirmation, fullscreenText;
         MouseGameObject mouseGO;
         public bool optionsVisible, exitConfirmation;
+        Sounds sounds;
         public Options(MouseGameObject mouseGO)
         {
             #region open/close options menu
@@ -141,35 +142,51 @@ namespace HarvestValley.GameObjects
 
         public override void HandleInput(InputHelper inputHelper)
         {
+            sounds = new Sounds();
             base.HandleInput(inputHelper);
             if (inputHelper.MouseLeftButtonPressed())
             {
                 if (mouseGO.CollidesWith(options))
                 {
                     optionsVisible = true;
+                    // Play ButtonClick
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
                 }
                 if (mouseGO.CollidesWith(closeButton))
                 {
                     optionsVisible = false;
+                    // Play ButtonClick
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
                 }
                 if (mouseGO.CollidesWith(muteButton))
                 {
                     GameEnvironment.AssetManager.volume = 0;
+                    // Play ButtonClick
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
                 }
                 if (mouseGO.CollidesWith(unmuteButton))
                 {
                     GameEnvironment.AssetManager.volume = 1;
+                    // Play ButtonClick
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
                 }
                 if (mouseGO.CollidesWith(plusButton))
                 {
+                    // Play ButtonClick
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
+
                     GameEnvironment.AssetManager.volume += .1f;
                     if (GameEnvironment.AssetManager.volume > 1)
                     {
+
                         GameEnvironment.AssetManager.volume = 1;
                     }
                 }
                 if (mouseGO.CollidesWith(minusButton))
                 {
+                    // Play ButtonClick
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
+
                     GameEnvironment.AssetManager.volume -= .1f;
                     if (GameEnvironment.AssetManager.volume < 0)
                     {
@@ -178,16 +195,25 @@ namespace HarvestValley.GameObjects
                 }
                 if (mouseGO.CollidesWith(exitButton))
                 {
+                    // Play ButtonClick
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
+
                     exitConfirmation = true;
                     optionsVisible = false;
                 }
                 if (mouseGO.CollidesWith(stayButton))
                 {
+                    // Play ButtonClick
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
+
                     exitConfirmation = false;
                     optionsVisible = true;
                 }
                 if (mouseGO.CollidesWith(exitConfirmedButton))
                 {
+                    // Play ButtonClick
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
+
                     System.Environment.Exit(1);
                 }
             }

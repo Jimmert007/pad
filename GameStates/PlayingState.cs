@@ -477,8 +477,7 @@ namespace HarvestValley.GameStates
 
                 //Play RoosterCrowing
                 GameEnvironment.AssetManager.PlaySound(sounds.SEIs[6]);
-                //Play PersonYawns
-                //GameEnvironment.AssetManager.PlaySound(SEIs[5]);
+                
                 if (sleeping.fadeOut)
                 {
                     for (int i = 0; i < cells.Children.Count; i++)

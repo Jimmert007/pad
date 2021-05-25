@@ -81,6 +81,7 @@ namespace HarvestValley.GameObjects
             targetText.Position = targetUI.Position + (new Vector2(targetUI.Width, targetUI.Height) * .5f) - targetText.Size * .5f;
             if (button.OnClick)
             {
+                // Play ButtonClick
                 GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
                 titleText.Visible = false;
                 panel_bg.Visible = false;

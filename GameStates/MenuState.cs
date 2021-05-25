@@ -19,9 +19,11 @@ namespace HarvestValley.GameStates
         MouseGameObject mouseGO = new MouseGameObject();
         TextGameObject creditsTitle, niels, luke, mo, jim, back;
         bool creditsScreen;
+        Sounds sounds;
 
         public MenuState()
         {
+            sounds = new Sounds();
             bgs = new GameObjectList();
             Add(bgs);
             for (int i = 0; i < 2; i++)
@@ -127,18 +129,26 @@ namespace HarvestValley.GameStates
                 if (mouseGO.CollidesWith(button1))
                 {
                     GameEnvironment.GameStateManager.SwitchTo("playingState");
+                    // Play ButtonClick
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
                 }
                 if (mouseGO.CollidesWith(button2))
                 {
                     creditsScreen = true;
+                    // Play ButtonClick
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
                 }
                 if (mouseGO.CollidesWith(button3))
                 {
                     System.Environment.Exit(1);
+                    // Play ButtonClick
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
                 }
                 if (mouseGO.CollidesWith(button1credits))
                 {
                     creditsScreen = false;
+                    // Play ButtonClick
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
                 }
             }
             bgs.Position = inputHelper.MousePosition * .01f + bg.Position;
