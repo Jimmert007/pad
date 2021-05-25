@@ -29,6 +29,7 @@ namespace HarvestValley.GameObjects.Shop
         public int totalCost, totalGained;
         ItemList itemList;
         Item selectedShopItem;
+        Sounds sounds;
 
         public ShopMenuUIList(ItemList _itemList, Tent tent, MouseGameObject MGO, Wallet _wallet)
         {
@@ -51,8 +52,21 @@ namespace HarvestValley.GameObjects.Shop
         }
         public override void HandleInput(InputHelper inputHelper)
         {
+            sounds = new Sounds();
             base.HandleInput(inputHelper);
-            if (inputHelper.KeyPressed(Keys.V)) { InitShopWelcomePage(); }
+
+            for (int i = 0; i < shopButtons.Children.Count; i++)
+            {
+                if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[i].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[i].Visible)
+                { 
+                    // Play ButtonClick
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
+                }
+            } 
+
+          
+
+                if (inputHelper.KeyPressed(Keys.V)) { InitShopWelcomePage(); }
             if (shopActive)
             {
                 if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[6].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[6].Visible) { InitBuyPage(); }
@@ -61,12 +75,12 @@ namespace HarvestValley.GameObjects.Shop
             }
             if (buyActive)
             {
-                foreach (Item item in shopItems.Children) { if (inputHelper.MouseLeftButtonPressed() && mouseGO.CollidesWith(item) && item.Visible) { selectedShopItem = item; selectedShopItem.selectedItem = true; InitConfirmBuy(); } }
+                foreach (Item item in shopItems.Children) { if (inputHelper.MouseLeftButtonPressed() && mouseGO.CollidesWith(item) && item.Visible) {  /*Play ButtonClick*/ GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]); selectedShopItem = item; selectedShopItem.selectedItem = true; InitConfirmBuy();  } }
                 if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[1].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[1].Visible) { bottomLine.Text = shopDialogueLines[1]; InitShopWelcomePage(); }
             }
             if (sellActive)
             {
-                foreach (Item item in shopItems.Children) { if (inputHelper.MouseLeftButtonPressed() && mouseGO.CollidesWith(item) && item.Visible) { selectedShopItem = item; selectedShopItem.selectedItem = true; InitConfirmSell(); } }
+                foreach (Item item in shopItems.Children) { if (inputHelper.MouseLeftButtonPressed() && mouseGO.CollidesWith(item) && item.Visible) {  /*Play ButtonClick*/ GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);  selectedShopItem = item; selectedShopItem.selectedItem = true; InitConfirmSell(); } }
                 if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[1].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[1].Visible) { bottomLine.Text = shopDialogueLines[1]; InitShopWelcomePage(); }
             }
             if (buyAmount)

@@ -79,7 +79,9 @@ namespace HarvestValley.GameObjects
 
             if (button.OnClick)
             {
+                // Play ButtonClick
                 GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
+
                 panel_bg.Visible = false;
                 welcomeText.Visible = false;
                 button.Visible = false;
