@@ -24,8 +24,8 @@ namespace HarvestValley.GameObjects.Shop
         private int shopItemAmount = 0, offset = 128;
         public string[] shopDialogueLines = { "Welcome to the shop", "What do you want to do?", "What do you want to buy?", "What do you want to sell?", "How many do you want to buy?", "How many do you want to sell?", "Buy", "Sell", "Cancel" };
         public int[] itemAmount = { 0, 0, 1, -1, 10, -10, 0, 0 };
-        public int[] reduceMoney = { 10, 5, 7, 20, 100, 10 };
-        public int[] addMoney = { 5, 2, 3, 10, 50, 5 };
+        public int[] reduceMoney = { 10, 15, 7, 20, 100, 10 };
+        public int[] addMoney = { 5, 10, 3, 10, 50, 5 };
         public int totalCost, totalGained;
         ItemList itemList;
         Item selectedShopItem;
