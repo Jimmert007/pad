@@ -70,7 +70,7 @@ namespace HarvestValley.GameObjects.Shop
 
 
 
-            if (inputHelper.KeyPressed(Keys.V)) { InitShopWelcomePage(); }
+            /*if (inputHelper.KeyPressed(Keys.V)) { InitShopWelcomePage(); }*/
             if (shopActive)
             {
                 if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[6].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[6].Visible) { InitBuyPage(); }
