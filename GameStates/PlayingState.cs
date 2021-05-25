@@ -73,6 +73,14 @@ namespace HarvestValley.GameStates
             player = new Player("Player/jorrit", new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2), 1);
             Add(player);
 
+            tent = new GameObjectList();
+            tent.Add(new Tent());
+            Add(tent);
+
+            shopPC = new GameObjectList();
+            shopPC.Add(new ShopPC(tent.Children[0] as Tent));
+            Add(shopPC);
+
             stones = new GameObjectList();
             Add(stones);
 
@@ -82,13 +90,7 @@ namespace HarvestValley.GameStates
             sprinklers = new GameObjectList();
             Add(sprinklers);
 
-            tent = new GameObjectList();
-            tent.Add(new Tent());
-            Add(tent);
 
-            shopPC = new GameObjectList();
-            shopPC.Add(new ShopPC(tent.Children[0] as Tent));
-            Add(shopPC);
 
             energyBar = new EnergyBar("UI/spr_empty", GameEnvironment.Screen.X - 60, GameEnvironment.Screen.Y - 220, 40, 200);
             Add(energyBar);
@@ -477,7 +479,7 @@ namespace HarvestValley.GameStates
 
                 //Play RoosterCrowing
                 GameEnvironment.AssetManager.PlaySound(sounds.SEIs[6]);
-                
+
                 if (sleeping.fadeOut)
                 {
                     for (int i = 0; i < cells.Children.Count; i++)
@@ -1034,6 +1036,20 @@ namespace HarvestValley.GameStates
                                     }
                                 }
                             }
+                        }
+                        else if (itemList.itemSelected == "AXE" && !(trees.Children[i] as Tree).treeHit)
+                        {
+                            foreach (Cell c in cells.Children)
+                            {
+                                if (c.Position == (trees.Children[i] as Tree).Position)
+                                {
+                                    c.cellHasTree = false;
+                                }
+                            }
+                            trees.Remove(trees.Children[i]);
+
+                            //play TreeFalling
+                            GameEnvironment.AssetManager.PlaySound(sounds.SEIs[3]);
                         }
                     }
                 }
