@@ -1,4 +1,3 @@
-﻿using HarvestValley.GameObjects.HarvestValley.GameObjects;
 using HarvestValley.GameObjects.Tools;
 using Microsoft.Xna.Framework;
 using System;
@@ -14,18 +13,20 @@ namespace HarvestValley.GameObjects
         TextGameObject welcomeText, targetText, congratsText;
         TargetButton button;
         int targetAmount, currentAmount;
-        int[] minTSeedWoodRockWheat = { 25, 100, 75, 100 };
+        //int[] minSeedTSeedWoodRockWheat = {150, 25, 100, 75, 150 };
+        int[] minSeedTSeedWoodRockWheat = { 1, 1, 1, 1, 1 };
         public Item targetItem;
         string targetName;
         GameObjectList stackableItemsList;
-        int rewardAmount;
+        int rewardAmount = 50;
         Wallet wallet;
         Player player;
         public bool collected;
         Sounds sounds;
-        public Target(ItemList _itemList, Wallet _wallet, Player _player)
+        int difficulty = 1;
+        public Target(ItemList _itemList, Wallet _wallet, Player _player, Sounds _sounds)
         {
-            sounds = new Sounds();
+            sounds = _sounds;
             Add(panel_bg = new SpriteGameObject("UI/spr_target_bg"));
             panel_bg.Origin = panel_bg.Sprite.Center;
             panel_bg.Position = GameEnvironment.Screen.ToVector2() * .5f;
@@ -34,36 +35,13 @@ namespace HarvestValley.GameObjects
             stackableItemsList = new GameObjectList();
             foreach (Item item in _itemList.Children)
             {
-                if (item.isStackable && !(item is Sprinkler) && !(item is Seed))//seed nu uit want kan je niet krijgen
+                if (item.isStackable && !(item is Sprinkler))
                 {
                     stackableItemsList.Add(item);
                 }
             }
 
-            int r = GameEnvironment.Random.Next(stackableItemsList.Children.Count);
-            //Debug.WriteLine(r);
-            targetItem = (stackableItemsList.Children[r] as Item);
-            targetName = targetItem.Sprite.Sprite.Name;
-
-            targetAmount = GameEnvironment.Random.Next(minTSeedWoodRockWheat[r], minTSeedWoodRockWheat[r] * 2);
-
-            string[] removeFromString = { "spr", "stage", "1", "Items", "/", "_", "Environment" };
-            for (int i = 0; i < removeFromString.Length; i++)
-            {
-                if (targetName.Contains(removeFromString[i]))
-                {
-                    targetName = targetName.Replace(removeFromString[i], "");
-                }
-            }
-
-            targetName = targetName.ToLower();
-
-            if (targetName[targetName.Length - 1] != 's' && targetName != "wood" && targetName != "wheat")
-            {
-                targetName += "s";
-            }
-
-            //Debug.WriteLine("target " + targetName);
+            NewTarget();
 
             welcomeText.Text =
                 "Welcome to Harvest Valley!\n\n" +
@@ -78,7 +56,6 @@ namespace HarvestValley.GameObjects
             targetUI.Position = new Vector2(GameEnvironment.Screen.X * .5f - targetUI.Sprite.Width * .5f, 0);
             Add(targetText = new TextGameObject("Fonts/JimFont"));
             targetText.Color = Color.Black;
-            rewardAmount = 500;
             Add(congratsText = new TextGameObject("Fonts/JimFont"));
             congratsText.Color = Color.Black;
             congratsText.Text =
@@ -97,7 +74,7 @@ namespace HarvestValley.GameObjects
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            targetText.Text = "Task: " + currentAmount + " / " + targetAmount + " " + targetName;
+            targetText.Text = "Quest: " + currentAmount + " / " + targetAmount + " " + targetName;
             targetText.Position = targetUI.Position + (new Vector2(targetUI.Width, targetUI.Height) * .5f) - targetText.Size * .5f;
 
             if (button.OnClick)
@@ -112,14 +89,42 @@ namespace HarvestValley.GameObjects
                     collected = true;
                     congratsText.Visible = false;
                     wallet.AddMoney(rewardAmount);
-                    targetText.Visible = false;
-                    targetUI.Visible = false;
+                    NewTarget();
                 }
             }
             if (currentAmount >= targetAmount && !collected)
             {
                 MadeIt();
             }
+        }
+
+        void NewTarget()
+        {
+            CurrentAmount = 0;
+            collected = false;
+            int r = GameEnvironment.Random.Next(stackableItemsList.Children.Count);
+            targetItem = (stackableItemsList.Children[r] as Item);
+            targetName = targetItem.Sprite.Sprite.Name;
+
+            targetAmount = GameEnvironment.Random.Next(minSeedTSeedWoodRockWheat[r], minSeedTSeedWoodRockWheat[r] * 2) * difficulty;
+
+            string[] removeFromString = { "spr", "stage", "1", "Items", "/", "_", "Environment" };
+            for (int i = 0; i < removeFromString.Length; i++)
+            {
+                if (targetName.Contains(removeFromString[i]))
+                {
+                    targetName = targetName.Replace(removeFromString[i], "");
+                }
+            }
+
+            targetName = targetName.ToLower();
+
+            if (targetName[targetName.Length - 1] != 's' && targetName != "wood" && targetName != "wheat")
+            {
+                targetName += "s";
+            }
+
+            difficulty *= 2;
         }
 
         void MadeIt()

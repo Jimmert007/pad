@@ -10,7 +10,7 @@ namespace HarvestValley.GameObjects.Shop
         SpriteGameObject shopPC;
         public ShopPC(Tent _tent)
         {
-            Add(shopPC = new SpriteGameObject("UI/spr_selected_square"));
+            Add(shopPC = new SpriteGameObject("Environment/spr_shop"));
             Position = _tent.Children[0].Position + new Vector2((_tent.Children[0] as SpriteGameObject).Sprite.Width, 0);
             shopPC.PerPixelCollisionDetection = false;
         }

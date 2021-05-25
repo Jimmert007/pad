@@ -10,6 +10,9 @@ namespace HarvestValley.GameObjects
     {
         public SpriteSheet energyBarBackground;
         public SpriteSheet energyBarPercentage;
+        public SpriteSheet energyBarLogo;
+        public Vector2 LogoPosition;
+        public Vector2 LogoSize;
         public Vector2 percentagePosition;
         public Vector2 percentageSize;
         public float percentageLost = 0;
@@ -22,6 +25,7 @@ namespace HarvestValley.GameObjects
             position.Y = _y;
             energyBarBackground = new SpriteSheet("UI/EnergyBarBackground");
             energyBarPercentage = new SpriteSheet("UI/EnergyBarPercentage");
+            energyBarLogo = new SpriteSheet("UI/EnergyLogo");
             oneUse = (_h - 10) / 100;
             percentagePosition.X = position.X + 5;
             percentageSize.X = _w - 10;
@@ -37,6 +41,12 @@ namespace HarvestValley.GameObjects
             {
                 passOut = true;
             }
+
+            LogoPosition.Y = position.Y + _size.Y / 2 - LogoSize.Y/2;
+            LogoPosition.X = position.X + _size.X / 2 - LogoSize.X/2;
+            LogoSize.X = _size.X/2;
+            LogoSize.Y = _size.Y/4;
+
             base.Update(gameTime);
         }
 
@@ -45,6 +55,8 @@ namespace HarvestValley.GameObjects
             base.Draw(gameTime, spriteBatch);
             spriteBatch.Draw(energyBarBackground.Sprite, new Rectangle((int)position.X, (int)position.Y, (int)_size.X, (int)_size.Y), Color.White);
             spriteBatch.Draw(energyBarPercentage.Sprite, new Rectangle((int)percentagePosition.X, (int)percentagePosition.Y, (int)percentageSize.X, (int)percentageSize.Y), Color.White);
+            spriteBatch.Draw(energyBarLogo.Sprite, new Rectangle((int)LogoPosition.X, (int)LogoPosition.Y, (int)LogoSize.X, (int)LogoSize.Y), Color.White);
+
 
         }
 

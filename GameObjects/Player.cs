@@ -12,8 +12,9 @@ namespace HarvestValley
     {
         public bool sleeping, sleepingPosition;
         public Vector2 newSleepingPosition = new Vector2(0, 10);
-        public Vector2 lastPosition;
+        float time, maxTimer = 120;
         public int speed = 3;
+        bool _deductEnergy;
         public SpriteGameObject playerReach, moveLeft, moveRight;
 
         public Player(string _assetName, Vector2 _position, float _scale) : base(_assetName)
@@ -44,6 +45,30 @@ namespace HarvestValley
             {
                 sprite = moveRight.Sprite;
             }
+            if (inputHelper.IsKeyDown(Keys.A) || inputHelper.IsKeyDown(Keys.D) || inputHelper.IsKeyDown(Keys.W) || inputHelper.IsKeyDown(Keys.S))
+            {
+                time++;
+            }
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            if (time > maxTimer)
+            {
+                time = 0;
+                DeductEnergy = true;
+            }
+            else
+            {
+                DeductEnergy = false;
+            }
+        }
+
+        public bool DeductEnergy
+        {
+            get { return _deductEnergy; }
+            set { _deductEnergy = value; }
         }
     }
 }

@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.Text;
 using HarvestValley.GameObjects;
 using HarvestValley.GameObjects.Tools;
-using HarvestValley.GameObjects.HarvestValley.GameObjects;
 using HarvestValley.GameObjects.UI;
 using HarvestValley.GameObjects.Shop;
 using Microsoft.Xna.Framework.Graphics;
@@ -112,14 +111,15 @@ namespace HarvestValley.GameStates
 
             jimFont = GameEnvironment.AssetManager.Content.Load<SpriteFont>("Fonts/JimFont");
 
+            wallet = new Wallet();
+
             ////Initialize UI Elements
             Add(uIList = new UIList());
-            Add(shopUI = new ShopMenuUIList(itemList, (tent.Children[0] as Tent), MouseGO));
+            Add(shopUI = new ShopMenuUIList(itemList, (tent.Children[0] as Tent), MouseGO, wallet));
 
-            wallet = new Wallet();
             Add(wallet);
 
-            Add(target = new Target(itemList, wallet, player));
+            Add(target = new Target(itemList, wallet, player, sounds));
 
             tutorialStepList = new TutorialStepList(MouseGO);
             Add(tutorialStepList);
@@ -137,12 +137,8 @@ namespace HarvestValley.GameStates
             {
                 SleepActions(gameTime);
                 CheckSleepHitbox();
-                if (wallet.PlayCoinsound())
-                {
-                    wallet.playedSound = true;
-                    GameEnvironment.AssetManager.PlaySound(sounds.SEIs[12]); //play coindrop
-                }
                 CheckPlantsWater();
+                PlayerEnergy();
             }
         }
 
@@ -166,9 +162,18 @@ namespace HarvestValley.GameStates
             }
         }
 
+        void PlayerEnergy()
+        {
+            if (player.DeductEnergy)
+            {
+                energyBar.percentageLost += energyBar.oneUse;
+            }
+        }
+
         bool UIIsActive
         {
             get { return !target.panel_bg.Visible && !options.IsActive && !shopUI.IsActive; }
+
         }
 
         void ToggleShopMenu(InputHelper inputHelper)
@@ -1062,11 +1067,15 @@ namespace HarvestValley.GameStates
                                         {
                                             if (item is Wheat)
                                             {
-                                                item.itemAmount += GameEnvironment.Random.Next(1, 3);
+                                                int randomAddition = GameEnvironment.Random.Next(1, 3);
+                                                item.itemAmount += randomAddition;
+                                                ConvertFromHotbarToMoney(item, randomAddition);
                                             }
                                             if (item is Seed)
                                             {
-                                                item.itemAmount += GameEnvironment.Random.Next(1, 3);
+                                                int randomAddition = GameEnvironment.Random.Next(1, 3);
+                                                item.itemAmount += randomAddition;
+                                                ConvertFromHotbarToMoney(item, randomAddition);
                                             }
                                         }
                                         c.cellHasPlant = false;
