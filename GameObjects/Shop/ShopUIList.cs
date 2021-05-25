@@ -49,6 +49,13 @@ namespace HarvestValley.GameObjects.Shop
             itemList = _itemList;
 
             ResetShop();
+            foreach (GameObject TGO in children)
+            {
+                if (TGO is TextGameObject)
+                {
+                    (TGO as TextGameObject).Color = Color.Black;
+                }
+            }
         }
         public override void HandleInput(InputHelper inputHelper)
         {
@@ -58,15 +65,15 @@ namespace HarvestValley.GameObjects.Shop
             for (int i = 0; i < shopButtons.Children.Count; i++)
             {
                 if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[i].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[i].Visible)
-                { 
+                {
                     // Play ButtonClick
                     GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
                 }
-            } 
+            }
 
-          
 
-                if (inputHelper.KeyPressed(Keys.V)) { InitShopWelcomePage(); }
+
+            if (inputHelper.KeyPressed(Keys.V)) { InitShopWelcomePage(); }
             if (shopActive)
             {
                 if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[6].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[6].Visible) { InitBuyPage(); }
@@ -75,12 +82,12 @@ namespace HarvestValley.GameObjects.Shop
             }
             if (buyActive)
             {
-                foreach (Item item in shopItems.Children) { if (inputHelper.MouseLeftButtonPressed() && mouseGO.CollidesWith(item) && item.Visible) {  /*Play ButtonClick*/ GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]); selectedShopItem = item; selectedShopItem.selectedItem = true; InitConfirmBuy();  } }
+                foreach (Item item in shopItems.Children) { if (inputHelper.MouseLeftButtonPressed() && mouseGO.CollidesWith(item) && item.Visible) {  /*Play ButtonClick*/ GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]); selectedShopItem = item; selectedShopItem.selectedItem = true; InitConfirmBuy(); } }
                 if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[1].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[1].Visible) { bottomLine.Text = shopDialogueLines[1]; InitShopWelcomePage(); }
             }
             if (sellActive)
             {
-                foreach (Item item in shopItems.Children) { if (inputHelper.MouseLeftButtonPressed() && mouseGO.CollidesWith(item) && item.Visible) {  /*Play ButtonClick*/ GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);  selectedShopItem = item; selectedShopItem.selectedItem = true; InitConfirmSell(); } }
+                foreach (Item item in shopItems.Children) { if (inputHelper.MouseLeftButtonPressed() && mouseGO.CollidesWith(item) && item.Visible) {  /*Play ButtonClick*/ GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]); selectedShopItem = item; selectedShopItem.selectedItem = true; InitConfirmSell(); } }
                 if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[1].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[1].Visible) { bottomLine.Text = shopDialogueLines[1]; InitShopWelcomePage(); }
             }
             if (buyAmount)
@@ -110,7 +117,7 @@ namespace HarvestValley.GameObjects.Shop
                                     if (totalCost <= wallet.Money)
                                     {
                                         x.itemAmount += shopItemAmount;
-                                        Debug.WriteLine(totalCost);
+                                        //Debug.WriteLine(totalCost);
                                         //Add money
                                         wallet.AddMoney(-totalCost);
                                     }
@@ -334,7 +341,7 @@ namespace HarvestValley.GameObjects.Shop
 
             if (selectedShopItem.selectedItem)         //Change the position of the selected item
             {
-                selectedShopItem.Position = new Vector2(GameEnvironment.Screen.X / 2 - selectedShopItem.Sprite.Width / 2, GameEnvironment.Screen.Y / 2 - selectedShopItem.Sprite.Height/2);
+                selectedShopItem.Position = new Vector2(GameEnvironment.Screen.X / 2 - selectedShopItem.Sprite.Width / 2, GameEnvironment.Screen.Y / 2 - selectedShopItem.Sprite.Height / 2);
             }
             //Make item amount, buy and sell buttons visible
             for (int i = 0; i < 6; i++)
@@ -423,7 +430,7 @@ namespace HarvestValley.GameObjects.Shop
                     totalGained = addMoney[i] * shopItemAmount;
                     //Add money
                     wallet.AddMoney(totalGained);
-                    Debug.WriteLine("Added");
+                    //Debug.WriteLine("Added");
                 }
             }
         }
