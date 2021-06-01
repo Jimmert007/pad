@@ -87,7 +87,7 @@ namespace HarvestValley.GameObjects
             exitGameConfirmation = new TextGameObject("Fonts/JimFont");
             exitGameConfirmation.Color = Color.Black;
             exitGameConfirmation.Text = "Are you sure you want to exit,\n" +
-                                        "all progress wil be lost!";
+                                        "all progress will be lost!";
             exitGameConfirmation.Position = optionBackground.Position + new Vector2(optionBackground.Width * .5f - exitGameConfirmation.Size.X * .5f, optionBackground.Height * .5f - exitGameConfirmation.Size.Y * .5f);
             Add(exitGameConfirmation);
 
