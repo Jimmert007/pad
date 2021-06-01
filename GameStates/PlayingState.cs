@@ -42,19 +42,23 @@ namespace HarvestValley.GameStates
         Target target;
         Sounds sounds;
 
+        /// <summary>
+        /// In the constructor we initialize instances and add them to the PlayingState GameObjectList
+        /// </summary>
         public PlayingState()
         {
             sounds = new Sounds();
             MouseGO = new MouseGameObject();
 
-            SpriteSheet mapSpriteSheet = new SpriteSheet("tiles/spr_grass", 0);
             map = new Map();
             cells = new GameObjectList();
+
+            // Adding cells to the map GameObjectList
             for (int i = 0; i < map.rows; i++)
             {
                 for (int x = 0; x < map.cols; x++)
                 {
-                    Cell c = new Cell(new Vector2(mapSpriteSheet.Width / 2 * x - GameEnvironment.Screen.X, mapSpriteSheet.Height / 2 * i - GameEnvironment.Screen.Y), .5f, x + (map.cols * i));
+                    Cell c = new Cell(new Vector2(Cell.CELL_SIZE * x - GameEnvironment.Screen.X, Cell.CELL_SIZE * i - GameEnvironment.Screen.Y), .5f, x + (map.cols * i));
                     cells.Add(c);
                 }
             }
@@ -106,7 +110,6 @@ namespace HarvestValley.GameStates
 
             wallet = new Wallet();
 
-            ////Initialize UI Elements
             Add(shopUI = new ShopMenuUIList(itemList, (tent.Children[0] as Tent), MouseGO, wallet));
 
             Add(wallet);
@@ -121,14 +124,16 @@ namespace HarvestValley.GameStates
             Add(tutorialStepList);
 
             Add(MouseGO);
+
             SpawnTent();
-            SpawnPC();
+            SpawnShopSign();
             PlaceStonesAndTrees();
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            // Checks if the UI is active and if it is, the game is frozen and only the UI works
             if (!UIIsActive)
             {
                 SleepActions(gameTime);
@@ -141,23 +146,20 @@ namespace HarvestValley.GameStates
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
+            // Checks if the UI is active and if it is, the game is frozen and only the UI works
             if (!UIIsActive)
             {
                 CameraSystem(inputHelper);
-                CheckHoeInput(inputHelper);
-                CheckSeedInput(inputHelper);
-                CheckSprinklerInput(inputHelper);
+                CheckActionInput(inputHelper);
                 PickupSprinkler(inputHelper);
-                CheckWateringCanInput(inputHelper);
-                CheckTreeSeedInput(inputHelper);
-                CheckPickaxeInput(inputHelper);
-                CheckAxeInput(inputHelper);
-                CheckPlantPickup(inputHelper);
                 CheckHotbarSelection(inputHelper);
                 ToggleShopMenu(inputHelper);
             }
         }
 
+        /// <summary>
+        /// Deducts energy in de player class when called
+        /// </summary>
         void PlayerEnergy()
         {
             if (player.DeductEnergy)
@@ -166,11 +168,18 @@ namespace HarvestValley.GameStates
             }
         }
 
+        /// <summary>
+        /// Checks for all the UI booleans if the UI is active
+        /// </summary>
         bool UIIsActive
         {
             get { return target.panel_bg.Visible || options.IsActive || shopUI.IsActive; }
         }
 
+        /// <summary>
+        /// Opens the shop page when the shopsign next to the tent is pressed and within player reach
+        /// </summary>
+        /// <param name="inputHelper"></param>
         void ToggleShopMenu(InputHelper inputHelper)
         {
             //Activate UI bools
@@ -189,6 +198,8 @@ namespace HarvestValley.GameStates
         }
 
         /// <summary>
+        /// Checks if the player walks into the grey part of the tent, when he does the sleeping actions are called via a boolean
+        /// </summary>
         void CheckSleepHitbox()
         {
             if ((tent.Children[0] as Tent).CollidesWithSleep(player))
@@ -205,6 +216,9 @@ namespace HarvestValley.GameStates
             }
         }
 
+        /// <summary>
+        /// Checks where the tent is placed, with which cells it collides and then sets the cellHasTent boolean in those cells to true
+        /// </summary>
         void SpawnTent()
         {
             foreach (Cell c in cells.Children)
@@ -219,7 +233,10 @@ namespace HarvestValley.GameStates
             }
         }
 
-        void SpawnPC()
+        /// <summary>
+        /// Checks where the 
+        /// </summary>
+        void SpawnShopSign()
         {
             foreach (Cell c in cells.Children)
             {
@@ -764,7 +781,7 @@ namespace HarvestValley.GameStates
             shopPC.Position = prevPos;
         }
 
-        void CheckHoeInput(InputHelper inputHelper)
+        void CheckActionInput(InputHelper inputHelper)
         {
             foreach (Cell c in cells.Children)
             {
@@ -772,80 +789,264 @@ namespace HarvestValley.GameStates
                 {
                     if (inputHelper.MouseLeftButtonDown())
                     {
-                        if (itemList.itemSelected == "HOE" && !c.cellIsTilled && !c.HasCollision)
+                        CheckHoeInput(c);
+                        CheckSeedInput(c);
+                        CheckTreeSeedInput(c);
+
+                    }
+                    if (inputHelper.MouseLeftButtonPressed())
+                    {
+                        CheckWateringCanInput(c);
+                        CheckPickaxeInput(c);
+                        CheckSprinklerInput(c);
+                        CheckAxeInput(c);
+                    }
+                    if (inputHelper.MouseRightButtonDown())
+                    {
+                        CheckPlantPickup(c);
+                    }
+                }
+            }
+        }
+
+        void CheckHoeInput(Cell c)
+        {
+            if (itemList.itemSelected == "HOE" && !c.cellIsTilled && !c.HasCollision)
+            {
+                if (tutorialStepList.step == 1)
+                {
+                    tutorialStepList.step += 1;
+                }
+                //Play HittingGround
+                GameEnvironment.AssetManager.PlaySound(sounds.SEIs[8]);
+
+                c.ChangeSpriteTo(1);
+                c.cellIsTilled = true;
+                energyBar.percentageLost += energyBar.oneUse;
+            }
+        }
+
+        void CheckSeedInput(Cell c)
+        {
+            foreach (Item item in itemList.Children)
+            {
+                if (item is Seed)
+                {
+                    if (itemList.itemSelected == "SEED" && c.cellIsTilled && !c.cellHasPlant && item.itemAmount > 0 && !c.cellHasSprinkler)
+                    {
+                        if (tutorialStepList.step == 2)
                         {
-                            if (tutorialStepList.step == 1)
+                            tutorialStepList.step += 1;
+                        }
+
+                        //Play Shakking1
+                        GameEnvironment.AssetManager.PlaySound(sounds.SEIs[9]);
+
+                        item.itemAmount -= 1;
+                        c.cellHasPlant = true;
+                        energyBar.percentageLost += energyBar.oneUse;
+                        plants.Add(new Plant(c.Position, 2));
+                    }
+                }
+            }
+        }
+
+        void CheckSprinklerInput(Cell c)
+        {
+            foreach (Item item in itemList.Children)
+            {
+                if (item is Sprinkler)
+                {
+                    if (itemList.itemSelected == "SPRINKLER" && !c.cellHasPlant && !c.HasCollision && item.itemAmount > 0)
+                    {
+                        item.itemAmount -= 1;
+                        c.cellHasSprinkler = true;
+                        energyBar.percentageLost += energyBar.oneUse;
+                        sprinklers.Add(new SprinklerObject(c.Position, 1));
+                        //Play WaterSplash
+                        GameEnvironment.AssetManager.PlaySound(sounds.SEIs[7]);
+                    }
+                }
+            }
+        }
+
+        void CheckWateringCanInput(Cell c)
+        {
+            if (itemList.itemSelected == "WATERINGCAN" && c.cellIsTilled && !c.cellHasWater)
+            {
+                if (tutorialStepList.step == 3)
+                {
+                    tutorialStepList.step += 1;
+                }
+                //Play WaterSplash
+                GameEnvironment.AssetManager.PlaySound(sounds.SEIs[4]);
+
+                c.cellHasWater = true;
+                c.ChangeSpriteTo(2);
+            }
+        }
+
+        void CheckTreeSeedInput(Cell c)
+        {
+            if (!c.CellCollidesWith(player))
+            {
+                for (int i = trees.Children.Count - 1; i >= 0; i--)
+                {
+                    foreach (Item item in itemList.Children)
+                    {
+                        if (item is TreeSeed)
+                        {
+                            if (itemList.itemSelected == "TREESEED" && !c.cellIsTilled && !c.cellHasPlant && !c.HasCollision && item.itemAmount > 0)
+                            {
+                                GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[13]);
+                                item.itemAmount -= 1;
+                                c.cellHasTree = true;
+                                trees.Add(new Tree(c.Position, .5f, 1));
+                                energyBar.percentageLost += energyBar.oneUse;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        void CheckPickaxeInput(Cell c)
+        {
+            for (int i = stones.Children.Count - 1; i >= 0; i--)
+            {
+                Stone s = stones.Children[i] as Stone;
+                if (s.CollidesWith(MouseGO.HitBox) && s.CollidesWith(player.playerReach))
+                {
+                    if (itemList.itemSelected == "PICKAXE" && !(stones.Children[i] as Stone).stoneHit && (stones.Children[i] as Stone)._sprite == 1)
+                    {
+                        //play PickaxeSwing
+                        GameEnvironment.AssetManager.PlaySound(sounds.SEIs[2]);
+
+                        (stones.Children[i] as Stone).stoneHit = true;
+                        (stones.Children[i] as Stone).hitTimer = (stones.Children[i] as Stone).hitTimerReset;
+                        (stones.Children[i] as Stone).health -= 1;
+                        Debug.WriteLine((stones.Children[i] as Stone).health);
+                        energyBar.percentageLost += energyBar.oneUse;
+                        if ((stones.Children[i] as Stone).health <= 0)
+                        {
+                            if (tutorialStepList.step == 4)
                             {
                                 tutorialStepList.step += 1;
                             }
-                            //Play HittingGround
-                            GameEnvironment.AssetManager.PlaySound(sounds.SEIs[8]);
-
-                            c.ChangeSpriteTo(1);
-                            c.cellIsTilled = true;
-                            energyBar.percentageLost += energyBar.oneUse;
+                            if (c.Position == s.Position)
+                            {
+                                c.cellHasStone = false;
+                            }
+                            foreach (Item item in itemList.Children)
+                            {
+                                if (item is Rock)
+                                {
+                                    Debug.WriteLine("DFA");
+                                    int randomAddition = GameEnvironment.Random.Next(2, 5);
+                                    item.itemAmount += randomAddition;
+                                    ConvertFromHotbarToMoney(item, randomAddition);
+                                }
+                            }
+                            stones.Remove(stones.Children[i]);
                         }
                     }
                 }
             }
         }
 
-        void CheckSeedInput(InputHelper inputHelper)
+        void CheckAxeInput(Cell c)
         {
-            foreach (Cell c in cells.Children)
+            for (int i = trees.Children.Count - 1; i >= 0; i--)
             {
-                if (c.CellCollidesWith(MouseGO.HitBox) && c.CellCollidesWith(player.playerReach))
+                if ((trees.Children[i] as Tree).CollidesWith(MouseGO.HitBox) && (trees.Children[i] as Tree).CollidesWith(player.playerReach))
                 {
-                    if (inputHelper.MouseLeftButtonDown())
+                    if (itemList.itemSelected == "AXE" && !(trees.Children[i] as Tree).treeHit && (trees.Children[i] as Tree).growthStage == 3)
                     {
-                        foreach (Item item in itemList.Children)
+                        GameEnvironment.AssetManager.PlaySound(sounds.SEIs[1]);
+                        (trees.Children[i] as Tree).treeHit = true;
+                        (trees.Children[i] as Tree).hitTimer = (trees.Children[i] as Tree).hitTimerReset;
+                        (trees.Children[i] as Tree).health -= 1;
+                        energyBar.percentageLost += energyBar.oneUse;
+                        if ((trees.Children[i] as Tree).health <= 0)
                         {
-                            if (item is Seed)
+                            if (tutorialStepList.step == 4)
                             {
-                                if (itemList.itemSelected == "SEED" && c.cellIsTilled && !c.cellHasPlant && item.itemAmount > 0 && !c.cellHasSprinkler)
+                                tutorialStepList.step += 1;
+                            }
+                            (trees.Children[i] as Tree).treeHit = false;
+                            if (c.Position == (trees.Children[i] as Tree).Position)
+                            {
+                                c.cellHasTree = false;
+                            }
+                            trees.Remove(trees.Children[i]);
+
+                            //play TreeFalling
+                            GameEnvironment.AssetManager.PlaySound(sounds.SEIs[3]);
+                            foreach (Item item in itemList.Children)
+                            {
+                                if (item is Wood)
                                 {
-                                    if (tutorialStepList.step == 2)
-                                    {
-                                        tutorialStepList.step += 1;
-                                    }
-
-                                    //Play Shakking1
-                                    GameEnvironment.AssetManager.PlaySound(sounds.SEIs[9]);
-
-                                    item.itemAmount -= 1;
-                                    c.cellHasPlant = true;
-                                    energyBar.percentageLost += energyBar.oneUse;
-                                    plants.Add(new Plant(c.Position, 2));
+                                    int randomAddition = GameEnvironment.Random.Next(3, 7);
+                                    item.itemAmount += randomAddition;
+                                    ConvertFromHotbarToMoney(item, randomAddition);
+                                }
+                                if (item is TreeSeed)
+                                {
+                                    int randomAddition = GameEnvironment.Random.Next(2);
+                                    item.itemAmount += randomAddition;
+                                    ConvertFromHotbarToMoney(item, randomAddition);
                                 }
                             }
                         }
+                    }
+                    else if (itemList.itemSelected == "AXE" && !(trees.Children[i] as Tree).treeHit)
+                    {
+                        if (c.Position == (trees.Children[i] as Tree).Position)
+                        {
+                            c.cellHasTree = false;
+                        }
+                        trees.Remove(trees.Children[i]);
+
+                        //play TreeFalling
+                        GameEnvironment.AssetManager.PlaySound(sounds.SEIs[3]);
                     }
                 }
             }
         }
 
-        void CheckSprinklerInput(InputHelper inputHelper)
+        void CheckPlantPickup(Cell c)
         {
-            foreach (Cell c in cells.Children)
+            if (c.cellHasPlant)
             {
-                if (c.CellCollidesWith(MouseGO.HitBox) && c.CellCollidesWith(player.playerReach) && !c.CellCollidesWith(player))
+                for (int i = plants.Children.Count - 1; i >= 0; i--)
                 {
-                    if (inputHelper.MouseLeftButtonPressed())
+                    if (plants.Children[i].Position == c.Position)
                     {
-                        foreach (Item item in itemList.Children)
+                        if ((plants.Children[i] as Plant).growthStage >= 4)
                         {
-                            if (item is Sprinkler)
+                            if (tutorialStepList.step == 6)
                             {
-                                if (itemList.itemSelected == "SPRINKLER" && !c.cellHasPlant && !c.HasCollision && item.itemAmount > 0)
+                                tutorialStepList.step += 1;
+                            }
+                            foreach (Item item in itemList.Children)
+                            {
+                                if (item is Wheat)
                                 {
-                                    item.itemAmount -= 1;
-                                    c.cellHasSprinkler = true;
-                                    energyBar.percentageLost += energyBar.oneUse;
-                                    sprinklers.Add(new SprinklerObject(c.Position, 1));
-                                    //Play WaterSplash
-                                    GameEnvironment.AssetManager.PlaySound(sounds.SEIs[7]);
+                                    int randomAddition = GameEnvironment.Random.Next(1, 3);
+                                    item.itemAmount += randomAddition;
+                                    ConvertFromHotbarToMoney(item, randomAddition);
+                                }
+                                if (item is Seed)
+                                {
+                                    int randomAddition = GameEnvironment.Random.Next(1, 3);
+                                    item.itemAmount += randomAddition;
+                                    ConvertFromHotbarToMoney(item, randomAddition);
                                 }
                             }
+                            c.cellHasPlant = false;
+                            plants.Remove(plants.Children[i]);
+                            //Play WheatPickup
+                            GameEnvironment.AssetManager.PlaySound(sounds.SEIs[11]);
                         }
                     }
                 }
@@ -877,227 +1078,6 @@ namespace HarvestValley.GameStates
                         }
                     }
                     sprinklers.Remove(sprinklers.Children[i]);
-                }
-            }
-        }
-
-        void CheckWateringCanInput(InputHelper inputHelper)
-        {
-            foreach (Cell c in cells.Children)
-            {
-                if (c.CellCollidesWith(MouseGO.HitBox) && c.CellCollidesWith(player.playerReach))
-                {
-                    if (inputHelper.MouseLeftButtonPressed())
-                    {
-                        if (itemList.itemSelected == "WATERINGCAN" && c.cellIsTilled && !c.cellHasWater)
-                        {
-                            if (tutorialStepList.step == 3)
-                            {
-                                tutorialStepList.step += 1;
-                            }
-                            //Play WaterSplash
-                            GameEnvironment.AssetManager.PlaySound(sounds.SEIs[4]);
-
-                            c.cellHasWater = true;
-                            c.ChangeSpriteTo(2);
-                        }
-                    }
-                }
-            }
-        }
-
-        void CheckTreeSeedInput(InputHelper inputHelper)
-        {
-            foreach (Cell c in cells.Children)
-            {
-                if (c.CellCollidesWith(MouseGO.HitBox) && c.CellCollidesWith(player.playerReach) && !c.CellCollidesWith(player))
-                {
-                    if (inputHelper.MouseLeftButtonDown())
-                    {
-                        foreach (Item item in itemList.Children)
-                        {
-                            for (int i = trees.Children.Count - 1; i >= 0; i--)
-                            {
-                                if (item is TreeSeed)
-                                {
-                                    if (itemList.itemSelected == "TREESEED" && !c.cellIsTilled && !c.cellHasPlant && !c.HasCollision && item.itemAmount > 0)
-                                    {
-                                        GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[13]);
-                                        item.itemAmount -= 1;
-                                        c.cellHasTree = true;
-                                        trees.Add(new Tree(c.Position, .5f, 1));
-                                        energyBar.percentageLost += energyBar.oneUse;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        void CheckPickaxeInput(InputHelper inputHelper)
-        {
-            for (int i = stones.Children.Count - 1; i >= 0; i--)
-            {
-                Stone s = stones.Children[i] as Stone;
-                if (s.CollidesWith(MouseGO.HitBox) && s.CollidesWith(player.playerReach))
-                {
-                    if (inputHelper.MouseLeftButtonPressed())
-                    {
-                        if (itemList.itemSelected == "PICKAXE" && !(stones.Children[i] as Stone).stoneHit && (stones.Children[i] as Stone)._sprite == 1)
-                        {
-                            //play PickaxeSwing
-                            GameEnvironment.AssetManager.PlaySound(sounds.SEIs[2]);
-
-                            (stones.Children[i] as Stone).stoneHit = true;
-                            (stones.Children[i] as Stone).hitTimer = (stones.Children[i] as Stone).hitTimerReset;
-                            (stones.Children[i] as Stone).health -= 1;
-                            energyBar.percentageLost += energyBar.oneUse;
-                            if ((stones.Children[i] as Stone).health <= 0)
-                            {
-                                if (tutorialStepList.step == 4)
-                                {
-                                    tutorialStepList.step += 1;
-                                }
-                                foreach (Cell c in cells.Children)
-                                {
-                                    if (c.Position == s.Position)
-                                    {
-                                        c.cellHasStone = false;
-                                    }
-                                }
-                                stones.Remove(stones.Children[i]);
-                                foreach (Item item in itemList.Children)
-                                {
-                                    if (item is Rock)
-                                    {
-                                        int randomAddition = GameEnvironment.Random.Next(2, 5);
-                                        item.itemAmount += randomAddition;
-                                        ConvertFromHotbarToMoney(item, randomAddition);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        void CheckAxeInput(InputHelper inputHelper)
-        {
-            for (int i = trees.Children.Count - 1; i >= 0; i--)
-            {
-                if ((trees.Children[i] as Tree).CollidesWith(MouseGO.HitBox) && (trees.Children[i] as Tree).CollidesWith(player.playerReach))
-                {
-                    if (inputHelper.MouseLeftButtonPressed())
-                    {
-                        if (itemList.itemSelected == "AXE" && !(trees.Children[i] as Tree).treeHit && (trees.Children[i] as Tree).growthStage == 3)
-                        {
-                            GameEnvironment.AssetManager.PlaySound(sounds.SEIs[1]);
-                            (trees.Children[i] as Tree).treeHit = true;
-                            (trees.Children[i] as Tree).hitTimer = (trees.Children[i] as Tree).hitTimerReset;
-                            (trees.Children[i] as Tree).health -= 1;
-                            energyBar.percentageLost += energyBar.oneUse;
-                            if ((trees.Children[i] as Tree).health <= 0)
-                            {
-                                if (tutorialStepList.step == 4)
-                                {
-                                    tutorialStepList.step += 1;
-                                }
-                                (trees.Children[i] as Tree).treeHit = false;
-                                foreach (Cell c in cells.Children)
-                                {
-                                    if (c.Position == (trees.Children[i] as Tree).Position)
-                                    {
-                                        c.cellHasTree = false;
-                                    }
-                                }
-                                trees.Remove(trees.Children[i]);
-
-                                //play TreeFalling
-                                GameEnvironment.AssetManager.PlaySound(sounds.SEIs[3]);
-
-                                foreach (Item item in itemList.Children)
-                                {
-                                    if (item is Wood)
-                                    {
-                                        int randomAddition = GameEnvironment.Random.Next(3, 7);
-                                        item.itemAmount += randomAddition;
-                                        ConvertFromHotbarToMoney(item, randomAddition);
-                                    }
-                                    if (item is TreeSeed)
-                                    {
-                                        int randomAddition = GameEnvironment.Random.Next(2);
-                                        item.itemAmount += randomAddition;
-                                        ConvertFromHotbarToMoney(item, randomAddition);
-                                    }
-                                }
-                            }
-                        }
-                        else if (itemList.itemSelected == "AXE" && !(trees.Children[i] as Tree).treeHit)
-                        {
-                            foreach (Cell c in cells.Children)
-                            {
-                                if (c.Position == (trees.Children[i] as Tree).Position)
-                                {
-                                    c.cellHasTree = false;
-                                }
-                            }
-                            trees.Remove(trees.Children[i]);
-
-                            //play TreeFalling
-                            GameEnvironment.AssetManager.PlaySound(sounds.SEIs[3]);
-                        }
-                    }
-                }
-            }
-        }
-
-        void CheckPlantPickup(InputHelper inputHelper)
-        {
-            foreach (Cell c in cells.Children)
-            {
-                if (c.CellCollidesWith(MouseGO.HitBox) && c.CellCollidesWith(player.playerReach))
-                {
-                    if (inputHelper.MouseRightButtonDown())
-                    {
-                        if (c.cellHasPlant)
-                        {
-                            for (int i = plants.Children.Count - 1; i >= 0; i--)
-                            {
-                                if (plants.Children[i].Position == c.Position)
-                                {
-                                    if ((plants.Children[i] as Plant).growthStage >= 4)
-                                    {
-                                        if (tutorialStepList.step == 6)
-                                        {
-                                            tutorialStepList.step += 1;
-                                        }
-                                        foreach (Item item in itemList.Children)
-                                        {
-                                            if (item is Wheat)
-                                            {
-                                                int randomAddition = GameEnvironment.Random.Next(1, 3);
-                                                item.itemAmount += randomAddition;
-                                                ConvertFromHotbarToMoney(item, randomAddition);
-                                            }
-                                            if (item is Seed)
-                                            {
-                                                int randomAddition = GameEnvironment.Random.Next(1, 3);
-                                                item.itemAmount += randomAddition;
-                                                ConvertFromHotbarToMoney(item, randomAddition);
-                                            }
-                                        }
-                                        c.cellHasPlant = false;
-                                        plants.Remove(plants.Children[i]);
-                                        //Play WheatPickup
-                                        GameEnvironment.AssetManager.PlaySound(sounds.SEIs[11]);
-                                    }
-                                }
-                            }
-                        }
-                    }
                 }
             }
         }
