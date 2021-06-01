@@ -234,7 +234,7 @@ namespace HarvestValley.GameStates
         }
 
         /// <summary>
-        /// Checks where the 
+        /// Checks where the shop sign is placed, with which cells it collides and then sets the cellHasShop boolean in those cells to true
         /// </summary>
         void SpawnShopSign()
         {
@@ -247,6 +247,9 @@ namespace HarvestValley.GameStates
             }
         }
 
+        /// <summary>
+        /// Creates a border around the map by placing cliffs around the map
+        /// </summary>
         void BuildBorder()
         {
             for (int x = 0; x < map.cols; x++)
@@ -272,7 +275,6 @@ namespace HarvestValley.GameStates
                     borderGrass.Add(new SpriteGameObject("tiles/spr_grass") { Position = new Vector2(-map.mapSizeX - map.cellSize + map.cellSize * i, map.rows * map.cellSize - map.mapSizeY + map.cellSize * 5 - map.cellSize * j), scale = .5f });
                 }
             }
-
             for (int i = 0; i < 9; i++)
             {
                 for (int j = 0; j < map.rows + 12; j++)
@@ -634,6 +636,9 @@ namespace HarvestValley.GameStates
             }
         }
 
+        /// <summary>
+        /// Continually checks for the cell boolean cellHasWater to also set the soilHasWater boolean in plant when they overlap
+        /// </summary>
         void CheckPlantsWater()
         {
             foreach (Cell c in cells.Children)
@@ -655,6 +660,12 @@ namespace HarvestValley.GameStates
             }
         }
 
+        /// <summary>
+        /// Checks for WASD walking inputs
+        /// When input is detected moves all the map objects 
+        /// Also checks for all collisions
+        /// </summary>
+        /// <param name="inputHelper"></param>
         void CameraSystem(InputHelper inputHelper)
         {
             Vector2 moveVector = Vector2.Zero;
@@ -768,6 +779,9 @@ namespace HarvestValley.GameStates
             shopPC.Position += moveVector;
         }
 
+        /// <summary>
+        /// when collision is detected in CameraSystem all the map objects are set to their last position, which prevents the player from walking through them
+        /// </summary>
         void SetPreviousPosition()
         {
             cells.Position = prevPos;
@@ -781,6 +795,10 @@ namespace HarvestValley.GameStates
             shopPC.Position = prevPos;
         }
 
+        /// <summary>
+        /// Checks for all the actions for each cell, mouse collision and playerreach to reduce the amount of for each loops and if statements in all the included functions
+        /// </summary>
+        /// <param name="inputHelper"></param>
         void CheckActionInput(InputHelper inputHelper)
         {
             foreach (Cell c in cells.Children)
@@ -809,6 +827,10 @@ namespace HarvestValley.GameStates
             }
         }
 
+        /// <summary>
+        /// Checks for input from the hoe, if detected it tills the ground and reduces energy
+        /// </summary>
+        /// <param name="c"></param>
         void CheckHoeInput(Cell c)
         {
             if (itemList.itemSelected == "HOE" && !c.cellIsTilled && !c.HasCollision)
@@ -826,6 +848,10 @@ namespace HarvestValley.GameStates
             }
         }
 
+        /// <summary>
+        /// Checks for input from the seed, if detected reduces the amount of seeds, places a plant and reduces energy
+        /// </summary>
+        /// <param name="c"></param>
         void CheckSeedInput(Cell c)
         {
             foreach (Item item in itemList.Children)
@@ -851,6 +877,10 @@ namespace HarvestValley.GameStates
             }
         }
 
+        /// <summary>
+        /// Checks for input form the sprinkler, if detected reduces the amount of sprinklers, places a sprinkler and reduces energy
+        /// </summary>
+        /// <param name="c"></param>
         void CheckSprinklerInput(Cell c)
         {
             foreach (Item item in itemList.Children)
@@ -870,6 +900,10 @@ namespace HarvestValley.GameStates
             }
         }
 
+        /// <summary>
+        /// Checks for input from the watering can, if detected gives the cell water and reduces energy
+        /// </summary>
+        /// <param name="c"></param>
         void CheckWateringCanInput(Cell c)
         {
             if (itemList.itemSelected == "WATERINGCAN" && c.cellIsTilled && !c.cellHasWater)
@@ -881,11 +915,16 @@ namespace HarvestValley.GameStates
                 //Play WaterSplash
                 GameEnvironment.AssetManager.PlaySound(sounds.SEIs[4]);
 
+                energyBar.percentageLost += energyBar.oneUse;
                 c.cellHasWater = true;
                 c.ChangeSpriteTo(2);
             }
         }
 
+        /// <summary>
+        /// Checks for input from the tree seed, if detected reduces a tree seed, places a tree and reduces energy
+        /// </summary>
+        /// <param name="c"></param>
         void CheckTreeSeedInput(Cell c)
         {
             if (!c.CellCollidesWith(player))
@@ -910,6 +949,10 @@ namespace HarvestValley.GameStates
             }
         }
 
+        /// <summary>
+        /// Checks for input from the pickaxe, if detected shows the stone being hit by changing its sprite, if the stone has no more health left it gets removed, the player receives rocks and energy is reduced
+        /// </summary>
+        /// <param name="c"></param>
         void CheckPickaxeInput(Cell c)
         {
             for (int i = stones.Children.Count - 1; i >= 0; i--)
@@ -954,6 +997,10 @@ namespace HarvestValley.GameStates
             }
         }
 
+        /// <summary>
+        /// Checks for input from the axe, if detected shows the tree being hit by changing its sprite, if the tree has no more health left it gets removed, the player receives wood and energy is reduced
+        /// </summary>
+        /// <param name="c"></param>
         void CheckAxeInput(Cell c)
         {
             for (int i = trees.Children.Count - 1; i >= 0; i--)
@@ -1014,6 +1061,10 @@ namespace HarvestValley.GameStates
             }
         }
 
+        /// <summary>
+        /// Checks for plant pickup, if detected adds wheat and new seeds to the players inventory, removes the plant and reduces energy
+        /// </summary>
+        /// <param name="c"></param>
         void CheckPlantPickup(Cell c)
         {
             if (c.cellHasPlant)
@@ -1053,6 +1104,10 @@ namespace HarvestValley.GameStates
             }
         }
 
+        /// <summary>
+        /// Checks for sprinkler pickup, if detected removes the sprinkler from the map, adds it to your inventory and reduces energy
+        /// </summary>
+        /// <param name="inputHelper"></param>
         void PickupSprinkler(InputHelper inputHelper)
         {
             for (int i = sprinklers.Children.Count - 1; i >= 0; i--)
@@ -1069,6 +1124,7 @@ namespace HarvestValley.GameStates
                         {
                             c.cellHasSprinkler = false;
                         }
+                        c.nextToSprinkler = false;
                     }
                     foreach (Item item in itemList.Children)
                     {
@@ -1082,6 +1138,10 @@ namespace HarvestValley.GameStates
             }
         }
 
+        /// <summary>
+        /// Checks for hotbar selection via 1-0 or mouse selection
+        /// </summary>
+        /// <param name="inputHelper"></param>
         void CheckHotbarSelection(InputHelper inputHelper)
         {
             //keyboard input

@@ -8,7 +8,6 @@ namespace HarvestValley.GameObjects.Tools
     {
         public Rock(string _assetName, bool stackable, int startItemAmount, float scale = 1) : base(_assetName, stackable, startItemAmount, scale)
         {
-
         }
     }
 }
