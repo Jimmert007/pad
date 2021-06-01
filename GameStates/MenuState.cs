@@ -19,9 +19,11 @@ namespace HarvestValley.GameStates
         MouseGameObject mouseGO = new MouseGameObject();
         TextGameObject creditsTitle, niels, luke, mo, jim, back;
         bool creditsScreen;
+        Sounds sounds;
 
         public MenuState()
         {
+            sounds = new Sounds();
             bgs = new GameObjectList();
             Add(bgs);
             for (int i = 0; i < 2; i++)
@@ -64,22 +66,22 @@ namespace HarvestValley.GameStates
             Add(creditsTitle);
 
             niels = new TextGameObject("Fonts/CreditFont");
-            niels.Text = "Niels Duivenvoorden: Coole gast zijn";
+            niels.Text = "Niels Duivenvoorden";
             niels.Position = new Vector2(GameEnvironment.Screen.X * .5f - niels.Size.X * .5f, GameEnvironment.Screen.Y * .5f - niels.Size.Y * .5f);
             Add(niels);
 
             luke = new TextGameObject("Fonts/CreditFont");
-            luke.Text = "Luke Sikma: Coole gast zijn";
+            luke.Text = "Luke Sikma";
             luke.Position = new Vector2(GameEnvironment.Screen.X * .5f - luke.Size.X * .5f, niels.Position.Y + 75);
             Add(luke);
 
             mo = new TextGameObject("Fonts/CreditFont");
-            mo.Text = "Mohammad Al Hadiansyah Suwandhy: Coole gast zijn";
+            mo.Text = "Mohammad Al Hadiansyah Suwandhy";
             mo.Position = new Vector2(GameEnvironment.Screen.X * .5f - mo.Size.X * .5f, niels.Position.Y + 150);
             Add(mo);
 
             jim = new TextGameObject("Fonts/CreditFont");
-            jim.Text = "Jim van de Burgwal: Coolste gast zijn";
+            jim.Text = "Jim van de Burgwal";
             jim.Position = new Vector2(GameEnvironment.Screen.X * .5f - jim.Size.X * .5f, niels.Position.Y + 225);
             Add(jim);
 
@@ -127,18 +129,26 @@ namespace HarvestValley.GameStates
                 if (mouseGO.CollidesWith(button1))
                 {
                     GameEnvironment.GameStateManager.SwitchTo("playingState");
+                    // Play ButtonClick
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
                 }
                 if (mouseGO.CollidesWith(button2))
                 {
                     creditsScreen = true;
+                    // Play ButtonClick
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
                 }
                 if (mouseGO.CollidesWith(button3))
                 {
                     System.Environment.Exit(1);
+                    // Play ButtonClick
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
                 }
                 if (mouseGO.CollidesWith(button1credits))
                 {
                     creditsScreen = false;
+                    // Play ButtonClick
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
                 }
             }
             bgs.Position = inputHelper.MousePosition * .01f + bg.Position;

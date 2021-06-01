@@ -34,8 +34,6 @@ namespace HarvestValley.GameStates
         Sleeping sleeping;
         Hotbar hotbar;
         ItemList itemList;
-        SpriteFont jimFont;
-        UIList uIList;
         ShopMenuUIList shopUI;
         GameObjectList shopPC;
         Wallet wallet;
@@ -75,6 +73,14 @@ namespace HarvestValley.GameStates
             player = new Player("Player/jorrit", new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2), 1);
             Add(player);
 
+            tent = new GameObjectList();
+            tent.Add(new Tent());
+            Add(tent);
+
+            shopPC = new GameObjectList();
+            shopPC.Add(new ShopPC(tent.Children[0] as Tent));
+            Add(shopPC);
+
             stones = new GameObjectList();
             Add(stones);
 
@@ -83,14 +89,6 @@ namespace HarvestValley.GameStates
 
             sprinklers = new GameObjectList();
             Add(sprinklers);
-
-            tent = new GameObjectList();
-            tent.Add(new Tent());
-            Add(tent);
-
-            shopPC = new GameObjectList();
-            shopPC.Add(new ShopPC(tent.Children[0] as Tent));
-            Add(shopPC);
 
             energyBar = new EnergyBar("UI/spr_empty", GameEnvironment.Screen.X - 60, GameEnvironment.Screen.Y - 220, 40, 200);
             Add(energyBar);
@@ -101,25 +99,23 @@ namespace HarvestValley.GameStates
             craftingMenu = new CraftingMenu();
             Add(craftingMenu);
 
-            options = new Options(MouseGO);
-            Add(options);
-
             itemList = new ItemList();
 
             hotbar = new Hotbar(itemList);
             Add(hotbar);
 
-            jimFont = GameEnvironment.AssetManager.Content.Load<SpriteFont>("Fonts/JimFont");
-
             wallet = new Wallet();
 
             ////Initialize UI Elements
-            Add(uIList = new UIList());
             Add(shopUI = new ShopMenuUIList(itemList, (tent.Children[0] as Tent), MouseGO, wallet));
 
             Add(wallet);
 
+            options = new Options(MouseGO);
+
             Add(target = new Target(itemList, wallet, player, sounds));
+
+            Add(options);
 
             tutorialStepList = new TutorialStepList(MouseGO);
             Add(tutorialStepList);
@@ -133,7 +129,7 @@ namespace HarvestValley.GameStates
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (UIIsActive)
+            if (!UIIsActive)
             {
                 SleepActions(gameTime);
                 CheckSleepHitbox();
@@ -145,12 +141,13 @@ namespace HarvestValley.GameStates
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
-            if (UIIsActive)
+            if (!UIIsActive)
             {
                 CameraSystem(inputHelper);
                 CheckHoeInput(inputHelper);
                 CheckSeedInput(inputHelper);
                 CheckSprinklerInput(inputHelper);
+                PickupSprinkler(inputHelper);
                 CheckWateringCanInput(inputHelper);
                 CheckTreeSeedInput(inputHelper);
                 CheckPickaxeInput(inputHelper);
@@ -171,8 +168,7 @@ namespace HarvestValley.GameStates
 
         bool UIIsActive
         {
-            get { return !target.panel_bg.Visible && !options.IsActive && !shopUI.IsActive; }
-
+            get { return target.panel_bg.Visible || options.IsActive || shopUI.IsActive; }
         }
 
         void ToggleShopMenu(InputHelper inputHelper)
@@ -481,8 +477,7 @@ namespace HarvestValley.GameStates
 
                 //Play RoosterCrowing
                 GameEnvironment.AssetManager.PlaySound(sounds.SEIs[6]);
-                //Play PersonYawns
-                //GameEnvironment.AssetManager.PlaySound(SEIs[5]);
+
                 if (sleeping.fadeOut)
                 {
                     for (int i = 0; i < cells.Children.Count; i++)
@@ -835,7 +830,7 @@ namespace HarvestValley.GameStates
             {
                 if (c.CellCollidesWith(MouseGO.HitBox) && c.CellCollidesWith(player.playerReach) && !c.CellCollidesWith(player))
                 {
-                    if (inputHelper.MouseLeftButtonDown())
+                    if (inputHelper.MouseLeftButtonPressed())
                     {
                         foreach (Item item in itemList.Children)
                         {
@@ -853,6 +848,35 @@ namespace HarvestValley.GameStates
                             }
                         }
                     }
+                }
+            }
+        }
+
+        void PickupSprinkler(InputHelper inputHelper)
+        {
+            for (int i = sprinklers.Children.Count - 1; i >= 0; i--)
+            {
+                SprinklerObject s = sprinklers.Children[i] as SprinklerObject;
+                if (inputHelper.MouseRightButtonPressed() && s.CollidesWith(player.playerReach) && s.CollidesWith(MouseGO.HitBox))
+                {
+                    energyBar.percentageLost += energyBar.oneUse;
+                    //Play WaterSplash
+                    GameEnvironment.AssetManager.PlaySound(sounds.SEIs[7]);
+                    foreach (Cell c in cells.Children)
+                    {
+                        if (c.Position == s.Position)
+                        {
+                            c.cellHasSprinkler = false;
+                        }
+                    }
+                    foreach (Item item in itemList.Children)
+                    {
+                        if (item is Sprinkler)
+                        {
+                            item.itemAmount += 1;
+                        }
+                    }
+                    sprinklers.Remove(sprinklers.Children[i]);
                 }
             }
         }
@@ -1010,6 +1034,20 @@ namespace HarvestValley.GameStates
                                     }
                                 }
                             }
+                        }
+                        else if (itemList.itemSelected == "AXE" && !(trees.Children[i] as Tree).treeHit)
+                        {
+                            foreach (Cell c in cells.Children)
+                            {
+                                if (c.Position == (trees.Children[i] as Tree).Position)
+                                {
+                                    c.cellHasTree = false;
+                                }
+                            }
+                            trees.Remove(trees.Children[i]);
+
+                            //play TreeFalling
+                            GameEnvironment.AssetManager.PlaySound(sounds.SEIs[3]);
                         }
                     }
                 }

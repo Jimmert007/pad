@@ -10,11 +10,10 @@ namespace HarvestValley.GameObjects
     class Target : GameObjectList
     {
         public SpriteGameObject panel_bg, targetUI;
-        TextGameObject welcomeText, targetText, congratsText;
+        TextGameObject titleText, welcomeText, targetText, congratsText;
         TargetButton button;
         int targetAmount, currentAmount;
-        //int[] minSeedTSeedWoodRockWheat = {150, 25, 100, 75, 150 };
-        int[] minSeedTSeedWoodRockWheat = { 1, 1, 1, 1, 1 };
+        int[] minSeedTSeedWoodRockWheat = { 50, 10, 90, 60, 50 };
         public Item targetItem;
         string targetName;
         GameObjectList stackableItemsList;
@@ -30,6 +29,10 @@ namespace HarvestValley.GameObjects
             Add(panel_bg = new SpriteGameObject("UI/spr_target_bg"));
             panel_bg.Origin = panel_bg.Sprite.Center;
             panel_bg.Position = GameEnvironment.Screen.ToVector2() * .5f;
+            Add(titleText = new TextGameObject("Fonts/JimFont"));
+            titleText.Color = Color.Black;
+            titleText.Text = "Quest";
+            titleText.Position = panel_bg.Position - new Vector2(titleText.Size.X * .5f, panel_bg.Sprite.Height * .5f - titleText.Size.Y * 1.5f);
             Add(welcomeText = new TextGameObject("Fonts/JimFont"));
             welcomeText.Color = Color.Black;
             stackableItemsList = new GameObjectList();
@@ -76,10 +79,11 @@ namespace HarvestValley.GameObjects
             base.Update(gameTime);
             targetText.Text = "Quest: " + currentAmount + " / " + targetAmount + " " + targetName;
             targetText.Position = targetUI.Position + (new Vector2(targetUI.Width, targetUI.Height) * .5f) - targetText.Size * .5f;
-
             if (button.OnClick)
             {
+                // Play ButtonClick
                 GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
+                titleText.Visible = false;
                 panel_bg.Visible = false;
                 welcomeText.Visible = false;
                 button.Visible = false;
@@ -129,6 +133,7 @@ namespace HarvestValley.GameObjects
 
         void MadeIt()
         {
+            titleText.Visible = true;
             player.sleeping = true;
             panel_bg.Visible = true;
             button.Visible = true;
