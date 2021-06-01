@@ -47,14 +47,13 @@ namespace HarvestValley.GameStates
             sounds = new Sounds();
             MouseGO = new MouseGameObject();
 
-            SpriteSheet mapSpriteSheet = new SpriteSheet("tiles/spr_grass", 0);
             map = new Map();
             cells = new GameObjectList();
             for (int i = 0; i < map.rows; i++)
             {
                 for (int x = 0; x < map.cols; x++)
                 {
-                    Cell c = new Cell(new Vector2(mapSpriteSheet.Width / 2 * x - GameEnvironment.Screen.X, mapSpriteSheet.Height / 2 * i - GameEnvironment.Screen.Y), .5f, x + (map.cols * i));
+                    Cell c = new Cell(new Vector2(Cell.CELL_SIZE * x - GameEnvironment.Screen.X, Cell.CELL_SIZE * i - GameEnvironment.Screen.Y), .5f, x + (map.cols * i));
                     cells.Add(c);
                 }
             }

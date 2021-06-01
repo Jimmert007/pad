@@ -12,6 +12,7 @@ namespace HarvestValley
         public int cellID, randomGrass, spriteID;
         public SpriteGameObject tileSoil, tileSoilWater, grass;
         public bool cellIsTilled, cellHasPlant, cellHasTree, cellHasWater, cellHasSprinkler, nextRandom, nextToSprinkler, cellHasStone, cellHasTent, cellHasShop;
+        public const int CELL_SIZE = 64;
 
         public Cell(Vector2 _position, float _scale, int _id) : base()
         {
