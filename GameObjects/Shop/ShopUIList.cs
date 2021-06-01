@@ -25,13 +25,15 @@ namespace HarvestValley.GameObjects.Shop
         Wallet wallet;
         ItemList itemList;
         Item selectedShopItem;
+        Sounds sounds;
+        TextGameObject[] iconPrices;
 
         public bool shopActive, buyActive, buyAmount, sellActive, sellAmount = false;
         private int shopItemAmount = 0, offset = 128;
         public string[] shopDialogueLines = { "Welcome to the shop", "What do you want to do?", "What do you want to buy?", "What do you want to sell?", "How many do you want to buy?", "How many do you want to sell?", "Buy", "Sell", "Cancel" };
         public int[] itemAmount = { 0, 0, 1, -1, 10, -10, 0, 0 };
-        public int[] reduceMoney = { 10, 5, 7, 20, 100, 10 };
-        public int[] addMoney = { 5, 2, 3, 10, 50, 5 };
+        public int[] reduceMoney = { 10, 15, 7, 20, 100, 10 };
+        public int[] addMoney = { 5, 10, 3, 10, 50, 5 };
         public int totalCost, totalGained;
 
 
@@ -51,12 +53,28 @@ namespace HarvestValley.GameObjects.Shop
             itemList = _itemList;
 
             ResetShop();
+
+            iconPrices = new TextGameObject[shopItems.Children.Count];
+            for (int i = 0; i < iconPrices.Length; i++)
+            {
+                iconPrices[i] = new TextGameObject("Fonts/JimFont");
+                iconPrices[i].Text = "";
+                Add(iconPrices[i]);
+            }
+            foreach (GameObject TGO in children)
+            {
+                if (TGO is TextGameObject)
+                {
+                    (TGO as TextGameObject).Color = Color.Black;
+                }
+            }
         }
         public override void HandleInput(InputHelper inputHelper)
         {
+            sounds = new Sounds();
             base.HandleInput(inputHelper);
 
-            if (shopActive)     //Set button inputs when the Welcome page is active
+            if (shopActive)
             {
                 if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[6].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[6].Visible) { InitBuyPage(); }       //Open the Buy page
                 if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[7].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[7].Visible) { InitSellPage(); }      //Open the Sell page
@@ -64,13 +82,13 @@ namespace HarvestValley.GameObjects.Shop
             }
             if (buyActive)      //Set button inputs when the Buy page is active
             {
-                foreach (Item item in shopItems.Children) { if (inputHelper.MouseLeftButtonPressed() && mouseGO.CollidesWith(item) && item.Visible) { selectedShopItem = item; selectedShopItem.selectedItem = true; InitConfirmBuy(); } }          //Open the Confirm Buy page when clicking on an item
-                if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[1].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[1].Visible) { bottomLine.Text = shopDialogueLines[1]; InitShopWelcomePage(); }       //Closes the Buy page and goes back to the Welcome page
+                foreach (Item item in shopItems.Children) { if (inputHelper.MouseLeftButtonPressed() && mouseGO.CollidesWith(item) && item.Visible) { selectedShopItem = item; selectedShopItem.selectedItem = true; InitConfirmBuy(); } }
+                if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[1].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[1].Visible) { bottomLine.Text = shopDialogueLines[1]; InitShopWelcomePage(); }
             }
             if (sellActive)     //Set button inputs when the Sell page is active
             {
-                foreach (Item item in shopItems.Children) { if (inputHelper.MouseLeftButtonPressed() && mouseGO.CollidesWith(item) && item.Visible) { selectedShopItem = item; selectedShopItem.selectedItem = true; InitConfirmSell(); } }         //Open the Confirm sellf page when clicking on an item
-                if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[1].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[1].Visible) { bottomLine.Text = shopDialogueLines[1]; InitShopWelcomePage(); }       //Closes the Sell page and goes back to the Welcome page
+                foreach (Item item in shopItems.Children) { if (inputHelper.MouseLeftButtonPressed() && mouseGO.CollidesWith(item) && item.Visible) { selectedShopItem = item; selectedShopItem.selectedItem = true; InitConfirmSell(); } }
+                if (inputHelper.MouseLeftButtonPressed() && shopButtons.shopButtons[1].collidesWithMouse(inputHelper.MousePosition) && shopButtons.shopButtons[1].Visible) { bottomLine.Text = shopDialogueLines[1]; InitShopWelcomePage(); }
             }
             if (buyAmount) //Set button inputs when the Confirm Buy page is active
             {
@@ -97,9 +115,10 @@ namespace HarvestValley.GameObjects.Shop
                                     if (totalCost <= wallet.Money)
                                     {
                                         x.itemAmount += shopItemAmount;
-                                        wallet.AddMoney(-totalCost);                     //Reduces money for  specifed item here
+                                        Debug.WriteLine(totalCost);
+                                        wallet.AddMoney(-totalCost);  //Add money
                                     }
-                                }
+                               }
                             }
                             selectedShopItem.selectedItem = false;                      //Reset the selected item 
                             InitBuyPage();
@@ -241,12 +260,11 @@ namespace HarvestValley.GameObjects.Shop
         /// From here the player can navigate to the other pages of the shop UI
         /// </Summary>
         public void InitShopWelcomePage()
-        {   
-            //Set the Welcome page bool on true
+        {//Set the welcome page elements of the shop on true
             shopActive = true;
 
             //Set the visibility of the Welcome page elements of the shop on true
-            uIBox.Visible = true;
+           uIBox.Visible = true;
             topLine.Visible = true;
             bottomLine.Visible = true;
             buyLine.Visible = true;
@@ -282,6 +300,10 @@ namespace HarvestValley.GameObjects.Shop
         /// </Summary>
         public void InitBuyPage()
         {
+            for (int i = 0; i < iconPrices.Length; i++)
+            {
+                iconPrices[i].Visible = true;
+            }
             //Turn off elements from Welcome page
             buyActive = true;
             shopActive = false;
@@ -303,11 +325,15 @@ namespace HarvestValley.GameObjects.Shop
             {
                 shopItems.Children[i].Visible = true;
                 shopItems.Children[i].Position = new Vector2(GameEnvironment.Screen.X / 3 + offset / 2 + (offset * i), GameEnvironment.Screen.Y * 2 / 5);
+                iconPrices[i].Position = shopItems.Children[i].Position + new Vector2(0, 64);
+                iconPrices[i].Text = reduceMoney[i].ToString();
             }
             for (int i = shopItems.Children.Count / 2; i < shopItems.Children.Count; i++)
             {
                 shopItems.Children[i].Visible = true;
                 shopItems.Children[i].Position = new Vector2(offset * .75f + (offset * i), GameEnvironment.Screen.Y * 3 / 5);
+                iconPrices[i].Position = shopItems.Children[i].Position + new Vector2(0, 64);
+                iconPrices[i].Text = reduceMoney[i].ToString();
             }
 
             //Make item amount, buy and sell buttons invisible
@@ -324,6 +350,10 @@ namespace HarvestValley.GameObjects.Shop
         /// </Summary>
         public void InitConfirmBuy()
         {
+            for (int i = 0; i < iconPrices.Length; i++)
+            {
+                iconPrices[i].Visible = false;
+            }
             //Turn off elements from Buy page
             buyAmount = true;
             buyActive = false;
@@ -361,6 +391,10 @@ namespace HarvestValley.GameObjects.Shop
         /// </Summary>
         public void InitSellPage()
         {
+            for (int i = 0; i < iconPrices.Length; i++)
+            {
+                iconPrices[i].Visible = true;
+            }
             //Turn off elements from Welcome page
             sellActive = true;
             shopActive = false;
@@ -383,11 +417,15 @@ namespace HarvestValley.GameObjects.Shop
             {
                 shopItems.Children[i].Visible = true;
                 shopItems.Children[i].Position = new Vector2(GameEnvironment.Screen.X / 3 + offset / 2 + (offset * i), GameEnvironment.Screen.Y * 2 / 5);
+                iconPrices[i].Position = shopItems.Children[i].Position + new Vector2(0, 64);
+                iconPrices[i].Text = addMoney[i].ToString();
             }
             for (int i = shopItems.Children.Count / 2; i < shopItems.Children.Count; i++)
             {
                 shopItems.Children[i].Visible = true;
                 shopItems.Children[i].Position = new Vector2(offset * .75f + (offset * i), GameEnvironment.Screen.Y * 3 / 5);
+                iconPrices[i].Position = shopItems.Children[i].Position + new Vector2(0, 64);
+                iconPrices[i].Text = addMoney[i].ToString();
             }
             //Make item amount, buy and sell buttons invisible
             for (int i = 2; i < 6; i++)
@@ -403,6 +441,10 @@ namespace HarvestValley.GameObjects.Shop
         /// </Summary>
         public void InitConfirmSell()
         {
+            for (int i = 0; i < iconPrices.Length; i++)
+            {
+                iconPrices[i].Visible = false;
+            }
             //Turn off elements from sell page
             sellAmount = true;
             sellActive = false;
@@ -444,10 +486,11 @@ namespace HarvestValley.GameObjects.Shop
                     totalGained = addMoney[i] * shopItemAmount;
                     //Add money to the wallet
                     wallet.AddMoney(totalGained);
+                    Debug.WriteLine("Added");
                 }
             }
         }
-        public bool IsActive
+        public bool IsActive 
         {
             get { return shopActive || buyActive || buyAmount || sellActive || sellAmount; }
         }
