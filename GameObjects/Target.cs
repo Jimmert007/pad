@@ -11,7 +11,7 @@ namespace HarvestValley.GameObjects
     ///Niels Duivenvoorden
     ///This script gives the player a random chosen quest to complete
     ///Once completed it generates a new quest with a higher gathering amount made with difficulty
-    ///It also handles the UI for these elements where the player sees the target, gets congratulated with a screen.
+    ///It also handles the UI for these elements where the player sees the target, gets congratulated with a screen
     ///The item amount are retrieved from their source name where this script builds a new string to display a proper name
     /// </summary>
     class Target : GameObjectList
