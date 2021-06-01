@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 namespace HarvestValley.GameObjects
 {
     /// <summary>
-    /// Jim van de Burgwal & Niels Duivenvoorden
+    /// Jim van de Burgwal
     /// This script contains multiple sprites for the different treestages, hitbox and when the tree is hit
     /// It also contains the tree health and has its own collision function
     /// </summary>
@@ -51,7 +51,7 @@ namespace HarvestValley.GameObjects
             for (int i = 0; i < children.Count; i++)
             {
                 (children[i] as SpriteGameObject).Scale = _scale;
-                (children[i] as SpriteGameObject).PerPixelCollisionDetection = false;
+                (children[i] as SpriteGameObject).PerPixelCollisionDetection = false; //Niels Duivenvoorden gemaakt
                 (children[i] as SpriteGameObject).Visible = false;
             }
 

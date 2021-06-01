@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 namespace HarvestValley.GameObjects
 {
     /// <summary>
-    /// Jim van de Burgwal & Niels Duivenvoorden
+    /// Jim van de Burgwal
     /// This script contains multiple sprites for the stone, hitbox and when the stone gets hit
     /// It also contains the stone health and has its own collision function
     /// </summary>
@@ -35,7 +35,7 @@ namespace HarvestValley.GameObjects
             for (int i = 0; i < children.Count; i++)
             {
                 (children[i] as SpriteGameObject).Scale = _scale;
-                (children[i] as SpriteGameObject).PerPixelCollisionDetection = false;
+                (children[i] as SpriteGameObject).PerPixelCollisionDetection = false; //Niels Duivenvoorden gemaakt
                 (children[i] as SpriteGameObject).Visible = false;
             }
 
