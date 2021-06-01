@@ -135,7 +135,7 @@ namespace HarvestValley.GameObjects
             CurrentAmount = 0; //reset the currentamount
             collected = false;
             int r = GameEnvironment.Random.Next(stackableItemsList.Children.Count); //make a random
-            targetItem = (stackableItemsList.Children[r] as Item); //randomly select an item out the stacbale item list
+            targetItem = (stackableItemsList.Children[r] as Item); //randomly select an item out the stackable item list
             targetName = targetItem.Sprite.Sprite.Name; //set the name based on the sprite name of the item
 
             targetAmount = GameEnvironment.Random.Next(minSeedTSeedWoodRockWheat[r], minSeedTSeedWoodRockWheat[r] * 2) * difficulty; //generate an amount to gether with minimums per item and a difficulty
