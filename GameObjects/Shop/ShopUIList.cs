@@ -36,7 +36,6 @@ namespace HarvestValley.GameObjects.Shop
         public int[] addMoney = { 5, 10, 3, 10, 50, 5 };
         public int totalCost, totalGained;
 
-
         public ShopMenuUIList(ItemList _itemList, Tent tent, MouseGameObject MGO, Wallet _wallet)
         {
             //Add all the instances of the Shop elements
@@ -107,7 +106,7 @@ namespace HarvestValley.GameObjects.Shop
                     {
                         if (x.GetType() == selectedShopItem.GetType())              //Checks if the selected item is the same as an item in the itemlist, which are the items in the HUD
                         {
-                            for (int i = 0; i < reduceMoney.Length; i++)        
+                            for (int i = 0; i < reduceMoney.Length; i++)
                             {
                                 if (shopItems.Children[i].GetType() == selectedShopItem.GetType())      //Checks if the selected item is the same as an item in the shopItemList, which are the items for the shop
                                 {
@@ -118,7 +117,7 @@ namespace HarvestValley.GameObjects.Shop
                                         Debug.WriteLine(totalCost);
                                         wallet.AddMoney(-totalCost);  //Add money
                                     }
-                               }
+                                }
                             }
                             selectedShopItem.selectedItem = false;                      //Reset the selected item 
                             InitBuyPage();
@@ -180,7 +179,7 @@ namespace HarvestValley.GameObjects.Shop
         /// <summary>
         /// Resets all the shop elements 
         /// </summary>
-        public void ResetShop() 
+        public void ResetShop()
         {
             //Set the text lines for the shop
             topLine.Text = shopDialogueLines[1];
@@ -254,7 +253,7 @@ namespace HarvestValley.GameObjects.Shop
                 bottomLine.Text = shopItemAmount.ToString();
             }
         }
-        
+
         ///<Summary>
         /// This script opens the Welcome page of the shop and simultaniously deactivates the other pages
         /// From here the player can navigate to the other pages of the shop UI
@@ -264,13 +263,13 @@ namespace HarvestValley.GameObjects.Shop
             shopActive = true;
 
             //Set the visibility of the Welcome page elements of the shop on true
-           uIBox.Visible = true;
+            uIBox.Visible = true;
             topLine.Visible = true;
             bottomLine.Visible = true;
             buyLine.Visible = true;
             cancelLine.Visible = true;
             sellLine.Visible = true;
-            
+
             shopButtons.shopButtons[6].Visible = true;      //Set the visibility of the Buy button
             shopButtons.shopButtons[7].Visible = true;      //Set the visibility of the Sell button
             shopButtons.shopButtons[1].Visible = true;      //Set the visibility of the Cancel button
@@ -365,7 +364,7 @@ namespace HarvestValley.GameObjects.Shop
             sellLine.Visible = false;
             topLine.Text = shopDialogueLines[4];        //Change the question line 
             bottomLine.Position = new Vector2(GameEnvironment.Screen.X * .5f, GameEnvironment.Screen.Y * .4f);
-            
+
             //Make all the shop items invisible
             foreach (Item x in shopItems.Children) { x.Visible = false; }
 
@@ -486,11 +485,10 @@ namespace HarvestValley.GameObjects.Shop
                     totalGained = addMoney[i] * shopItemAmount;
                     //Add money to the wallet
                     wallet.AddMoney(totalGained);
-                    Debug.WriteLine("Added");
                 }
             }
         }
-        public bool IsActive 
+        public bool IsActive
         {
             get { return shopActive || buyActive || buyAmount || sellActive || sellAmount; }
         }
