@@ -7,6 +7,13 @@ using System.Text;
 
 namespace HarvestValley.GameObjects
 {
+
+    /// <summary>
+    /// Luke Sikma, Jim van de Burgwal 
+    /// Class to 
+    /// </summary>
+     
+
     class Hotbar : GameObjectList
     {
         public SpriteGameObject selectedSquare, hotbarSquare;
@@ -50,6 +57,9 @@ namespace HarvestValley.GameObjects
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            //Looping through the items to see if there are items and if not then don't display the item
+            // Looping through the items to see if there are items and how many there are
             for (int i = 0; i < slots; i++)
             {
                 (itemAmountText.Children[i] as TextGameObject).Text = (itemList.Children[i] as Item).itemAmount.ToString();
