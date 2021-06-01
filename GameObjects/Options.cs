@@ -14,6 +14,7 @@ namespace HarvestValley.GameObjects
         Sounds sounds;
         public Options(MouseGameObject mouseGO)
         {
+            sounds = new Sounds();
             #region open/close options menu
             options = new SpriteGameObject("UI/Menu");
             options.Position = new Vector2(0, GameEnvironment.Screen.Y - options.Height);
@@ -142,7 +143,7 @@ namespace HarvestValley.GameObjects
 
         public override void HandleInput(InputHelper inputHelper)
         {
-            sounds = new Sounds();
+            
             base.HandleInput(inputHelper);
             if (inputHelper.MouseLeftButtonPressed())
             {
@@ -150,30 +151,30 @@ namespace HarvestValley.GameObjects
                 {
                     optionsVisible = true;
                     // Play ButtonClick
-                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[9]);
                 }
                 if (mouseGO.CollidesWith(closeButton))
                 {
                     optionsVisible = false;
                     // Play ButtonClick
-                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[9]);
                 }
                 if (mouseGO.CollidesWith(muteButton))
                 {
                     GameEnvironment.AssetManager.volume = 0;
                     // Play ButtonClick
-                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[9]);
                 }
                 if (mouseGO.CollidesWith(unmuteButton))
                 {
                     GameEnvironment.AssetManager.volume = 1;
                     // Play ButtonClick
-                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[9]);
                 }
                 if (mouseGO.CollidesWith(plusButton))
                 {
                     // Play ButtonClick
-                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[9]);
 
                     GameEnvironment.AssetManager.volume += .1f;
                     if (GameEnvironment.AssetManager.volume > 1)
@@ -185,7 +186,7 @@ namespace HarvestValley.GameObjects
                 if (mouseGO.CollidesWith(minusButton))
                 {
                     // Play ButtonClick
-                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[9]);
 
                     GameEnvironment.AssetManager.volume -= .1f;
                     if (GameEnvironment.AssetManager.volume < 0)
@@ -196,7 +197,7 @@ namespace HarvestValley.GameObjects
                 if (mouseGO.CollidesWith(exitButton))
                 {
                     // Play ButtonClick
-                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[9]);
 
                     exitConfirmation = true;
                     optionsVisible = false;
@@ -204,7 +205,7 @@ namespace HarvestValley.GameObjects
                 if (mouseGO.CollidesWith(stayButton))
                 {
                     // Play ButtonClick
-                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[9]);
 
                     exitConfirmation = false;
                     optionsVisible = true;
@@ -212,7 +213,7 @@ namespace HarvestValley.GameObjects
                 if (mouseGO.CollidesWith(exitConfirmedButton))
                 {
                     // Play ButtonClick
-                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[9]);
 
                     System.Environment.Exit(1);
                 }
