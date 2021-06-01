@@ -1,4 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using System;
+using System.Diagnostics;
 
 namespace HarvestValley.GameObjects
 {
@@ -13,7 +16,6 @@ namespace HarvestValley.GameObjects
         TextGameObject text;            //text to be displayed
         SpriteGameObject bg, coin;      //background and coin sprite
         int money, newMoney;            //ints to read the money and moneyToBe
-        public bool playedSound;        
 
         public Wallet()
         {
@@ -46,11 +48,6 @@ namespace HarvestValley.GameObjects
             //change the text and place it in the center of the background sprite
             text.Text = money.ToString();
             text.Position = new Vector2(bg.Position.X + bg.Sprite.Width * .5f - text.Size.X * .5f, bg.Position.Y + bg.Sprite.Height * .5f - text.Size.Y * .5f);
-        }
-
-        public bool PlayCoinsound()
-        {
-            return (money == newMoney && money > 0 && !playedSound);
         }
 
         /// <summary>
