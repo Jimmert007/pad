@@ -49,6 +49,10 @@ namespace HarvestValley.GameObjects.Shop
             Add(buyLine = new TextGameObject("Fonts/JimFont"));
             Add(sellLine = new TextGameObject("Fonts/JimFont"));
             Add(cancelLine = new TextGameObject("Fonts/JimFont"));
+            Add(addItemLine = new TextGameObject("Fonts/JimFont"));
+            Add(retractItemLine = new TextGameObject("Fonts/JimFont"));
+            Add(add10ItemsLine = new TextGameObject("Fonts/JimFont"));
+            Add(retract10ItemsLine = new TextGameObject("Fonts/JimFont"));
             mouseGO = MGO;
             itemList = _itemList;
 
@@ -206,9 +210,12 @@ namespace HarvestValley.GameObjects.Shop
             //Make the UI lines invisible
             uIBox.Visible = false;
            
-            foreach(TextGameObject tgo in Children)
+            foreach(GameObject tgo in Children)
             {
-                tgo.Visible = false;
+                if (tgo is TextGameObject)
+                {
+                    tgo.Visible = false;
+                }
             }
 
             //Make the Shop Items invisible
