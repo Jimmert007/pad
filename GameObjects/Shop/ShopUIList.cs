@@ -84,7 +84,6 @@ namespace HarvestValley.GameObjects.Shop
         }
         public override void HandleInput(InputHelper inputHelper)
         {
-
             base.HandleInput(inputHelper);
 
             for (int i = 0; i < shopButtons.Children.Count; i++)
@@ -330,7 +329,6 @@ namespace HarvestValley.GameObjects.Shop
             {
                 iconPrices[i].Visible = false;
             }
-
         }
 
         ///<Summary>
