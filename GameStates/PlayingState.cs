@@ -69,7 +69,7 @@ namespace HarvestValley.GameStates
             plants = new GameObjectList();
             Add(plants);
 
-            player = new Player("Player/jorrit", new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2), 1);
+            player = new Player("Player/jorrit", new Vector2(GameEnvironment.Screen.X / 2, GameEnvironment.Screen.Y / 2));
             Add(player);
 
             tent = new GameObjectList();
@@ -602,12 +602,6 @@ namespace HarvestValley.GameStates
                         (trees.Children[i] as Tree).growthStage++;
                     }
                 }
-                if (energyBar.passOut)
-                {
-                    sleeping.Sleep(gameTime);
-                    sleeping.useOnce = false;
-                }
-                sleeping.Update(gameTime);
             }
             if (energyBar.passOut)
             {
