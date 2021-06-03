@@ -156,7 +156,6 @@ namespace HarvestValley.GameStates
                 ToggleShopMenu(inputHelper);
             }
 
-            base.HandleInput(inputHelper);
             if (inputHelper.KeyPressed(Microsoft.Xna.Framework.Input.Keys.P))
             {
                 GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[12]);
