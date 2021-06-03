@@ -10,12 +10,6 @@ namespace HarvestValley.GameObjects.UI
     {
         public Button(string _assetName = "Player/1px") : base(_assetName)
         {
-
-        }
-
-        public void PrintDialog(string _message)
-        {
-            Debug.WriteLine(_message);
         }
 
         public bool collidesWithMouse(Vector2 _mousePosition)

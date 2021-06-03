@@ -8,8 +8,6 @@ namespace HarvestValley.GameObjects
 {
     class ShopItems : GameObjectList
     {
-        ItemList itemList;
-
         public string itemSelected = "HOE";
 
         public ShopItems()
