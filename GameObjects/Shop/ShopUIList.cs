@@ -19,7 +19,7 @@ namespace HarvestValley.GameObjects.Shop
     {
         MouseGameObject mouseGO;
         ShopItems shopItems;
-        TextGameObject topLine, bottomLine, buyLine, sellLine, cancelLine, addItemLine, retractItemLine, add10ItemsLine, retract10ItemsLine;
+        TextGameObject topLine, bottomLine, buyLine, sellLine, cancelLine, addItemLine, retractItemLine, add10ItemsLine, retract10ItemsLine, currentPrize;
         UIBox uIBox;
         ShopButtons shopButtons;
         Wallet wallet;
@@ -53,6 +53,7 @@ namespace HarvestValley.GameObjects.Shop
             Add(retractItemLine = new TextGameObject("Fonts/JimFont"));
             Add(add10ItemsLine = new TextGameObject("Fonts/JimFont"));
             Add(retract10ItemsLine = new TextGameObject("Fonts/JimFont"));
+            Add(currentPrize = new TextGameObject("Fonts/JimFont"));
             mouseGO = MGO;
             itemList = _itemList;
 
@@ -118,7 +119,8 @@ namespace HarvestValley.GameObjects.Shop
                 {
                     if ((shopButtons.Children[i] as Button).collidesWithMouse(inputHelper.MousePosition) && inputHelper.MouseLeftButtonPressed() && shopButtons.Children[i].Visible)
                     {
-                        shopItemAmount += itemAmount[i];
+                        shopItemAmount += itemAmount[i];            //Calculate shop amount
+
                     }
                 }
                 //Inputs for the confirm button
@@ -155,11 +157,20 @@ namespace HarvestValley.GameObjects.Shop
             }
             if (sellAmount)         //Set button inputs when the Confirm Sell page is active
             {
-                //Make item amount, buy and sell buttons visible
                 for (int i = 2; i < 6; i++)
                 {
+                    //Inputs for the item amount manipulation buttons
                     if ((shopButtons.Children[i] as Button).collidesWithMouse(inputHelper.MousePosition) && inputHelper.MouseLeftButtonPressed() && shopButtons.Children[i].Visible)
                     {
+                        //Calculate money gained for specifed item here
+                        for (int x = 0; x < addMoney.Length; x++)
+                        {
+                            if (shopItems.Children[x].GetType() == selectedShopItem.GetType())
+                            {
+                                totalGained = addMoney[x] * shopItemAmount;
+                            }
+                        }
+
                         foreach (Item x in itemList.Children)
                         {
                             if (x.GetType() == selectedShopItem.GetType())      //Checks if the selected item is the same as an item in the itemList
@@ -168,6 +179,7 @@ namespace HarvestValley.GameObjects.Shop
                                 {
                                     shopItemAmount += itemAmount[i];            //Adds the item amount 
                                 }
+
                             }
                         }
                     }
@@ -183,7 +195,8 @@ namespace HarvestValley.GameObjects.Shop
                             if (shopItemAmount <= x.itemAmount)             //Prevents the sold item amount to exceed the item amount the player has
                             {
                                 x.itemAmount -= shopItemAmount;
-                                GainMoney();                                //Get money from selling item
+                                wallet.AddMoney(totalGained);               //Get money from selling item
+                                
                             }
                             selectedShopItem.selectedItem = false;
                             InitSellPage();
@@ -213,6 +226,7 @@ namespace HarvestValley.GameObjects.Shop
             retractItemLine.Text = itemAmountText[1];
             add10ItemsLine.Text = itemAmountText[2];
             retract10ItemsLine.Text = itemAmountText[3];
+            currentPrize.Text = "";
 
             //Set the position of Shop Design elements
             uIBox.Position = new Vector2(GameEnvironment.Screen.X * .5f - uIBox.Sprite.Width / 2, GameEnvironment.Screen.Y / 2 - uIBox.Sprite.Height / 2);
@@ -262,6 +276,7 @@ namespace HarvestValley.GameObjects.Shop
             retractItemLine.Position = new Vector2(shopButtons.reduceItem.Position.X - retractItemLine.Size.X * .3f, shopButtons.reduceItem.Position.Y + shopButtons.reduceItem.Sprite.Height * 1.5f);
             add10ItemsLine.Position = new Vector2(shopButtons.add10Items.Position.X - add10ItemsLine.Size.X * .3f, shopButtons.add10Items.Position.Y + shopButtons.add10Items.Sprite.Height * 1.5f);
             retract10ItemsLine.Position = new Vector2(shopButtons.reduce10Items.Position.X - retract10ItemsLine.Size.X * .3f, shopButtons.reduce10Items.Position.Y + shopButtons.reduce10Items.Sprite.Height * 1.5f);
+            currentPrize.Position = new Vector2(GameEnvironment.Screen.X * .5f, uIBox.Position.Y);
 
             //Resets the Shop UI bools
             shopActive = false;
@@ -284,6 +299,18 @@ namespace HarvestValley.GameObjects.Shop
             if (buyAmount || sellAmount)
             {
                 bottomLine.Text = shopItemAmount.ToString();
+            }
+
+            if (buyAmount)      //Continuesly update the current price
+            {
+                currentPrize.Visible = true;
+                currentPrize.Text = "Cost" + totalCost.ToString();
+            } 
+
+            if (sellAmount)     //Continuesly update the money gained
+            {
+                currentPrize.Visible = true;
+                currentPrize.Text = "Money gained " +totalGained.ToString();
             }
         }
 
@@ -342,6 +369,7 @@ namespace HarvestValley.GameObjects.Shop
             {
                 iconPrices[i].Visible = true;
             }
+
             //Make item lines invisible
             addItemLine.Visible = false;
             retractItemLine.Visible = false;
@@ -351,6 +379,7 @@ namespace HarvestValley.GameObjects.Shop
             //Turn off elements from Welcome page
             buyActive = true;
             shopActive = false;
+            buyAmount = false;
             buyLine.Visible = false;
             sellLine.Visible = false;
             cancelLine.Visible = false;
@@ -456,6 +485,7 @@ namespace HarvestValley.GameObjects.Shop
             //Turn off elements from Welcome page
             sellActive = true;
             shopActive = false;
+            sellAmount = false;
             buyLine.Visible = false;
             sellLine.Visible = false;
             cancelLine.Visible = false;
@@ -542,19 +572,32 @@ namespace HarvestValley.GameObjects.Shop
         /// <summary>
         /// This script controls how much money the player gains 
         /// </summary>
-        public void GainMoney()
+        //public void GainMoney()
+        //{
+        //    //Add money here for specifed item here
+        //    for (int i = 0; i < reduceMoney.Length; i++)
+        //    {
+        //        if (shopItems.Children[i].GetType() == selectedShopItem.GetType())
+        //        {
+        //            totalGained = addMoney[i] * shopItemAmount;
+        //            //Add money to the wallet
+        //            wallet.AddMoney(totalGained);
+        //        }
+        //    }
+        //}
+
+        public void CalculateMoney()
         {
-            //Add money here for specifed item here
-            for (int i = 0; i < reduceMoney.Length; i++)
+            //Calculate money live
+            for (int x = 0; x < reduceMoney.Length; x++)
             {
-                if (shopItems.Children[i].GetType() == selectedShopItem.GetType())
+                if (shopItems.Children[x].GetType() == selectedShopItem.GetType())
                 {
-                    totalGained = addMoney[i] * shopItemAmount;
-                    //Add money to the wallet
-                    wallet.AddMoney(totalGained);
+                    totalGained = addMoney[x] * shopItemAmount;
                 }
             }
         }
+
         public bool CollidesWith(SpriteGameObject obj)
         {
             return ((children[0] as SpriteGameObject).CollidesWith(obj));
