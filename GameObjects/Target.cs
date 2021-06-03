@@ -120,6 +120,10 @@ namespace HarvestValley.GameObjects
                     collected = true;
                     congratsText.Visible = false;
                     wallet.AddMoney(rewardAmount);
+
+                    // Play CoinDrop
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[11]);
+
                     NewTarget();
                 }
             }
@@ -143,7 +147,7 @@ namespace HarvestValley.GameObjects
             targetAmount = GameEnvironment.Random.Next(minSeedTSeedWoodRockWheat[r], minSeedTSeedWoodRockWheat[r] * 2) * difficulty; //generate an amount to gether with minimums per item and a difficulty
 
             //clean string
-            string[] removeFromString = { "spr", "stage", "1", "Items", "/", "_", "Environment" }; 
+            string[] removeFromString = { "spr", "stage", "1", "Items", "/", "_", "Environment" };
             for (int i = 0; i < removeFromString.Length; i++)
             {
                 if (targetName.Contains(removeFromString[i]))

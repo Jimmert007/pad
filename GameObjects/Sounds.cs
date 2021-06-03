@@ -9,7 +9,19 @@ namespace HarvestValley.GameObjects
     public class Sounds : GameObjectList
     {
         //Array with all the soundeffect names
-        public string[] soundEffectStrings = { "FootstepsOnGrass", "AxeSwing", "PickaxeSwing", "TreeFalling", "WaterSplash", "RoosterCrowing", "MetalRattling", "HittingGround", "Shaking1", "ButtonClick", "WheatPickup", "CoinDrop", "PlacingTree" }; 
+        public string[] soundEffectStrings = {  "FootstepsOnGrass",
+                                                "AxeSwing",
+                                                "PickaxeSwing",
+                                                "TreeFalling",
+                                                "WaterSplash",
+                                                "RoosterCrowing",
+                                                "MetalRattling",
+                                                "HittingGround",
+                                                "Shaking1",
+                                                "ButtonClick",
+                                                "WheatPickup",
+                                                "CoinDrop",
+                                                "PlacingTree" };
 
         public SoundEffect[] SFXs;
         public SoundEffectInstance[] SEIs; // A Array to use when wanted to play a sound
