@@ -7,11 +7,15 @@ using System.Text;
 
 namespace HarvestValley
 {
+    /// <summary>
+    /// Jim van de Burgwal
+    /// This script contains multiple sprites for the plants growthstages
+    /// </summary>
     class Plant : GameObjectList
     {
-        public int growthStage = 1;
-        public SpriteGameObject seed1stage1, seed1stage2, seed1stage3, seed1stage4;
-        public bool soilHasWater;
+        public int growthStage = 1; //When added the plant starts at the first growthstage
+        public SpriteGameObject seed1stage1, seed1stage2, seed1stage3, seed1stage4; //Different SpriteGameObjects are declared for each growthstage
+        public bool soilHasWater; //Boolean which checks if the plant has water
 
         public Plant(Vector2 _postition, float scale) : base()
         {
@@ -34,10 +38,12 @@ namespace HarvestValley
 
         public override void Update(GameTime gameTime)
         {
+            //Plant can't grow further if it's fully grown
             if (growthStage > 4)
             {
                 growthStage = 4;
             }
+            //Only have the right SpriteGameObject shown with the right growthstage
             foreach (SpriteGameObject SGO in Children)
             {
                 SGO.Visible = false;
@@ -46,18 +52,6 @@ namespace HarvestValley
                     SGO.Visible = true;
                 }
             }
-        }
-
-        public bool CollidesWith(SpriteGameObject obj)
-        {
-            foreach (SpriteGameObject SGO in Children)
-            {
-                if (SGO.CollidesWith(obj))
-                {
-                    return true;
-                }
-            }
-            return false;
         }
     }
 }

@@ -6,13 +6,17 @@ using System.Text;
 
 namespace HarvestValley.GameObjects.Tutorial
 {
+    /// <summary>
+    /// Jim van de Burgwal
+    /// This class handles the tutorial steps which can be seen in de top left corner
+    /// </summary>
     class TutorialStepList : GameObjectList
     {
-        MouseGameObject mouseGO;
-        SpriteGameObject tutorialBox;
-        public int step = 1;
-        public bool mouseCollides;
-        public string
+        MouseGameObject mouseGO;        //The tutorial uses the mouse, so it's added here
+        SpriteGameObject tutorialBox;   //The box with a questionmark is declared
+        public int step = 1;            //This int keeps track of the current step
+        public bool mouseCollides;      //Uses this bool keep track if the mouse collides
+        public string                   //For each step there is a string declared
             step1 = "To start growing plants, you need to till some land first (within playerreach). \n" +
                     "Select the hoe by pressing 1 and click on a piece of land to till it.",
             step2 = "When the land is tilled you can plant a seed by selecting the seed \n" +
@@ -49,29 +53,28 @@ namespace HarvestValley.GameObjects.Tutorial
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (mouseGO.CollidesWith(tutorialBox))
+            if (mouseGO.CollidesWith(tutorialBox))      //If the mouse collides with the questionmark box
             {
-                mouseGO.Children[0].Visible = false;
-                for (int i = 1; i < children.Count; i++)
+                mouseGO.Children[0].Visible = false;    //The mouse is invisible
+                for (int i = 1; i < children.Count; i++)    //For each child
                 {
-                    if ((children[i] as TutorialStep).step == step)
+                    if ((children[i] as TutorialStep).step == step) //It checks if the given step in TutorialStep equals the step in this class
                     {
-                        (children[i] as TutorialStep).mouseCollides = true;
-
+                        (children[i] as TutorialStep).mouseCollides = true; //If that happens, the correct TutorialStep will be visible
                     }
                     else
                     {
 
-                        (children[i] as TutorialStep).mouseCollides = false;
+                        (children[i] as TutorialStep).mouseCollides = false;//All other TutorialSteps are made invisible
                     }
                 }
             }
-            else
+            else //If the mouse doesn't collide with the questionmark box
             {
-                mouseGO.Children[0].Visible = true;
+                mouseGO.Children[0].Visible = true; //The mouse is visible
                 for (int i = 1; i < children.Count; i++)
                 {
-                    (children[i] as TutorialStep).mouseCollides = false;
+                    (children[i] as TutorialStep).mouseCollides = false;    //All TutorialSteps are invisible
                 }
             }
         }

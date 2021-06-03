@@ -5,9 +5,13 @@ using System.Text;
 
 namespace HarvestValley.GameObjects
 {
+    /// <summary>
+    /// Jim van de Burgwal
+    /// This GameObjectList contains all the items in the game and sets their specific details like their sprite, if they are stackable, with how many items you start and the sprite scale
+    /// </summary>
     class ItemList : GameObjectList
     {
-        public string itemSelected = "HOE";
+        public string itemSelected = "HOE"; //The hoe is always selected at first
 
         public ItemList()
         {
