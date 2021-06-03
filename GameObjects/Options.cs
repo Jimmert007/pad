@@ -13,7 +13,7 @@ namespace HarvestValley.GameObjects
     {
         SpriteGameObject options, optionBackground, closeButton, muteButton, unmuteButton, plusButton, minusButton, exitButton, exitConfirmedButton, stayButton; //SpriteGameObjects for the options menu button, the background and all the other buttons
         TextGameObject optionText, soundOptionText, volume, exitGame, exitGameConfirmation, fullscreenText; //TextGameObjects for the options menu
-        MouseGameObject mouseGO;    //Uses the MouseGameObject so it's added here
+        MouseGameObject mouseGO;    //Options uses the MouseGameObject so it's added here
         public bool optionsVisible, exitConfirmation;   //Booleans for the different menu's
         Sounds sounds;  //Also needs sounds for the button clicks
         public Options(MouseGameObject mouseGO)
