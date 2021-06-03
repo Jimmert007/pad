@@ -26,14 +26,14 @@ namespace HarvestValley.GameObjects.Shop
             Add(buy = new Button("UI/spr_shop_buy"));
             Add(sell = new Button("UI/spr_shop_sell"));
 
-            //shopButtons[0] = confirm;
-            //shopButtons[1] = cancel;
-            //shopButtons[2] = addItem;
-            //shopButtons[3] = reduceItem;
-            //shopButtons[4] = add10Items;
-            //shopButtons[5] = reduce10Items;
-            //shopButtons[6] = buy;
-            //shopButtons[7] = sell;
+            shopButtons[0] = confirm;
+            shopButtons[1] = cancel;
+            shopButtons[2] = addItem;
+            shopButtons[3] = reduceItem;
+            shopButtons[4] = add10Items;
+            shopButtons[5] = reduce10Items;
+            shopButtons[6] = buy;
+            shopButtons[7] = sell;
 
         }
 

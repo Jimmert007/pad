@@ -53,14 +53,14 @@ namespace HarvestValley.GameObjects.Shop
 
             ResetShop();
 
-            iconPrices = new TextGameObject[shopItems.Children.Count];
+            iconPrices = new TextGameObject[shopItems.Children.Count];         //Add an array of text prices for each shopItem
             for (int i = 0; i < iconPrices.Length; i++)
             {
                 iconPrices[i] = new TextGameObject("Fonts/JimFont");
                 iconPrices[i].Text = "";
                 Add(iconPrices[i]);
             }
-            foreach (GameObject TGO in children)
+            foreach (GameObject TGO in children)                               //Make every textline color black
             {
                 if (TGO is TextGameObject)
                 {
