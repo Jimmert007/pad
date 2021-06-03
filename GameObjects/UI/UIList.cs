@@ -67,7 +67,7 @@ namespace HarvestValley.GameObjects.UI
                     }
                     else
                     {
-                        button.PrintDialog(uiDesiscionDialog.GetString());
+                       // button.PrintDialog(uiDesiscionDialog.GetString());
                     }
                     uiDesiscionDialog.uiDesiscion = false;
                     uiActive = false;
