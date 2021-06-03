@@ -205,15 +205,10 @@ namespace HarvestValley.GameObjects.Shop
 
             //Make the UI lines invisible
             uIBox.Visible = false;
-            topLine.Visible = false;
-            bottomLine.Visible = false;
-            buyLine.Visible = false;
-            cancelLine.Visible = false;
-            sellLine.Visible = false;
-
-            for (int i = 0; i < iconPrices.Length; i++)
+           
+            foreach(TextGameObject tgo in Children)
             {
-                iconPrices[i].Visible = false;
+                tgo.Visible = false;
             }
 
             //Make the Shop Items invisible
@@ -330,6 +325,11 @@ namespace HarvestValley.GameObjects.Shop
             {
                 iconPrices[i].Visible = true;
             }
+            //Make item lines invisible
+            addItemLine.Visible=false;
+            retractItemLine.Visible = false;
+            add10ItemsLine.Visible = false;
+            retract10ItemsLine.Visible = false;
 
             //Turn off elements from Welcome page
             buyActive = true;
@@ -382,6 +382,12 @@ namespace HarvestValley.GameObjects.Shop
             {
                 iconPrices[i].Visible = false;
             }
+            //Make item manipulation lines visible
+            addItemLine.Visible = true;
+            retractItemLine.Visible = true;
+            add10ItemsLine.Visible = true;
+            retract10ItemsLine.Visible = true;
+
             //Turn off elements from Buy page
             buyAmount = true;
             buyActive = false;
@@ -424,6 +430,12 @@ namespace HarvestValley.GameObjects.Shop
             {
                 iconPrices[i].Visible = true;
             }
+            //Make item manipulation lines invisible
+            addItemLine.Visible = false;
+            retractItemLine.Visible = false;
+            add10ItemsLine.Visible = false;
+            retract10ItemsLine.Visible = false;
+
             //Turn off elements from Welcome page
             sellActive = true;
             shopActive = false;
@@ -475,6 +487,13 @@ namespace HarvestValley.GameObjects.Shop
             {
                 iconPrices[i].Visible = false;
             }
+
+            //Make item manipulationLines visible
+            addItemLine.Visible = true;
+            retractItemLine.Visible = true;
+            add10ItemsLine.Visible = true;
+            retract10ItemsLine.Visible = true;
+
             //Turn off elements from sell page
             sellAmount = true;
             sellActive = false;
