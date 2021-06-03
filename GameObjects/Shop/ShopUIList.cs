@@ -247,10 +247,10 @@ namespace HarvestValley.GameObjects.Shop
             sellLine.Position = new Vector2(GameEnvironment.Screen.X * 1 / 2 - sellLine.Size.X / 2, GameEnvironment.Screen.Y * .6f);
             cancelLine.Position = new Vector2(GameEnvironment.Screen.X * 3 / 5 - cancelLine.Size.X / 2, GameEnvironment.Screen.Y * .6f);
             buyLine.Position = new Vector2(GameEnvironment.Screen.X * 2 / 5 - buyLine.Size.X / 2, GameEnvironment.Screen.Y * .6f);
-            addItemLine.Position = new Vector2(shopButtons.addItem.Position.X, shopButtons.addItem.Position.Y + shopButtons.addItem.Sprite.Height * 1.5f);
-            retractItemLine.Position = new Vector2(shopButtons.reduceItem.Position.X, shopButtons.reduceItem.Position.Y + shopButtons.reduceItem.Sprite.Height * 1.5f);
-            add10ItemsLine.Position = new Vector2(shopButtons.add10Items.Position.X, shopButtons.add10Items.Position.Y + shopButtons.add10Items.Sprite.Height * 1.5f);
-            retract10ItemsLine.Position = new Vector2(shopButtons.reduce10Items.Position.X, shopButtons.reduce10Items.Position.Y + shopButtons.reduce10Items.Sprite.Height * 1.5f);
+            addItemLine.Position = new Vector2(shopButtons.addItem.Position.X - addItemLine.Size.X* .3f, shopButtons.addItem.Position.Y + shopButtons.addItem.Sprite.Height * 1.5f);
+            retractItemLine.Position = new Vector2(shopButtons.reduceItem.Position.X - retractItemLine.Size.X* .3f, shopButtons.reduceItem.Position.Y + shopButtons.reduceItem.Sprite.Height * 1.5f);
+            add10ItemsLine.Position = new Vector2(shopButtons.add10Items.Position.X - add10ItemsLine.Size.X * .3f, shopButtons.add10Items.Position.Y + shopButtons.add10Items.Sprite.Height * 1.5f);
+            retract10ItemsLine.Position = new Vector2(shopButtons.reduce10Items.Position.X - retract10ItemsLine.Size.X * .3f, shopButtons.reduce10Items.Position.Y + shopButtons.reduce10Items.Sprite.Height * 1.5f);
 
             //Resets the Shop UI bools
             shopActive = false;
