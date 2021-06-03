@@ -138,7 +138,7 @@ namespace HarvestValley.GameObjects.Shop
                                     if (totalCost <= wallet.Money)
                                     {
                                         x.itemAmount += shopItemAmount;
-                                        Debug.WriteLine(totalCost);
+                                        //Debug.WriteLine(totalCost);
                                         wallet.AddMoney(-totalCost);                     //Add money
                                     }
                                 }
