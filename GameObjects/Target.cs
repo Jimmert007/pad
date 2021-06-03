@@ -104,8 +104,9 @@ namespace HarvestValley.GameObjects
             //once the button gets clicked on
             if (button.OnClick)
             {
-                //Play ButtonClick
-                GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
+                // Play ButtonClick
+                GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[9]);
+
                 //disable UI elements
                 titleText.Visible = false;
                 panel_bg.Visible = false;

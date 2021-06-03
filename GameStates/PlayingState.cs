@@ -475,7 +475,7 @@ namespace HarvestValley.GameStates
                 player.sleepingPosition = true;
 
                 //Play RoosterCrowing
-                GameEnvironment.AssetManager.PlaySound(sounds.SEIs[6]);
+                GameEnvironment.AssetManager.PlaySound(sounds.SEIs[5]);
 
                 if (sleeping.fadeOut)
                 {
@@ -772,7 +772,7 @@ namespace HarvestValley.GameStates
                                 tutorialStepList.step += 1;
                             }
                             //Play HittingGround
-                            GameEnvironment.AssetManager.PlaySound(sounds.SEIs[8]);
+                            GameEnvironment.AssetManager.PlaySound(sounds.SEIs[7]);
 
                             c.ChangeSpriteTo(1);
                             c.cellIsTilled = true;
@@ -803,7 +803,7 @@ namespace HarvestValley.GameStates
                                     }
 
                                     //Play Shakking1
-                                    GameEnvironment.AssetManager.PlaySound(sounds.SEIs[9]);
+                                    GameEnvironment.AssetManager.PlaySound(sounds.SEIs[8]);
 
                                     item.itemAmount -= 1;
                                     c.cellHasPlant = true;
@@ -836,7 +836,7 @@ namespace HarvestValley.GameStates
                                     energyBar.percentageLost += energyBar.oneUse;
                                     sprinklers.Add(new SprinklerObject(c.Position, 1));
                                     //Play WaterSplash
-                                    GameEnvironment.AssetManager.PlaySound(sounds.SEIs[7]);
+                                    GameEnvironment.AssetManager.PlaySound(sounds.SEIs[6]);
                                 }
                             }
                         }
@@ -853,8 +853,8 @@ namespace HarvestValley.GameStates
                 if (inputHelper.MouseRightButtonPressed() && s.CollidesWith(player.playerReach) && s.CollidesWith(MouseGO.HitBox))
                 {
                     energyBar.percentageLost += energyBar.oneUse;
-                    //Play WaterSplash
-                    GameEnvironment.AssetManager.PlaySound(sounds.SEIs[7]);
+                    //Play MetalRattling
+                    GameEnvironment.AssetManager.PlaySound(sounds.SEIs[6]);
                     foreach (Cell c in cells.Children)
                     {
                         if (c.Position == s.Position)
@@ -915,7 +915,8 @@ namespace HarvestValley.GameStates
                                 {
                                     if (itemList.itemSelected == "TREESEED" && !c.cellIsTilled && !c.cellHasPlant && !c.HasCollision && item.itemAmount > 0)
                                     {
-                                        GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[13]);
+                                        // Play PlacingTree
+                                        GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[12]);
                                         item.itemAmount -= 1;
                                         c.cellHasTree = true;
                                         trees.Add(new Tree(c.Position, .5f, 1));
@@ -1085,7 +1086,7 @@ namespace HarvestValley.GameStates
                                         c.cellHasPlant = false;
                                         plants.Remove(plants.Children[i]);
                                         //Play WheatPickup
-                                        GameEnvironment.AssetManager.PlaySound(sounds.SEIs[11]);
+                                        GameEnvironment.AssetManager.PlaySound(sounds.SEIs[10]);
                                     }
                                 }
                             }

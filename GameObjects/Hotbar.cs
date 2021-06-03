@@ -7,13 +7,21 @@ using System.Text;
 
 namespace HarvestValley.GameObjects
 {
+
+    /// <summary>
+    /// Luke Sikma, Jim van de Burgwal: 
+    /// Class for getting every item and putting the tools you start with in the hotbar 
+    /// and checks the items u can have multiple of if you have it and how many
+    /// </summary>
+     
+
     class Hotbar : GameObjectList
     {
-        public SpriteGameObject selectedSquare, hotbarSquare;
-        public GameObjectList hotbarSquares;
-        public GameObjectList itemAmountText;
-        public ItemList itemList;
-        public int slots = 10;
+        public SpriteGameObject selectedSquare, hotbarSquare;   // declare the selescted square and the induvidual hotbarsquare
+        public GameObjectList hotbarSquares;                    // declare the squares
+        public GameObjectList itemAmountText;                   // declare the item amount
+        public ItemList itemList;                               // declare the List of items out of the Class ItemList
+        public int slots = 10;                                  // declare the amount of hotbar slots
         public Hotbar(ItemList itemList)
         {
 
@@ -50,6 +58,8 @@ namespace HarvestValley.GameObjects
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            
+            // Looping through the items to see if there are items and how many there are and if there are non then don't display the item
             for (int i = 0; i < slots; i++)
             {
                 (itemAmountText.Children[i] as TextGameObject).Text = (itemList.Children[i] as Item).itemAmount.ToString();
