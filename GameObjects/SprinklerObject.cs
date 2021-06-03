@@ -5,6 +5,10 @@ using Microsoft.Xna.Framework;
 
 namespace HarvestValley.GameObjects
 {
+    /// <summary>
+    /// Jim van de Burgwal
+    /// This script contains the sprinkler
+    /// </summary>
     class SprinklerObject : GameObjectList
     {
         public int sprinklerSprite = 1;
@@ -21,23 +25,10 @@ namespace HarvestValley.GameObjects
             {
                 (children[i] as SpriteGameObject).Scale = _scale;
                 (children[i] as SpriteGameObject).PerPixelCollisionDetection = false;
-                (children[i] as SpriteGameObject).Visible = false;
+                (children[i] as SpriteGameObject).Visible = true;
             }
 
             sprinkler1.scale = 1.3f;
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-            foreach (SpriteGameObject SGO in Children)
-            {
-                SGO.Visible = false;
-                if (SGO.Id == sprinklerSprite.ToString())
-                {
-                    SGO.Visible = true;
-                }
-            }
         }
 
         public bool CollidesWith(SpriteGameObject obj)

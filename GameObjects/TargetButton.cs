@@ -6,6 +6,10 @@ using System.Text;
 
 namespace HarvestValley.GameObjects
 {
+    /// <summary>
+    /// Niels Duivenvoorden
+    /// A button class that displays a button and is able to detect Overlap and when the button gets clicked on
+    /// </summary>
     class TargetButton : SpriteGameObject
     {
         SpriteGameObject mouseGO;
@@ -20,20 +24,21 @@ namespace HarvestValley.GameObjects
         {
             base.HandleInput(inputHelper);
             mouseGO.Position = inputHelper.MousePosition;
-            if (inputHelper.MouseLeftButtonDown() && Overlap())
-            {
-                _onClick = true;
-            }
-            else
-            {
-                _onClick = false;
-            }
+            OnClick = inputHelper.MouseLeftButtonDown() && Overlap();
         }
 
-        public bool Overlap()
+        /// <summary>
+        /// Checks if the button collides with the mouse sprite
+        /// </summary>
+        /// <returns></returns>
+        bool Overlap()
         {
             return (CollidesWith(mouseGO));
         }
+
+        /// <summary>
+        /// Property once the button gets clicked
+        /// </summary>
         public bool OnClick
         {
             get { return _onClick; }

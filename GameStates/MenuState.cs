@@ -130,25 +130,25 @@ namespace HarvestValley.GameStates
                 {
                     GameEnvironment.GameStateManager.SwitchTo("playingState");
                     // Play ButtonClick
-                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[9]);
                 }
                 if (mouseGO.CollidesWith(button2))
                 {
                     creditsScreen = true;
                     // Play ButtonClick
-                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[9]);
                 }
                 if (mouseGO.CollidesWith(button3))
                 {
                     System.Environment.Exit(1);
                     // Play ButtonClick
-                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[9]);
                 }
                 if (mouseGO.CollidesWith(button1credits))
                 {
                     creditsScreen = false;
                     // Play ButtonClick
-                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[10]);
+                    GameEnvironment.AssetManager.PlayOnce(sounds.SEIs[9]);
                 }
             }
             bgs.Position = inputHelper.MousePosition * .01f + bg.Position;
