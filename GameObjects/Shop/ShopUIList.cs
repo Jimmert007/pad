@@ -110,6 +110,13 @@ namespace HarvestValley.GameObjects.Shop
                     {
                         shopItemAmount += itemAmount[i];            //Calculate shop amount
 
+                        for (int x = 0; x < reduceMoney.Length; x++)
+                        {
+                            if (shopItems.Children[x].GetType() == selectedShopItem.GetType())
+                            {
+                                totalCost = reduceMoney[x] * shopItemAmount;
+                            }
+                        }
                     }
                 }
                 //Inputs for the confirm button
@@ -127,7 +134,7 @@ namespace HarvestValley.GameObjects.Shop
                                     if (totalCost <= wallet.Money)
                                     {
                                         x.itemAmount += shopItemAmount;
-                                        Debug.WriteLine(totalCost);
+
                                         wallet.AddMoney(-totalCost);                     //Add money
                                     }
                                 }
@@ -151,15 +158,6 @@ namespace HarvestValley.GameObjects.Shop
                     //Inputs for the item amount manipulation buttons
                     if ((shopButtons.Children[i] as Button).collidesWithMouse(inputHelper.MousePosition) && inputHelper.MouseLeftButtonPressed() && shopButtons.Children[i].Visible)
                     {
-                        //Calculate money gained for specifed item here
-                        for (int x = 0; x < addMoney.Length; x++)
-                        {
-                            if (shopItems.Children[x].GetType() == selectedShopItem.GetType())
-                            {
-                                totalGained = addMoney[x] * shopItemAmount;
-                            }
-                        }
-
                         foreach (Item x in itemList.Children)
                         {
                             if (x.GetType() == selectedShopItem.GetType())      //Checks if the selected item is the same as an item in the itemList
@@ -171,6 +169,15 @@ namespace HarvestValley.GameObjects.Shop
 
                             }
                         }
+                        //Calculate money gained for specifed item here
+                        for (int x = 0; x < addMoney.Length; x++)
+                        {
+                            if (shopItems.Children[x].GetType() == selectedShopItem.GetType())
+                            {
+                                totalGained = addMoney[x] * shopItemAmount;
+                            }
+                        }
+
                     }
                 }
                 //Inputs for the confirm button
@@ -294,7 +301,7 @@ namespace HarvestValley.GameObjects.Shop
             {
                 currentPrize.Visible = true;
                 currentPrize.Text = "Cost" + totalCost.ToString();
-            } 
+            }
 
             if (sellAmount)     //Continuesly update the money gained
             {
@@ -365,6 +372,7 @@ namespace HarvestValley.GameObjects.Shop
             retractItemLine.Visible = false;
             add10ItemsLine.Visible = false;
             retract10ItemsLine.Visible = false;
+            currentPrize.Visible = false;
 
             //Turn off elements from Welcome page
             buyActive = true;
@@ -471,6 +479,7 @@ namespace HarvestValley.GameObjects.Shop
             retractItemLine.Visible = false;
             add10ItemsLine.Visible = false;
             retract10ItemsLine.Visible = false;
+            currentPrize.Visible = false;
 
             //Turn off elements from Welcome page
             sellActive = true;
@@ -559,39 +568,6 @@ namespace HarvestValley.GameObjects.Shop
             shopButtons.cancel.Position = new Vector2(GameEnvironment.Screen.X / 3 - shopButtons.cancel.Sprite.Width / 2, GameEnvironment.Screen.Y * 2 / 3);
         }
 
-        /// <summary>
-        /// This script controls how much money the player gains 
-        /// </summary>
-        //public void GainMoney()
-        //{
-        //    //Add money here for specifed item here
-        //    for (int i = 0; i < reduceMoney.Length; i++)
-        //    {
-        //        if (shopItems.Children[i].GetType() == selectedShopItem.GetType())
-        //        {
-        //            totalGained = addMoney[i] * shopItemAmount;
-        //            //Add money to the wallet
-        //            wallet.AddMoney(totalGained);
-        //        }
-        //    }
-        //}
-
-        public void CalculateMoney()
-        {
-            //Calculate money live
-            for (int x = 0; x < reduceMoney.Length; x++)
-            {
-                if (shopItems.Children[x].GetType() == selectedShopItem.GetType())
-                {
-                    totalGained = addMoney[x] * shopItemAmount;
-                }
-            }
-        }
-
-        public bool CollidesWith(SpriteGameObject obj)
-        {
-            return ((children[0] as SpriteGameObject).CollidesWith(obj));
-        }
         public bool IsActive
         {
             get { return shopActive || buyActive || buyAmount || sellActive || sellAmount; }
