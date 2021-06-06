@@ -8,7 +8,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace HarvestValley
 {
-    class Sleeping : SpriteGameObject
+    /// <summary>
+    /// Wessel
+    /// This script contains the fade in and fade out for the sleeping action
+    /// </summary>
+    class Sleeping : GameObject
     {
         public float fadeAmount = 0;
         public bool useOnce = true, sleepHitboxHit;
@@ -16,7 +20,7 @@ namespace HarvestValley
         public bool fadeIn, fadeOut;
         Color color1, color2, finalColor;
         public SpriteSheet fadeSprite;
-        public Sleeping(string _assetName) : base(_assetName)
+        public Sleeping()
         {
             color1 = new Color(0, 0, 0, 0);
             color2 = new Color(0, 0, 0, 255);
@@ -26,9 +30,9 @@ namespace HarvestValley
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (sleepHitboxHit && useOnce/* && insert cords check*/)
+            if (sleepHitboxHit && useOnce)
             {
-                Sleep(gameTime);
+                Sleep();
                 useOnce = false;
             }
             if (fade)
@@ -70,7 +74,7 @@ namespace HarvestValley
             finalColor = Color.Lerp(color1, color2, fadeAmount);
         }
 
-        public void Sleep(GameTime time)
+        public void Sleep()
         {
             fade = true;
             fadeIn = true;
