@@ -1,6 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 public class SpriteSheet
@@ -16,7 +14,7 @@ public class SpriteSheet
     {
         // retrieve the sprite
         sprite = GameEnvironment.AssetManager.GetSprite(assetname);
-        
+
         // construct the collision mask
         Color[] colorData = new Color[sprite.Width * sprite.Height];
         collisionMask = new bool[sprite.Width * sprite.Height];

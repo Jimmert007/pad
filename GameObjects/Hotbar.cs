@@ -1,9 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
 namespace HarvestValley.GameObjects
 {
@@ -59,7 +54,7 @@ namespace HarvestValley.GameObjects
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            
+
             // Looping through the items to see if there are items and how many there are and if there are non then don't display the item
             for (int i = 0; i < slots; i++)
             {
@@ -73,7 +68,7 @@ namespace HarvestValley.GameObjects
                 {
                     itemAmountText.Children[i].Visible = false;
                 }
-                
+
                 if ((itemList.Children[i] as Item).itemAmount > 0)
                 {
                     itemList.Children[i].Visible = true;

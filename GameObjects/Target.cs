@@ -1,9 +1,5 @@
 using HarvestValley.GameObjects.Tools;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
 namespace HarvestValley.GameObjects
 {

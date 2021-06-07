@@ -1,9 +1,5 @@
 ﻿using HarvestValley.GameObjects;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace HarvestValley.GameStates
 {
@@ -18,9 +14,9 @@ namespace HarvestValley.GameStates
         TextGameObject credits = new TextGameObject("Fonts/JimFont");
         TextGameObject close = new TextGameObject("Fonts/JimFont");
         TextGameObject title = new TextGameObject("Fonts/GameFont");
-        SpriteGameObject button1 = new SpriteGameObject("UI/spr_target_ui_bar") { scale = 1.5f}, 
-            button2 = new SpriteGameObject("UI/spr_target_ui_bar") { scale = 1.5f}, 
-            button3 = new SpriteGameObject("UI/spr_target_ui_bar") { scale = 1.5f}, 
+        SpriteGameObject button1 = new SpriteGameObject("UI/spr_target_ui_bar") { scale = 1.5f },
+            button2 = new SpriteGameObject("UI/spr_target_ui_bar") { scale = 1.5f },
+            button3 = new SpriteGameObject("UI/spr_target_ui_bar") { scale = 1.5f },
             button1credits = new SpriteGameObject("UI/spr_target_ui_bar") { scale = 1.5f };
         GameObjectList bgs;
         SpriteGameObject bg;

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using HarvestValley.GameObjects.UI;
-using Microsoft.Xna.Framework;
+﻿using HarvestValley.GameObjects.UI;
 
 namespace HarvestValley.GameObjects.Shop
 {

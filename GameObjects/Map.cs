@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Diagnostics;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
-namespace HarvestValley
+﻿namespace HarvestValley
 {
     /// <summary>
     /// Niels Duivenvoorden, 500847100

@@ -1,9 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
 namespace HarvestValley.GameObjects.Tutorial
 {
@@ -27,7 +23,7 @@ namespace HarvestValley.GameObjects.Tutorial
             backgroundSprite = new SpriteSheet("UI/TutorialBackground");
             textFont = GameEnvironment.AssetManager.Content.Load<SpriteFont>("Fonts/JimFont");
             text = new TextGameObject("Fonts/JimFont");
-            text.Text = tutorialText; 
+            text.Text = tutorialText;
             foreach (GameObject GO in children)
             {
                 GO.Visible = false; //Everything is made invisible

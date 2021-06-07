@@ -1,7 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework.Input;
 
 namespace HarvestValley.GameObjects.UI
@@ -20,10 +17,10 @@ namespace HarvestValley.GameObjects.UI
             Add(uIBox = new UIBox("UI/ui_bar"));
             uIBox.Position = new Vector2(GameEnvironment.Screen.X * .5f, GameEnvironment.Screen.Y * .35f);
             buttons.Add(yes = new Button("UI/checkmark"));
-            yes.Position = new Vector2(uIBox.Position.X - uIBox.Width/3, GameEnvironment.Screen.Y * .6f);
+            yes.Position = new Vector2(uIBox.Position.X - uIBox.Width / 3, GameEnvironment.Screen.Y * .6f);
             //yes.Scale = .5f;
             buttons.Add(no = new Button("UI/cross"));
-            no.Position = new Vector2(uIBox.Position.X + uIBox.Width/5, GameEnvironment.Screen.Y * .6f);
+            no.Position = new Vector2(uIBox.Position.X + uIBox.Width / 5, GameEnvironment.Screen.Y * .6f);
             //no.Scale = .5f;
             Add(uiDesiscionDialog = new SingleLineCycleDialog());
 
@@ -67,7 +64,7 @@ namespace HarvestValley.GameObjects.UI
                     }
                     else
                     {
-                       // button.PrintDialog(uiDesiscionDialog.GetString());
+                        // button.PrintDialog(uiDesiscionDialog.GetString());
                     }
                     uiDesiscionDialog.uiDesiscion = false;
                     uiActive = false;

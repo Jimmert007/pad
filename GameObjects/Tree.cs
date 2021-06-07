@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
 
 namespace HarvestValley.GameObjects
 {
@@ -110,6 +105,6 @@ namespace HarvestValley.GameObjects
             }
             return false;
         }
-    
+
     }
 }

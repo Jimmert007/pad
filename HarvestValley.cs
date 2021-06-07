@@ -1,12 +1,11 @@
 ﻿using HarvestValley.GameStates;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 
 namespace HarvestValley
 {
-    
+
     class HarvestValley : GameEnvironment
     {
         /// <summary>
@@ -14,7 +13,7 @@ namespace HarvestValley
         /// all of your content.
         /// </summary>
         /// 
-    
+
 
         protected override void LoadContent()
         {

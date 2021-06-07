@@ -1,10 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-
-namespace HarvestValley.GameObjects
+﻿namespace HarvestValley.GameObjects
 {
     /// <summary>
     /// Niels Duivenvoorden

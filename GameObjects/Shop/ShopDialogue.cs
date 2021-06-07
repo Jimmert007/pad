@@ -1,7 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework.Input;
 
 
@@ -18,7 +15,7 @@ namespace HarvestValley.GameObjects.Shop
             {
                 TextGameObject x = new TextGameObject("GameFont");
                 x.Text = strings[i];
-                x.Position = new Vector2(GameEnvironment.Screen.X * .5f - x.Size.X * .5f, GameEnvironment.Screen.Y * .1f );
+                x.Position = new Vector2(GameEnvironment.Screen.X * .5f - x.Size.X * .5f, GameEnvironment.Screen.Y * .1f);
                 Add(x);
             }
         }

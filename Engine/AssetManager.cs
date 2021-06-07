@@ -38,7 +38,7 @@ public class AssetManager
     public void PlaySound(SoundEffectInstance SEI)
     {
         SEI.Volume = volume;
-        if(SEI.State == SoundState.Playing)
+        if (SEI.State == SoundState.Playing)
         {
             SEI.Stop();
         }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace HarvestValley.GameObjects
+﻿namespace HarvestValley.GameObjects
 {
     /// <summary>
     /// Niels Duivnevoorden

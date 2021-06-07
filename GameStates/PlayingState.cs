@@ -1,17 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using HarvestValley.GameObjects;
-using HarvestValley.GameObjects.Tools;
-using HarvestValley.GameObjects.UI;
+﻿using HarvestValley.GameObjects;
 using HarvestValley.GameObjects.Shop;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Audio;
+using HarvestValley.GameObjects.Tools;
 using HarvestValley.GameObjects.Tutorial;
-using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace HarvestValley.GameStates
 {
