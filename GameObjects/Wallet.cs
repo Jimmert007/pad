@@ -6,7 +6,7 @@ using System.Diagnostics;
 namespace HarvestValley.GameObjects
 {
     /// <summary>
-    /// Niels Duivenvoorden, Luke Sikma
+    /// Niels Duivenvoorden
     /// Wallet class to display the coin amount
     /// Also contains functions to add/deduct from the wallet
     /// Has a add effect

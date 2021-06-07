@@ -8,6 +8,12 @@ using Microsoft.Xna.Framework.Input;
 
 namespace HarvestValley
 {
+    /// <summary>
+    /// Niels Duivenvoorden
+    /// A spritegameobject that flips its sprite based on input
+    /// to disable player input, use the sleeping bool
+    /// also loses energy based on input and controls how fast the player 'moves'
+    /// </summary>
     class Player : SpriteGameObject
     {
         public bool sleeping, sleepingPosition;
@@ -17,12 +23,6 @@ namespace HarvestValley
         bool _deductEnergy;
         public SpriteGameObject playerReach, moveLeft, moveRight;
 
-        /// <summary>
-        /// Niels Duivenvoorden
-        /// A spritegameobject that flips its sprite based on input
-        /// to disable player input, use the sleeping bool
-        /// also loses energy based on input and controls how fast the player 'moves'
-        /// </summary>
         public Player(string _assetName, Vector2 _position) : base(_assetName)
         {
             position = _position - new Vector2(32, 32);                     //place the player in the center

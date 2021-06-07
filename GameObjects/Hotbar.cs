@@ -13,8 +13,6 @@ namespace HarvestValley.GameObjects
     /// Class for getting every item and putting the tools you start with in the hotbar 
     /// and checks the items u can have multiple of if you have it and how many
     /// </summary>
-     
-
     class Hotbar : GameObjectList
     {
         public SpriteGameObject selectedSquare, hotbarSquare;   // declare the selescted square and the induvidual hotbarsquare

@@ -7,6 +7,11 @@ using System.Text;
 
 namespace HarvestValley
 {
+    /// <summary>
+    /// Niels Duivenvoorden
+    /// Every tile on the map is a cell
+    /// Cells can be either grass, soil or watered soil
+    /// </summary>
     class Cell : GameObjectList
     {
         public int cellID, randomGrass, spriteID;               //every cell has an ID, randomgrass to reset plowed lands, id of sprite to set the visible sprite of the object
@@ -14,17 +19,9 @@ namespace HarvestValley
         public bool cellIsTilled, cellHasPlant, cellHasTree, cellHasWater, cellHasSprinkler, nextRandom, nextToSprinkler, cellHasStone, cellHasTent, cellHasShop; //bool to know what the cell carries
         public const int CELL_SIZE = 64;                        //width of the sprites
 
-        /// <summary>
-        /// Niels Duivenvoorden
-        /// Every tile on the map is a cell
-        /// Cells can be either grass, soil or watered soil
-        /// </summary>
-        /// <param name="_position"></param>
-        /// <param name="_scale"></param>
-        /// <param name="_id"></param>
         public Cell(Vector2 _position, float _scale, int _id) : base()
         {
-            position = _position; 
+            position = _position;
             cellID = _id;
             randomGrass = GameEnvironment.Random.Next(4);
 

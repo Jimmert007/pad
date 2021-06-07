@@ -10,6 +10,7 @@ namespace HarvestValley.GameStates
     /// <summary>
     /// Jim van de Burgwal
     /// This script contains every TextGameObject and SpriteGameObject for the menu
+    /// Niels Duivenvoorden for the background effect
     /// </summary>
     class MenuState : GameObjectList
     {
