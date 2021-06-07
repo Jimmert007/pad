@@ -5,7 +5,10 @@ namespace HarvestValley.GameObjects
     class ShopItems : GameObjectList
     {
         public string itemSelected = "HOE";
-
+        /// <summary>
+        /// Mohammad Al Hadiansyah Suwandhy
+        /// Class to add the different stackable items
+        /// </summary>
         public ShopItems()
         {
             #region Adding Items for the shop

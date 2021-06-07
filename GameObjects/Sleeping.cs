@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace HarvestValley
 {
     /// <summary>
-    /// Wessel
+    /// Wessel Vink
     /// This script contains the fade in and fade out for the sleeping action
     /// </summary>
     class Sleeping : GameObject

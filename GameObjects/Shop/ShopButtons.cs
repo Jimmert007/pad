@@ -2,6 +2,10 @@
 
 namespace HarvestValley.GameObjects.Shop
 {
+    /// <summary>
+    /// Mohammad Al Hadiansyah Suwandhy, 500843466
+    /// Class that contains the different buttons
+    /// </summary>
     class ShopButtons : GameObjectList
     {
         public Button confirm, cancel, addItem, reduceItem, add10Items, reduce10Items, buy, sell;

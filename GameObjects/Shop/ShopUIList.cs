@@ -1,12 +1,12 @@
 ﻿using HarvestValley.GameObjects.UI;
-///Mohammad Al Hadiansyah Suwandhy, 500843466
-///<Summary>
-/// This class serves to adjust and control all the UI elements for the shop
-///</Summary>
 using Microsoft.Xna.Framework;
 
 namespace HarvestValley.GameObjects.Shop
 {
+    ///<Summary>
+    /// Mohammad Al Hadiansyah Suwandhy, 500843466
+    /// This class serves to adjust and control all the UI elements for the shop
+    ///</Summary>
     class ShopMenuUIList : GameObjectList
     {
         MouseGameObject mouseGO;

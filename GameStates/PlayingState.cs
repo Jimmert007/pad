@@ -13,7 +13,6 @@ namespace HarvestValley.GameStates
         Options options;
         GameObjectList cells;
         Player player;
-        CraftingMenu craftingMenu;
         GameObjectList plants;
         GameObjectList trees;
         GameObjectList stones;
@@ -74,7 +73,7 @@ namespace HarvestValley.GameStates
             Add(tent);
 
             shopPC = new GameObjectList();
-            shopPC.Add(new ShopPC(tent.Children[0] as Tent));
+            shopPC.Add(new ShopBoard(tent.Children[0] as Tent));
             Add(shopPC);
 
             stones = new GameObjectList();
@@ -91,9 +90,6 @@ namespace HarvestValley.GameStates
 
             sleeping = new Sleeping();
             Add(sleeping);
-
-            craftingMenu = new CraftingMenu();
-            Add(craftingMenu);
 
             itemList = new ItemList();
 
@@ -175,7 +171,7 @@ namespace HarvestValley.GameStates
         void ToggleShopMenu(InputHelper inputHelper)
         {
             //Activate UI bools
-            if (inputHelper.MouseLeftButtonPressed() && MouseGO.CollidesWith((shopPC.Children[0] as ShopPC).Sprite) && player.playerReach.CollidesWith((shopPC.Children[0] as ShopPC).Sprite))
+            if (inputHelper.MouseLeftButtonPressed() && MouseGO.CollidesWith((shopPC.Children[0] as ShopBoard).Sprite) && player.playerReach.CollidesWith((shopPC.Children[0] as ShopBoard).Sprite))
             {
                 shopUI.InitShopWelcomePage();
             }
@@ -232,7 +228,7 @@ namespace HarvestValley.GameStates
         {
             foreach (Cell c in cells.Children)
             {
-                if (c.CellCollidesWith((shopPC.Children[0] as ShopPC).Sprite))
+                if (c.CellCollidesWith((shopPC.Children[0] as ShopBoard).Sprite))
                 {
                     c.cellHasShop = true;
                 }
@@ -754,7 +750,7 @@ namespace HarvestValley.GameStates
                 }
             }
 
-            if ((shopPC.Children[0] as ShopPC).CollidesWith(player))
+            if ((shopPC.Children[0] as ShopBoard).CollidesWith(player))
             {
                 SetPreviousPosition();
             }
