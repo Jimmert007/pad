@@ -477,8 +477,8 @@ namespace HarvestValley.GameObjects.Shop
                 shopButtons.Children[i].Visible = true;
             }
             //Set the positions of the item amount, buy and sell buttons
-            shopButtons.confirm.Position = new Vector2(GameEnvironment.Screen.X * 2 / 3 - shopButtons.confirm.Sprite.Width / 2, GameEnvironment.Screen.Y * 2 / 3);
-            shopButtons.cancel.Position = new Vector2(GameEnvironment.Screen.X / 3 - shopButtons.cancel.Sprite.Width / 2, GameEnvironment.Screen.Y * 2 / 3);
+            shopButtons.confirm.Position = new Vector2(uIBox.Position.X + uIBox.Sprite.Width*uIBox.Scale - shopButtons.confirm.Sprite.Width*2, GameEnvironment.Screen.Y * 2 / 3);
+            shopButtons.cancel.Position = new Vector2(uIBox.Position.X + shopButtons.cancel.Sprite.Width, GameEnvironment.Screen.Y * 2 / 3);
         }
 
         ///<Summary>
@@ -582,8 +582,8 @@ namespace HarvestValley.GameObjects.Shop
                 shopButtons.Children[i].Visible = true;
             }
             //Set the positions of the item amount, cancel and sell buttons
-            shopButtons.confirm.Position = new Vector2(GameEnvironment.Screen.X * 2 / 3 - shopButtons.confirm.Sprite.Width / 2, GameEnvironment.Screen.Y * 2 / 3);
-            shopButtons.cancel.Position = new Vector2(GameEnvironment.Screen.X / 3 - shopButtons.cancel.Sprite.Width / 2, GameEnvironment.Screen.Y * 2 / 3);
+            shopButtons.confirm.Position = new Vector2(uIBox.Position.X + uIBox.Sprite.Width * uIBox.Scale - shopButtons.confirm.Sprite.Width * 2, GameEnvironment.Screen.Y * 2 / 3);
+            shopButtons.cancel.Position = new Vector2(uIBox.Position.X + shopButtons.cancel.Sprite.Width, GameEnvironment.Screen.Y * 2 / 3);
         }
 
         public bool IsActive
