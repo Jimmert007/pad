@@ -34,7 +34,7 @@ namespace HarvestValley.GameObjects
             //Looping through soundEffectStrings to load into SFXs and initialize into SEIs
             for (int s = 0; s < SFXs.Length; s++)
             {
-                // Getting the soundseffects names to use them to load them
+                // Getting the soundseffects names to load them
                 SFXs[s] = GameEnvironment.AssetManager.Content.Load<SoundEffect>("Sound/" + soundEffectStrings[s]);
                 //Initialize the Current sound
                 SEIs[s] = SFXs[s].CreateInstance();

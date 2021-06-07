@@ -24,7 +24,7 @@ namespace HarvestValley.GameObjects
         public int slots = 10;                                  // declare the amount of hotbar slots
         public Hotbar(ItemList itemList)
         {
-
+            //Adding the hotbar squares, giving it a Sprite and giving them a position
             hotbarSquares = new GameObjectList();
             hotbarSquare = new SpriteGameObject("UI/HotbarSquare");
             for (int i = 0; i < slots; i++)
@@ -34,10 +34,12 @@ namespace HarvestValley.GameObjects
             }
             Add(hotbarSquares);
 
+            // Adding and loading the selected square, giving it a Sprite and giving it the first hotbar item als sleected
             selectedSquare = new SpriteGameObject("UI/HotbarSquareSelected");
             Add(selectedSquare);
             selectedSquare.Position = hotbarSquares.Children[0].Position;
 
+            //Adding the items and giving them a position
             this.itemList = itemList;
             Add(this.itemList);
             for (int i = 0; i < slots; i++)
@@ -45,6 +47,7 @@ namespace HarvestValley.GameObjects
                 this.itemList.Children[i].Position = hotbarSquares.Children[i].Position;
             }
 
+            //Adding the item amount, setting a font, giving it a position and a color
             itemAmountText = new GameObjectList();
             Add(itemAmountText);
             for (int i = 0; i < slots; i++)
