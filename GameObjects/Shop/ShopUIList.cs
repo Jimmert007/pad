@@ -586,7 +586,7 @@ namespace HarvestValley.GameObjects.Shop
             shopButtons.cancel.Position = new Vector2(uIBox.Position.X + shopButtons.cancel.Sprite.Width, GameEnvironment.Screen.Y * 2 / 3);
         }
 
-        public bool IsActive
+        public bool IsActive //Checks if the shop UI is active
         {
             get { return shopActive || buyActive || buyAmount || sellActive || sellAmount; }
         }
