@@ -94,10 +94,10 @@ namespace HarvestValley.GameStates
             sprinklers = new GameObjectList();
             Add(sprinklers);
 
-            energyBar = new EnergyBar("UI/spr_empty", GameEnvironment.Screen.X - 60, GameEnvironment.Screen.Y - 220, 40, 200);
+            energyBar = new EnergyBar(GameEnvironment.Screen.X - 60, GameEnvironment.Screen.Y - 220, 40, 200);
             Add(energyBar);
 
-            sleeping = new Sleeping("UI/spr_empty");
+            sleeping = new Sleeping();
             Add(sleeping);
 
             craftingMenu = new CraftingMenu();
@@ -164,7 +164,7 @@ namespace HarvestValley.GameStates
         {
             if (player.DeductEnergy)
             {
-                energyBar.percentageLost += energyBar.oneUse;
+                energyBar.energyLost += energyBar.oneUse;
             }
         }
 
@@ -624,14 +624,14 @@ namespace HarvestValley.GameStates
                 }
                 if (energyBar.passOut)
                 {
-                    sleeping.Sleep(gameTime);
+                    sleeping.Sleep();
                     sleeping.useOnce = false;
                 }
                 sleeping.Update(gameTime);
             }
             if (energyBar.passOut)
             {
-                sleeping.Sleep(gameTime);
+                sleeping.Sleep();
                 sleeping.useOnce = false;
             }
         }
@@ -844,7 +844,7 @@ namespace HarvestValley.GameStates
 
                 c.ChangeSpriteTo(1);
                 c.cellIsTilled = true;
-                energyBar.percentageLost += energyBar.oneUse;
+                energyBar.energyLost += energyBar.oneUse;
             }
         }
 
@@ -870,7 +870,7 @@ namespace HarvestValley.GameStates
 
                         item.itemAmount -= 1;
                         c.cellHasPlant = true;
-                        energyBar.percentageLost += energyBar.oneUse;
+                        energyBar.energyLost += energyBar.oneUse;
                         plants.Add(new Plant(c.Position, 2));
                     }
                 }
@@ -891,7 +891,7 @@ namespace HarvestValley.GameStates
                     {
                         item.itemAmount -= 1;
                         c.cellHasSprinkler = true;
-                        energyBar.percentageLost += energyBar.oneUse;
+                        energyBar.energyLost += energyBar.oneUse;
                         sprinklers.Add(new SprinklerObject(c.Position, 1));
                         //Play MetalRattling
                         GameEnvironment.AssetManager.PlaySound(sounds.SEIs[6]);
@@ -915,7 +915,7 @@ namespace HarvestValley.GameStates
                 //Play WaterSplash
                 GameEnvironment.AssetManager.PlaySound(sounds.SEIs[4]);
 
-                energyBar.percentageLost += energyBar.oneUse;
+                energyBar.energyLost += energyBar.oneUse;
                 c.cellHasWater = true;
                 c.ChangeSpriteTo(2);
             }
@@ -941,7 +941,7 @@ namespace HarvestValley.GameStates
                                 item.itemAmount -= 1;
                                 c.cellHasTree = true;
                                 trees.Add(new Tree(c.Position, .5f, 1));
-                                energyBar.percentageLost += energyBar.oneUse;
+                                energyBar.energyLost += energyBar.oneUse;
                             }
                         }
                     }
@@ -968,7 +968,7 @@ namespace HarvestValley.GameStates
                         (stones.Children[i] as Stone).stoneHit = true;
                         (stones.Children[i] as Stone).hitTimer = (stones.Children[i] as Stone).hitTimerReset;
                         (stones.Children[i] as Stone).health -= 1;
-                        energyBar.percentageLost += energyBar.oneUse;
+                        energyBar.energyLost += energyBar.oneUse;
                         if ((stones.Children[i] as Stone).health <= 0)
                         {
                             if (tutorialStepList.step == 4)
@@ -1011,7 +1011,7 @@ namespace HarvestValley.GameStates
                         (trees.Children[i] as Tree).treeHit = true;
                         (trees.Children[i] as Tree).hitTimer = (trees.Children[i] as Tree).hitTimerReset;
                         (trees.Children[i] as Tree).health -= 1;
-                        energyBar.percentageLost += energyBar.oneUse;
+                        energyBar.energyLost += energyBar.oneUse;
                         if ((trees.Children[i] as Tree).health <= 0)
                         {
                             if (tutorialStepList.step == 4)
@@ -1113,7 +1113,7 @@ namespace HarvestValley.GameStates
                 SprinklerObject s = sprinklers.Children[i] as SprinklerObject;
                 if (inputHelper.MouseRightButtonPressed() && s.CollidesWith(player.playerReach) && s.CollidesWith(MouseGO.HitBox))
                 {
-                    energyBar.percentageLost += energyBar.oneUse;
+                    energyBar.energyLost += energyBar.oneUse;
                     //Play WaterSplash
                     GameEnvironment.AssetManager.PlaySound(sounds.SEIs[7]);
                     foreach (Cell c in cells.Children)

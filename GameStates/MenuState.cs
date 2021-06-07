@@ -7,13 +7,20 @@ using System.Text;
 
 namespace HarvestValley.GameStates
 {
+    /// <summary>
+    /// Jim van de Burgwal
+    /// This script contains every TextGameObject and SpriteGameObject for the menu
+    /// </summary>
     class MenuState : GameObjectList
     {
         TextGameObject start = new TextGameObject("Fonts/JimFont");
         TextGameObject credits = new TextGameObject("Fonts/JimFont");
         TextGameObject close = new TextGameObject("Fonts/JimFont");
         TextGameObject title = new TextGameObject("Fonts/GameFont");
-        SpriteGameObject button1 = new SpriteGameObject("UI/spr_target_ui_bar") { scale = 1.5f}, button2 = new SpriteGameObject("UI/spr_target_ui_bar") { scale = 1.5f}, button3 = new SpriteGameObject("UI/spr_target_ui_bar") { scale = 1.5f}, button1credits = new SpriteGameObject("UI/spr_target_ui_bar") { scale = 1.5f };
+        SpriteGameObject button1 = new SpriteGameObject("UI/spr_target_ui_bar") { scale = 1.5f}, 
+            button2 = new SpriteGameObject("UI/spr_target_ui_bar") { scale = 1.5f}, 
+            button3 = new SpriteGameObject("UI/spr_target_ui_bar") { scale = 1.5f}, 
+            button1credits = new SpriteGameObject("UI/spr_target_ui_bar") { scale = 1.5f };
         GameObjectList bgs;
         SpriteGameObject bg;
         MouseGameObject mouseGO = new MouseGameObject();
@@ -35,6 +42,7 @@ namespace HarvestValley.GameStates
                     bgs.Add(bg);
                 }
             }
+            //Every button and text gets its position and text here
             button1.Position = new Vector2(GameEnvironment.Screen.X * .5f - button1.Width * .5f, GameEnvironment.Screen.Y * .5f - button1.Height * .5f);
             Add(button1);
 
@@ -99,33 +107,34 @@ namespace HarvestValley.GameStates
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            foreach (GameObject g in children)
+            foreach (GameObject g in children) //All GameObjects 
             {
-                g.Visible = false;
+                g.Visible = false;             //Are made invisible
             }
-            if (!creditsScreen)
+            if (!creditsScreen)                //If the normal menu is active, the creditsScreen boolean is false, so
             {
-                for (int i = 0; i < 8; i++)
+                for (int i = 0; i < 8; i++)    //The first 8 children in the MenuState GameObjectList
                 {
-                    children[i].Visible = true;
+                    children[i].Visible = true; //Are made visible
                 }
             }
-            else if (creditsScreen)
+            else if (creditsScreen)            //If the creditsScreen boolean is true
             {
-                for (int i = 8; i < 15; i++)
+                for (int i = 8; i < 15; i++)   //The last 7 children in the MenuState GameObjectList
                 {
-                    children[i].Visible = true;
+                    children[i].Visible = true; //Are made visible
                 }
             }
-            children[0].Visible = true;
-            children[children.Count - 1].Visible = true;
+            children[0].Visible = true;        //The background is always visible
+            children[children.Count - 1].Visible = true;    //The mouse is also always visible
         }
 
         public override void HandleInput(InputHelper inputHelper)
         {
             base.HandleInput(inputHelper);
-            if (inputHelper.MouseLeftButtonPressed())
+            if (inputHelper.MouseLeftButtonPressed())   //If the left mouse button is pressed
             {
+                //All buttons check for collision
                 if (mouseGO.CollidesWith(button1))
                 {
                     GameEnvironment.GameStateManager.SwitchTo("playingState");
