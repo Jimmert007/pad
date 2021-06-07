@@ -4,7 +4,7 @@ using System;
 namespace HarvestValley.GameObjects
 {
     /// <summary>
-    /// Jim van de Burgwal & Niels Duivenvoorden
+    /// Jim van de Burgwal, Niels Duivenvoorden
     /// This script contains all the GameObject surrounding the options
     /// </summary>
     class Options : GameObjectList

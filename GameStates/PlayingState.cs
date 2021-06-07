@@ -30,9 +30,9 @@ namespace HarvestValley.GameStates
         GameObjectList shopPC;
         Wallet wallet;
         GameObjectList tent;
-        Vector2 prevPos;
         Target target;
         Sounds sounds;
+        Vector2 prevPos;
 
         /// <summary>
         /// In the constructor we initialize instances and add them to the PlayingState GameObjectList

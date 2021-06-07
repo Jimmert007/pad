@@ -1,8 +1,8 @@
 ﻿namespace HarvestValley
 {
     /// <summary>
-    /// Niels Duivenvoorden, 500847100
-    /// purpose: Generate a random map for every player
+    /// Niels Duivenvoorden
+    /// Generate a random map for every player
     /// </summary>
     class Map : GameObject
     {
