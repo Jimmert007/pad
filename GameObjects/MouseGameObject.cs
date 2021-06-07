@@ -1,7 +1,7 @@
 ﻿namespace HarvestValley.GameObjects
 {
     /// <summary>
-    /// Niels Duivnevoorden
+    /// Niels Duivenvoorden
     /// Class to draw a mouseobject
     /// Also contains collision with one pixel in th top left corner of the object
     /// </summary>
