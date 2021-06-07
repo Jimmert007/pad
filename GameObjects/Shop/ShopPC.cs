@@ -10,7 +10,7 @@ namespace HarvestValley.GameObjects.Shop
         SpriteGameObject shopPC;
         public ShopPC(Tent _tent)
         {
-            Add(shopPC = new SpriteGameObject("Environment/spr_shop"));                                                         //Add a PC objects
+            Add(shopPC = new SpriteGameObject("Environment/spr_shop"));                                                         //Add a PC object
             Position = _tent.Children[0].Position + new Vector2((_tent.Children[0] as SpriteGameObject).Sprite.Width, 0);       //Set the position of the PC next to the Tent
             shopPC.PerPixelCollisionDetection = false;
         }

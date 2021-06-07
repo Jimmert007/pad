@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using HarvestValley.GameObjects.Tools;
 
 namespace HarvestValley.GameObjects
 {
@@ -12,7 +11,7 @@ namespace HarvestValley.GameObjects
 
         public ShopItems()
         {
-            #region Adding Items
+            #region Adding Items for the shop
             Add(new Seed("Environment/spr_seed1_stage1", true, 15) { scale = 2 });
             Add(new Wood("Items/spr_wood", true, 0));
             Add(new TreeSeed("Items/spr_treeseed", true, 5));
